@@ -1,0 +1,12 @@
+H:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.exe.config
+H:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.exe
+H:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.pdb
+H:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.csprojAssemblyReference.cache
+H:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.exe
+H:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.pdb
+D:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.exe.config
+D:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.exe
+D:\Uni\InputOutput\InputOutput\bin\Debug\InputOutput.pdb
+D:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.csprojAssemblyReference.cache
+D:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.exe
+D:\Uni\InputOutput\InputOutput\obj\Debug\InputOutput.pdb
