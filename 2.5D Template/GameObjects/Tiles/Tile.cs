@@ -110,7 +110,7 @@ class Tile : SpriteGameObject
         get { return texturetype; }
     }
 
-    public void InitializeTile()
+    public virtual void InitializeTile()
     {
         if (type == TileType.Background)
         {
