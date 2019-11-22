@@ -71,4 +71,3 @@ class PlayingState : IGameLoopObject
         paused = false;
     }
 }
-

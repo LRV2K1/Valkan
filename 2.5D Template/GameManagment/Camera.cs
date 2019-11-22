@@ -102,4 +102,9 @@ class Camera : GameObject
     {
         get { return cameraPosition; }
     }
+
+    public Rectangle Screen
+    {
+        get { return new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2); }
+    }
 }

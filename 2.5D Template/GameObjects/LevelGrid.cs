@@ -74,29 +74,63 @@ class LevelGrid : GameObjectGrid
         return tile.Id;
     }
 
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        List<string> tiles = ActiveTiles();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
+            tile.HandleInput(inputHelper);
+        }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        List<string> tiles = ActiveTiles();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
+            tile.Update(gameTime);
+        }
+    }
+
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        Camera camera = GameWorld.GetObject("camera") as Camera;
-        int minLength = Math.Min(grid.GetLength(0), grid.GetLength(1));
-        int maxLengt = Math.Max(grid.GetLength(0), grid.GetLength(1));
-        for (int z = 0; z < grid.GetLength(0) + (grid.GetLength(1) - 1); z++)
+        List<string> tiles = ActiveTiles();
+        for (int i = 0; i < tiles.Count; i++)
         {
-            for (int x = 0; x <= z; x++)
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
+            tile.Draw(gameTime, spriteBatch);
+
+            for (int j = 0; j < tile.Passengers.Count; j++)
+            {
+                GameWorld.GetObject(tile.Passengers[j]).Draw(gameTime, spriteBatch);
+            }
+        }
+    }
+
+    private List<string> ActiveTiles()
+    {
+        List<string> tiles = new List<string>();
+        Camera camera = GameWorld.GetObject("camera") as Camera;
+        Vector2 cameraposbegin = GridPosition(new Vector2(camera.Screen.X, camera.Screen.Y));
+        Vector2 cameraposend = GridPosition(new Vector2(camera.Screen.X + camera.Screen.Width, camera.Screen.Y + camera.Screen.Height));
+        int beginz = (int)cameraposbegin.X + (int)cameraposbegin.Y;
+        int endz = (int)cameraposend.X + (int)cameraposend.Y;
+
+        for (int z = beginz; z < endz; z++)
+        {
+            for (int x = (int)cameraposbegin.X; x <= (int)cameraposend.X; x++)
             {
                 int y = z - x;
-                if (x >= grid.GetLength(0) || y >= grid.GetLength(1) || !camera.OnScreen(AnchorPosition(x,y)))
+                if (x >= grid.GetLength(0) || y >= grid.GetLength(1) || x < 0 || y < 0 || !camera.OnScreen(AnchorPosition(x, y)))
                 {
                     continue;
                 }
-                Tile tile = GameWorld.GetObject(grid[x, y]) as Tile;
-                tile.Draw(gameTime, spriteBatch);
-
-                for (int i = 0; i < tile.Passengers.Count; i++)
-                {
-                    GameWorld.GetObject(tile.Passengers[i]).Draw(gameTime, spriteBatch);
-                }
+                tiles.Add(grid[x, y]);
             }
         }
+        return tiles;
     }
 
     public Vector2 AnchorPosition(int x, int y)

@@ -11,5 +11,6 @@ partial class Level : GameObjectLibrary
         : base()
     {
         LoadLevel("Content/Levels/" + name + ".txt");
+        Reset();
     }
 }

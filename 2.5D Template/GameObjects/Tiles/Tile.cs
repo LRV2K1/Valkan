@@ -39,6 +39,12 @@ class Tile : SpriteGameObject
         passengers = new List<string>();
     }
 
+    public override void Reset()
+    {
+        base.Reset();
+        InitializeTile();
+    }
+
     public void AddPassenger(GameObject obj)
     {
         for (int i = 0; i < passengers.Count; i++)
