@@ -84,8 +84,9 @@ class LevelGrid : GameObjectGrid
             for (int x = 0; x <= z; x++)
             {
                 int y = z - x;
-                if (x >= grid.GetLength(0) || y >= grid.GetLength(1))
+                if (x >= grid.GetLength(0) || y >= grid.GetLength(1) || !camera.OnScreen(AnchorPosition(x, y)))
                 {
+                    Console.WriteLine("hello");
                     continue;
                 }
                 Tile tile = GameWorld.GetObject(grid[x, y]) as Tile;
