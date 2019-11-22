@@ -84,7 +84,7 @@ class LevelGrid : GameObjectGrid
             for (int x = 0; x <= z; x++)
             {
                 int y = z - x;
-                if (x >= grid.GetLength(0) || y >= grid.GetLength(1) || !camera.OnScreen(AnchorPosition(x,y)))
+                if (x >= grid.GetLength(0) || y >= grid.GetLength(1))
                 {
                     continue;
                 }
