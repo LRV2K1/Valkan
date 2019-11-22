@@ -30,18 +30,29 @@ partial class Entity : AnimatedGameObject
 
         if (previousPos != position)
         {
-            LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-            if (levelGrid.DrawGridPosition(position) != gridPos)
-            {
-                host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), gridPos, this, host);
-                gridPos = levelGrid.DrawGridPosition(position);
-            }
-            else if (host != "")
-            {
-                (GameWorld.GetObject(host) as Tile).CheckPassengerPosition(this);
-            }
+            NewHost();
             previousPos = position;
             DoPhysics();
+        }
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        NewHost();
+    }
+
+    private void NewHost()
+    {
+        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        if (levelGrid.DrawGridPosition(position) != gridPos)
+        {
+            host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), gridPos, this, host);
+            gridPos = levelGrid.DrawGridPosition(position);
+        }
+        else if (host != "")
+        {
+            (GameWorld.GetObject(host) as Tile).CheckPassengerPosition(this);
         }
     }
 

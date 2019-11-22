@@ -60,21 +60,12 @@ partial class Level : GameObjectLibrary
         camera.Width = (width) * level.CellWidth/2;
         camera.Height = (textlines.Count) * level.CellHeight;
 
-        for(int x = 0; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < textlines.Count; y++)
             {
                 Tile t = LoadTile(textlines[y][x], x, y);
                 level.Add(t, x, y);
-            }
-        }
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < textlines.Count; y++)
-            {
-                Tile obj = level.Get(x, y) as Tile;
-                obj.InitializeTile();
             }
         }
     }
@@ -94,7 +85,7 @@ partial class Level : GameObjectLibrary
                 return new Tile(new Point(x, y), "Sprites/Tiles/spr_wall_itest_1", TileType.Wall);
             case '@':
                 //return new WallTile(new Point(x, y), "Sprites/Tiles/spr_wall_sheet_test_1@5x4");
-                return new WallTile(new Point(x, y), "Sprites/Tiles/spr_brick_wall_sheet_0@5");
+                return new WallTile(new Point(x, y), "Sprites/Tiles/spr_brick_wall_sheet_1@4x4");
             case '%':
                 return new WallTile(new Point(x, y), "Sprites/Tiles/spr_wood_wall_sheet_0@5");
             case '+':
