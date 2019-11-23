@@ -19,8 +19,8 @@ public class SpriteSheet
         // retrieve the sprite
         sprite = GameEnvironment.AssetManager.GetSprite(assetname);
         color = Color.White;
-        // construct the collision mask
         /*
+        // construct the collision mask
         Color[] colorData = new Color[sprite.Width * sprite.Height];
         collisionMask = new bool[sprite.Width * sprite.Height];
         sprite.GetData(colorData);
