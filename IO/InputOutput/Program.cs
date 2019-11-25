@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 class IO
 {
+    public static string FilePath = "Stats.txt";   
     static void Main(string[] args)
     {
         ChangeStats();
@@ -15,7 +16,7 @@ class IO
     {
         string[] lines;
         var list = new List<string>();
-        FileStream CharacterStats = new FileStream(@"\IO\InputOutput\Stats.txt", FileMode.Open);
+        FileStream CharacterStats = new FileStream(FilePath, FileMode.Open);
         using (var r = new StreamReader(CharacterStats))
         {
             string line;
@@ -62,7 +63,7 @@ class IO
         newSpeed = 7;
         string[] lines;
         var list = new List<string>();
-        FileStream CharacterStats = new FileStream(@"\IO\InputOutput\Stats.txt", FileMode.Open);
+        FileStream CharacterStats = new FileStream(FilePath, FileMode.Open);
         using (var r = new StreamReader(CharacterStats))
         {
             string line;
@@ -72,7 +73,7 @@ class IO
             }
         }
         lines = list.ToArray();
-        StreamWriter writer = new StreamWriter(File.OpenWrite(@"\IO\InputOutput\Stats.txt"));
+        StreamWriter writer = new StreamWriter(File.OpenWrite(FilePath));
         lines[0] = lines[0].Replace(lines[0], newName);
         writer.Write(lines[0]);
         lines[1] = lines[1].Replace(lines[1], Environment.NewLine + newHP);
