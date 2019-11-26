@@ -82,5 +82,7 @@ partial class Entity : AnimatedGameObject
     {
         get { return weight; }
     }
+
+    //Dit is nieuw
 }
 
