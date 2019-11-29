@@ -106,17 +106,11 @@ partial class Level : GameObjectLibrary
                 return new Tile(new Point(x, y), asset, tp, tt);
             case "WallTile":
                 return new WallTile(new Point(x, y), asset, tp, tt);
-                break;
+            case "TreeTile":
+                return new TreeTile(new Point(x, y), asset, tp, tt);
         }
 
         return new Tile(new Point(x, y));
-    }
-
-    public Tile LoadTree(int x, int y)
-    {
-        int type = GameEnvironment.Random.Next(0, 5);
-        return new Tile(new Point(x, y), "Sprites/Tiles/Trees/spr_tree_" + type, TileType.Wall);
-        //return new Tile(new Point(x, y), "Sprites/Tiles/spr_tree_itest_1", TileType.Wall);
     }
 
     public Tile LoadPlayer(int x, int y)
