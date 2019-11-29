@@ -56,6 +56,7 @@ partial class Entity : AnimatedGameObject
                 Vector2 depth = Collision.CalculateIntersectionDepth(BoundingBox, tileBounds);
                 if (Math.Abs(depth.X) < Math.Abs(depth.Y))
                 {
+
                     position.X += depth.X;
                     continue;
                 }
