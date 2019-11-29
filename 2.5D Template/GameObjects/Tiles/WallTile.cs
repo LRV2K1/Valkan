@@ -14,7 +14,11 @@ class WallTile : Tile
         tileobject = TileObject.WallTile;
     }
 
-    
+    public override void InitializeTile()
+    {
+        base.InitializeTile();
+        origin.Y -= 1;
+    }
     public override void SetSprite()
     {
         if (sprite.NumberSheetElements < 16)
