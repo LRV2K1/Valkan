@@ -22,18 +22,7 @@ partial class Level : GameObjectLibrary
         GameMouse mouse = new GameMouse();
         RootList.Add(mouse);
 
-        List<string> textLines = new List<string>();
-        StreamReader streamReader = new StreamReader(path);
-
-        string line = streamReader.ReadLine();
-        int width = line.Length;
-        while(line != null)
-        {
-            textLines.Add(line);
-            line = streamReader.ReadLine();
-        }
-
-        LoadTiles(textLines, width);
+        LoadFile(path);
 
         LoadOverlays();
     }
@@ -49,7 +38,7 @@ partial class Level : GameObjectLibrary
         overlayManager.SwitchTo("hud");
     }
 
-    public void LoadTiles(List<string> textlines, int width)
+    public void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
         LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
         RootList.Add(level);
@@ -64,49 +53,64 @@ partial class Level : GameObjectLibrary
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                Tile t = LoadTile(textlines[y][x], x, y);
+                Tile t;
+                if (textlines[y][x] == '1')
+                {
+                    t = LoadPlayer(x, y);
+                }
+                else
+                {
+                    t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
+                }
                 level.Add(t, x, y);
             }
         }
     }
 
-    public Tile LoadTile(char tileType, int x, int y)
+    public Tile LoadTile(int x, int y, string tiletype)
     {
-        switch (tileType)
+        string[] type = tiletype.Split(',');
+        string asset = type[0];
+        TileType tp = TileType.Background;
+        TextureType tt = TextureType.None;
+
+        switch (type[1])
         {
-            case '.':
-                return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
-                //return new Tile(new Point(x,y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
-                //return new Tile(new Point(x, y));
-            case 'w':
-                //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_itest_2", TileType.Wall, TextureType.Water);
-                return new Tile(new Point(x, y), "Sprites/Tiles/spr_water_0", TileType.Wall, TextureType.Water);
-            case '#':
-                return new Tile(new Point(x, y), "Sprites/Tiles/spr_wall_itest_1", TileType.Wall);
-            case '@':
-                //return new WallTile(new Point(x, y), "Sprites/Tiles/spr_wall_sheet_test_1@5x4");
-                return new WallTile(new Point(x, y), "Sprites/Tiles/spr_brick_wall_sheet_1@4x4");
-            case '%':
-                return new WallTile(new Point(x, y), "Sprites/Tiles/spr_wood_wall_sheet_0@5");
-            case '+':
-                return LoadTree(x, y);
-            case 'i':
-                return LoadItem(x, y);
-            case '1':
-                return LoadPlayer(x, y);
-            case 'r':
-                return new Tile(new Point(x, y));
-            default:
-                return new Tile(new Point(x, y));
-
+            case "Floor":
+                tp = TileType.Floor;
+                break;
+            case "Background":
+                tp = TileType.Background;
+                break;
+            case "Wall":
+                tp = TileType.Wall;
+                break;
         }
-    }
 
-    public Tile LoadTree(int x, int y)
-    {
-        int type = GameEnvironment.Random.Next(0, 5);
-        return new Tile(new Point(x, y), "Sprites/Tiles/Trees/spr_tree_" + type, TileType.Wall);
-        //return new Tile(new Point(x, y), "Sprites/Tiles/spr_tree_itest_1", TileType.Wall);
+        switch (type[2])
+        {
+            case "None":
+                tt = TextureType.None;
+                break;
+            case "Grass":
+                tt = TextureType.Grass;
+                break;
+            case "Water":
+                tt = TextureType.Water;
+                break;
+        }
+
+        switch (type[3])
+        {
+            case "Tile":
+                return new Tile(new Point(x, y), asset, tp, tt);
+            case "WallTile":
+                return new WallTile(new Point(x, y), asset, tp, tt);
+            case "TreeTile":
+                return new TreeTile(new Point(x, y), asset, tp, tt);
+        }
+
+        return new Tile(new Point(x, y));
     }
 
     public Tile LoadPlayer(int x, int y)

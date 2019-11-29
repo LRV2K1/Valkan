@@ -11,10 +11,14 @@ class WallTile : Tile
     public WallTile(Point grid, string assetname = "", TileType tp = TileType.Wall, TextureType tt = TextureType.None, int layer = 0, string id = "")
         : base(grid, assetname, tp, tt, layer, id)
     {
-
+        tileobject = TileObject.WallTile;
     }
 
-    
+    public override void InitializeTile()
+    {
+        base.InitializeTile();
+        origin.Y -= 1;
+    }
     public override void SetSprite()
     {
         if (sprite.NumberSheetElements < 16)

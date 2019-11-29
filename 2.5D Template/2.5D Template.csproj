@@ -53,7 +53,9 @@
     <Compile Include="GameObjects\Item.cs" />
     <Compile Include="GameObjects\LevelGrid.cs" />
     <Compile Include="GameObjects\Mouse.cs" />
+    <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
+    <Compile Include="Level\LevelIO.cs" />
     <Compile Include="Menu\Button.cs" />
     <Compile Include="Overlays\Hud.cs" />
     <Compile Include="Overlays\Inventory.cs" />

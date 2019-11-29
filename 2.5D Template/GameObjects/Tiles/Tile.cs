@@ -21,11 +21,19 @@ enum TextureType
     Water,
 }
 
+enum TileObject
+{
+    Tile,
+    WallTile,
+    TreeTile
+}
+
 class Tile : SpriteGameObject
 {
 
     protected TileType type;
     protected TextureType texturetype;
+    protected TileObject tileobject;
     protected Rectangle boundingbox;
     protected List<string> passengers;
     protected Point grid;
@@ -33,6 +41,7 @@ class Tile : SpriteGameObject
     public Tile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.None, int layer = 0, string id = "")
         : base (assetname, layer, id, 0)
     {
+        tileobject = TileObject.Tile;
         this.grid = grid;
         texturetype = tt;
         type = tp;
@@ -110,7 +119,7 @@ class Tile : SpriteGameObject
         get { return texturetype; }
     }
 
-    public void InitializeTile()
+    public virtual void InitializeTile()
     {
         if (type == TileType.Background)
         {
