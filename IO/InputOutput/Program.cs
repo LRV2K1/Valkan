@@ -37,8 +37,8 @@ class IO
         int newRange;
         int newSpeed;
         newName = "Valkan";
-        newHP = 10;
-        newStrength = 1;
+        newHP = 100;
+        newStrength = 15;
         newRange = 5;
         newSpeed = 7;
         string[] lines;
