@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 class IO
 {
-    public static string FilePath = @"\Users\leung\Documents\GitHub\Valkan\IO\InputOutput\PlayerStats\Stats.txt";   
+    public static string FilePath = "..\\Debug\\PlayerStats\\Stats.txt";   
     static void Main(string[] args)
     {
         ChangeStats();
@@ -26,6 +26,7 @@ class IO
         {
             Console.WriteLine(lines[i]);
         }
+        streamReader.Close();
     }
 
     static void ChangeStats()
@@ -36,12 +37,11 @@ class IO
         int newRange;
         int newSpeed;
         newName = "Valkan";
-        newHP = 10;
-        newStrength = 1;
+        newHP = 100;
+        newStrength = 15;
         newRange = 5;
-        newSpeed = 7;
+        newSpeed = 8;
         string[] lines;
-        List<string> list = new List<string>();
         lines = new string[5];
         StreamWriter writer = new StreamWriter(FilePath);
 
