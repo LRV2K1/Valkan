@@ -18,5 +18,14 @@ class TreeTile : Tile
     {
         tileobject = TileObject.TreeTile;
     }
+
+    public override void InitializeTile()
+    {
+        base.InitializeTile();
+        if (boundingbox == Rectangle.Empty && TileType == TileType.Wall)
+        {
+            boundingbox = new Rectangle((int)(GlobalPosition.X - levelGrid.CellWidth / 2), (int)(GlobalPosition.Y - levelGrid.CellHeight / 2), levelGrid.CellWidth, levelGrid.CellHeight);
+        }
+    }
 }
 
