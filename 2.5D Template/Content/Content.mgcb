@@ -53,6 +53,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Items/spr_barrel_boundingbox.png
 
+#begin Sprites/Items/spr_bones.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Items/spr_bones.png
+
 #begin Sprites/Items/spr_bucket.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -64,6 +76,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Items/spr_bucket.png
+
+#begin Sprites/Items/spr_campfire@1x4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Items/spr_campfire@1x4.png
 
 #begin Sprites/Items/spr_potion.png
 /importer:TextureImporter
