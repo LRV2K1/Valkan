@@ -25,20 +25,43 @@ class GameMouse : SpriteGameObject
     public string CeckEntitySelected()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-        Vector2 gridpos = levelGrid.GridPosition(mousePos + new Vector2(0, levelGrid.CellHeight / 2));
-        Point GridPos = new Point((int)gridpos.X, (int)gridpos.Y);
-        Tile tile = levelGrid.Get(GridPos.X + 1, GridPos.Y + 1) as Tile;
-        if (tile != null)
+        Vector2 vpos = levelGrid.GridPosition(mousePos + new Vector2(0, levelGrid.CellHeight / 2));
+        Point gridpos = new Point((int)vpos.X + 1, (int)vpos.Y + 1);
+
+        string entity = "";
+        float closedistance = 100f;
+
+        for (int x = gridpos.X - 1; x <= gridpos.X + 1; x++)
         {
-            for (int i = 0; i < tile.Passengers.Count; i++)
+            for (int y = gridpos.Y -1; y <= gridpos.Y + 1; y++)
             {
-                if (GameWorld.GetObject(tile.Passengers[i]) is Item)
+                Tile tile = levelGrid.Get(x, y) as Tile;
+                if (tile == null)
                 {
-                    return tile.Passengers[0];
+                    continue;
+                }
+                for (int i = 0; i < tile.Passengers.Count; i++)
+                {
+                    Item item = GameWorld.GetObject(tile.Passengers[i]) as Item;
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    if (item.OnSprite(mousePos))
+                    {
+                        float xd = mousePos.X - item.GlobalPosition.X;
+                        float yd = mousePos.Y - item.GlobalPosition.Y;
+                        float distance = (float)Math.Sqrt(xd*xd+yd*yd);
+                        if (distance < closedistance)
+                        {
+                            entity = item.Id;
+                            closedistance = distance;
+                        }
+                    }
                 }
             }
         }
-        return "";
+        return entity;
     }
 
     public Vector2 MousePos
@@ -46,4 +69,3 @@ class GameMouse : SpriteGameObject
         get { return mousePos; }
     }
 }
-

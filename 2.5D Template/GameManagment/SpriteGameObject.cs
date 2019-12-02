@@ -124,5 +124,12 @@ public class SpriteGameObject : GameObject
         }
         return false;
     }
+
+    public bool OnSprite(Vector2 pos)
+    {
+        int left = (int)(GlobalPosition.X - origin.X);
+        int top = (int)(GlobalPosition.Y - origin.Y);
+        return new Rectangle(left, top, Width, Height).Contains(new Point((int)pos.X, (int)pos.Y));
+    }
 }
 
