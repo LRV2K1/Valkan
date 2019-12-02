@@ -17,7 +17,7 @@ partial class Entity : AnimatedGameObject
     private void HandleCollisions()
     {
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
-        Vector2 gridPos = tiles.GridPosition(position);
+        Vector2 gridPos = tiles.GridPosition(position + new Vector2(0, tiles.CellWidth / 2));
         for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {
             for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
