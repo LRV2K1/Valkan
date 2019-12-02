@@ -10,17 +10,17 @@ using Microsoft.Xna.Framework.Graphics;
 partial class Entity : AnimatedGameObject
 {
     protected Vector2 gridPos;
-    protected Texture2D boundingbox;
+    int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
 
-    public Entity(string boundingbox, int weight = 10, int layer = 0, string id = "")
+    public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         host = "";
         this.weight = weight;
-        this.boundingbox = GameEnvironment.AssetManager.GetSprite(boundingbox);
+        this.boundingy = boundingy;
         previousPos = position;
     }
 
@@ -66,9 +66,9 @@ partial class Entity : AnimatedGameObject
     {
         get
         {
-            int left = (int)(GlobalPosition.X - boundingbox.Width / 2);
-            int top = (int)(GlobalPosition.Y - boundingbox.Height / 2);
-            return new Rectangle(left, top, boundingbox.Width, boundingbox.Height);
+            int left = (int)(GlobalPosition.X - boundingy);
+            int top = (int)(GlobalPosition.Y - boundingy/2);
+            return new Rectangle(left, top, boundingy*2, boundingy);
         }
     }
 

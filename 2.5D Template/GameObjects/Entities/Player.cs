@@ -18,7 +18,7 @@ class Player : Entity
     bool wait;
 
     public Player()
-        : base("Sprites/Player/spr_boundingbox", 20, 2, "player")
+        : base(30, 20, 2, "player")
     {
         maxhealth = 10;
         maxstamina = 10;

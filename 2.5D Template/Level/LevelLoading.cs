@@ -38,7 +38,7 @@ partial class Level : GameObjectLibrary
         overlayManager.SwitchTo("hud");
     }
 
-    public void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
+    private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
         LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
         RootList.Add(level);
@@ -53,21 +53,13 @@ partial class Level : GameObjectLibrary
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                Tile t;
-                if (textlines[y][x] == '1')
-                {
-                    t = LoadPlayer(x, y);
-                }
-                else
-                {
-                    t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
-                }
+                Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
                 level.Add(t, x, y);
             }
         }
     }
 
-    public Tile LoadTile(int x, int y, string tiletype)
+    private Tile LoadTile(int x, int y, string tiletype)
     {
         string[] type = tiletype.Split(',');
         string asset = type[0];
@@ -113,26 +105,54 @@ partial class Level : GameObjectLibrary
         return new Tile(new Point(x, y));
     }
 
-    public Tile LoadPlayer(int x, int y)
+    private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < textlines.Count; y++)
+            {
+                LoadEntity(x, y, entitytypechar[textlines[y][x]]);
+            }
+        }
+    }
+
+    private void LoadEntity(int x, int y, string entitytype)
+    {
+        string[] type = entitytype.Split(',');
+        if (type[0] == "None")
+        {
+            return;
+        }
+
+        string asset = type[0];
+        int boundingy = int.Parse(type[1]);
+        switch (type[2])
+        {
+            case "Item":
+                LoadItem(x, y, asset, boundingy);
+                break;
+            case "Player":
+                LoadPlayer(x, y);
+                break;
+        }
+    }
+
+    public void LoadPlayer(int x, int y)
     {
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
         player.MovePositionOnGrid(x, y);
-        //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
-        return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
     }
 
-    public Tile LoadItem(int x, int y)
+    public void LoadItem(int x, int y, string asset, int boundingy)
     {
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
-        Item item = new Item();
+        Item item = new Item(asset, boundingy);
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
         item.MovePositionOnGrid(x, y);
-        //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
-        return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
     }
 }
