@@ -140,7 +140,7 @@ class LevelGrid : GameObjectGrid
 
     public Vector2 GridPosition(Vector2 pos)
     {
-        return new Vector2(pos.X/cellWidth + pos.Y/cellHeight, -pos.X/CellWidth + pos.Y/cellHeight);
+        return new Vector2(pos.X / cellWidth + pos.Y / cellHeight, -pos.X / CellWidth + pos.Y / cellHeight);
     }
 
     public Vector2 DrawGridPosition(Vector2 pos)

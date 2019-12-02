@@ -97,18 +97,24 @@ class Player : Entity
         if (inputHelper.MouseLeftButtonPressed() && !wait)
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
-            if (selected)
+            string entity = mouse.CeckEntitySelected();
+            if (entity != "")
             {
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                icon.Position = mouse.MousePos;
-            }
-            else
-            {
-                Selected icon = new Selected(1, "selected");
-                icon.Position = mouse.MousePos;
-                Level level = GameWorld as Level;
-                level.RootList.Add(icon);
-                selected = true;
+                if (selected)
+                {
+                    Selected icon = GameWorld.GetObject("selected") as Selected;
+                    icon.SelectedEntity = entity;
+                    //icon.Position = mouse.MousePos;
+                }
+                else
+                {
+                    Selected icon = new Selected(1, "selected");
+                    //icon.Position = mouse.MousePos;
+                    Level level = GameWorld as Level;
+                    level.RootList.Add(icon);
+                    icon.SelectedEntity = entity;
+                    selected = true;
+                }
             }
         }
 
