@@ -134,10 +134,13 @@ partial class Level : GameObjectLibrary
             case "Player":
                 LoadPlayer(x, y);
                 break;
+            case "Enemy":
+                LoadEnemy(x, y, asset, boundingy);
+                break;
         }
     }
 
-    public void LoadPlayer(int x, int y)
+    private void LoadPlayer(int x, int y)
     {
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
@@ -146,7 +149,7 @@ partial class Level : GameObjectLibrary
         player.MovePositionOnGrid(x, y);
     }
 
-    public void LoadItem(int x, int y, string asset, int boundingy)
+    private void LoadItem(int x, int y, string asset, int boundingy)
     {
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Item item = new Item(asset, boundingy);
@@ -154,5 +157,10 @@ partial class Level : GameObjectLibrary
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
         item.MovePositionOnGrid(x, y);
+    }
+
+    private void LoadEnemy(int x, int y, string asset, int boundingy)
+    {
+
     }
 }
