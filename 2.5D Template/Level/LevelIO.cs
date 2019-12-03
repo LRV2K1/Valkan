@@ -24,7 +24,7 @@ partial class Level : GameObjectLibrary
 
         line = streamReader.ReadLine();
         int width = line.Length;
-        while (line != "")
+        while (line != "" && line != null)
         {
             textLines.Add(line);
             line = streamReader.ReadLine();
@@ -32,11 +32,17 @@ partial class Level : GameObjectLibrary
 
         LoadTiles(textLines, width, tiletypeschar);
 
+        if (line == null)
+        {
+            streamReader.Close();
+            return;
+        }
+
         Dictionary<char, string> entitytypeschar = new Dictionary<char, string>();
         List<string> entityLines = new List<string>();
 
         line = streamReader.ReadLine();
-        while (line != "")
+        while (line != "" && line != null)
         {
             string[] types = line.Split(':');
             char[] a = types[0].ToCharArray();
@@ -46,7 +52,7 @@ partial class Level : GameObjectLibrary
 
         line = streamReader.ReadLine();
         width = line.Length;
-        while (line != null)
+        while (line != "" && line != null)
         {
             entityLines.Add(line);
             line = streamReader.ReadLine();

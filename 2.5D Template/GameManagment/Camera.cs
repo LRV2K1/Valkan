@@ -26,6 +26,10 @@ class Camera : GameObject
     public override void Update(GameTime gameTime)
     {
         GameObject folowObj = GameWorld.GetObject(objid);
+        if (folowObj == null)
+        {
+            return;
+        }
 
         if (!first)
         {
