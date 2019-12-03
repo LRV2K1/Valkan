@@ -15,7 +15,6 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    bool wait;
 
     public Player()
         : base("Sprites/Player/spr_boundingbox", 20, 2, "player")
@@ -24,7 +23,6 @@ class Player : Entity
         maxstamina = 10;
         health = maxhealth;
         stamina = maxstamina;
-        wait = true;
 
         direction = 0;
 
@@ -42,16 +40,14 @@ class Player : Entity
     
     public override void HandleInput(InputHelper inputHelper)
     {
-        
+        //player movement
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if(!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
-            wait = true;
             return;
         }
         
-
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
@@ -94,7 +90,8 @@ class Player : Entity
             velocity = Vector2.Zero;
         }
 
-        if (inputHelper.KeyPressed(Keys.Z) && !wait)
+        //entity selection
+        if (inputHelper.KeyPressed(Keys.Z))
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
             string entity = mouse.CeckEntitySelected();
@@ -104,12 +101,10 @@ class Player : Entity
                 {
                     Selected icon = GameWorld.GetObject("selected") as Selected;
                     icon.SelectedEntity = entity;
-                    //icon.Position = mouse.MousePos;
                 }
                 else
                 {
                     Selected icon = new Selected(1, "selected");
-                    //icon.Position = mouse.MousePos;
                     Level level = GameWorld as Level;
                     level.RootList.Add(icon);
                     icon.SelectedEntity = entity;
@@ -123,36 +118,6 @@ class Player : Entity
                 level.RootList.Remove(icon.Id);
                 selected = false;
             }
-        }
-
-        if (inputHelper.MouseLeftButtonPressed())
-        {
-            if (selected)
-            {
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
-                entity.RemoveSelf();
-                Level level = GameWorld as Level;
-                level.RootList.Remove(icon.Id);
-                selected = false;
-            }
-        }
-
-        wait = false;
-
-        //test
-        if (inputHelper.ScrolDown())
-        {
-            Stamina--;
-        }
-        else if (inputHelper.ScrolUp())
-        {
-            Stamina++;
-        }
-
-        if (inputHelper.ScrolPressed())
-        {
-            MaxStamina= 1;
         }
     }
 
