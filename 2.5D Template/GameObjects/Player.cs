@@ -94,7 +94,7 @@ class Player : Entity
             velocity = Vector2.Zero;
         }
 
-        if (inputHelper.MouseLeftButtonPressed() && !wait)
+        if (inputHelper.KeyPressed(Keys.Z) && !wait)
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
             string entity = mouse.CeckEntitySelected();
@@ -116,11 +116,7 @@ class Player : Entity
                     selected = true;
                 }
             }
-        }
-
-        if (inputHelper.MouseRightButtonPressed())
-        {
-            if (selected)
+            else if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;
                 Level level = GameWorld as Level;
@@ -128,6 +124,20 @@ class Player : Entity
                 selected = false;
             }
         }
+
+        if (inputHelper.MouseLeftButtonPressed())
+        {
+            if (selected)
+            {
+                Selected icon = GameWorld.GetObject("selected") as Selected;
+                Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
+                entity.RemoveSelf();
+                Level level = GameWorld as Level;
+                level.RootList.Remove(icon.Id);
+                selected = false;
+            }
+        }
+
         wait = false;
 
         //test
