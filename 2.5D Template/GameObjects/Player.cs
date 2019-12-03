@@ -15,6 +15,9 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
+    protected SkillTimer skill1;
+    protected SkillTimer skill2;
+    protected SkillTimer skill3;
 
     public Player()
         : base("Sprites/Player/spr_boundingbox", 20, 2, "player")
@@ -119,6 +122,23 @@ class Player : Entity
                 selected = false;
             }
         }
+
+        //combat test
+        if (inputHelper.IsKeyDown(Keys.LeftShift))
+        {
+            if (inputHelper.MouseLeftButtonPressed() && skill3.Ready)
+            {
+                skill3.Ready = false;
+            }
+        }
+        else if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
+        {
+            skill1.Ready = false;
+        }
+        if (inputHelper.MouseRightButtonPressed() && skill2.Ready)
+        {
+            skill2.Ready = false;
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -147,6 +167,25 @@ class Player : Entity
         }
 
         base.Update(gameTime);
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
+        Overlay hud = overlay.GetOverlay("hud") as Overlay;
+
+        skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");
+        skill1.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        hud.Add(skill1);
+        skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_1");
+        skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill2.WaitTime = 1f;
+        hud.Add(skill2);
+        skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_3");
+        skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill3.WaitTime = 3f;
+        hud.Add(skill3);
     }
 
     public override void PlayAnimation(string id)
