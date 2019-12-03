@@ -44,22 +44,16 @@ class SkillTimer : SpriteGameObject
         overlay.Draw(gameTime, spriteBatch);
     }
 
+    public void Use(float timer)
+    {
+        waittime = timer;
+        this.timer = timer;
+        ready = false;
+    }
+
     public bool Ready
     {
         get { return ready; }
-        set { 
-            ready = value;
-            if (!ready)
-            {
-                timer = waittime;
-            }
-        }
-    }
-
-    public float WaitTime
-    {
-        get { return waittime; }
-        set { waittime = value; }
     }
 }
 

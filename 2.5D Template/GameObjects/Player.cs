@@ -126,18 +126,22 @@ class Player : Entity
         //combat test
         if (inputHelper.IsKeyDown(Keys.LeftShift))
         {
-            if (inputHelper.MouseLeftButtonPressed() && skill3.Ready)
+            if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
             {
-                skill3.Ready = false;
+                skill1.Use(3f);
+                if (selected)
+                {
+                    RemoveSelectedEntity();
+                }
             }
         }
         else if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
         {
-            skill1.Ready = false;
+            skill1.Use(2f);
         }
         if (inputHelper.MouseRightButtonPressed() && skill2.Ready)
         {
-            skill2.Ready = false;
+            skill2.Use(1f);
         }
     }
 
@@ -180,11 +184,9 @@ class Player : Entity
         hud.Add(skill1);
         skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_1");
         skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        skill2.WaitTime = 1f;
         hud.Add(skill2);
         skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_3");
         skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        skill3.WaitTime = 3f;
         hud.Add(skill3);
     }
 
@@ -192,6 +194,15 @@ class Player : Entity
     {
         base.PlayAnimation(id);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+    }
+
+    private void RemoveSelectedEntity()
+    {
+        Selected icon = GameWorld.GetObject("selected") as Selected;
+        GameWorld.GetObject(icon.SelectedEntity).RemoveSelf();
+        Level level = GameWorld as Level;
+        level.RootList.Remove(icon.Id);
+        selected = false;
     }
 
     public int Health
