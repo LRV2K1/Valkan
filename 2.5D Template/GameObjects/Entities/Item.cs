@@ -9,10 +9,10 @@ using Microsoft.Xna.Framework.Input;
 class Item : Entity
 {
 
-    public Item(string assetname = "Sprites/Items/spr_barrel_boundingbox", int weight = 10, int layer = -1, string id = "")
-        : base (assetname, weight, layer, id)
+    public Item(string asset = "Sprites/Items/spr_test_1", int boundingy = 0, int weight = 10, int layer = -1, string id = "")
+        : base (boundingy, weight, layer, id)
     {
-        LoadAnimation("Sprites/Items/spr_barrel", "sprite", false);
+        LoadAnimation(asset, "sprite", true,  0.2f);
         PlayAnimation("sprite");
 
         origin = new Vector2(Width / 2, Height - BoundingBox.Height / 2);

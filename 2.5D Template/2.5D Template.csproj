@@ -48,9 +48,9 @@
     <Compile Include="GameManagment\Collision.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
-    <Compile Include="GameObjects\Entity.cs" />
-    <Compile Include="GameObjects\EntityPhysics.cs" />
-    <Compile Include="GameObjects\Item.cs" />
+    <Compile Include="GameObjects\Entities\Entity.cs" />
+    <Compile Include="GameObjects\Entities\EntityPhysics.cs" />
+    <Compile Include="GameObjects\Entities\Item.cs" />
     <Compile Include="GameObjects\LevelGrid.cs" />
     <Compile Include="GameObjects\Mouse.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="Overlays\Overlay.cs" />
     <Compile Include="Overlays\Objects\Tube.cs" />
     <Compile Include="Overlays\OverlayManager.cs" />
-    <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Entities\Player.cs" />
     <Compile Include="GameObjects\Selected.cs" />
     <Compile Include="GameObjects\Tiles\Tile.cs" />
     <Compile Include="GameStart.cs" />
