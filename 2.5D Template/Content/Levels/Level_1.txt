@@ -52,7 +52,7 @@ aaaaaaaaaaadaaaaadaaaaaaffaaaaaaaeaaaaaa
 aaaaaaaaaaaanaaaaaaaajaaaffaacaaaaaaaaaa
 aaaaaaiaaaaaaaaaaaaaaaaaafffaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
 
 a:None
 b:Sprites/Items/spr_bucket,20,Item
