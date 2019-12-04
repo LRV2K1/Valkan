@@ -773,3 +773,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/Trees/spr_tree_4.png
 
+#begin PlayerStats/Stats.txt
+/copy:PlayerStats/Stats.txt
+

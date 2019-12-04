@@ -16,7 +16,7 @@ partial class Level : GameObjectLibrary
         GameObjectList items = new GameObjectList(1, "items");
         entities.Add(items);
 
-        Camera camera = new Camera("player",0, "camera");
+        Camera camera = new Camera("player", 0, "camera");
         RootList.Add(camera);
 
         GameMouse mouse = new GameMouse();
@@ -27,7 +27,7 @@ partial class Level : GameObjectLibrary
 
         string line = streamReader.ReadLine();
         int width = line.Length;
-        while(line != null)
+        while (line != null)
         {
             textLines.Add(line);
             line = streamReader.ReadLine();
@@ -57,7 +57,7 @@ partial class Level : GameObjectLibrary
         level.CellHeight = 54;
 
         Camera camera = GetObject("camera") as Camera;
-        camera.Width = (width) * level.CellWidth/2;
+        camera.Width = (width) * level.CellWidth / 2;
         camera.Height = (textlines.Count) * level.CellHeight;
 
         for (int x = 0; x < width; x++)
@@ -76,8 +76,8 @@ partial class Level : GameObjectLibrary
         {
             case '.':
                 return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
-                //return new Tile(new Point(x,y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
-                //return new Tile(new Point(x, y));
+            //return new Tile(new Point(x,y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
+            //return new Tile(new Point(x, y));
             case 'w':
                 //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_itest_2", TileType.Wall, TextureType.Water);
                 return new Tile(new Point(x, y), "Sprites/Tiles/spr_water_0", TileType.Wall, TextureType.Water);
@@ -111,6 +111,7 @@ partial class Level : GameObjectLibrary
 
     public Tile LoadPlayer(int x, int y)
     {
+        ReadStats();
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
@@ -130,5 +131,25 @@ partial class Level : GameObjectLibrary
         item.MovePositionOnGrid(x, y);
         //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
         return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
+    }
+
+    static void ReadStats()
+    {
+        System.Diagnostics.Debug.WriteLine("1");
+        string statspath = "Content/PlayerStats/Stats.txt";
+        StreamReader streamReader = new StreamReader(statspath);
+        List<string> lines = new List<string>();
+        string line = streamReader.ReadLine();
+        while (line != null)
+        {
+            lines.Add(line);
+            line = streamReader.ReadLine();
+            System.Diagnostics.Debug.WriteLine("3");
+        }
+        for (int i = 0; i < lines.Count; i++)
+        {
+            System.Diagnostics.Debug.WriteLine("2");
+        }
+        streamReader.Close();
     }
 }

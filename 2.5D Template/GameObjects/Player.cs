@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 class Player : Entity
 {
-    
+
     const float speed = 400;
     protected double direction;
     protected bool selected;
@@ -39,18 +40,18 @@ class Player : Entity
         LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
         PlayAnimation("idle_1");
     }
-    
+
     public override void HandleInput(InputHelper inputHelper)
     {
-        
+
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        if(!(overlay.CurrentOverlay is Hud))
+        if (!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
             wait = true;
             return;
         }
-        
+
 
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
@@ -86,7 +87,7 @@ class Player : Entity
                 {
                     velocity.Y = 0;
                 }
-                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence , velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
+                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence, velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
             }
         }
         else
@@ -136,7 +137,7 @@ class Player : Entity
 
         if (inputHelper.ScrolPressed())
         {
-            MaxStamina= 1;
+            MaxStamina = 1;
         }
     }
 
@@ -153,7 +154,7 @@ class Player : Entity
 
         if (velocity != Vector2.Zero)
         {
-            int dir = (int)((direction + (Math.PI/8)) / (Math.PI/4));
+            int dir = (int)((direction + (Math.PI / 8)) / (Math.PI / 4));
             if (dir > 7)
             {
                 dir = 0;
@@ -172,6 +173,24 @@ class Player : Entity
     {
         base.PlayAnimation(id);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+    }
+
+    public void LevelUp()
+    {
+        //PlayerLevel++;
+        maxhealth = maxhealth + 1;
+        maxstamina = maxstamina + 1;
+        string statpath = "Content/PlayerStats/Stats.txt";
+        string[] lines;
+        lines = new string[5];
+        StreamWriter writer = new StreamWriter(statpath);
+        lines[0] = maxhealth.ToString();
+        lines[1] = maxstamina.ToString();
+        for (int i = 0; i < lines.Length; i++)
+        {
+            writer.WriteLine(lines[i]);
+        }
+        writer.Close();
     }
 
     public int Health
