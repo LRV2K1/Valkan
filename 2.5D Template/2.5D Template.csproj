@@ -44,6 +44,7 @@
     <Compile Include="GameManagment\AnimatedGameObject.cs" />
     <Compile Include="GameManagment\Animation.cs" />
     <Compile Include="GameManagment\AssetManager.cs" />
+    <Compile Include="GameManagment\Box.cs" />
     <Compile Include="GameManagment\Camera.cs" />
     <Compile Include="GameManagment\Collision.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
