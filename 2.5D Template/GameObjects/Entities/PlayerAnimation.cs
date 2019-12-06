@@ -38,7 +38,7 @@ partial class Player : Entity
         {
             int dir = (int)((direction + (Math.PI / 8)) / (Math.PI / 4));
             if (dir > 7)
-            {
+            { 
                 dir = 0;
             }
             PlayAnimation("walking_" + dir);
