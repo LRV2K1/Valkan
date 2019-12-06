@@ -16,6 +16,7 @@ partial class Player : Entity
     protected int health, stamina;
     protected int maxhealth, maxstamina;
     protected Skill skill1;
+    protected Block skill2;
 
     public Player()
         : base(30, 20, 2, "player")
@@ -30,12 +31,16 @@ partial class Player : Entity
         LoadAnimations();
         skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
+        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
     public void SetupPlayer()
     {
         skill1.Parent = this;
         skill1.Setup();
+        skill2.Parent = this;
+        skill2.Setup();
     }
     
     public override void HandleInput(InputHelper inputHelper)
@@ -104,65 +109,5 @@ partial class Player : Entity
         ChangeAnimation();
 
         base.Update(gameTime);
-    }
-
-    //variabelen
-    public int Health
-    {
-        get { return health; }
-        set
-        {
-            health = value;
-            if (health > maxhealth)
-            {
-                health = maxhealth;
-            }
-            else if (health < 0)
-            {
-                health = 0;
-            }
-        }
-    }
-
-    public int Stamina
-    {
-        get { return stamina; }
-        set
-        {
-            stamina = value;
-            if (stamina > maxstamina)
-            {
-                stamina = maxstamina;
-            }
-            else if (stamina < 0)
-            {
-                stamina = 0;
-            }
-        }
-    }
-
-    public int MaxHealth
-    {
-        get { return maxhealth; }
-        set
-        {
-            maxhealth = value;
-            Health = health;
-        }
-    }
-
-    public int MaxStamina
-    {
-        get { return maxstamina; }
-        set
-        {
-            maxstamina = value;
-            Stamina = stamina;
-        }
-    }
-
-    public bool Selected
-    {
-        get { return selected; }
     }
 }
