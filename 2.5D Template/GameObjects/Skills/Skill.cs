@@ -12,18 +12,20 @@ class Skill : GameObject
 {
 
     protected SkillTimer timer;
-    protected Keys button;
+    protected Keys key;
+    protected MouseButton button;
 
-    public Skill(string assetname, Keys button)
+    public Skill(string assetname, MouseButton button = MouseButton.None, Keys key = Keys.None)
         : base()
     {
         timer = new SkillTimer(assetname);
+        this.key = key;
         this.button = button;
     }
 
     public void Setup()
     {
-        RootList.Add(this);
+        GameWorld.Add(this);
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         Overlay hud = overlay.GetOverlay("hud") as Overlay;
 
@@ -33,15 +35,32 @@ class Skill : GameObject
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(button) && timer.Ready)
+        if (button != MouseButton.None && key != Keys.None)
         {
-            Use();
+            if (inputHelper.MouseButtonPressed(button) && inputHelper.IsKeyDown(key) && timer.Ready)
+            {
+                Use();
+            }
+        }
+        else if (button != MouseButton.None)
+        {
+            if (inputHelper.MouseButtonPressed(button) && timer.Ready)
+            {
+                Use();
+            }
+        }
+        else if (key != Keys.None)
+        {
+            if (inputHelper.IsKeyDown(key) && timer.Ready)
+            {
+                Use();
+            }
         }
     }
 
-    public void Use()
+    public virtual void Use(float timer = 2f)
     {
-        timer.Use(2f);
+        this.timer.Use(timer);
     }
 
     public SkillTimer Timer

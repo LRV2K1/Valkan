@@ -15,7 +15,7 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected Skill skill1, skill2, skill3;
+    protected Skill skill1;
 
     public Player()
         : base(30, 20, 2, "player")
@@ -38,28 +38,14 @@ class Player : Entity
         LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
         PlayAnimation("idle_1");
 
-        skill1 = new Skill("Sprites/Menu/Skills/spr_skill_0", Keys.E);
+        skill1 = new PrimairySkill("Sprites/Menu/Skills/spr_skill_0");
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        /*
-        skill2 = new Skill("Sprites/Menu/Skills/spr_skill_1");
-        skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        skill3 = new Skill("Sprites/Menu/Skills/spr_skill_3");
-        skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        */
     }
 
     public void SetupPlayer()
     {
         skill1.Parent = this;
         skill1.Setup();
-        /*
-        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        Overlay hud = overlay.GetOverlay("hud") as Overlay;
-
-        hud.Add(skill1);
-        hud.Add(skill2);
-        hud.Add(skill3);
-        */
     }
     
     public override void HandleInput(InputHelper inputHelper)
@@ -146,47 +132,6 @@ class Player : Entity
 
         //combat test
         skill1.HandleInput(inputHelper);
-        /*
-        if (inputHelper.IsKeyDown(Keys.LeftShift))
-        {
-            if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
-            {
-                skill1.Use(3f);
-                if (selected)
-                {
-                    //distance
-                    Selected icon = GameWorld.GetObject("selected") as Selected;
-                    Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
-                    float dx = entity.GlobalPosition.X - GlobalPosition.X;
-                    float dy = entity.GlobalPosition.Y - GlobalPosition.Y;
-                    if (Math.Sqrt(dx * dx + dy * dy) < 150)
-                    {
-                        RemoveSelectedEntity();
-                    }
-                }
-            }
-        }
-        else if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
-        {
-            skill1.Use(2f);
-            if (selected)
-            {
-                //distance
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
-                float dx = entity.GlobalPosition.X - GlobalPosition.X;
-                float dy = entity.GlobalPosition.Y - GlobalPosition.Y;
-                if (Math.Sqrt(dx * dx + dy * dy) < 100)
-                {
-                    RemoveSelectedEntity();
-                }
-            }
-        }
-        if (inputHelper.MouseRightButtonPressed() && skill2.Ready)
-        {
-            skill2.Use(1f);
-        }
-        */
     }
 
     public override void Update(GameTime gameTime)

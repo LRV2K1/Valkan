@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-enum MouseButton
+public enum MouseButton
 {
-    left,
-    right
+    Left,
+    Right,
+    Middel,
+    None
 }
 
 public class InputHelper
@@ -44,24 +46,38 @@ public class InputHelper
         get { return (new Vector2(currentMouseState.X, currentMouseState.Y) - offset ) / scale; }
     }
 
-    public bool MouseLeftButtonPressed()
+    public bool MouseButtonPressed(MouseButton m)
     {
-        return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released;
+        if (m == MouseButton.Left)
+        {
+            return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released;
+        }
+        else if (m == MouseButton.Right)
+        {
+            return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
+        }
+        else if (m == MouseButton.Middel)
+        {
+            return currentMouseState.MiddleButton == ButtonState.Pressed && previousMouseState.MiddleButton == ButtonState.Released;
+        }
+        else return false;
     }
 
-    public bool MouseLeftButtonDown()
+    public bool MouseButtonDown(MouseButton m)
     {
-        return currentMouseState.LeftButton == ButtonState.Pressed;
-    }
-
-    public bool MouseRightButtonPressed()
-    {
-        return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
-    }
-
-    public bool MouseRightButtonDown()
-    {
-        return currentMouseState.RightButton == ButtonState.Pressed;
+        if (m == MouseButton.Left)
+        {
+            return currentMouseState.LeftButton == ButtonState.Pressed;
+        }
+        else if (m == MouseButton.Right)
+        {
+            return currentMouseState.RightButton == ButtonState.Pressed;
+        }
+        else if (m == MouseButton.Middel)
+        {
+            return currentMouseState.MiddleButton == ButtonState.Pressed;
+        }
+        else return false;
     }
 
     public bool ScrolUp()
@@ -72,11 +88,6 @@ public class InputHelper
     public bool ScrolDown()
     {
         return currentMouseState.ScrollWheelValue < previousMouseState.ScrollWheelValue;
-    }
-
-    public bool ScrolPressed()
-    {
-        return currentMouseState.MiddleButton == ButtonState.Pressed && previousMouseState.MiddleButton == ButtonState.Released;
     }
 
     public bool KeyPressed(Keys k)
