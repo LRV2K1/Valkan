@@ -30,7 +30,6 @@ class Skill : GameObject
         Overlay hud = overlay.GetOverlay("hud") as Overlay;
 
         hud.Add(timer);
-
     }
 
     public override void HandleInput(InputHelper inputHelper)

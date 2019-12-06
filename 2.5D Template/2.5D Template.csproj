@@ -57,9 +57,11 @@
     <Compile Include="GameObjects\Mouse.cs" />
     <Compile Include="GameObjects\Skills\Block.cs" />
     <Compile Include="GameObjects\Skills\CloseAttack.cs" />
+    <Compile Include="GameObjects\Skills\Dodge.cs" />
     <Compile Include="GameObjects\Skills\PrimairySkill.cs" />
     <Compile Include="GameObjects\Skills\SecondairySkill.cs" />
     <Compile Include="GameObjects\Skills\Skill.cs" />
+    <Compile Include="GameObjects\Skills\TertairySkill.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />

@@ -7,16 +7,28 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+struct SpeedMultiplier
+{
+    public float multiplier;
+    public float time { get; set; }
+    public SpeedMultiplier(float m, float t)
+    {
+        multiplier = m;
+        time = t;
+    }
+}
+
 partial class Player : Entity
 {
-    
     const float speed = 400;
     protected double direction;
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected Skill skill1;
+    protected Skill skill1, skill3;
     protected Block skill2;
+
+    protected List<SpeedMultiplier> speedMultipliers;
 
     public Player()
         : base(30, 20, 2, "player")
@@ -26,6 +38,8 @@ partial class Player : Entity
         health = maxhealth;
         stamina = maxstamina;
 
+        speedMultipliers = new List<SpeedMultiplier>();
+
         direction = 0;
 
         LoadAnimations();
@@ -33,6 +47,8 @@ partial class Player : Entity
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
         skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
+        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
     public void SetupPlayer()
@@ -41,18 +57,29 @@ partial class Player : Entity
         skill1.Setup();
         skill2.Parent = this;
         skill2.Setup();
+        skill3.Parent = this;
+        skill3.Setup();
     }
     
     public override void HandleInput(InputHelper inputHelper)
     {
-        Move(inputHelper);
+        ControlMove(inputHelper);
 
         EntitySelection(inputHelper);
 
         Skills(inputHelper);
     }
 
-    private void Move(InputHelper inputHelper)
+    public override void Update(GameTime gameTime)
+    {
+        Move(gameTime);
+
+        ChangeAnimation();
+
+        base.Update(gameTime);
+    }
+
+    private void ControlMove(InputHelper inputHelper)
     {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
@@ -104,10 +131,27 @@ partial class Player : Entity
         }
     }
 
-    public override void Update(GameTime gameTime)
+    private void Move(GameTime gameTime)
     {
-        ChangeAnimation();
+        for (int i = speedMultipliers.Count - 1; i >= 0; i--)
+        {
+            SpeedMultiplier s = speedMultipliers[i];
+            velocity *= s.multiplier;
+            s.time -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (s.time < 0)
+            {
+                speedMultipliers.RemoveAt(i);
+            }
+            else
+            {
+                speedMultipliers.RemoveAt(i);
+                speedMultipliers.Add(s);
+            }
+        }
+    }
 
-        base.Update(gameTime);
+    public void AddSpeedMultiplier(float time, float multiplier)
+    {
+        speedMultipliers.Add(new SpeedMultiplier(multiplier, time));
     }
 }

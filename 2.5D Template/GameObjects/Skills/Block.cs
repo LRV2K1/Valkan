@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 class Block : SecondairySkill
 {
     protected bool block;
@@ -32,4 +31,3 @@ class Block : SecondairySkill
         }
     }
 }
-

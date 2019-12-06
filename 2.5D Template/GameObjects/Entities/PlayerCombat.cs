@@ -49,6 +49,7 @@ partial class Player : Entity
         }
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
+        skill3.HandleInput(inputHelper);
     }
 
     public void RemoveSelectedEntity()

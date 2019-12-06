@@ -35,11 +35,4 @@ class PrimairySkill : Skill
             Use(normaltimer);
         }
     }
-
-    public override void Use(float timer = 2)
-    {
-        base.Use(timer);
-    }
-
 }
-

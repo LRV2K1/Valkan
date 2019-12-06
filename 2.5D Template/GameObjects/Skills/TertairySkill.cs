@@ -6,22 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-class SecondairySkill : Skill
+
+class TertairySkill : Skill
 {
-
     protected float time;
-    protected int damage;
-
-    public SecondairySkill(string assetname, float timer = 1f, int damage = 10)
-        : base(assetname, MouseButton.Right)
+    public TertairySkill(string assetname, float time = 1f)
+        : base(assetname, MouseButton.None, Keys.Space)
     {
-        this.time = timer;
-        this.damage = damage;
+        this.time = time;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.MouseButtonDown(button) && timer.Ready)
+        if (inputHelper.KeyPressed(key) && timer.Ready)
         {
             Use(time);
         }
