@@ -11,7 +11,8 @@ class PrimairySkill : Skill
 {
     protected float normaltimer, longtimer;
     protected int normaldamage, longdamage;
-    bool heavy;
+    protected bool heavy;
+
     public PrimairySkill(string assetname, float normaltimer = 1f, float longtimer = 3f, int normaldamage = 10, int longdamage = 30)
         : base(assetname, MouseButton.Left, Keys.LeftShift)
     {
@@ -25,24 +26,20 @@ class PrimairySkill : Skill
     {
         if (inputHelper.MouseButtonDown(button) && inputHelper.IsKeyDown(key) && timer.Ready)
         {
-            Use(longtimer);
             heavy = true;
+            Use(longtimer);
         }
         else if (inputHelper.MouseButtonDown(button) && timer.Ready)
         {
-            Use(normaltimer);
             heavy = false;
+            Use(normaltimer);
         }
     }
 
     public override void Use(float timer = 2)
     {
         base.Use(timer);
-        Attack();
     }
 
-    public virtual void Attack()
-    {
-    }
 }
 

@@ -51,8 +51,11 @@
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\EntityPhysics.cs" />
     <Compile Include="GameObjects\Entities\Item.cs" />
+    <Compile Include="GameObjects\Entities\PlayerAnimation.cs" />
+    <Compile Include="GameObjects\Entities\PlayerCombat.cs" />
     <Compile Include="GameObjects\LevelGrid.cs" />
     <Compile Include="GameObjects\Mouse.cs" />
+    <Compile Include="GameObjects\Skills\CloseAttack.cs" />
     <Compile Include="GameObjects\Skills\PrimairySkill.cs" />
     <Compile Include="GameObjects\Skills\Skill.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />

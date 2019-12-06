@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-class Player : Entity
+partial class Player : Entity
 {
     
     const float speed = 400;
@@ -27,18 +27,8 @@ class Player : Entity
 
         direction = 0;
 
-        LoadAnimation("Sprites/Player/spr_idle_1", "idle_1", true);
-        LoadAnimation("Sprites/Player/spr_walking_1", "walking_0", true);
-        LoadAnimation("Sprites/Player/spr_walking_2", "walking_1", true);
-        LoadAnimation("Sprites/Player/spr_walking_3", "walking_2", true);
-        LoadAnimation("Sprites/Player/spr_walking_4", "walking_3", true);
-        LoadAnimation("Sprites/Player/spr_walking_5", "walking_4", true);
-        LoadAnimation("Sprites/Player/spr_walking_6", "walking_5", true);
-        LoadAnimation("Sprites/Player/spr_walking_7", "walking_6", true);
-        LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
-        PlayAnimation("idle_1");
-
-        skill1 = new PrimairySkill("Sprites/Menu/Skills/spr_skill_0");
+        LoadAnimations();
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
@@ -50,14 +40,22 @@ class Player : Entity
     
     public override void HandleInput(InputHelper inputHelper)
     {
-        //player movement
+        Move(inputHelper);
+
+        EntitySelection(inputHelper);
+
+        Skills(inputHelper);
+    }
+
+    private void Move(InputHelper inputHelper)
+    {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        if(!(overlay.CurrentOverlay is Hud))
+        if (!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
             return;
         }
-        
+
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
@@ -92,91 +90,23 @@ class Player : Entity
                 {
                     velocity.Y = 0;
                 }
-                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence , velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
+                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence, velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
             }
         }
         else
         {
             velocity = Vector2.Zero;
         }
-
-        //entity selection
-        if (inputHelper.KeyPressed(Keys.Z))
-        {
-            GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
-            string entity = mouse.CeckEntitySelected();
-            if (entity != "")
-            {
-                if (selected)
-                {
-                    Selected icon = GameWorld.GetObject("selected") as Selected;
-                    icon.SelectedEntity = entity;
-                }
-                else
-                {
-                    Selected icon = new Selected(1, "selected");
-                    Level level = GameWorld as Level;
-                    level.RootList.Add(icon);
-                    icon.SelectedEntity = entity;
-                    selected = true;
-                }
-            }
-            else if (selected)
-            {
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                Level level = GameWorld as Level;
-                level.RootList.Remove(icon.Id);
-                selected = false;
-            }
-        }
-
-        //combat test
-        skill1.HandleInput(inputHelper);
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (velocity != Vector2.Zero)
-        {
-            direction = Math.Atan2((double)velocity.Y, (double)velocity.X);
-            if (direction < 0)
-            {
-                direction += 2 * Math.PI;
-            }
-        }
-
-        if (velocity != Vector2.Zero)
-        {
-            int dir = (int)((direction + (Math.PI/8)) / (Math.PI/4));
-            if (dir > 7)
-            {
-                dir = 0;
-            }
-            PlayAnimation("walking_" + dir);
-        }
-        else
-        {
-            PlayAnimation("idle_1");
-        }
+        ChangeAnimation();
 
         base.Update(gameTime);
     }
 
-    public override void PlayAnimation(string id)
-    {
-        base.PlayAnimation(id);
-        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
-    }
-
-    private void RemoveSelectedEntity()
-    {
-        Selected icon = GameWorld.GetObject("selected") as Selected;
-        GameWorld.GetObject(icon.SelectedEntity).RemoveSelf();
-        Level level = GameWorld as Level;
-        level.RootList.Remove(icon.Id);
-        selected = false;
-    }
-
+    //variabelen
     public int Health
     {
         get { return health; }
@@ -229,5 +159,10 @@ class Player : Entity
             maxstamina = value;
             Stamina = stamina;
         }
+    }
+
+    public bool Selected
+    {
+        get { return selected; }
     }
 }
