@@ -31,7 +31,7 @@ class PlayingState : IGameLoopObject
             if (level1)
             {
                 level = null;
-                level = new Level("Level_2");
+                level = new Level("Level_3");
             }
             else
             {

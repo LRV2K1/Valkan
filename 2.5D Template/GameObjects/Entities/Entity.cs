@@ -62,6 +62,13 @@ partial class Entity : AnimatedGameObject
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
     }
 
+    public override void RemoveSelf()
+    {
+        Tile host = GameWorld.GetObject(this.host) as Tile;
+        host.RemovePassenger(id);
+        (parent as GameObjectList).Remove(id);
+    }
+
     public override Rectangle BoundingBox
     {
         get

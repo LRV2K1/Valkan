@@ -78,6 +78,7 @@
     <Compile Include="Level\LevelGameLoop.cs" />
     <Compile Include="Level\LevelLoading.cs" />
     <Compile Include="Overlays\OverlayMenu.cs" />
+    <Compile Include="Overlays\Objects\SkillTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameManagment\SpriteGameObject.cs" />
     <Compile Include="GameManagment\SpriteSheet.cs" />

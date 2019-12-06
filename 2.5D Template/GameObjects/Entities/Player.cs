@@ -15,7 +15,7 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    bool wait;
+    protected SkillTimer skill1, skill2, skill3;
 
     public Player()
         : base(30, 20, 2, "player")
@@ -24,7 +24,6 @@ class Player : Entity
         maxstamina = 10;
         health = maxhealth;
         stamina = maxstamina;
-        wait = true;
 
         direction = 0;
 
@@ -38,20 +37,25 @@ class Player : Entity
         LoadAnimation("Sprites/Player/spr_walking_7", "walking_6", true);
         LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
         PlayAnimation("idle_1");
+
+        skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");
+        skill1.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_1");
+        skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_3");
+        skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
     }
     
     public override void HandleInput(InputHelper inputHelper)
     {
-        
+        //player movement
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if(!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
-            wait = true;
             return;
         }
         
-
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
@@ -94,27 +98,28 @@ class Player : Entity
             velocity = Vector2.Zero;
         }
 
-        if (inputHelper.MouseLeftButtonPressed() && !wait)
+        //entity selection
+        if (inputHelper.KeyPressed(Keys.Z))
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
-            if (selected)
+            string entity = mouse.CeckEntitySelected();
+            if (entity != "")
             {
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                icon.Position = mouse.MousePos;
+                if (selected)
+                {
+                    Selected icon = GameWorld.GetObject("selected") as Selected;
+                    icon.SelectedEntity = entity;
+                }
+                else
+                {
+                    Selected icon = new Selected(1, "selected");
+                    Level level = GameWorld as Level;
+                    level.RootList.Add(icon);
+                    icon.SelectedEntity = entity;
+                    selected = true;
+                }
             }
-            else
-            {
-                Selected icon = new Selected(1, "selected");
-                icon.Position = mouse.MousePos;
-                Level level = GameWorld as Level;
-                level.RootList.Add(icon);
-                selected = true;
-            }
-        }
-
-        if (inputHelper.MouseRightButtonPressed())
-        {
-            if (selected)
+            else if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;
                 Level level = GameWorld as Level;
@@ -122,21 +127,46 @@ class Player : Entity
                 selected = false;
             }
         }
-        wait = false;
 
-        //test
-        if (inputHelper.ScrolDown())
+        //combat test
+        if (inputHelper.IsKeyDown(Keys.LeftShift))
         {
-            Stamina--;
+            if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
+            {
+                skill1.Use(3f);
+                if (selected)
+                {
+                    //distance
+                    Selected icon = GameWorld.GetObject("selected") as Selected;
+                    Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
+                    float dx = entity.GlobalPosition.X - GlobalPosition.X;
+                    float dy = entity.GlobalPosition.Y - GlobalPosition.Y;
+                    if (Math.Sqrt(dx * dx + dy * dy) < 150)
+                    {
+                        RemoveSelectedEntity();
+                    }
+                }
+            }
         }
-        else if (inputHelper.ScrolUp())
+        else if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
         {
-            Stamina++;
+            skill1.Use(2f);
+            if (selected)
+            {
+                //distance
+                Selected icon = GameWorld.GetObject("selected") as Selected;
+                Entity entity = GameWorld.GetObject(icon.SelectedEntity) as Entity;
+                float dx = entity.GlobalPosition.X - GlobalPosition.X;
+                float dy = entity.GlobalPosition.Y - GlobalPosition.Y;
+                if (Math.Sqrt(dx * dx + dy * dy) < 100)
+                {
+                    RemoveSelectedEntity();
+                }
+            }
         }
-
-        if (inputHelper.ScrolPressed())
+        if (inputHelper.MouseRightButtonPressed() && skill2.Ready)
         {
-            MaxStamina= 1;
+            skill2.Use(1f);
         }
     }
 
@@ -168,10 +198,30 @@ class Player : Entity
         base.Update(gameTime);
     }
 
+    public override void Reset()
+    {
+        base.Reset();
+        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
+        Overlay hud = overlay.GetOverlay("hud") as Overlay;
+
+        hud.Add(skill1);
+        hud.Add(skill2);
+        hud.Add(skill3);
+    }
+
     public override void PlayAnimation(string id)
     {
         base.PlayAnimation(id);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+    }
+
+    private void RemoveSelectedEntity()
+    {
+        Selected icon = GameWorld.GetObject("selected") as Selected;
+        GameWorld.GetObject(icon.SelectedEntity).RemoveSelf();
+        Level level = GameWorld as Level;
+        level.RootList.Remove(icon.Id);
+        selected = false;
     }
 
     public int Health
