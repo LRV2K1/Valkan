@@ -53,6 +53,7 @@
     <Compile Include="GameObjects\Entities\Item.cs" />
     <Compile Include="GameObjects\LevelGrid.cs" />
     <Compile Include="GameObjects\Mouse.cs" />
+    <Compile Include="GameObjects\Skills\Skill.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />

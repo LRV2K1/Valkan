@@ -22,9 +22,9 @@ partial class Level : GameObjectLibrary
         GameMouse mouse = new GameMouse();
         RootList.Add(mouse);
 
-        LoadFile(path);
-
         LoadOverlays();
+
+        LoadFile(path);
     }
 
     public void LoadOverlays()
@@ -146,6 +146,7 @@ partial class Level : GameObjectLibrary
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
+        player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
     }
 

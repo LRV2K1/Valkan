@@ -15,7 +15,7 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected SkillTimer skill1, skill2, skill3;
+    protected Skill skill1, skill2, skill3;
 
     public Player()
         : base(30, 20, 2, "player")
@@ -38,12 +38,28 @@ class Player : Entity
         LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
         PlayAnimation("idle_1");
 
-        skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");
-        skill1.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_1");
+        skill1 = new Skill("Sprites/Menu/Skills/spr_skill_0", Keys.E);
+        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        /*
+        skill2 = new Skill("Sprites/Menu/Skills/spr_skill_1");
         skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
-        skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_3");
+        skill3 = new Skill("Sprites/Menu/Skills/spr_skill_3");
         skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        */
+    }
+
+    public void SetupPlayer()
+    {
+        skill1.Parent = this;
+        skill1.Setup();
+        /*
+        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
+        Overlay hud = overlay.GetOverlay("hud") as Overlay;
+
+        hud.Add(skill1);
+        hud.Add(skill2);
+        hud.Add(skill3);
+        */
     }
     
     public override void HandleInput(InputHelper inputHelper)
@@ -129,6 +145,8 @@ class Player : Entity
         }
 
         //combat test
+        skill1.HandleInput(inputHelper);
+        /*
         if (inputHelper.IsKeyDown(Keys.LeftShift))
         {
             if (inputHelper.MouseLeftButtonPressed() && skill1.Ready)
@@ -168,6 +186,7 @@ class Player : Entity
         {
             skill2.Use(1f);
         }
+        */
     }
 
     public override void Update(GameTime gameTime)
@@ -196,17 +215,6 @@ class Player : Entity
         }
 
         base.Update(gameTime);
-    }
-
-    public override void Reset()
-    {
-        base.Reset();
-        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        Overlay hud = overlay.GetOverlay("hud") as Overlay;
-
-        hud.Add(skill1);
-        hud.Add(skill2);
-        hud.Add(skill3);
     }
 
     public override void PlayAnimation(string id)

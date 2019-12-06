@@ -1,6 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+enum MouseButton
+{
+    left,
+    right
+}
+
 public class InputHelper
 {
     protected MouseState currentMouseState, previousMouseState;
