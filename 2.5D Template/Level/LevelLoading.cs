@@ -110,8 +110,7 @@ partial class Level : GameObjectLibrary
     }
 
     public Tile LoadPlayer(int x, int y)
-    {
-        ReadStats();
+    {            
         LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
@@ -131,25 +130,5 @@ partial class Level : GameObjectLibrary
         item.MovePositionOnGrid(x, y);
         //return new Tile(new Point(x, y), "Sprites/Tiles/spr_floor_sheet_test_1@4x4", TileType.Floor, TextureType.Grass);
         return new Tile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x4", TileType.Floor, TextureType.Grass);
-    }
-
-    static void ReadStats()
-    {
-        System.Diagnostics.Debug.WriteLine("1");
-        string statspath = "Content/PlayerStats/Stats.txt";
-        StreamReader streamReader = new StreamReader(statspath);
-        List<string> lines = new List<string>();
-        string line = streamReader.ReadLine();
-        while (line != null)
-        {
-            lines.Add(line);
-            line = streamReader.ReadLine();
-            System.Diagnostics.Debug.WriteLine("3");
-        }
-        for (int i = 0; i < lines.Count; i++)
-        {
-            System.Diagnostics.Debug.WriteLine("2");
-        }
-        streamReader.Close();
     }
 }

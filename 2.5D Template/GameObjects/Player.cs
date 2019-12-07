@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.Cryptography;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 class Player : Entity
 {
-
     const float speed = 400;
     protected double direction;
     protected bool selected;
@@ -51,7 +51,6 @@ class Player : Entity
             wait = true;
             return;
         }
-
 
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
@@ -165,7 +164,8 @@ class Player : Entity
         {
             PlayAnimation("idle_1");
         }
-
+        ReadStats();
+        LevelUp();
         base.Update(gameTime);
     }
 
@@ -178,19 +178,70 @@ class Player : Entity
     public void LevelUp()
     {
         //PlayerLevel++;
-        maxhealth = maxhealth + 1;
-        maxstamina = maxstamina + 1;
+        //maxhealth = maxhealth + 1;
+        //maxstamina = maxstamina + 1;
         string statpath = "Content/PlayerStats/Stats.txt";
         string[] lines;
         lines = new string[5];
-        StreamWriter writer = new StreamWriter(statpath);
-        lines[0] = maxhealth.ToString();
-        lines[1] = maxstamina.ToString();
+        StreamWriter writer = new StreamWriter(statpath);       
+        lines[0] = Encrypt(maxhealth.ToString());
+        lines[1] = Encrypt(maxstamina.ToString());
         for (int i = 0; i < lines.Length; i++)
         {
             writer.WriteLine(lines[i]);
         }
         writer.Close();
+    }
+
+    public void ReadStats()
+    {
+        string statspath = "Content/PlayerStats/Stats.txt";
+        StreamReader streamReader = new StreamReader(statspath);
+        List<string> lines = new List<string>();
+        string line = streamReader.ReadLine();
+        while (line != null)
+        {
+            lines.Add(line);
+            line = streamReader.ReadLine();
+        }
+        lines[0] = Decrypt(lines[0]);
+        lines[1] = Decrypt(lines[1]);      
+        streamReader.Close();
+        System.Diagnostics.Debug.WriteLine(maxhealth);
+        System.Diagnostics.Debug.WriteLine(maxstamina);
+    }
+    
+    private static string hash = "1559874(&!*";
+    public static string EncryptedText;
+    public static string Encrypt(string input)
+    {
+        byte[] file = UTF8Encoding.UTF8.GetBytes(input);
+        using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+        {
+            byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+            using (TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() { Key = key, Mode = CipherMode.ECB })
+            {
+                ICryptoTransform tr = trip.CreateEncryptor();
+                byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
+                EncryptedText = Convert.ToBase64String(results, 0, results.Length);
+                return Convert.ToBase64String(results, 0, results.Length);
+            }
+        }
+    }
+
+    public static string Decrypt(string input)
+    {
+        byte[] file = Convert.FromBase64String(input);
+        using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+        {
+            byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+            using (TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() { Key = key, Mode = CipherMode.ECB })
+            {
+                ICryptoTransform tr = trip.CreateDecryptor();
+                byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
+                return UTF8Encoding.UTF8.GetString(results);
+            }
+        }
     }
 
     public int Health
