@@ -183,13 +183,14 @@ class Player : Entity
         string statpath = "Content/PlayerStats/Stats.txt";
         string[] lines;
         lines = new string[5];
-        StreamWriter writer = new StreamWriter(statpath);       
+        StreamWriter writer = new StreamWriter(statpath);
         lines[0] = Encrypt(maxhealth.ToString());
         lines[1] = Encrypt(maxstamina.ToString());
         for (int i = 0; i < lines.Length; i++)
         {
             writer.WriteLine(lines[i]);
         }
+        //System.Diagnostics.Debug.WriteLine(lines[1]);
         writer.Close();
     }
 
@@ -205,10 +206,9 @@ class Player : Entity
             line = streamReader.ReadLine();
         }
         lines[0] = Decrypt(lines[0]);
-        lines[1] = Decrypt(lines[1]);      
+        lines[1] = Decrypt(lines[1]);
+        //System.Diagnostics.Debug.WriteLine(lines[1]);
         streamReader.Close();
-        System.Diagnostics.Debug.WriteLine(maxhealth);
-        System.Diagnostics.Debug.WriteLine(maxstamina);
     }
     
     private static string hash = "1559874(&!*";
