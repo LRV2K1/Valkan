@@ -5,12 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-partial class Level : GameObjectLibrary
+partial class Level : GameObjectList
 {
     public Level(string name)
         : base()
     {
         LoadLevel("Content/Levels/" + name + ".txt");
-        Reset();
     }
 }

@@ -17,8 +17,6 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
 
-    protected static int randomid;
-
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
@@ -29,18 +27,6 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-
-        randomid = 0;
-    }
-
-    public static string RandomID
-    {
-        get
-        {
-            string s = randomid.ToString();
-            randomid++;
-            return s;
-        }
     }
 
     public static Point Screen

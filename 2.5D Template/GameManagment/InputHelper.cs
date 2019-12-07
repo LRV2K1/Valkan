@@ -68,11 +68,6 @@ public class InputHelper
         return currentMouseState.ScrollWheelValue < previousMouseState.ScrollWheelValue;
     }
 
-    public bool ScrolPressed()
-    {
-        return currentMouseState.MiddleButton == ButtonState.Pressed && previousMouseState.MiddleButton == ButtonState.Released;
-    }
-
     public bool KeyPressed(Keys k)
     {
         return currentKeyboardState.IsKeyDown(k) && previousKeyboardState.IsKeyUp(k);

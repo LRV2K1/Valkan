@@ -30,7 +30,7 @@ public class SpriteGameObject : GameObject
 
         if(GameWorld != null)
         {
-            Camera camera1 = GameWorld.GetObject("camera") as Camera;
+            Camera camera1 = GameWorld.Find("camera") as Camera;
             camera = camera1;
         }
         if (this.layer > 90)
@@ -41,10 +41,7 @@ public class SpriteGameObject : GameObject
         {
             if (camera != null)
             {
-                if (camera.OnScreen(GlobalPosition))
-                {
-                    sprite.Draw(spriteBatch, this.GlobalPosition - camera.CameraPosition, origin);
-                }
+                sprite.Draw(spriteBatch, this.GlobalPosition - camera.CameraPosition, origin);
             }
         }
     }
@@ -53,7 +50,6 @@ public class SpriteGameObject : GameObject
     {
         get { return sprite; }
     }
-
     public Vector2 Center
     {
         get { return new Vector2(Width, Height) / 2; }
@@ -123,13 +119,6 @@ public class SpriteGameObject : GameObject
             }
         }
         return false;
-    }
-
-    public bool OnSprite(Vector2 pos)
-    {
-        int left = (int)(GlobalPosition.X - origin.X);
-        int top = (int)(GlobalPosition.Y - origin.Y);
-        return new Rectangle(left, top, Width, Height).Contains(new Point((int)pos.X, (int)pos.Y));
     }
 }
 

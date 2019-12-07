@@ -5,67 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-class GameMouse : SpriteGameObject
+class GameMouse : GameObject
 {
-    Vector2 mousePos;
     public GameMouse()
-        : base("Sprites/Menu/spr_mouse",200, "mouse")
+        : base(0, "mouse")
     {
-          
+
     }
-    
+
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        Camera camera = GameWorld.GetObject("camera") as Camera;
-        mousePos = inputHelper.MousePosition + camera.CameraPosition;
-        position = inputHelper.MousePosition;
-    }
-
-    public string CeckEntitySelected()
-    {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-        Vector2 vpos = levelGrid.GridPosition(mousePos + new Vector2(0, levelGrid.CellHeight / 2));
-        Point gridpos = new Point((int)vpos.X + 1, (int)vpos.Y + 1);
-
-        string entity = "";
-        float closedistance = 100f;
-
-        for (int x = gridpos.X - 1; x <= gridpos.X + 1; x++)
-        {
-            for (int y = gridpos.Y -1; y <= gridpos.Y + 1; y++)
-            {
-                Tile tile = levelGrid.Get(x, y) as Tile;
-                if (tile == null)
-                {
-                    continue;
-                }
-                for (int i = 0; i < tile.Passengers.Count; i++)
-                {
-                    Item item = GameWorld.GetObject(tile.Passengers[i]) as Item;
-                    if (item == null)
-                    {
-                        continue;
-                    }
-                    if (item.OnSprite(mousePos))
-                    {
-                        float xd = mousePos.X - item.GlobalPosition.X;
-                        float yd = mousePos.Y - item.GlobalPosition.Y;
-                        float distance = (float)Math.Sqrt(xd*xd+yd*yd);
-                        if (distance < closedistance)
-                        {
-                            entity = item.Id;
-                            closedistance = distance;
-                        }
-                    }
-                }
-            }
-        }
-        return entity;
-    }
-
-    public Vector2 MousePos
-    {
-        get { return mousePos; }
+        Camera camera = GameWorld.Find("camera") as Camera;
+        position = inputHelper.MousePosition + camera.CameraPosition;
     }
 }
+

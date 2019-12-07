@@ -3,26 +3,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class GameObjectGrid : GameObject
 {
-    protected string[,] grid;
+    protected GameObject[,] grid;
     protected int cellWidth, cellHeight;
 
     public GameObjectGrid(int columns, int rows, int layer = 0, string id = "")
         : base(layer, id)
     {
-        grid = new string[columns, rows];
+        grid = new GameObject[columns, rows];
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                grid[x, y] = "";
+                grid[x, y] = null;
             }
         }
     }
 
     public virtual void Add(GameObject obj, int x, int y)
     {
-        GameWorld.Add(obj);
-        grid[x, y] = obj.Id;
+        grid[x, y] = obj;
         obj.Parent = this;
         obj.Position = new Vector2(x * cellWidth, y * cellHeight);
     }
@@ -31,7 +30,7 @@ public class GameObjectGrid : GameObject
     {
         if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1))
         {
-            return GameWorld.GetObject(grid[x, y]);
+            return grid[x, y];
         }
         else
         {
@@ -39,12 +38,27 @@ public class GameObjectGrid : GameObject
         }
     }
 
-    public string[,] Objects
+    public GameObject[,] Objects
     {
         get
         {
             return grid;
         }
+    }
+
+    public Vector2 GetAnchorPosition(GameObject s)
+    {
+        for (int x = 0; x < Columns; x++)
+        {
+            for (int y = 0; y < Rows; y++)
+            {
+                if (grid[x, y] == s)
+                {
+                    return new Vector2(x * cellWidth, y * cellHeight);
+                }
+            }
+        }
+        return Vector2.Zero;
     }
 
     public int Rows
@@ -71,34 +85,34 @@ public class GameObjectGrid : GameObject
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        foreach (string id in grid)
+        foreach (GameObject obj in grid)
         {
-            GameWorld.GetObject(id).HandleInput(inputHelper);
+            obj.HandleInput(inputHelper);
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        foreach (string id in grid)
+        foreach (GameObject obj in grid)
         {
-            GameWorld.GetObject(id).Update(gameTime);
+            obj.Update(gameTime);
         }
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        foreach (string id in grid)
+        foreach (GameObject obj in grid)
         {
-            GameWorld.GetObject(id).Draw(gameTime, spriteBatch);
+            obj.Draw(gameTime, spriteBatch);
         }
     }
 
     public override void Reset()
     {
         base.Reset();
-        foreach (string id in grid)
+        foreach (GameObject obj in grid)
         {
-            GameWorld.GetObject(id).Reset();
+            obj.Reset();
         }
     }
 }

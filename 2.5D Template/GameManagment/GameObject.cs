@@ -4,23 +4,20 @@ using Microsoft.Xna.Framework.Graphics;
 public abstract class GameObject : IGameLoopObject
 {
     protected GameObject parent;
-    protected GameObjectLibrary library;
     protected Vector2 position, velocity;
     protected int layer;
     protected string id;
     protected bool visible;
+    protected bool removeSelf;
 
     public GameObject(int layer = 0, string id = "")
     {
-        this.id = id;
-        if (this.id == "")
-        {
-            this.id = GameEnvironment.RandomID;
-        }
         this.layer = layer;
+        this.id = id;
         position = Vector2.Zero;
         velocity = Vector2.Zero; 
         visible = true;
+        removeSelf = false;
     }
 
     public virtual void HandleInput(InputHelper inputHelper)
@@ -39,11 +36,6 @@ public abstract class GameObject : IGameLoopObject
     public virtual void Reset()
     {
         visible = true;
-    }
-
-    public virtual void RemoveSelf()
-    {
-
     }
 
     public virtual Vector2 Position
@@ -73,25 +65,27 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
-    public virtual GameObjectList RootList
+    public GameObject Root
     {
         get
         {
-            if (GameWorld != null)
+            if (parent != null)
             {
-                return GameWorld.RootList;
+                return parent.Root;
             }
             else
             {
-                return null;
+                return this;
             }
         }
     }
 
-    public GameObjectLibrary GameWorld
+    public GameObjectList GameWorld
     {
-        get { return library; }
-        set { library = value; }
+        get
+        {
+            return Root as GameObjectList;
+        }
     }
 
     public virtual int Layer
@@ -103,14 +97,7 @@ public abstract class GameObject : IGameLoopObject
     public virtual GameObject Parent
     {
         get { return parent; }
-        set
-        {
-            parent = value;
-            if (parent != null)
-            {
-                GameWorld = parent.GameWorld;
-            }
-        }
+        set { parent = value; }
     }
 
     public string Id
@@ -130,5 +117,11 @@ public abstract class GameObject : IGameLoopObject
         {
             return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
         }
+    }
+
+    public bool RemoveSelf
+    {
+        get { return removeSelf; }
+        set { removeSelf = value; }
     }
 }

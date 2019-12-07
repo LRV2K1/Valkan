@@ -4,59 +4,80 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class GameObjectList : GameObject
 {
-    protected List<string> children;
+    protected List<GameObject> children;
 
     public GameObjectList(int layer = 0, string id = "") : base(layer, id)
     {
-        children = new List<string>();
+        children = new List<GameObject>();
     }
 
-    public List<string> Children
+    public List<GameObject> Children
     {
         get { return children; }
     }
 
-    public virtual void Add(GameObject obj)
+    public void Add(GameObject obj)
     {
-        GameWorld.Add(obj);
         obj.Parent = this;
         for (int i = 0; i < children.Count; i++)
         {
-            if (GameWorld.GetObject(children[i]).Layer > obj.Layer)
+            if (children[i].Layer > obj.Layer)
             {
-                children.Insert(i, obj.Id);
+                children.Insert(i, obj);
                 return;
             }
         }
-        children.Add(obj.Id);
+        children.Add(obj);
     }
 
-    public void RemoveFromList(string id)
+    public void Remove(GameObject obj)
     {
-        children.Remove(id);
-        GameWorld.GetObject(id).Parent = null;
+        children.Remove(obj);
+        obj.Parent = null;
     }
 
-    public void Remove(string id)
+    public GameObject Find(string id)
     {
-        children.Remove(id);
-        GameWorld.GetObject(id).Parent = null;
-        GameWorld.Remove(id);
+        foreach (GameObject obj in children)
+        {
+            if (obj.Id == id)
+            {
+                return obj;
+            }
+            if (obj is GameObjectList)
+            {
+                GameObjectList objList = obj as GameObjectList;
+                GameObject subObj = objList.Find(id);
+                if (subObj != null)
+                {
+                    return subObj;
+                }
+            }
+        }
+        return null;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        for (int i = 0; i < children.Count; i++)
+        for (int i = children.Count - 1; i >= 0; i--)
         {
-            GameWorld.GetObject(children[i]).HandleInput(inputHelper);
+            children[i].HandleInput(inputHelper);
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        foreach (string id in children)
+        foreach (GameObject obj in children)
         {
-            GameWorld.GetObject(id).Update(gameTime);
+            obj.Update(gameTime);
+        }
+
+        for (int i = children.Count - 1; i >= 0; i--)
+        {
+            if (children[i].RemoveSelf)
+            {
+                Remove(children[i]);
+            }
         }
     }
 
@@ -66,19 +87,19 @@ public class GameObjectList : GameObject
         {
             return;
         }
-        List<string>.Enumerator e = children.GetEnumerator();
+        List<GameObject>.Enumerator e = children.GetEnumerator();
         while (e.MoveNext())
         {
-            GameWorld.GetObject(e.Current).Draw(gameTime, spriteBatch);
+            e.Current.Draw(gameTime, spriteBatch);
         }
     }
 
     public override void Reset()
     {
         base.Reset();
-        foreach (string id in children)
+        foreach (GameObject obj in children)
         {
-            GameWorld.GetObject(id).Reset();
+            obj.Reset();
         }
     }
 }

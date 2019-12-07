@@ -14,7 +14,6 @@ class Camera : GameObject
     int width, height;
     bool first;
     string objid;
-    const int edge = 300;
 
     public Camera(string folowObjid, int layer = 0, string id = "")
         : base(layer, id)
@@ -25,11 +24,8 @@ class Camera : GameObject
 
     public override void Update(GameTime gameTime)
     {
-        GameObject folowObj = GameWorld.GetObject(objid);
-        if (folowObj == null)
-        {
-            return;
-        }
+        GameObject folowObj = GameWorld.Find(objid);
+        GameObjectList level = GameWorld;
 
         if (!first)
         {
@@ -84,12 +80,6 @@ class Camera : GameObject
         return newPositionY;
     }
 
-    public bool OnScreen(Vector2 pos)
-    {
-        Rectangle screen = new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2);
-        return screen.Contains(new Point((int)pos.X, (int)pos.Y));
-    }
-
     public int Width
     {
         get { return width; }
@@ -105,10 +95,5 @@ class Camera : GameObject
     public Vector2 CameraPosition
     {
         get { return cameraPosition; }
-    }
-
-    public Rectangle Screen
-    {
-        get { return new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2); }
     }
 }

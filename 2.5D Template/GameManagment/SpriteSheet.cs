@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class SpriteSheet
 {
     protected Texture2D sprite;
-    //protected bool[] collisionMask;
+    protected bool[] collisionMask;
     protected int sheetIndex;
     protected int sheetColumns;
     protected int sheetRows;
@@ -19,7 +19,6 @@ public class SpriteSheet
         // retrieve the sprite
         sprite = GameEnvironment.AssetManager.GetSprite(assetname);
         color = Color.White;
-        /*
         // construct the collision mask
         Color[] colorData = new Color[sprite.Width * sprite.Height];
         collisionMask = new bool[sprite.Width * sprite.Height];
@@ -28,7 +27,6 @@ public class SpriteSheet
         {
             collisionMask[i] = colorData[i].A != 0;
         }
-        */
 
         this.sheetIndex = sheetIndex;
         sheetColumns = 1;
@@ -69,9 +67,7 @@ public class SpriteSheet
         int column_index = sheetIndex % sheetColumns;
         int row_index = sheetIndex / sheetColumns % sheetRows;
 
-
-        //return collisionMask[column_index * Width + x + (row_index * Height + y) * sprite.Width];
-        return false;
+        return collisionMask[column_index * Width + x + (row_index * Height + y) * sprite.Width];
     }
 
     public Texture2D Sprite
