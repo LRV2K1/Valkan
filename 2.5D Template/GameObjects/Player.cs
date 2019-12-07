@@ -288,7 +288,7 @@ partial class Player : AnimatedGameObject
                     animationFinished = false;
                     
                     currentAnimation = "RBR";
-                }
+                }//Test
                 else if (this.Sprite.SheetIndex == 7)
                 {
                     PlayAnimation("idleToWalkLeft_" + dir, true); //Index 7
