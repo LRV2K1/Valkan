@@ -26,14 +26,14 @@ partial class Player : AnimatedGameObject
         direction = 0;
 
         LoadAnimation("Sprites/Player/spr_boundingbox", "boundingbox", false, false);
-        LoadAnimation("Sprites/Player/player_idle_6@7", "idle_0", true, true);
-        LoadAnimation("Sprites/Player/player_idle_7@7", "idle_1", true, true);
-        LoadAnimation("Sprites/Player/player_idle_0@7", "idle_2", true, true);
-        LoadAnimation("Sprites/Player/player_idle_1@7", "idle_3", true, true);
-        LoadAnimation("Sprites/Player/player_idle_2@7", "idle_4", true, true);
-        LoadAnimation("Sprites/Player/player_idle_3@7", "idle_5", true, true);
-        LoadAnimation("Sprites/Player/player_idle_4@7", "idle_6", true, true);
-        LoadAnimation("Sprites/Player/player_idle_5@7", "idle_7", true, true);
+        LoadAnimation("Sprites/Player/player_idle_6@7", "idle_0", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_7@7", "idle_1", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_0@7", "idle_2", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_1@7", "idle_3", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_2@7", "idle_4", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_3@7", "idle_5", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_4@7", "idle_6", true, true, 0.1f);
+        LoadAnimation("Sprites/Player/player_idle_5@7", "idle_7", true, true, 0.1f);
         LoadAnimation("Sprites/Player/player_transitionToWalkLeft_6@5", "idleToWalkLeft_0", false, false);
         LoadAnimation("Sprites/Player/player_transitionToWalkLeft_7@5", "idleToWalkLeft_1", false, false);
         LoadAnimation("Sprites/Player/player_transitionToWalkLeft_0@5", "idleToWalkLeft_2", false, false);

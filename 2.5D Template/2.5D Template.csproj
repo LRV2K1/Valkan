@@ -45,6 +45,7 @@
     <Compile Include="GameManagment\Animation.cs" />
     <Compile Include="GameManagment\AssetManager.cs" />
     <Compile Include="GameManagment\Camera.cs" />
+    <Compile Include="GameObjects\Menus\Button.cs" />
     <Compile Include="GameObjects\Menus\Menu.cs" />
     <Compile Include="GameObjects\TextBox.cs" />
     <Compile Include="GameObjects\TextWriter.cs" />

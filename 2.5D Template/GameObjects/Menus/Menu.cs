@@ -9,6 +9,7 @@ class Menu : GameObject
 {
     protected int menuNumber; //Indicates which menu screen should be displayed.
     protected bool isLoaded;
+    protected bool isActive;
     public Menu() :
         base(0, "menu")
     {
@@ -23,25 +24,48 @@ class Menu : GameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if(!isLoaded) //Only go through this piece of code if the menu isn't loaded yet.
+        if(isActive)
         {
-            switch (menuNumber) //Check which menu should be loaded
+            if (!isLoaded) //Only go through this piece of code if the menu isn't loaded yet.
             {
-                case 0: //Load Main Menu
-                    break;
-                case 1: //Load Settings Menu
-                    break;
-                case 2: //Load Credits Menu
-                    break;
-                case 3: //In-Game Menu
-                    break;
-                case 4: //In-Game Settings Menu
-                    break;
+                switch (menuNumber) //Check which menu should be loaded
+                {
+                    case 0: //Load Main Menu
+                        break;
+                    case 1: //Load Settings Menu
+                        break;
+                    case 2: //Load Credits Menu
+                        break;
+                    case 3: //In-Game Menu
+                        break;
+                    case 4: //In-Game Settings Menu
+                        break;
+                }
+                isLoaded = true;
             }
-            //Drie
-
+            else
+            {
+                //Check if button is pressed.
+            }
         }
+        else
+        {
+            //If not active, then there is no menu to show.
+        }
+        
     }
 
+    public void LoadMenu(int menu)
+    {
+        menuNumber = menu;
+        isLoaded = false;
+        isActive = true;
+    }
+
+    public void CloseMenu()
+    {
+        isLoaded = false;
+        isActive = false;
+    }
 
 }
