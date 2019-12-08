@@ -8,12 +8,83 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-class ScreenFade : SpriteGameObject
+public class ScreenFade : SpriteGameObject
 {
-    public void ScreenFade(string assetname, int layer = 101, string id = "") :
+    protected bool fadeToWhite;
+    protected bool fadeToBlack;
+    protected int r, g, b, a;
+    protected int speed;
+
+    public ScreenFade(string assetname = "Sprites/Menu/spr_button", int layer = 105, string id = "screenFade") :
         base(assetname, layer, id)
     {
+        this.Sprite.Color = Color.Black;
+        this.Sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
+        this.Visible = true;
+    }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        if (fadeToBlack)
+        {
+            if (sprite.Color.A < 255)
+            {
+                r += speed;
+                g += speed;
+                b += speed;
+                a += speed;
+                sprite.Color = new Color(r, g, b, a);
+                return;
+            }
+            fadeToBlack = false;
+        }
+        else if (fadeToWhite)
+        {
+            if (sprite.Color.A > 0)
+            {
+                r -= speed;
+                g -= speed;
+                b -= speed;
+                a -= speed;
+                sprite.Color = new Color(r, g, b, a);
+                return;
+            }
+            this.Visible = false;
+            fadeToWhite = false;
+        }
+    }
+
+    public void FadeWhite()
+    {
+        fadeToWhite = true;
+        speed = 2;
+        r = 255;
+        g = 255;
+        b = 255;
+        a = 255;
+        sprite.Color = new Color(r, g, b, a);
+    }
+    public void FadeBlack()
+    {
+        this.Visible = true;
+        fadeToBlack = true;
+        speed = 2;
+        r = 0;
+        g = 0;
+        b = 0;
+        a = 0;
+        sprite.Color = new Color(r, g, b, a);
+    }
+
+    public bool FadeToWhite
+    {
+        get { return fadeToWhite; }
+    }
+
+    public bool FadeToBlack
+    {
+        get { return fadeToBlack; }
     }
 }
 
