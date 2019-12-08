@@ -128,6 +128,7 @@ public class GameEnvironment : Game
     {
         HandleInput();
         gameStateManager.Update(gameTime);
+        assetManager.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)

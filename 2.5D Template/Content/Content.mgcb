@@ -1277,3 +1277,21 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Player/player_transitionToWalkRight_7@5.png
 
+#begin Soundtracks/The_Cure_-_Lullaby_Transcription.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/The_Cure_-_Lullaby_Transcription.mp3
+
+#begin Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
+
+#begin Soundtracks/Sad.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Sad.mp3
+
