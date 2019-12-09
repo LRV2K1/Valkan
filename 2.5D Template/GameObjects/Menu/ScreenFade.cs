@@ -18,9 +18,7 @@ public class ScreenFade : SpriteGameObject
     public ScreenFade(string assetname = "Sprites/Menu/spr_button", int layer = 105, string id = "screenFade") :
         base(assetname, layer, id)
     {
-        this.Sprite.Color = Color.Black;
-        this.Sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
-        this.Visible = true;
+        
     }
 
     public override void Update(GameTime gameTime)
@@ -57,6 +55,9 @@ public class ScreenFade : SpriteGameObject
 
     public void FadeWhite()
     {
+        this.Sprite.Color = Color.Black;
+        this.Sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
+        this.Visible = true;
         fadeToWhite = true;
         speed = 2;
         r = 255;

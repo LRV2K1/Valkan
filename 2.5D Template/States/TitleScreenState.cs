@@ -10,11 +10,12 @@ using Microsoft.Xna.Framework.Media;
 class TitleScreenState : GameObjectList
 {
     protected Button startButton, settingsButton;
+    protected string nextScene;
     ScreenFade screenFade;
     public TitleScreenState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey",100,"background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Logo",100,"background");
         Add(titleScreen);
 
         startButton = new Button("Sprites/Menu/spr_button",101);
@@ -29,6 +30,8 @@ class TitleScreenState : GameObjectList
         Add(screenFade);
         screenFade.FadeWhite();
 
+        nextScene = "";
+
         GameEnvironment.AssetManager.PlaySong("The_Cure_-_Lullaby_Transcription");
     }
 
@@ -38,10 +41,15 @@ class TitleScreenState : GameObjectList
         {
             return;
         }
+        else if(!screenFade.FadeToBlack && nextScene != "")
+        {
+            GameEnvironment.GameStateManager.SwitchTo(nextScene);
+        }
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
             GameEnvironment.AssetManager.PlaySong("Sad");
+            nextScene = "playingState";
             screenFade.FadeBlack();
         }
         else if (settingsButton.Pressed)

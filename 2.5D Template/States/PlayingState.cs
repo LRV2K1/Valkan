@@ -12,20 +12,34 @@ class PlayingState : IGameLoopObject
 {
     protected ContentManager content;
     protected Level level;
+    protected bool firstLoad;
+    ScreenFade screenFade;
 
     public PlayingState(ContentManager content)
     {
         this.content = content;
         level = new Level("Level_1");
+        firstLoad = true;
     }
 
     public virtual void HandleInput(InputHelper inputHelper)
     {
+        if(screenFade.FadeToWhite)
+        {
+            return;
+        }
         level.HandleInput(inputHelper);
     }
 
     public virtual void Update(GameTime gameTime)
     {
+        if(firstLoad)
+        {
+            screenFade = new ScreenFade();
+            level.Add(screenFade);
+            screenFade.FadeWhite();
+            firstLoad = false;
+        }
         level.Update(gameTime);
     }
 
