@@ -11,6 +11,7 @@ class Dodge : TertairySkill
 {
     protected float speed;
     protected float runtime;
+
     public Dodge(string assetname, float time = 1f, float speed = 2f, float runtime = 0.2f)
         : base(assetname, time)
     {

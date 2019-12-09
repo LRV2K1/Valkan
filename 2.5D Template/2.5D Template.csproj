@@ -48,6 +48,7 @@
     <Compile Include="GameManagment\Collision.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
+    <Compile Include="GameObjects\Entities\Enemy.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\EntityPhysics.cs" />
     <Compile Include="GameObjects\Entities\Item.cs" />

@@ -128,8 +128,11 @@ partial class Level : GameObjectLibrary
         int boundingy = int.Parse(type[1]);
         switch (type[2])
         {
-            case "Item":
-                LoadItem(x, y, asset, boundingy);
+            case "SpriteItem":
+                LoadItem(x, y, asset, boundingy, false);
+                break;
+            case "AnimatedItem":
+                LoadItem(x, y, asset, boundingy, true);
                 break;
             case "Player":
                 LoadPlayer(x, y);
@@ -142,7 +145,6 @@ partial class Level : GameObjectLibrary
 
     private void LoadPlayer(int x, int y)
     {
-        LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
@@ -150,13 +152,13 @@ partial class Level : GameObjectLibrary
         player.MovePositionOnGrid(x, y);
     }
 
-    private void LoadItem(int x, int y, string asset, int boundingy)
+    private void LoadItem(int x, int y, string asset, int boundingy, bool animated)
     {
-        LevelGrid tiles = GetObject("tiles") as LevelGrid;
-        Item item = new Item(asset, boundingy);
+        Item item = new Item(asset, animated, boundingy);
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
+        //entities.Add(item);
         item.MovePositionOnGrid(x, y);
     }
 

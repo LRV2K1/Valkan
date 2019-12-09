@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-partial class Entity : AnimatedGameObject
+abstract partial class Entity : AnimatedGameObject
 {
     private void DoPhysics()
     {

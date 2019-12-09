@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-partial class Entity : AnimatedGameObject
+abstract partial class Entity : AnimatedGameObject
 {
     protected Vector2 gridPos;
     int boundingy;
