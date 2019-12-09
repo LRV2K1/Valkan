@@ -25,10 +25,11 @@ public class GameStart : GameEnvironment
         screen = new Point(1920, 1080);
         windowSize = new Point(1280, 720);
         FullScreen = false;
+        gameStateManager.AddGameState("introState", new IntroState());
         gameStateManager.AddGameState("titleScreen", new TitleScreenState());
         gameStateManager.AddGameState("playingState", new PlayingState(Content));
         gameStateManager.AddGameState("settingsState", new SettingsState());
-        gameStateManager.SwitchTo("titleScreen");
+        gameStateManager.SwitchTo("introState");
     }
     protected override void UnloadContent()
     {

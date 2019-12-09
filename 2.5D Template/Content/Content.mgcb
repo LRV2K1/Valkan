@@ -1307,3 +1307,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Overlay/Logo.png
 
+#begin Videos/Fragment 1(intro).mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:Videos/Fragment 1(intro).mp4
+

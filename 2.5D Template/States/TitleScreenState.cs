@@ -9,9 +9,8 @@ using Microsoft.Xna.Framework.Media;
 
 class TitleScreenState : GameObjectList
 {
-    protected Button startButton, settingsButton;
+    protected Button startButton, settingsButton, exitButton;
     protected string nextScene;
-    ScreenFade screenFade;
     public TitleScreenState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
@@ -19,43 +18,61 @@ class TitleScreenState : GameObjectList
         Add(titleScreen);
 
         startButton = new Button("Sprites/Menu/spr_button",101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 2, 350);
+        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
         Add(startButton);
 
         settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
-        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 2, 750);
+        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         Add(settingsButton);
 
-        screenFade = new ScreenFade();
-        Add(screenFade);
-        screenFade.FadeWhite();
+        exitButton = new Button("Sprites/Menu/spr_button_exit", 101);
+        exitButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        Add(exitButton);
+      
+        nextScene = "firstTime";
+    }
 
-        nextScene = "";
-
-        GameEnvironment.AssetManager.PlaySong("The_Cure_-_Lullaby_Transcription");
+    public override void Update(GameTime gameTime)
+    {
+        if(nextScene == "firstTime")
+        {
+            GameEnvironment.ScreenFade.FadeWhite();
+            GameEnvironment.AssetManager.PlaySong("Sad");
+            nextScene = "";
+        }
+        base.Update(gameTime);
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if(screenFade.FadeToWhite)
+        if(GameEnvironment.ScreenFade.FadeToWhite)
         {
             return;
         }
-        else if(!screenFade.FadeToBlack && nextScene != "")
+        else if(!GameEnvironment.ScreenFade.FadeToBlack && nextScene == "exit")
+        {
+            GameEnvironment.QuitGame = true;
+        }
+        else if(!GameEnvironment.ScreenFade.FadeToBlack && nextScene != "")
         {
             GameEnvironment.GameStateManager.SwitchTo(nextScene);
         }
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            GameEnvironment.AssetManager.PlaySong("Sad");
+            GameEnvironment.AssetManager.PlaySong("Valkan's Fate - Battle Theme(Garageband)");
             nextScene = "playingState";
-            screenFade.FadeBlack();
+            GameEnvironment.ScreenFade.FadeBlack();
         }
         else if (settingsButton.Pressed)
         {
             GameEnvironment.AssetManager.PlaySong("Valkan's Fate - Battle Theme(Garageband)");
-            screenFade.FadeBlack();
+            GameEnvironment.ScreenFade.FadeBlack();
+        }
+        else if (exitButton.Pressed)
+        {
+            nextScene = "exit";
+            GameEnvironment.ScreenFade.FadeBlack();
         }
     }
 

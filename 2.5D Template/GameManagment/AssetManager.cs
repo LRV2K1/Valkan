@@ -29,35 +29,8 @@ public class AssetManager
 
     public void Update(GameTime gameTime)
     {
-        if (fadeDown)
-        {
-            if (MediaPlayer.Volume > 0.01f)
-            {
-                MediaPlayer.Volume -= speed;
-                speed += acceleration;
-            }
-            else
-            {
-                MediaPlayer.Volume = 0f;
-                MediaPlayer.Play(contentManager.Load<Song>("Soundtracks/" + songInQueue));
-                fadeDown = false;
-                fadeUp = true;
-                speed = 0.001f;
-            }
-        }
-        else if(fadeUp)
-        {
-            if(MediaPlayer.Volume < 1f)
-            {
-                MediaPlayer.Volume += speed;
-                speed += acceleration;
-            }
-            else
-            {
-                MediaPlayer.Volume = 1f;
-                fadeUp = false;
-            }
-        }
+        if(GameEnvironment.ScreenFade != null)
+            MediaPlayer.Volume = (255 - GameEnvironment.ScreenFade.A) / 255;
     }
 
     public void PlaySound(string assetName)
@@ -80,8 +53,6 @@ public class AssetManager
         else
         {
             songInQueue = assetName;
-            speed = 0.001f;
-            fadeDown = true;
         }
     }
 

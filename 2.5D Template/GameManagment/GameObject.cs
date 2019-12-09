@@ -31,6 +31,7 @@ public abstract class GameObject : IGameLoopObject
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        
     }
 
     public virtual void Reset()

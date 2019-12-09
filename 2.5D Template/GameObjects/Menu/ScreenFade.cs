@@ -87,5 +87,10 @@ public class ScreenFade : SpriteGameObject
     {
         get { return fadeToBlack; }
     }
+
+    public int A
+    {
+        get { return a; }
+    }
 }
 

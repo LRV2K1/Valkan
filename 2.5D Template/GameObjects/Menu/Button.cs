@@ -10,9 +10,6 @@ using System.IO;
 
 class Button : SpriteGameObject
 {
-    protected int buttonID;
-    protected int buttonText;
-    protected int destinationScene;
     protected bool pressed;
     protected bool highLighted;
 

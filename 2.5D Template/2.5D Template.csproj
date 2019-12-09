@@ -48,6 +48,7 @@
     <Compile Include="GameManagment\SoundtrackManager.cs" />
     <Compile Include="GameObjects\Menu\Button.cs" />
     <Compile Include="GameObjects\Menu\ScreenFade.cs" />
+    <Compile Include="States\IntroState.cs" />
     <Compile Include="States\SettingsState.cs" />
     <Compile Include="States\TitleScreenState.cs" />
     <Compile Include="GameObjects\TextBox.cs" />

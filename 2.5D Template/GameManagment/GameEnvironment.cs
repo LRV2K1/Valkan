@@ -10,22 +10,23 @@ public class GameEnvironment : Game
     protected InputHelper inputHelper;
     protected Matrix spriteScale;
     protected Point windowSize;
+    protected bool quitGame;
 
     protected static Point screen;
     protected static GameStateManager gameStateManager;
     protected static Random random;
     protected static AssetManager assetManager;
+    protected static ScreenFade screenFade;
     protected static GameSettingsManager gameSettingsManager;
 
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
-
+        assetManager = new AssetManager(Content);
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
         random = new Random();
-        assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
     }
 
@@ -45,6 +46,11 @@ public class GameEnvironment : Game
         get { return assetManager; }
     }
 
+    public static ScreenFade ScreenFade
+    {
+        get { return screenFade; }
+    }
+
     public static GameStateManager GameStateManager
     {
         get { return gameStateManager; }
@@ -54,6 +60,8 @@ public class GameEnvironment : Game
     {
         get { return gameSettingsManager; }
     }
+
+    public static bool QuitGame { get; set; }
 
     public bool FullScreen
     {
@@ -112,10 +120,6 @@ public class GameEnvironment : Game
     protected void HandleInput()
     {
         inputHelper.Update();
-        if (inputHelper.KeyPressed(Keys.Escape))
-        {
-            Exit();
-        }
         if (inputHelper.KeyPressed(Keys.F5))
         {
             FullScreen = !FullScreen;
@@ -126,14 +130,23 @@ public class GameEnvironment : Game
 
     protected override void Update(GameTime gameTime)
     {
+        if(QuitGame)
+        {
+            Exit();
+        }
         HandleInput();
         gameStateManager.Update(gameTime);
         assetManager.Update(gameTime);
+        if(screenFade == null)
+        {
+            screenFade = new ScreenFade();
+            
+        }
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(Color.Blue);
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
