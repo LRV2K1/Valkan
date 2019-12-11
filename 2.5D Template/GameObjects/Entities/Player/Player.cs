@@ -34,7 +34,7 @@ partial class Player : Entity
         : base(30, 20, 2, "player")
     {
         maxhealth = 10;
-        maxstamina = 10;
+        maxstamina = 20;
         health = maxhealth;
         stamina = maxstamina;
 

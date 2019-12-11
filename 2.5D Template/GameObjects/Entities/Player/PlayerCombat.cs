@@ -14,30 +14,7 @@ partial class Player : Entity
         if (inputHelper.KeyPressed(Keys.Z))
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
-            string entity = mouse.CeckEntitySelected();
-            if (entity != "")
-            {
-                if (selected)
-                {
-                    Selected icon = GameWorld.GetObject("selected") as Selected;
-                    icon.SelectedEntity = entity;
-                }
-                else
-                {
-                    Selected icon = new Selected(1, "selected");
-                    Level level = GameWorld as Level;
-                    level.RootList.Add(icon);
-                    icon.SelectedEntity = entity;
-                    selected = true;
-                }
-            }
-            else if (selected)
-            {
-                Selected icon = GameWorld.GetObject("selected") as Selected;
-                Level level = GameWorld as Level;
-                level.RootList.Remove(icon.Id);
-                selected = false;
-            }
+            selected = mouse.SelectEntity();
         }
     }
 
@@ -50,15 +27,6 @@ partial class Player : Entity
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
         skill3.HandleInput(inputHelper);
-    }
-
-    public void RemoveSelectedEntity()
-    {
-        Selected icon = GameWorld.GetObject("selected") as Selected;
-        GameWorld.GetObject(icon.SelectedEntity).RemoveSelf();
-        Level level = GameWorld as Level;
-        level.RootList.Remove(icon.Id);
-        selected = false;
     }
 
     public int Health
@@ -123,5 +91,6 @@ partial class Player : Entity
     public bool Selected
     {
         get { return selected; }
+        set { selected = value; }
     }
 }

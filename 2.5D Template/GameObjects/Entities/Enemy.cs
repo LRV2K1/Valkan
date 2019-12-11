@@ -9,11 +9,13 @@ using Microsoft.Xna.Framework;
 class Enemy : Entity
 {
     protected int health;
-    public bool die, dead;
+    protected bool die, dead;
+    protected bool selected;
 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, weight, layer, id)
     {
+        selected = false;
         dead = false;
         health = 20;
         LoadAnimation(assetname, "sprite", true);
@@ -45,6 +47,11 @@ class Enemy : Entity
             die = true;
             PlayAnimation("die");
             sprite.Color = Color.Pink;
+            if (selected)
+            {
+                GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
+                mouse.RemoveSelectedEntity();
+            }
         }
     }
 
@@ -55,6 +62,17 @@ class Enemy : Entity
             health = value;
             CheckDie();
         }
+    }
+
+    public bool Dead
+    {
+        get { return die; }
+    }
+
+    public bool Selected
+    {
+        get { return selected; }
+        set { selected = value; }
     }
 }
 

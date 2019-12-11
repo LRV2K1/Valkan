@@ -23,6 +23,7 @@ class CloseAttack : PrimairySkill
         if (!heavy && player.Stamina >= 2)
         {
             base.Use(timer);
+            player.Stamina -= 2;
             Selected selected = GameWorld.GetObject("selected") as Selected;
             if (selected != null)
             {
