@@ -66,34 +66,8 @@ partial class Level : GameObjectLibrary
     {
         string[] type = tiletype.Split(',');
         string asset = type[0];
-        TileType tp = TileType.Background;
-        TextureType tt = TextureType.None;
-
-        switch (type[1])
-        {
-            case "Floor":
-                tp = TileType.Floor;
-                break;
-            case "Background":
-                tp = TileType.Background;
-                break;
-            case "Wall":
-                tp = TileType.Wall;
-                break;
-        }
-
-        switch (type[2])
-        {
-            case "None":
-                tt = TextureType.None;
-                break;
-            case "Grass":
-                tt = TextureType.Grass;
-                break;
-            case "Water":
-                tt = TextureType.Water;
-                break;
-        }
+        TileType tp = (TileType) Enum.Parse(typeof(TileType), type[1]);
+        TextureType tt = (TextureType)Enum.Parse(typeof(TextureType), type[2]);
 
         switch (type[3])
         {
