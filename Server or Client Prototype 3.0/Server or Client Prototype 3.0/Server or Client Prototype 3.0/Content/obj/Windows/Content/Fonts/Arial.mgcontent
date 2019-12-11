@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/joeri/source/repos/Server or Client Prototype 3.0 (1)/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/Fonts/Arial.spritefont</SourceFile>
+  <SourceTime>2019-12-08T20:42:11.3382238+01:00</SourceTime>
+  <DestFile>C:/Users/joeri/source/repos/Server or Client Prototype 3.0 (1)/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/bin/Windows/Content/Fonts/Arial.xnb</DestFile>
+  <DestTime>2019-12-09T11:56:50.0360528+01:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

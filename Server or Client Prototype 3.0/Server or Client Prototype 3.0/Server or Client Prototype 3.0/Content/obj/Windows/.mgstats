@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/joeri/source/repos/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/Fonts/Arial.spritefont","C:/Users/joeri/source/repos/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/bin/Windows/Fonts/Arial.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21521,0,3550704
+"C:/Users/joeri/source/repos/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/player.png","C:/Users/joeri/source/repos/Server or Client Prototype 3.0/Server or Client Prototype 3.0/Content/bin/Windows/player.xnb","TextureProcessor","Texture2DContent",124,1109,0,5446731
