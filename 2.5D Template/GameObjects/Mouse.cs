@@ -42,19 +42,19 @@ class GameMouse : SpriteGameObject
                 }
                 for (int i = 0; i < tile.Passengers.Count; i++)
                 {
-                    Item item = GameWorld.GetObject(tile.Passengers[i]) as Item;
-                    if (item == null)
+                    Enemy enemy = GameWorld.GetObject(tile.Passengers[i]) as Enemy;
+                    if (enemy == null)
                     {
                         continue;
                     }
-                    if (item.OnSprite(mousePos))
+                    if (enemy.OnSprite(mousePos))
                     {
-                        float xd = mousePos.X - item.GlobalPosition.X;
-                        float yd = mousePos.Y - item.GlobalPosition.Y;
+                        float xd = mousePos.X - enemy.GlobalPosition.X;
+                        float yd = mousePos.Y - enemy.GlobalPosition.Y;
                         float distance = (float)Math.Sqrt(xd*xd+yd*yd);
                         if (distance < closedistance)
                         {
-                            entity = item.Id;
+                            entity = enemy.Id;
                             closedistance = distance;
                         }
                     }

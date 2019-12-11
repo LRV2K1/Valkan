@@ -48,10 +48,4 @@ partial class Player : Entity
             PlayAnimation("idle_1");
         }
     }
-
-    public override void PlayAnimation(string id)
-    {
-        base.PlayAnimation(id);
-        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
-    }
 }

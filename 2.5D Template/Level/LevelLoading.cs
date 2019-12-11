@@ -16,6 +16,9 @@ partial class Level : GameObjectLibrary
         GameObjectList items = new GameObjectList(1, "items");
         entities.Add(items);
 
+        GameObjectList enemies = new GameObjectList(1, "enemies");
+        entities.Add(enemies);
+
         Camera camera = new Camera("player",0, "camera");
         RootList.Add(camera);
 
@@ -164,6 +167,9 @@ partial class Level : GameObjectLibrary
 
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
-
+        Enemy enemy = new Enemy(asset, boundingy);
+        GameObjectList enemies = GetObject("enemies") as GameObjectList;
+        enemies.Add(enemy);
+        enemy.MovePositionOnGrid(x, y);
     }
 }

@@ -14,8 +14,6 @@ class Item : Entity
     {
         LoadAnimation(asset, "sprite", animated);
         PlayAnimation("sprite");
-
-        origin = new Vector2(Width / 2, Height - BoundingBox.Height / 2);
     }
 }
 

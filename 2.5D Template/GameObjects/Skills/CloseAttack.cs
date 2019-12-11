@@ -23,10 +23,11 @@ class CloseAttack : PrimairySkill
         if (!heavy && player.Stamina >= 2)
         {
             base.Use(timer);
-            player.Stamina -= 2;
-            if (player.Selected)
+            Selected selected = GameWorld.GetObject("selected") as Selected;
+            if (selected != null)
             {
-                player.RemoveSelectedEntity();
+                Enemy enemy = GameWorld.GetObject(selected.SelectedEntity) as Enemy;
+                enemy.Health -= 10;
             }
         }
     }

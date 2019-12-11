@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Entity : AnimatedGameObject
 {
     protected Vector2 gridPos;
-    int boundingy;
+    protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
@@ -67,6 +67,12 @@ abstract partial class Entity : AnimatedGameObject
         Tile host = GameWorld.GetObject(this.host) as Tile;
         host.RemovePassenger(id);
         (parent as GameObjectList).Remove(id);
+    }
+
+    public override void PlayAnimation(string id)
+    {
+        base.PlayAnimation(id);
+        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
     public override Rectangle BoundingBox

@@ -29,6 +29,30 @@
 #begin Levels/Level_3.txt
 /copy:Levels/Level_3.txt
 
+#begin Sprites/Enemy/spr_enemy_0@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/spr_enemy_0@4.png
+
+#begin Sprites/Enemy/spr_enemy_1@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/spr_enemy_1@4.png
+
 #begin Sprites/Items/spr_barrel.png
 /importer:TextureImporter
 /processor:TextureProcessor
