@@ -28,7 +28,7 @@ class Player : Entity
         job = "Reaper";
         playerID = 1;
         playerlevel = 1;
-        playerEXP = 0;
+        playerEXP = 1;
         maxhealth = 10;
         maxstamina = 10;
         health = maxhealth;
@@ -149,7 +149,7 @@ class Player : Entity
         }
         if (inputHelper.KeyPressed(Keys.Q))
         {
-            LevelUp();
+            WriteStats();
             ReadStats();
         }
     }
@@ -187,19 +187,8 @@ class Player : Entity
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
-    public virtual void LevelUp()
+    public virtual void WriteStats()
     {
-
-        if (playerEXP > EXPThreshold)
-
-
-        {
-            playerlevel++;
-            //maxhealth = maxhealth + 1;
-            //maxstamina = maxstamina + 1;
-            playerEXP = playerEXP - EXPThreshold;
-            EXPThreshold = EXPThreshold * 2;
-
             string statpath = "Content/PlayerStats/Stats.txt";
             string[] lines;
             lines = new string[7];
@@ -217,10 +206,17 @@ class Player : Entity
                 System.Diagnostics.Debug.WriteLine(lines[i]);
             }
             writer.Close();
+    }
+
+    public void LevelUp()
+    {
+        if (playerEXP > EXPThreshold)
+        {
+            playerlevel++;
+            playerEXP = playerEXP - EXPThreshold;
+            EXPThreshold = EXPThreshold * 2;
         }
-
-
-       
+        WriteStats();
     }
 
     public void ReadStats()
@@ -233,18 +229,12 @@ class Player : Entity
         {
             lines.Add(line);
             line = streamReader.ReadLine();
-       } 
-
+        }
         for (int i = 0; i < lines.Count; i++)
         {
             lines[i] = Decrypt(lines[i]);
             System.Diagnostics.Debug.WriteLine(lines[i]);
         }
-
-        lines[0] = Decrypt(lines[0]);
-        lines[1] = Decrypt(lines[1]);
-        System.Diagnostics.Debug.WriteLine(lines[1]);
-
         streamReader.Close();
     }
 
@@ -261,6 +251,7 @@ class Player : Entity
                 ICryptoTransform tr = trip.CreateEncryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 EncryptedText = Convert.ToBase64String(results, 0, results.Length);
+                System.Diagnostics.Debug.WriteLine("encrypted");
                 return Convert.ToBase64String(results, 0, results.Length);
             }
         }
