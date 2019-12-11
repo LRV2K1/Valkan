@@ -28,6 +28,7 @@ partial class Player : Entity
     protected Skill skill1, skill3;
     protected Block skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
+    protected bool dead, die;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -40,6 +41,9 @@ partial class Player : Entity
         stamina = maxstamina;
         staminatimerreset = 1f;
         addstaminatimerreset = 0.02f;
+
+        dead = false;
+        die = false;
 
         speedMultipliers = new List<SpeedMultiplier>();
 
@@ -66,6 +70,10 @@ partial class Player : Entity
     
     public override void HandleInput(InputHelper inputHelper)
     {
+        if (die || dead)
+        {
+            return;
+        }
         ControlMove(inputHelper);
 
         EntitySelection(inputHelper);
@@ -75,13 +83,16 @@ partial class Player : Entity
 
     public override void Update(GameTime gameTime)
     {
-        Move(gameTime);
+        if (!die && !dead)
+        {
+            Move(gameTime);
 
-        ChangeAnimation();
+            ChangeAnimation();
+
+            RegenStamina(gameTime);
+        }
 
         base.Update(gameTime);
-
-        RegenStamina(gameTime);
     }
 
     private void ControlMove(InputHelper inputHelper)

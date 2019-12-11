@@ -51,6 +51,14 @@ partial class Player : Entity
         stamina++;
     }
 
+    private void CheckDie()
+    {
+        if (health <= 0)
+        {
+            die = true;
+        }
+    }
+
     public int Health
     {
         get { return health; }
@@ -70,6 +78,7 @@ partial class Player : Entity
             {
                 health = 0;
             }
+            CheckDie();
         }
     }
 
