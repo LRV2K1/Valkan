@@ -25,12 +25,8 @@ class Enemy : Entity
 
     public override void Update(GameTime gameTime)
     {
-        if (dead)
-        {
-            return;
-        }
         base.Update(gameTime);
-        if (die)
+        if (die || dead)
         {
             if (Current.AnimationEnded)
             {

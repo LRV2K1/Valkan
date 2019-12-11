@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 class Block : SecondairySkill
 {
     protected bool block;
-    public Block(string assetname, float time = 2f, int damage = 10)
+    public Block(string assetname, float time = 1f, int damage = 10)
         : base(assetname, time, damage)
     {
         block = false;
@@ -15,17 +15,20 @@ class Block : SecondairySkill
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        block = inputHelper.MouseButtonDown(button) && timer.Ready;
+        Player player = parent as Player;
+        block = inputHelper.MouseButtonDown(button) && timer.Ready && player.Stamina >= 20;
     }
 
     public bool Blocking
     {
         get { return block; }
         set 
-        { 
+        {
             block = value;
             if (!block)
             {
+                Player player = parent as Player;
+                player.Stamina -= 20;
                 base.Use(time);
             }
         }
