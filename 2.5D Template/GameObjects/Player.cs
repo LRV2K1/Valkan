@@ -189,7 +189,10 @@ class Player : Entity
 
     public virtual void LevelUp()
     {
+
         if (playerEXP > EXPThreshold)
+
+
         {
             playerlevel++;
             //maxhealth = maxhealth + 1;
@@ -215,6 +218,9 @@ class Player : Entity
             }
             writer.Close();
         }
+
+
+       
     }
 
     public void ReadStats()
@@ -227,12 +233,18 @@ class Player : Entity
         {
             lines.Add(line);
             line = streamReader.ReadLine();
-        }
+       } 
+
         for (int i = 0; i < lines.Count; i++)
         {
             lines[i] = Decrypt(lines[i]);
             System.Diagnostics.Debug.WriteLine(lines[i]);
         }
+
+        lines[0] = Decrypt(lines[0]);
+        lines[1] = Decrypt(lines[1]);
+        System.Diagnostics.Debug.WriteLine(lines[1]);
+
         streamReader.Close();
     }
 
