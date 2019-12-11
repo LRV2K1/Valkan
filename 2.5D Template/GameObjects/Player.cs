@@ -16,15 +16,24 @@ class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
+    protected string name, job;
+    protected int playerlevel, playerEXP, EXPThreshold;
+    public int playerID;
     bool wait;
 
     public Player()
         : base("Sprites/Player/spr_boundingbox", 20, 2, "player")
     {
+        name = "Valkan";
+        job = "Reaper";
+        playerID = 1;
+        playerlevel = 1;
+        playerEXP = 0;
         maxhealth = 10;
         maxstamina = 10;
         health = maxhealth;
         stamina = maxstamina;
+        EXPThreshold = 5;
         wait = true;
 
         direction = 0;
@@ -138,6 +147,11 @@ class Player : Entity
         {
             MaxStamina = 1;
         }
+        if (inputHelper.KeyPressed(Keys.Q))
+        {
+            LevelUp();
+            ReadStats();
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -164,8 +178,6 @@ class Player : Entity
         {
             PlayAnimation("idle_1");
         }
-        ReadStats();
-        LevelUp();
         base.Update(gameTime);
     }
 
@@ -175,23 +187,34 @@ class Player : Entity
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
-    public void LevelUp()
+    public virtual void LevelUp()
     {
-        //PlayerLevel++;
-        //maxhealth = maxhealth + 1;
-        //maxstamina = maxstamina + 1;
-        string statpath = "Content/PlayerStats/Stats.txt";
-        string[] lines;
-        lines = new string[5];
-        StreamWriter writer = new StreamWriter(statpath);
-        lines[0] = Encrypt(maxhealth.ToString());
-        lines[1] = Encrypt(maxstamina.ToString());
-        for (int i = 0; i < lines.Length; i++)
+        if (playerEXP > EXPThreshold)
         {
-            writer.WriteLine(lines[i]);
+            playerlevel++;
+            //maxhealth = maxhealth + 1;
+            //maxstamina = maxstamina + 1;
+            playerEXP = playerEXP - EXPThreshold;
+            EXPThreshold = EXPThreshold * 2;
+
+            string statpath = "Content/PlayerStats/Stats.txt";
+            string[] lines;
+            lines = new string[7];
+            StreamWriter writer = new StreamWriter(statpath);
+            lines[0] = Encrypt(name);
+            lines[1] = Encrypt(job);
+            lines[2] = Encrypt(playerID.ToString());
+            lines[3] = Encrypt(playerlevel.ToString());
+            lines[4] = Encrypt(playerEXP.ToString());
+            lines[5] = Encrypt(maxhealth.ToString());
+            lines[6] = Encrypt(maxstamina.ToString());
+            for (int i = 0; i < lines.Length; i++)
+            {
+                writer.WriteLine(lines[i]);
+                System.Diagnostics.Debug.WriteLine(lines[i]);
+            }
+            writer.Close();
         }
-        //System.Diagnostics.Debug.WriteLine(lines[1]);
-        writer.Close();
     }
 
     public void ReadStats()
@@ -205,13 +228,15 @@ class Player : Entity
             lines.Add(line);
             line = streamReader.ReadLine();
         }
-        lines[0] = Decrypt(lines[0]);
-        lines[1] = Decrypt(lines[1]);
-        //System.Diagnostics.Debug.WriteLine(lines[1]);
+        for (int i = 0; i < lines.Count; i++)
+        {
+            lines[i] = Decrypt(lines[i]);
+            System.Diagnostics.Debug.WriteLine(lines[i]);
+        }
         streamReader.Close();
     }
-    
-    private static string hash = "1559874(&!*";
+
+    private static string hash = "_+*/(&!*";
     public static string EncryptedText;
     public static string Encrypt(string input)
     {

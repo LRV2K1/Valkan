@@ -28,6 +28,7 @@ partial class Level : GameObjectLibrary
         string line = streamReader.ReadLine();
         int width = line.Length;
         while (line != null)
+
         {
             textLines.Add(line);
             line = streamReader.ReadLine();

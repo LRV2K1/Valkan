@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-class Heavy : Player
+class Bard : Player
 {
-    public Heavy() : base()
+    public Bard()
     {
-        job = "Heavy";
-        maxhealth = 20;
-        maxstamina = 5;
+        job = "Bard";
+        maxhealth = 10;
+        maxstamina = 10;
     }
 }
 
