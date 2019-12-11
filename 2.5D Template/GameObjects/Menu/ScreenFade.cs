@@ -53,6 +53,20 @@ public class ScreenFade : SpriteGameObject
         }
     }
 
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        //If fade Black
+        //Draw previous scene
+        //Draw black fade
+
+        //If fade White
+        //Draw current scene
+        //Draw white fade
+        //When finished, currentscene is currentscene -> gamestatemanager
+
+        base.Draw(gameTime, spriteBatch);
+    }
+
     public void FadeWhite()
     {
         this.Sprite.Color = Color.Black;

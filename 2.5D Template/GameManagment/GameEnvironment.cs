@@ -23,6 +23,7 @@ public class GameEnvironment : Game
     {
         graphics = new GraphicsDeviceManager(this);
         assetManager = new AssetManager(Content);
+        screenFade = new ScreenFade();
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
