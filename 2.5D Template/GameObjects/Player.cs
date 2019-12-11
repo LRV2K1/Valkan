@@ -138,6 +138,11 @@ class Player : Entity
         {
             MaxStamina = 1;
         }
+        if (inputHelper.KeyPressed(Keys.Q))
+        {
+            LevelUp();
+            ReadStats();
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -164,8 +169,6 @@ class Player : Entity
         {
             PlayAnimation("idle_1");
         }
-        ReadStats();
-        LevelUp();
         base.Update(gameTime);
     }
 
@@ -182,7 +185,7 @@ class Player : Entity
         //maxstamina = maxstamina + 1;
         string statpath = "Content/PlayerStats/Stats.txt";
         string[] lines;
-        lines = new string[5];
+        lines = new string[7];
         StreamWriter writer = new StreamWriter(statpath);
         lines[0] = Encrypt(maxhealth.ToString());
         lines[1] = Encrypt(maxstamina.ToString());
@@ -190,7 +193,7 @@ class Player : Entity
         {
             writer.WriteLine(lines[i]);
         }
-        //System.Diagnostics.Debug.WriteLine(lines[1]);
+        System.Diagnostics.Debug.WriteLine(lines[1]);
         writer.Close();
     }
 
@@ -207,7 +210,7 @@ class Player : Entity
         }
         lines[0] = Decrypt(lines[0]);
         lines[1] = Decrypt(lines[1]);
-        //System.Diagnostics.Debug.WriteLine(lines[1]);
+        System.Diagnostics.Debug.WriteLine(lines[1]);
         streamReader.Close();
     }
     
