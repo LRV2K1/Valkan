@@ -21,8 +21,12 @@ class Dodge : TertairySkill
 
     public override void Use(float timer = 2)
     {
-        base.Use(timer);
         Player player = parent as Player;
-        player.AddSpeedMultiplier(runtime, speed);
+        if (player.Stamina >= 20)
+        {
+            base.Use(timer);
+            player.Stamina -= 20;
+            player.AddSpeedMultiplier(runtime, speed);
+        }
     }
 }

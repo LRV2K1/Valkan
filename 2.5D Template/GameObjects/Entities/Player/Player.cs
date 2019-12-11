@@ -27,6 +27,7 @@ partial class Player : Entity
     protected int maxhealth, maxstamina;
     protected Skill skill1, skill3;
     protected Block skill2;
+    protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -34,9 +35,11 @@ partial class Player : Entity
         : base(30, 20, 2, "player")
     {
         maxhealth = 10;
-        maxstamina = 20;
+        maxstamina = 100;
         health = maxhealth;
         stamina = maxstamina;
+        staminatimerreset = 1f;
+        addstaminatimerreset = 0.02f;
 
         speedMultipliers = new List<SpeedMultiplier>();
 
@@ -77,6 +80,8 @@ partial class Player : Entity
         ChangeAnimation();
 
         base.Update(gameTime);
+
+        RegenStamina(gameTime);
     }
 
     private void ControlMove(InputHelper inputHelper)

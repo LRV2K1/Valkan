@@ -29,6 +29,28 @@ partial class Player : Entity
         skill3.HandleInput(inputHelper);
     }
 
+    private void RegenStamina(GameTime gameTime)
+    {
+        if (stamina == maxstamina)
+        {
+            return;
+        }
+        if (staminatimer >= 0)
+        {
+            staminatimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+
+        if (addstaminatimer >= 0)
+        {
+            addstaminatimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+
+        addstaminatimer = addstaminatimerreset;
+        stamina++;
+    }
+
     public int Health
     {
         get { return health; }
@@ -57,6 +79,7 @@ partial class Player : Entity
         set
         {
             stamina = value;
+            staminatimer = staminatimerreset;
             if (stamina > maxstamina)
             {
                 stamina = maxstamina;

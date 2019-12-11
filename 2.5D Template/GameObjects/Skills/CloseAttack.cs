@@ -20,15 +20,18 @@ class CloseAttack : PrimairySkill
     public void Attack(float timer)
     {
         Player player = parent as Player;
-        if (!heavy && player.Stamina >= 2)
+        if (!heavy && player.Stamina >= 20)
         {
             base.Use(timer);
-            player.Stamina -= 2;
+            player.Stamina -= 20;
             Selected selected = GameWorld.GetObject("selected") as Selected;
             if (selected != null)
             {
                 Enemy enemy = GameWorld.GetObject(selected.SelectedEntity) as Enemy;
-                enemy.Health -= 10;
+                if (Math.Abs(Math.Sqrt((player.GlobalPosition.X - enemy.GlobalPosition.X)* (player.GlobalPosition.X - enemy.GlobalPosition.X) + (player.GlobalPosition.Y - enemy.GlobalPosition.Y) * (player.GlobalPosition.Y - enemy.GlobalPosition.Y))) < 200)
+                {
+                    enemy.Health -= 10;
+                }
             }
         }
     }
