@@ -1,4 +1,4 @@
-a:Sprites/Tiles/spr_grass_sheet_0@4x4,Floor,Grass,Tile
+a:Sprites/Tiles/spr_grass_sheet_0@4x8,Floor,Grass,Tile
 b:Sprites/Tiles/spr_sand_0,Floor,Grass,Tile
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

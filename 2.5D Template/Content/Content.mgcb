@@ -605,7 +605,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/spr_grass_2.png
 
-#begin Sprites/Tiles/spr_grass_sheet_0@4x4.png
+#begin Sprites/Tiles/spr_grass_sheet_0@4x8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -615,7 +615,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_grass_sheet_0@4x4.png
+/build:Sprites/Tiles/spr_grass_sheet_0@4x8.png
 
 #begin Sprites/Tiles/spr_sand_0.png
 /importer:TextureImporter

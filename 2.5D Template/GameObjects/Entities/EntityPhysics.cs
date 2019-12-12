@@ -75,13 +75,20 @@ abstract partial class Entity : AnimatedGameObject
         Vector2 depth = Collision.CalculateIntersectionDepth(BoundingBox, entity.BoundingBox);
         int totalWeight = weight + entity.Weight;
         float push = ((float)weight / (float)totalWeight);
+        Item item = entity as Item;
         if (Math.Abs(depth.X) < Math.Abs(depth.Y))
         {
             position.X += depth.X;
-            entity.position -= new Vector2(depth.X * push, 0);
+            if (item != null && item.ItemType == ItemType.Movible)
+            {
+                entity.position -= new Vector2(depth.X * push, 0);
+            }
             return;
         }
         position.Y += depth.Y;
-        entity.position -= new Vector2(0, depth.Y * push);
+        if (item != null && item.ItemType == ItemType.Movible)
+        {
+            entity.position -= new Vector2(0, depth.Y * push);
+        }
     }
 }
