@@ -128,7 +128,8 @@ class Tile : SpriteGameObject
 
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
 
-        origin = new Vector2(Width/2, sprite.Height- levelGrid.CellHeight / 2);
+        origin = new Vector2(Width / 2, sprite.Height / 2);
+
         if (boundingbox == Rectangle.Empty && TileType == TileType.Wall)
         {
             boundingbox = new Rectangle((int)(GlobalPosition.X - levelGrid.CellWidth/2), (int)(GlobalPosition.Y - levelGrid.CellHeight / 2), levelGrid.CellWidth, levelGrid.CellHeight);
@@ -139,10 +140,19 @@ class Tile : SpriteGameObject
 
     public virtual void SetSprite()
     {
-        sprite.SheetIndex = CalculateSurroundingTiles()%16;
+        int r = CalculateSurroundingStraightTiles();
+        int s = CalculateSurroundingSideTiles();
+        if (r != 0)
+        {
+            sprite.SheetIndex = r % 16;
+        }
+        else
+        {
+            sprite.SheetIndex = s % 16 + 16;
+        }
     }
 
-    public virtual int CalculateSurroundingTiles()
+    public virtual int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         int i = 0;
@@ -162,24 +172,32 @@ class Tile : SpriteGameObject
         {
             i += 8;
         }
-
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y - 1) != texturetype)
-        {
-            i += 16;
-        }
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y) != texturetype)
-        {
-            i += 32;
-        }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y + 1) != texturetype)
-        {
-            i += 64;
-        }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y) != texturetype)
-        {
-            i += 128;
-        }
         return i;
+    }
+
+
+    public virtual int CalculateSurroundingSideTiles()
+    {
+        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        //schuin
+        int s = 0;
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != texturetype)
+        {
+            s += 1;
+        }
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != texturetype)
+        {
+            s += 2;
+        }
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != texturetype)
+        {
+            s += 4;
+        }
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != texturetype)
+        {
+            s += 8;
+        }
+        return s;
     }
 
     public List<string> Passengers

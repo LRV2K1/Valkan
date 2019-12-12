@@ -60,6 +60,11 @@ public class GameObjectLibrary : GameObject
         return null;
     }
 
+    public Dictionary<string, GameObject> Dictionary
+    {
+        get { return objects; }
+    }
+
     public virtual void Remove(string id)
     {
         objects.Remove(id);

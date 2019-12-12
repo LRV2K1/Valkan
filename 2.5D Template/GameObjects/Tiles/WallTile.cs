@@ -17,7 +17,10 @@ class WallTile : Tile
     public override void InitializeTile()
     {
         base.InitializeTile();
-        origin.Y -= 1;
+
+        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+
+        origin = new Vector2(Width / 2, sprite.Height - levelGrid.CellHeight / 2 - 1);
     }
     public override void SetSprite()
     {
@@ -32,7 +35,7 @@ class WallTile : Tile
     }
     
     
-    public override int CalculateSurroundingTiles()
+    public override int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         int i = 0;

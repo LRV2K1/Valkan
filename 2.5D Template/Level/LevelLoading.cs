@@ -16,15 +16,18 @@ partial class Level : GameObjectLibrary
         GameObjectList items = new GameObjectList(1, "items");
         entities.Add(items);
 
+        GameObjectList enemies = new GameObjectList(1, "enemies");
+        entities.Add(enemies);
+
         Camera camera = new Camera("player",0, "camera");
         RootList.Add(camera);
 
         GameMouse mouse = new GameMouse();
         RootList.Add(mouse);
 
-        LoadFile(path);
-
         LoadOverlays();
+
+        LoadFile(path);
     }
 
     public void LoadOverlays()
@@ -102,8 +105,11 @@ partial class Level : GameObjectLibrary
         int boundingy = int.Parse(type[1]);
         switch (type[2])
         {
-            case "Item":
-                LoadItem(x, y, asset, boundingy);
+            case "SpriteItem":
+                LoadItem(x, y, asset, boundingy, false, type[3]);
+                break;
+            case "AnimatedItem":
+                LoadItem(x, y, asset, boundingy, true, type[3]);
                 break;
             case "Player":
                 LoadPlayer(x, y);
@@ -116,25 +122,29 @@ partial class Level : GameObjectLibrary
 
     private void LoadPlayer(int x, int y)
     {
-        LevelGrid tiles = GetObject("tiles") as LevelGrid;
         Player player = new Player();
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
+        player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
     }
 
-    private void LoadItem(int x, int y, string asset, int boundingy)
+    private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string et)
     {
-        LevelGrid tiles = GetObject("tiles") as LevelGrid;
-        Item item = new Item(asset, boundingy);
+        ItemType type = (ItemType)Enum.Parse(typeof(ItemType), et);
+        Item item = new Item(asset, animated, type, boundingy);
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
+        //entities.Add(item);
         item.MovePositionOnGrid(x, y);
     }
 
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
-
+        Enemy enemy = new Enemy(asset, boundingy);
+        GameObjectList enemies = GetObject("enemies") as GameObjectList;
+        enemies.Add(enemy);
+        enemy.MovePositionOnGrid(x, y);
     }
 }
