@@ -79,16 +79,18 @@ abstract partial class Entity : AnimatedGameObject
         if (Math.Abs(depth.X) < Math.Abs(depth.Y))
         {
             position.X += depth.X;
-            if (item != null && item.ItemType == ItemType.Movible)
+            if (item == null || item.ItemType == ItemType.InMovible)
             {
-                entity.position -= new Vector2(depth.X * push, 0);
+                return;
             }
+            entity.position -= new Vector2(depth.X * push, 0);
             return;
         }
         position.Y += depth.Y;
-        if (item != null && item.ItemType == ItemType.Movible)
+        if (item == null || item.ItemType == ItemType.InMovible)
         {
-            entity.position -= new Vector2(0, depth.Y * push);
+            return;
         }
+        entity.position -= new Vector2(0, depth.Y * push);
     }
 }

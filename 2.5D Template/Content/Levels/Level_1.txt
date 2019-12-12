@@ -55,9 +55,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
 
 a:None
-b:Sprites/Items/spr_bucket,20,Item,Movible
-c:Sprites/Items/spr_barrel,30,Item,Movible
-d:Sprites/Items/spr_campfire@1x4,20,Item,Movible
+b:Sprites/Items/spr_bucket,20,SpriteItem,Movible
+c:Sprites/Items/spr_barrel,30,SpriteItem,Movible
+d:Sprites/Items/spr_campfire@1x4,20,AnimatedItem,Movible
 e:Sprites/Player/spr_idle_1,30,Player
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
