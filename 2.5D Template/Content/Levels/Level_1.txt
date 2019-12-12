@@ -1,4 +1,4 @@
-a:Sprites/Tiles/spr_grass_sheet_0@4x4,Floor,Grass,Tile
+a:Sprites/Tiles/spr_grass_sheet_0@4x8,Floor,Grass,Tile
 b:Sprites/Tiles/Trees/spr_deadtree_3,Wall,Grass,TreeTile
 c:Sprites/Tiles/Trees/spr_tree_0,Wall,Grass,TreeTile
 d:Sprites/Tiles/Trees/spr_tree_4,Wall,Grass,TreeTile
@@ -55,9 +55,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
 
 a:None
-b:Sprites/Items/spr_bucket,20,Item
-c:Sprites/Items/spr_barrel,30,Item
-d:Sprites/Items/spr_campfire@1x4,20,Item
+b:Sprites/Items/spr_bucket,20,Item,Movible
+c:Sprites/Items/spr_barrel,30,Item,Movible
+d:Sprites/Items/spr_campfire@1x4,20,Item,Movible
 e:Sprites/Player/spr_idle_1,30,Player
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

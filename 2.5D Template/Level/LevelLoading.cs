@@ -129,9 +129,9 @@ partial class Level : GameObjectLibrary
         player.MovePositionOnGrid(x, y);
     }
 
-    private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string et)
+    private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)
     {
-        ItemType type = (ItemType)Enum.Parse(typeof(ItemType), et);
+        ItemType type = (ItemType)Enum.Parse(typeof(ItemType), it);
         Item item = new Item(asset, animated, type, boundingy);
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
