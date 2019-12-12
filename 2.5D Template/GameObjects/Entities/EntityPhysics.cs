@@ -79,7 +79,7 @@ abstract partial class Entity : AnimatedGameObject
         if (Math.Abs(depth.X) < Math.Abs(depth.Y))
         {
             position.X += depth.X;
-            if (item == null || item.ItemType == ItemType.InMovible)
+            if (item != null && item.ItemType == ItemType.InMovible)
             {
                 return;
             }
@@ -87,7 +87,7 @@ abstract partial class Entity : AnimatedGameObject
             return;
         }
         position.Y += depth.Y;
-        if (item == null || item.ItemType == ItemType.InMovible)
+        if (item != null && item.ItemType == ItemType.InMovible)
         {
             return;
         }

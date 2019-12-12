@@ -24,6 +24,15 @@ class Item : Entity
         itemtype = it;
     }
 
+    public override void MovePositionOnGrid(int x, int y)
+    {
+        base.MovePositionOnGrid(x, y);
+        if (itemtype == ItemType.InMovible)
+        {
+            previousPos = position;
+        }
+    }
+
     public ItemType ItemType
     {
         get { return itemtype; }

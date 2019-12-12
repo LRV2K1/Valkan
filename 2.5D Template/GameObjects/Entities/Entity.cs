@@ -56,7 +56,7 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    public void MovePositionOnGrid(int x, int y)
+    public virtual void MovePositionOnGrid(int x, int y)
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
