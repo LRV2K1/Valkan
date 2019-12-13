@@ -22,7 +22,7 @@ class Button : SpriteGameObject
     public override void HandleInput(InputHelper inputHelper)
     {
         highLighted = BoundingBox.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y);
-        pressed = inputHelper.MouseLeftButtonPressed() && highLighted;
+        pressed = inputHelper.MouseButtonPressed(MouseButton.Left) && highLighted;
         if (highLighted)
         {
             this.Sprite.Color = Color.Black;
