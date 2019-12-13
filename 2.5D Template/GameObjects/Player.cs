@@ -187,29 +187,29 @@ class Player : Entity
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
-    public virtual void WriteStats()
+    public virtual void WriteStats()                        //Saves the player stats in a text file
     {
-            string statpath = "Content/PlayerStats/Stats.txt";
-            string[] lines;
-            lines = new string[7];
-            StreamWriter writer = new StreamWriter(statpath);
-            lines[0] = Encrypt(name);
-            lines[1] = Encrypt(job);
-            lines[2] = Encrypt(playerID.ToString());
-            lines[3] = Encrypt(playerlevel.ToString());
-            lines[4] = Encrypt(playerEXP.ToString());
-            lines[5] = Encrypt(maxhealth.ToString());
-            lines[6] = Encrypt(maxstamina.ToString());
-            for (int i = 0; i < lines.Length; i++)
-            {
-                writer.WriteLine(lines[i]);
-            }
-            writer.Close();
+        string statpath = "Content/PlayerStats/Stats.txt";
+        string[] lines;
+        lines = new string[7];
+        StreamWriter writer = new StreamWriter(statpath);
+        lines[0] = Encrypt(name);
+        lines[1] = Encrypt(job);
+        lines[2] = Encrypt(playerID.ToString());
+        lines[3] = Encrypt(playerlevel.ToString());
+        lines[4] = Encrypt(playerEXP.ToString());
+        lines[5] = Encrypt(maxhealth.ToString());
+        lines[6] = Encrypt(maxstamina.ToString());
+        for (int i = 0; i < lines.Length; i++)
+        {
+            writer.WriteLine(lines[i]);
+        }
+        writer.Close();
     }
 
     public void LevelUp()
     {
-        if (playerEXP > EXPThreshold)
+        if (playerEXP > EXPThreshold)               
         {
             playerlevel++;
             playerEXP = playerEXP - EXPThreshold;
@@ -218,7 +218,7 @@ class Player : Entity
         WriteStats();
     }
 
-    public void ReadStats()
+    public void ReadStats()                                //Reads the player stats in a text file
     {
         string statspath = "Content/PlayerStats/Stats.txt";
         StreamReader streamReader = new StreamReader(statspath);
