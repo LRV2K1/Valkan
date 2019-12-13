@@ -18,7 +18,7 @@ public class AnimatedGameObject : SpriteGameObject
         animations[id] = anim;        
     }
 
-    public virtual void PlayAnimation(string id)
+    public virtual void PlayAnimation(string id, bool backwards = false)
     {
         if (sprite == animations[id])
         {
@@ -28,7 +28,7 @@ public class AnimatedGameObject : SpriteGameObject
         {
             animations[id].Mirror = sprite.Mirror;
         }
-        animations[id].Play(false);
+        animations[id].Play(backwards);
         sprite = animations[id];
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
     }
