@@ -29,6 +29,9 @@
 #begin Levels/Level_3.txt
 /copy:Levels/Level_3.txt
 
+#begin PlayerStats/Stats.txt
+/copy:PlayerStats/Stats.txt
+
 #begin Soundtracks/Sad.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
