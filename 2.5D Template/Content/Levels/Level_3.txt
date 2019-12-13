@@ -12,7 +12,7 @@ k:Sprites/Tiles/spr_water_1,Wall,Water,Tile
 l:Sprites/Tiles/Trees/spr_tree_4,Wall,Grass,TreeTile
 m:Sprites/Tiles/Trees/spr_tree_0,Wall,Grass,TreeTile
 
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcccccbbdb
+maaaaaaaaaaaaaaaaaaaaaaaaaaaaabcccccbbdb
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacccccbbdd
 aaaaaeaaaaaaaeaaaaafagaaaahhaaaabccccbid
 aaaaaaaaaaaaaaaaaaaaaaaaahhhhaaaabccccbd
