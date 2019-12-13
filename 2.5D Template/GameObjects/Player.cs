@@ -203,7 +203,6 @@ class Player : Entity
             for (int i = 0; i < lines.Length; i++)
             {
                 writer.WriteLine(lines[i]);
-                System.Diagnostics.Debug.WriteLine(lines[i]);
             }
             writer.Close();
     }
@@ -233,7 +232,6 @@ class Player : Entity
         for (int i = 0; i < lines.Count; i++)
         {
             lines[i] = Decrypt(lines[i]);
-            System.Diagnostics.Debug.WriteLine(lines[i]);
         }
         streamReader.Close();
     }
@@ -251,7 +249,6 @@ class Player : Entity
                 ICryptoTransform tr = trip.CreateEncryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 EncryptedText = Convert.ToBase64String(results, 0, results.Length);
-                System.Diagnostics.Debug.WriteLine("encrypted");
                 return Convert.ToBase64String(results, 0, results.Length);
             }
         }
