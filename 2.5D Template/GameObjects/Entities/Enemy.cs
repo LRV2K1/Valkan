@@ -18,8 +18,8 @@ class Enemy : Entity
         selected = false;
         dead = false;
         health = 20;
-        LoadAnimation(assetname, "sprite", true);
-        LoadAnimation(assetname, "die", false);
+        LoadAnimation(assetname, "sprite", true, false);
+        LoadAnimation(assetname, "die", false, false);
         PlayAnimation("sprite");
     }
 

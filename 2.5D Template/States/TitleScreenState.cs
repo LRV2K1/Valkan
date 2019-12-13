@@ -69,7 +69,7 @@ class TitleScreenState : GameObjectLibrary
         if (startButton.Pressed)
         {
             //GameEnvironment.AssetManager.PlaySong("Valkan's Fate - Battle Theme(Garageband)");
-            nextScene = "playingState";
+            GameEnvironment.GameStateManager.SwitchTo("playingState");
             //GameEnvironment.ScreenFade.FadeBlack();
         }
         else if (settingsButton.Pressed)

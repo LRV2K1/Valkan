@@ -30,6 +30,10 @@ partial class Player : Entity
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
     protected string currentAnimation;
+    protected bool animationFinished = false;
+    protected double lastDirection;
+    protected bool input;
+    protected Vector2 stillVelocity;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -104,7 +108,6 @@ partial class Player : Entity
             velocity = Vector2.Zero;
             return;
         }
-
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
@@ -127,25 +130,31 @@ partial class Player : Entity
         float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
         if (totalDir != 0)
         {
-
-            velocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            input = true;
+            stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
             if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;
                 Vector2 difirence = icon.Position - position;
                 float totaldifirence = (float)Math.Sqrt(difirence.X * difirence.X + difirence.Y * difirence.Y);
-                if (totaldifirence <= 10 && velocity.Y < 0)
+                if (totaldifirence <= 10 && stillVelocity.Y < 0)
                 {
-                    velocity.Y = 0;
+                    stillVelocity.Y = 0;
                 }
-                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence, velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
+                stillVelocity = new Vector2(-stillVelocity.X * difirence.Y / totaldifirence - stillVelocity.Y * difirence.X / totaldifirence, stillVelocity.X * difirence.X / totaldifirence - stillVelocity.Y * difirence.Y / totaldifirence);
+            }
+            if (currentAnimation == "C")
+            {
+                velocity = stillVelocity;
             }
         }
         else
         {
+            input = false;
             velocity = Vector2.Zero;
         }
+
     }
 
     private void Move(GameTime gameTime)
