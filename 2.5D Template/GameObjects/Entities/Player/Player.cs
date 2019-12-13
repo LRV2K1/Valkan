@@ -77,6 +77,7 @@ partial class Player : Entity
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
+    //setup skills
     public void SetupPlayer()
     {
         skill1.Parent = this;
@@ -113,6 +114,7 @@ partial class Player : Entity
         base.Update(gameTime);
     }
 
+    //move control player
     private void ControlMove(InputHelper inputHelper)
     {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
@@ -175,8 +177,10 @@ partial class Player : Entity
 
     }
 
+    //move player
     private void Move(GameTime gameTime)
     {
+        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -194,6 +198,7 @@ partial class Player : Entity
         }
     }
 
+    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));

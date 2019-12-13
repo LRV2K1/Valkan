@@ -7,12 +7,14 @@ using System.IO;
 
 partial class Level : GameObjectLibrary
 {
+    //loads all data from the level file
     private void LoadFile(string path)
     {
         Dictionary<char, string> tiletypeschar = new Dictionary<char, string>();
         List<string> textLines = new List<string>();
         StreamReader streamReader = new StreamReader(path);
 
+        //read different tiletypes
         string line = streamReader.ReadLine();
         while (line != "")
         {
@@ -22,6 +24,7 @@ partial class Level : GameObjectLibrary
             line = streamReader.ReadLine();
         }
 
+        //read tile grid
         line = streamReader.ReadLine();
         int width = line.Length;
         while (line != "" && line != null)
@@ -41,6 +44,7 @@ partial class Level : GameObjectLibrary
         Dictionary<char, string> entitytypeschar = new Dictionary<char, string>();
         List<string> entityLines = new List<string>();
 
+        //read different entitytypes
         line = streamReader.ReadLine();
         while (line != "" && line != null)
         {
@@ -50,6 +54,7 @@ partial class Level : GameObjectLibrary
             line = streamReader.ReadLine();
         }
 
+        //read entitygrid
         line = streamReader.ReadLine();
         width = line.Length;
         while (line != "" && line != null)

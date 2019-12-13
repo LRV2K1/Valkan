@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 
 class Selected : SpriteGameObject
 {
+    //selected point of the player
     protected string selectedentity;
 
     public Selected(int layer = 1, string id = "")

@@ -14,6 +14,7 @@ class GrassTile : Tile
         tileobject = TileObject.GrassTile;
     }
 
+    //autotiling algorithm
     public override int CalculateSurroundingStraightTiles()
     {
 
