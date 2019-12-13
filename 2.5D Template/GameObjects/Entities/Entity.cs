@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-partial class Entity : AnimatedGameObject
+abstract partial class Entity : AnimatedGameObject
 {
     protected Vector2 gridPos;
-    int boundingy;
+    protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
@@ -56,7 +56,7 @@ partial class Entity : AnimatedGameObject
         }
     }
 
-    public void MovePositionOnGrid(int x, int y)
+    public virtual void MovePositionOnGrid(int x, int y)
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
@@ -67,6 +67,12 @@ partial class Entity : AnimatedGameObject
         Tile host = GameWorld.GetObject(this.host) as Tile;
         host.RemovePassenger(id);
         (parent as GameObjectList).Remove(id);
+    }
+
+    public override void PlayAnimation(string id)
+    {
+        base.PlayAnimation(id);
+        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
     public override Rectangle BoundingBox

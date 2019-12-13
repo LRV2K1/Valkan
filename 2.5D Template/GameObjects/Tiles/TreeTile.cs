@@ -12,4 +12,13 @@ class TreeTile : Tile
     {
         tileobject = TileObject.TreeTile;
     }
+
+    public override void InitializeTile()
+    {
+        base.InitializeTile();
+
+        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+
+        origin = new Vector2(Width / 2, sprite.Height - levelGrid.CellHeight / 2);
+    }
 }

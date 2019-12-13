@@ -19,11 +19,13 @@ enum TextureType
     None,
     Grass,
     Water,
+    Mine
 }
 
 enum TileObject
 {
     Tile,
+    GrassTile,
     WallTile,
     TreeTile
 }
@@ -119,6 +121,11 @@ class Tile : SpriteGameObject
         get { return texturetype; }
     }
 
+    public TileObject TileObject
+    {
+        get { return tileobject; }
+    }
+
     public virtual void InitializeTile()
     {
         if (type == TileType.Background)
@@ -128,7 +135,8 @@ class Tile : SpriteGameObject
 
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
 
-        origin = new Vector2(Width/2, sprite.Height- levelGrid.CellHeight / 2);
+        origin = new Vector2(Width / 2, sprite.Height / 2);
+
         if (boundingbox == Rectangle.Empty && TileType == TileType.Wall)
         {
             boundingbox = new Rectangle((int)(GlobalPosition.X - levelGrid.CellWidth/2), (int)(GlobalPosition.Y - levelGrid.CellHeight / 2), levelGrid.CellWidth, levelGrid.CellHeight);
@@ -139,47 +147,65 @@ class Tile : SpriteGameObject
 
     public virtual void SetSprite()
     {
-        sprite.SheetIndex = CalculateSurroundingTiles()%16;
+        int r = CalculateSurroundingStraightTiles();
+        int s = CalculateSurroundingSideTiles();
+        if (r != 0)
+        {
+            sprite.SheetIndex = r % 16;
+        }
+        else
+        {
+            sprite.SheetIndex = s % 16 + 16;
+        }
     }
 
-    public virtual int CalculateSurroundingTiles()
+    public virtual int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-        int i = 0;
-        if (levelGrid.GetTextureType(grid.X, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y - 1) != texturetype)
+        //regt
+        int r = 0;
+        if (levelGrid.GetTextureType(grid.X, grid.Y - 1) == texturetype)
         {
-            i += 1;
+            r += 1;
         }
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y) == texturetype)
         {
-            i += 2;
+            r += 2;
         }
-        if (levelGrid.GetTextureType(grid.X, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y + 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X, grid.Y + 1) == texturetype)
         {
-            i += 4;
+            r += 4;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y) == texturetype)
         {
-            i += 8;
+            r += 8;
         }
+        return r;
+    }
 
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y - 1) != texturetype)
+
+    public virtual int CalculateSurroundingSideTiles()
+    {
+        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        //schuin
+        int s = 0;
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) == texturetype)
         {
-            i += 16;
+            s += 1;
         }
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) == texturetype)
         {
-            i += 32;
+            s += 2;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y + 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) == texturetype)
         {
-            i += 64;
+            s += 4;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) == texturetype)
         {
-            i += 128;
+            s += 8;
         }
-        return i;
+        return s;
     }
 
     public List<string> Passengers

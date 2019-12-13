@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-partial class Entity : AnimatedGameObject
+abstract partial class Entity : AnimatedGameObject
 {
     private void DoPhysics()
     {
@@ -24,17 +24,6 @@ partial class Entity : AnimatedGameObject
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;
-                if (tileType == TileType.Floor)
-                {
-                    for (int i= 0; i < currentTile.Passengers.Count; i++)
-                    {
-                        if (currentTile.Passengers[i] != id)
-                        {
-                            HandleEntityCollisions(currentTile.Passengers[i]);
-                        }
-                    }
-                    continue;
-                }
 
                 Vector2 tilePos = new Vector2(x * tiles.CellWidth / 2 - tiles.CellWidth / 2 * y, y * tiles.CellHeight / 2 + tiles.CellHeight / 2 * x);
                 Rectangle tileBounds;    
@@ -44,6 +33,17 @@ partial class Entity : AnimatedGameObject
                 }
                 else
                 {
+                    for (int i = 0; i < currentTile.Passengers.Count; i++)
+                    {
+                        if (currentTile.Passengers[i] != id)
+                        {
+                            HandleEntityCollisions(currentTile.Passengers[i]);
+                        }
+                    }
+                    if (tileType == TileType.Floor)
+                    {
+                        continue;
+                    }
                     tileBounds = currentTile.GetBoundingBox();
                 }
 
@@ -75,13 +75,22 @@ partial class Entity : AnimatedGameObject
         Vector2 depth = Collision.CalculateIntersectionDepth(BoundingBox, entity.BoundingBox);
         int totalWeight = weight + entity.Weight;
         float push = ((float)weight / (float)totalWeight);
+        Item item = entity as Item;
         if (Math.Abs(depth.X) < Math.Abs(depth.Y))
         {
             position.X += depth.X;
+            if (item != null && item.ItemType == ItemType.InMovible)
+            {
+                return;
+            }
             entity.position -= new Vector2(depth.X * push, 0);
             return;
         }
         position.Y += depth.Y;
+        if (item != null && item.ItemType == ItemType.InMovible)
+        {
+            return;
+        }
         entity.position -= new Vector2(0, depth.Y * push);
     }
 }
