@@ -50,6 +50,20 @@ class LevelGrid : GameObjectGrid
         return current.TextureType;
     }
 
+    public TileObject GetTileObject(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return TileObject.Tile;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return TileObject.Tile;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.TileObject;
+    }
+
     public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile tile;

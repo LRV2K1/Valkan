@@ -77,6 +77,8 @@ partial class Level : GameObjectLibrary
                 return new WallTile(new Point(x, y), asset, tp, tt);
             case "TreeTile":
                 return new TreeTile(new Point(x, y), asset, tp, tt);
+            case "GrassTile":
+                return new GrassTile(new Point(x, y), asset, tp, tt);
         }
 
         return new Tile(new Point(x, y));

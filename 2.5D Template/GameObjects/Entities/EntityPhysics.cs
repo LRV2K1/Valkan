@@ -24,17 +24,6 @@ abstract partial class Entity : AnimatedGameObject
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;
-                if (tileType == TileType.Floor)
-                {
-                    for (int i= 0; i < currentTile.Passengers.Count; i++)
-                    {
-                        if (currentTile.Passengers[i] != id)
-                        {
-                            HandleEntityCollisions(currentTile.Passengers[i]);
-                        }
-                    }
-                    continue;
-                }
 
                 Vector2 tilePos = new Vector2(x * tiles.CellWidth / 2 - tiles.CellWidth / 2 * y, y * tiles.CellHeight / 2 + tiles.CellHeight / 2 * x);
                 Rectangle tileBounds;    
@@ -44,6 +33,17 @@ abstract partial class Entity : AnimatedGameObject
                 }
                 else
                 {
+                    for (int i = 0; i < currentTile.Passengers.Count; i++)
+                    {
+                        if (currentTile.Passengers[i] != id)
+                        {
+                            HandleEntityCollisions(currentTile.Passengers[i]);
+                        }
+                    }
+                    if (tileType == TileType.Floor)
+                    {
+                        continue;
+                    }
                     tileBounds = currentTile.GetBoundingBox();
                 }
 

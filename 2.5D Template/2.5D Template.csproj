@@ -63,6 +63,7 @@
     <Compile Include="GameObjects\Skills\SecondairySkill.cs" />
     <Compile Include="GameObjects\Skills\Skill.cs" />
     <Compile Include="GameObjects\Skills\TertairySkill.cs" />
+    <Compile Include="GameObjects\Tiles\GrassTile.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />
