@@ -29,6 +29,24 @@
 #begin Levels/Level_3.txt
 /copy:Levels/Level_3.txt
 
+#begin Soundtracks/Sad.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Sad.mp3
+
+#begin Soundtracks/The_Cure_-_Lullaby_Transcription.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/The_Cure_-_Lullaby_Transcription.mp3
+
+#begin Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
+
 #begin Sprites/Enemy/spr_enemy_0@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -497,7 +515,43 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Objects/spr_treestump.png
 
-#begin Sprites/Player/spr_idle_1.png
+#begin Sprites/Overlay/Logo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Overlay/Logo.png
+
+#begin Sprites/Overlay/Menu_BG_Grey.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Overlay/Menu_BG_Grey.jpg
+
+#begin Sprites/Overlay/spr_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Overlay/spr_idle.png
+
+#begin Sprites/Player/orc_walking_1@8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -677,55 +731,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Player/player_idle_6@7.png
 
-#begin Sprites/Tiles/spr_cave_0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_cave_0.png
-
-#begin Sprites/Tiles/spr_cave_sheet_0@4x8.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_cave_sheet_0@4x8.png
-
-#begin Sprites/Tiles/spr_cave_track_0@4x4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_cave_track_0@4x4.png
-
-#begin Sprites/Tiles/spr_cave_wall_sheet_0@4x8.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_cave_wall_sheet_0@4x8.png
-
-#begin Sprites/Tiles/spr_cave_wall_sheet_1@4x4.png
+#begin Sprites/Player/player_idle_7@7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -822,7 +828,6 @@
 /build:Sprites/Player/player_transitionToWalkLeft_6@5.png
 
 #begin Sprites/Player/player_transitionToWalkLeft_7@5.png
-#begin Sprites/Tiles/spr_grass_sheet_0@4x8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -833,21 +838,8 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Player/player_transitionToWalkLeft_7@5.png
-/build:Sprites/Tiles/spr_grass_sheet_0@4x8.png
 
-#begin Sprites/Tiles/spr_grass_wall_sheet_0@4x8.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Tiles/spr_grass_wall_sheet_0@4x8.png
-
-#begin Sprites/Tiles/spr_sand_0.png
+#begin Sprites/Player/player_transitionToWalkRight_0@5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1050,6 +1042,78 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Player/spr_boundingbox.png
+
+#begin Sprites/Tiles/spr_cave_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_cave_0.png
+
+#begin Sprites/Tiles/spr_cave_sheet_0@4x8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_cave_sheet_0@4x8.png
+
+#begin Sprites/Tiles/spr_cave_track_0@4x4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_cave_track_0@4x4.png
+
+#begin Sprites/Tiles/spr_cave_wall_sheet_0@4x8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_cave_wall_sheet_0@4x8.png
+
+#begin Sprites/Tiles/spr_grass_sheet_0@4x8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_grass_sheet_0@4x8.png
+
+#begin Sprites/Tiles/spr_grass_wall_sheet_0@4x8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_grass_wall_sheet_0@4x8.png
 
 #begin Sprites/Tiles/spr_water_0.png
 /importer:TextureImporter
@@ -1266,4 +1330,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/Trees/spr_tree_4.png
+
+#begin Videos/Fragment 1(intro).mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:Videos/Fragment 1(intro).mp4
 

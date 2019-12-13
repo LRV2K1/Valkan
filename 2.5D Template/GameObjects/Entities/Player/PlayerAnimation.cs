@@ -11,16 +11,22 @@ partial class Player : Entity
 {
     private void LoadAnimations()
     {
-        LoadAnimation("Sprites/Player/spr_idle_1", "idle_1", true);
-        LoadAnimation("Sprites/Player/spr_walking_1", "walking_0", true);
-        LoadAnimation("Sprites/Player/spr_walking_2", "walking_1", true);
-        LoadAnimation("Sprites/Player/spr_walking_3", "walking_2", true);
-        LoadAnimation("Sprites/Player/spr_walking_4", "walking_3", true);
-        LoadAnimation("Sprites/Player/spr_walking_5", "walking_4", true);
-        LoadAnimation("Sprites/Player/spr_walking_6", "walking_5", true);
-        LoadAnimation("Sprites/Player/spr_walking_7", "walking_6", true);
-        LoadAnimation("Sprites/Player/spr_walking_8", "walking_7", true);
-        PlayAnimation("idle_1");
+        LoadAnimation("Sprites/Player/spr_boundingbox", "boundingbox", false, false);
+        int tempint = 6;
+        for (int i = 0; i < 8; i++)
+        {
+            if (tempint > 7)
+            {
+                tempint = 0;
+            }
+            LoadAnimation("Sprites/Player/player_idle_" + tempint + "@7", "idle_" + i, true, true, 0.1f);
+            LoadAnimation("Sprites/Player/player_transitionToWalkLeft_" + tempint + "@5", "idleToWalkLeft_" + i, false, false);
+            LoadAnimation("Sprites/Player/player_transitionToWalkRight_" + tempint + "@5", "idleToWalkRight_" + i, false, false);
+            LoadAnimation("Sprites/Player/player_walking_" + tempint + "@13", "walking_" + i, true, false);
+            tempint += 1;
+        }
+        PlayAnimation("idle_3");
+        currentAnimation = "A";
     }
 
     private void ChangeAnimation()

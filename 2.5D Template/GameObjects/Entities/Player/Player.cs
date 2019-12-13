@@ -29,6 +29,7 @@ partial class Player : Entity
     protected Block skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
+    protected string currentAnimation;
 
     protected List<SpeedMultiplier> speedMultipliers;
 

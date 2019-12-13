@@ -11,14 +11,14 @@ public class AnimatedGameObject : SpriteGameObject
         animations = new Dictionary<string, Animation>();
     }
 
-    public void LoadAnimation(string assetName, string id, bool looping, bool isBackAndForth,
+    public void LoadAnimation(string assetName, string id, bool looping = false, bool isBackAndForth = false,
                               float frameTime = 0.1f)
     {
         Animation anim = new Animation(assetName, looping, isBackAndForth, frameTime);
         animations[id] = anim;        
     }
 
-    public virtual void PlayAnimation(string id, bool backWards = false)
+    public virtual void PlayAnimation(string id)
     {
         if (sprite == animations[id])
         {
@@ -28,7 +28,7 @@ public class AnimatedGameObject : SpriteGameObject
         {
             animations[id].Mirror = sprite.Mirror;
         }
-        animations[id].Play(backWards);
+        animations[id].Play(false);
         sprite = animations[id];
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
     }
