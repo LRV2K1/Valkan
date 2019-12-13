@@ -48,7 +48,6 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
         inputHelper.Update(gameTime);
         player.Update(inputHelper);
         currentPlayerpos = player.playerpos;
@@ -68,7 +67,6 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
         grid.Draw(spriteBatch);
-        // TODO: Add your drawing code here
         player.Draw(spriteBatch);
         ai.Draw(spriteBatch);
         base.Draw(gameTime);
