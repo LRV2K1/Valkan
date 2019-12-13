@@ -31,9 +31,9 @@ public class GameStart : GameEnvironment
         windowSize = new Point(1280, 720);
         FullScreen = false;
         //gameStateManager.AddGameState("introState", new IntroState());
-        //gameStateManager.AddGameState("titleScreen", new TitleScreenState());
+        gameStateManager.AddGameState("titleScreen", new TitleScreenState());
         gameStateManager.AddGameState("playingState", new PlayingState(Content));
-        gameStateManager.SwitchTo("playingState");
+        gameStateManager.SwitchTo("titleScreen");
 
         framecounter = new TextGameObject("Fonts/Hud");
         physicscounter = new TextGameObject("Fonts/Hud");
