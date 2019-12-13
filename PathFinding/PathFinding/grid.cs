@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-class Grid
+class Grid //basic map grid class
 {
     public int[,] grid = new int[25, 20]
     {

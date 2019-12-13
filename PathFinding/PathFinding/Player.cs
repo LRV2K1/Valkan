@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-class Player
+class Player //basic player class
 {
     Texture2D player;
     public Vector2 playerpos;
     Rectangle playerrect;
     Grid grid;
     public Player(Grid grid)
-    {      
+    {
         playerpos = new Vector2(5, 19);
         playerrect = new Rectangle((int)playerpos.X, (int)playerpos.Y, 40, 40);
         this.grid = grid;
@@ -24,44 +24,44 @@ class Player
         if (inputHelper.KeyDown(Keys.Right))
         {
 
-            playerpos = new Vector2 ((playerpos.X)+1, (playerpos.Y)+0);
+            playerpos.X++;
             if (Collision() == true)
             {
-                playerpos = new Vector2((playerpos.X) - 1, (playerpos.Y) + 0);
+                playerpos.X--;
             }
         }
         if (inputHelper.KeyDown(Keys.Left))
         {
-            playerpos = new Vector2((playerpos.X) - 1, (playerpos.Y) + 0);
+            playerpos.X--;
             if (Collision() == true)
             {
-                playerpos = new Vector2((playerpos.X) + 1, (playerpos.Y) + 0);
+                playerpos.X++;
             }
         }
         if (inputHelper.KeyDown(Keys.Up))
         {
-            playerpos = new Vector2((playerpos.X) + 0, (playerpos.Y) - 1);
+            playerpos.Y--;
             if (Collision() == true)
             {
-                playerpos = new Vector2((playerpos.X) + 0, (playerpos.Y) + 1);
+                playerpos.Y++;
             }
         }
         if (inputHelper.KeyDown(Keys.Down))
         {
-            playerpos = new Vector2((playerpos.X) + 0, (playerpos.Y) + 1);
+            playerpos.Y++;
             if (Collision() == true)
             {
-                playerpos = new Vector2((playerpos.X) - 0, (playerpos.Y) - 1);
+                playerpos.Y--;
             }
         }
         if (playerpos.X < 0)
-            playerpos = new Vector2(0, (playerpos.Y));
+            playerpos.X = 0;
         if (playerpos.X >= 24)
-            playerpos = new Vector2(24, (playerpos.Y));
+            playerpos.X = 24;
         if (playerpos.Y >= 19)
-            playerpos = new Vector2((playerpos.X), 19);
+            playerpos.Y = 19;
         if (playerpos.Y < 0)
-            playerpos = new Vector2((playerpos.X), 0);
+            playerpos.Y = 0;
     }
     public void Draw(SpriteBatch spriteBatch)
     {
