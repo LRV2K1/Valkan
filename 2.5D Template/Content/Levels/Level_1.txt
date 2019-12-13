@@ -55,7 +55,7 @@ jjjjjjaaaaaaaaaaaaaaaahhhhhhhhhhhaaajjjj
 
 a:None
 b:Sprites/Enemy/spr_enemy_0@4,60,Enemy,Close
-c:Sprites/Objects/spr_cart_0,20,SpriteItem,InMovible
+c:Sprites/Objects/spr_cart_0,40,SpriteItem,InMovible
 d:Sprites/Items/spr_stone_0,20,SpriteItem,Movible
 e:Sprites/Objects/spr_treestump,40,SpriteItem,InMovible
 f:Sprites/Items/spr_stone_2,20,SpriteItem,Movible

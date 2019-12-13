@@ -24,12 +24,15 @@ public class AnimatedGameObject : SpriteGameObject
         {
             return;
         }
+        Color color = Color.White;
         if (sprite != null)
         {
             animations[id].Mirror = sprite.Mirror;
+            color = sprite.Color;
         }
         animations[id].Play(backwards);
         sprite = animations[id];
+        sprite.Color = color;
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
     }
 
