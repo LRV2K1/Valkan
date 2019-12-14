@@ -4,10 +4,10 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Antar/Documents/GitHub/Valkan/PathFinding/PathFinding/Content/ai.png</File>
-    <File>C:/Users/Antar/Documents/GitHub/Valkan/PathFinding/PathFinding/Content/player.png</File>
-    <File>C:/Users/Antar/Documents/GitHub/Valkan/PathFinding/PathFinding/Content/tile.jpg</File>
-    <File>C:/Users/Antar/Documents/GitHub/Valkan/PathFinding/PathFinding/Content/tree.jpg</File>
+    <File>C:/Users/Antar/source/repos/PathFinding/PathFinding/Content/ai.png</File>
+    <File>C:/Users/Antar/source/repos/PathFinding/PathFinding/Content/player.png</File>
+    <File>C:/Users/Antar/source/repos/PathFinding/PathFinding/Content/tile.jpg</File>
+    <File>C:/Users/Antar/source/repos/PathFinding/PathFinding/Content/tree.jpg</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
