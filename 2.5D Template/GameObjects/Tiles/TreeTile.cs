@@ -13,6 +13,7 @@ class TreeTile : Tile
         tileobject = TileObject.TreeTile;
     }
 
+    //set tile
     public override void InitializeTile()
     {
         base.InitializeTile();

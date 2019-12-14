@@ -77,6 +77,7 @@ partial class Player : Entity
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
+    //setup skills
     public void SetupPlayer()
     {
         skill1.Parent = this;
@@ -102,6 +103,7 @@ partial class Player : Entity
 
     public override void Update(GameTime gameTime)
     {
+        //update loop
         if (!die && !dead)
         {
             Move(gameTime);
@@ -113,6 +115,7 @@ partial class Player : Entity
         base.Update(gameTime);
     }
 
+    //move control player
     private void ControlMove(InputHelper inputHelper)
     {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
@@ -145,12 +148,14 @@ partial class Player : Entity
             ReadStats();
         }
 
+        //check direction and movement
         float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
         if (totalDir != 0)
         {
             input = true;
             stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
+            //change movement if selected
             if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;
@@ -175,8 +180,10 @@ partial class Player : Entity
 
     }
 
+    //move player
     private void Move(GameTime gameTime)
     {
+        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -194,6 +201,7 @@ partial class Player : Entity
         }
     }
 
+    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));

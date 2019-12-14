@@ -9,14 +9,17 @@ using System.IO;
 
 public class GameObjectLibrary : GameObject
 {
-
+    //the gameobject library is also the gameworld
     protected GameObjectList root;
     protected Dictionary<string, GameObject> objects;
 
     public GameObjectLibrary(int layer = 0, string id = "")
         : base (layer, id)
     {
+        //dictionary to save all objects with id
         objects = new Dictionary<string, GameObject>();
+
+        //has its onw internal list
         root = new GameObjectList();
         root.GameWorld = this;
     }

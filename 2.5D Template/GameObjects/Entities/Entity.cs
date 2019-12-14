@@ -28,6 +28,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         base.Update(gameTime);
 
+        //check if moved
         if (previousPos != position)
         {
             NewHost();
@@ -44,7 +45,9 @@ abstract partial class Entity : AnimatedGameObject
 
     private void NewHost()
     {
+        //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        //check if on new tile
         if (levelGrid.DrawGridPosition(position) != gridPos)
         {
             host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), gridPos, this, host);

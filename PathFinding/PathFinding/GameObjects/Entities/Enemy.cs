@@ -12,6 +12,8 @@ class Enemy : Entity
     protected bool die, dead;
     protected bool selected;
 
+    //generic enemy
+    //no function yet
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, weight, layer, id)
     {

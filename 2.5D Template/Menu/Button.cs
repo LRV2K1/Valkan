@@ -13,6 +13,7 @@ class Button : SpriteGameObject
     protected bool pressed;
     protected bool highLighted;
 
+    //simple button
     public Button(string assetname, int layer = 101, string id = "") :
         base(assetname, layer, id)
     {

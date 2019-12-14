@@ -56,6 +56,7 @@ class Tile : SpriteGameObject
         InitializeTile();
     }
 
+    //add passenger
     public void AddPassenger(GameObject obj)
     {
         for (int i = 0; i < passengers.Count; i++)
@@ -69,6 +70,7 @@ class Tile : SpriteGameObject
         passengers.Add(obj.Id);
     }
 
+    //remove passenger
     public void RemovePassenger(string id)
     {
         for (int i = 0; i < Passengers.Count; i++)
@@ -81,6 +83,7 @@ class Tile : SpriteGameObject
         }
     }
 
+    //passenger order
     public void CheckPassengerPosition(GameObject obj)
     {
         for (int i = 0; i < passengers.Count; i++)
@@ -126,6 +129,7 @@ class Tile : SpriteGameObject
         get { return tileobject; }
     }
 
+    //set tile
     public virtual void InitializeTile()
     {
         if (type == TileType.Background)
@@ -145,8 +149,10 @@ class Tile : SpriteGameObject
         SetSprite();
     }
 
+    //sets sprite
     public virtual void SetSprite()
     {
+        //autotiling alogrithm
         int r = CalculateSurroundingStraightTiles();
         int s = CalculateSurroundingSideTiles();
         if (r != 0)
@@ -159,6 +165,7 @@ class Tile : SpriteGameObject
         }
     }
 
+    //autotiling algorithm
     public virtual int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
@@ -183,7 +190,7 @@ class Tile : SpriteGameObject
         return r;
     }
 
-
+    //autotiling alogrithm
     public virtual int CalculateSurroundingSideTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;

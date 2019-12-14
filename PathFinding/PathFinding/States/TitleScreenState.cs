@@ -51,26 +51,10 @@ class TitleScreenState : GameObjectLibrary
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        /*
-        if (GameEnvironment.ScreenFade.FadeToWhite)
-        {
-            return;
-        }
-        else if (!GameEnvironment.ScreenFade.FadeToBlack && nextScene == "exit")
-        {
-            GameEnvironment.QuitGame = true;
-        }
-        else if (!GameEnvironment.ScreenFade.FadeToBlack && nextScene != "")
-        {
-            GameEnvironment.GameStateManager.SwitchTo(nextScene);
-        }
-        */
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            //GameEnvironment.AssetManager.PlaySong("Valkan's Fate - Battle Theme(Garageband)");
             GameEnvironment.GameStateManager.SwitchTo("playingState");
-            //GameEnvironment.ScreenFade.FadeBlack();
         }
         else if (settingsButton.Pressed)
         {
