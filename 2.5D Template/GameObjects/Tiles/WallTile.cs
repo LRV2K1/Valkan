@@ -92,6 +92,7 @@ class WallTile : Tile
 
     }
 
+    //autotiling alogrithm
     public override int CalculateSurroundingSideTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;

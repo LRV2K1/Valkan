@@ -103,6 +103,7 @@ partial class Player : Entity
 
     public override void Update(GameTime gameTime)
     {
+        //update loop
         if (!die && !dead)
         {
             Move(gameTime);
@@ -147,12 +148,14 @@ partial class Player : Entity
             ReadStats();
         }
 
+        //check direction and movement
         float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
         if (totalDir != 0)
         {
             input = true;
             stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
+            //change movement if selected
             if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;

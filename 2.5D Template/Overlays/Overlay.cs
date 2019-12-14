@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 class Overlay : GameObjectList
 {
+    //basic overlay
     public Overlay (GameObjectLibrary gameworld, int layer = 101, string id = "")
         : base (layer, id)
     {

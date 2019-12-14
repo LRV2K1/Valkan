@@ -14,6 +14,7 @@ class Hud : Overlay
     public Hud(GameObjectLibrary gameworld, int layer = 101, string id = "")
         : base(gameworld, layer, id)
     {
+        //add overlay items
         tube1 = new Tube("Sprites/Menu/spr_health");
         tube1.Position = new Vector2(GameEnvironment.Screen.X - 1.5f* tube1.Width, GameEnvironment.Screen.Y - 1 * tube1.Width);
         Add(tube1);
@@ -24,10 +25,12 @@ class Hud : Overlay
 
     public override void Update(GameTime gameTime)
     {
+        //update overlay items
         base.Update(gameTime);
         Player player = GameWorld.GetObject("player") as Player;
         if (player != null)
         {
+            //check player data and scale tubes
             tube1.TargetSize = (float)player.Health / (float)player.MaxHealth;
             tube2.TargetSize = (float)player.Stamina / (float)player.MaxStamina;
         }

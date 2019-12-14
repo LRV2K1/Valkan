@@ -22,7 +22,7 @@ class Camera : GameObject
         first = false;
         objid = folowObjid;
     }
-
+    //move camera
     public override void Update(GameTime gameTime)
     {
         GameObject folowObj = GameWorld.GetObject(objid);
@@ -31,6 +31,7 @@ class Camera : GameObject
             return;
         }
 
+        //smooth camera
         if (!first)
         {
             cameraPosition.X = folowObj.Position.X - GameEnvironment.Screen.X / 2;
@@ -52,6 +53,7 @@ class Camera : GameObject
         first = false;
     }
 
+    //calculate delayx
     public float DelayPositionX(float newPositionX, int amount=20)
     {
         if(Math.Abs(cameraPosition.X - newPositionX) != 0)
@@ -68,6 +70,7 @@ class Camera : GameObject
         return newPositionX;
     }
 
+    //calculate delayy
     public float DelayPositionY(float newPositionY, int amount = 20)
     {
         if (Math.Abs(cameraPosition.Y - newPositionY) != 0)
@@ -84,6 +87,7 @@ class Camera : GameObject
         return newPositionY;
     }
 
+    //check if on screen
     public bool OnScreen(Vector2 pos)
     {
         Rectangle screen = new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2);

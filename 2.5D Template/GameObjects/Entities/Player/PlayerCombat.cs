@@ -33,6 +33,7 @@ partial class Player : Entity
 
     private void RegenStamina(GameTime gameTime)
     {
+        //check stamina timers and add stamina
         if (stamina == maxstamina)
         {
             return;

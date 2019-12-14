@@ -152,6 +152,7 @@ class Tile : SpriteGameObject
     //sets sprite
     public virtual void SetSprite()
     {
+        //autotiling alogrithm
         int r = CalculateSurroundingStraightTiles();
         int s = CalculateSurroundingSideTiles();
         if (r != 0)
@@ -189,7 +190,7 @@ class Tile : SpriteGameObject
         return r;
     }
 
-
+    //autotiling alogrithm
     public virtual int CalculateSurroundingSideTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;

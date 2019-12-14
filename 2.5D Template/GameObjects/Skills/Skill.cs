@@ -31,6 +31,7 @@ class Skill : GameObject
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         Overlay hud = overlay.GetOverlay("hud") as Overlay;
 
+        //add timer to the hud overlay
         hud.Add(timer);
     }
 

@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework;
 
 class Inventory : OverlayMenu
 {
+    //inventory overlay, no functionality
+    //will likely be removed
     public Inventory(GameObjectLibrary gameworld, int layer = 101, string id = "")
         : base(gameworld, layer, id)
     {

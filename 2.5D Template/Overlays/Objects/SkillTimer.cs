@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 class SkillTimer : SpriteGameObject
 {
+    //timer for skills
     protected bool ready;
     protected float timer, waittime;
     protected SpriteGameObject overlay;
@@ -26,6 +27,7 @@ class SkillTimer : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
+        //update timer
         base.Update(gameTime);
         if (timer > 0)
         {

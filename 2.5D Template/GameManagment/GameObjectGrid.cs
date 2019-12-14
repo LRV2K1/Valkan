@@ -21,12 +21,22 @@ public class GameObjectGrid : GameObject
 
     public virtual void Add(GameObject obj, int x, int y)
     {
+        //add to gameworld
         GameWorld.Add(obj);
         grid[x, y] = obj.Id;
         obj.Parent = this;
         obj.Position = new Vector2(x * cellWidth, y * cellHeight);
     }
 
+    public virtual void Remove(string id, int x, int y)
+    {
+        //remove completely
+        grid[x, y] = "";
+        GameWorld.GetObject(id).Parent = null;
+        GameWorld.Remove(id);
+    }
+
+    //get object
     public GameObject Get(int x, int y)
     {
         if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1))
