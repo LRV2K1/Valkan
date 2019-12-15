@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 
 class Enemy : Entity
@@ -19,13 +20,14 @@ class Enemy : Entity
         dead = false;
         health = 20;
         LoadAnimation(assetname, "sprite", true, false);
-        LoadAnimation(assetname, "die", false, false);
+        LoadAnimation(assetname, "zombie_death_0", false, false);
         PlayAnimation("sprite");
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        CheckDie();
         if (die || dead)
         {
             if (Current.AnimationEnded)
@@ -34,14 +36,15 @@ class Enemy : Entity
             }
             return;
         }
+        health--;
     }
 
     private void CheckDie()
     {
-        if (health <=0)
+        if (health <= 0)
         {
             die = true;
-            PlayAnimation("die");
+            PlayAnimation("zombie_death_0");
             sprite.Color = Color.Pink;
             if (selected)
             {
@@ -54,7 +57,8 @@ class Enemy : Entity
     public int Health
     {
         get { return health; }
-        set { 
+        set
+        {
             health = value;
             CheckDie();
         }

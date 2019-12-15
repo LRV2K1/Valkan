@@ -86,7 +86,7 @@ partial class Player : Entity
         skill3.Parent = this;
         skill3.Setup();
     }
-    
+
     public override void HandleInput(InputHelper inputHelper)
     {
         if (die || dead)
