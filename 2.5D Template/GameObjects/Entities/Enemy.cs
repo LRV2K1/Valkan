@@ -20,15 +20,16 @@ class Enemy : Entity
         dead = false;
         health = 20;
         LoadAnimation(assetname, "sprite", true, false);
-        LoadAnimation(assetname, "zombie_death_0", false, false);
+        LoadAnimation(assetname, "die", false, false);
         PlayAnimation("sprite");
     }
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
+        base.Update(gameTime);       
         if (die || dead)
         {
+            this.sprite.Color = Color.Red;
             if (Current.AnimationEnded)
             {
                 dead = true;
@@ -42,7 +43,7 @@ class Enemy : Entity
         if (health <= 0)
         {
             die = true;
-            PlayAnimation("zombie_death_0");
+            PlayAnimation("die");
             sprite.Color = Color.Pink;
             if (selected)
             {
