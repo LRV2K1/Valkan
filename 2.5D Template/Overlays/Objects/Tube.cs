@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 class Tube : SpriteGameObject
 {
 
-
     SpriteGameObject substance;
     protected float growspeed;
     protected float targetSize;
@@ -27,6 +26,7 @@ class Tube : SpriteGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        //update size
         growspeed = (targetSize - substance.Sprite.Size.Y) * 0.1f;
         substance.Sprite.Size += new Vector2(0, growspeed);
     }

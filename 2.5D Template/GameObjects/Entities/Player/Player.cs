@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using System.IO;
+using System.Security.Cryptography;
 using Microsoft.Xna.Framework.Graphics;
 
 struct SpeedMultiplier
@@ -25,22 +27,39 @@ partial class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
+    protected string name, job;
+    protected int playerlevel, playerEXP, EXPThreshold;
+    public int playerID;
     protected Skill skill1, skill3;
     protected Block skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
+    protected string currentAnimation;
+    protected bool animationFinished = false;
+    protected double lastDirection;
+    protected bool input;
+    protected Vector2 stillVelocity;
 
     protected List<SpeedMultiplier> speedMultipliers;
+
+    private static string hash = "_+*/(&!*";
+    public static string EncryptedText;
 
     public Player()
         : base(30, 20, 2, "player")
     {
+        name = "Valkan";
+        job = "Light";
+        playerID = 1;
+        playerlevel = 1;
+        playerEXP = 1;
         maxhealth = 10;
         maxstamina = 100;
         health = maxhealth;
         stamina = maxstamina;
         staminatimerreset = 1f;
         addstaminatimerreset = 0.02f;
+        EXPThreshold = 5;
 
         dead = false;
         die = false;
@@ -58,6 +77,7 @@ partial class Player : Entity
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
     }
 
+    //setup skills
     public void SetupPlayer()
     {
         skill1.Parent = this;
@@ -83,6 +103,7 @@ partial class Player : Entity
 
     public override void Update(GameTime gameTime)
     {
+        //update loop
         if (!die && !dead)
         {
             Move(gameTime);
@@ -91,10 +112,10 @@ partial class Player : Entity
 
             RegenStamina(gameTime);
         }
-
         base.Update(gameTime);
     }
 
+    //move control player
     private void ControlMove(InputHelper inputHelper)
     {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
@@ -103,7 +124,6 @@ partial class Player : Entity
             velocity = Vector2.Zero;
             return;
         }
-
         Vector2 direction = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
@@ -122,33 +142,48 @@ partial class Player : Entity
         {
             direction.Y = 1;
         }
+        if (inputHelper.KeyPressed(Keys.Q))
+        {
+            WriteStats();
+            ReadStats();
+        }
 
+        //check direction and movement
         float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
         if (totalDir != 0)
         {
+            input = true;
+            stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
-            velocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
-
+            //change movement if selected
             if (selected)
             {
                 Selected icon = GameWorld.GetObject("selected") as Selected;
                 Vector2 difirence = icon.Position - position;
                 float totaldifirence = (float)Math.Sqrt(difirence.X * difirence.X + difirence.Y * difirence.Y);
-                if (totaldifirence <= 10 && velocity.Y < 0)
+                if (totaldifirence <= 10 && stillVelocity.Y < 0)
                 {
-                    velocity.Y = 0;
+                    stillVelocity.Y = 0;
                 }
-                velocity = new Vector2(-velocity.X * difirence.Y / totaldifirence - velocity.Y * difirence.X / totaldifirence, velocity.X * difirence.X / totaldifirence - velocity.Y * difirence.Y / totaldifirence);
+                stillVelocity = new Vector2(-stillVelocity.X * difirence.Y / totaldifirence - stillVelocity.Y * difirence.X / totaldifirence, stillVelocity.X * difirence.X / totaldifirence - stillVelocity.Y * difirence.Y / totaldifirence);
+            }
+            if (currentAnimation == "C")
+            {
+                velocity = stillVelocity;
             }
         }
         else
         {
+            input = false;
             velocity = Vector2.Zero;
         }
+
     }
 
+    //move player
     private void Move(GameTime gameTime)
     {
+        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -166,8 +201,89 @@ partial class Player : Entity
         }
     }
 
+    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));
+    }
+
+    public void LevelUp()
+    {
+        if (playerEXP > EXPThreshold)
+        {
+            playerlevel++;
+            playerEXP = playerEXP - EXPThreshold;
+            EXPThreshold = EXPThreshold * 2;
+        }
+        WriteStats();
+    }
+
+    public virtual void WriteStats()                        //Saves the player stats in a text file
+    {
+        string statpath = "Content/PlayerStats/Stats.txt";
+        string[] lines;
+        lines = new string[7];
+        StreamWriter writer = new StreamWriter(statpath);
+        lines[0] = Encrypt(name);
+        lines[1] = Encrypt(job);
+        lines[2] = Encrypt(playerID.ToString());
+        lines[3] = Encrypt(playerlevel.ToString());
+        lines[4] = Encrypt(playerEXP.ToString());
+        lines[5] = Encrypt(maxhealth.ToString());
+        lines[6] = Encrypt(maxstamina.ToString());
+        for (int i = 0; i < lines.Length; i++)
+        {
+            writer.WriteLine(lines[i]);
+        }
+        writer.Close();
+    }
+
+    public void ReadStats()                                //Reads the player stats in a text file
+    {
+        string statspath = "Content/PlayerStats/Stats.txt";
+        StreamReader streamReader = new StreamReader(statspath);
+        List<string> lines = new List<string>();
+        string line = streamReader.ReadLine();
+        while (line != null)
+        {
+            lines.Add(line);
+            line = streamReader.ReadLine();
+        }
+        for (int i = 0; i < lines.Count; i++)
+        {
+            lines[i] = Decrypt(lines[i]);
+        }
+        streamReader.Close();
+    }
+
+    public static string Encrypt(string input)
+    {
+        byte[] file = UTF8Encoding.UTF8.GetBytes(input);
+        using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+        {
+            byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+            using (TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() { Key = key, Mode = CipherMode.ECB })
+            {
+                ICryptoTransform tr = trip.CreateEncryptor();
+                byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
+                EncryptedText = Convert.ToBase64String(results, 0, results.Length);
+                return Convert.ToBase64String(results, 0, results.Length);
+            }
+        }
+    }
+
+    public static string Decrypt(string input)
+    {
+        byte[] file = Convert.FromBase64String(input);
+        using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+        {
+            byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+            using (TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() { Key = key, Mode = CipherMode.ECB })
+            {
+                ICryptoTransform tr = trip.CreateDecryptor();
+                byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
+                return UTF8Encoding.UTF8.GetString(results);
+            }
+        }
     }
 }

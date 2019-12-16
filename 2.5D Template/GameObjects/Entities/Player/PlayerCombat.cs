@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Player : Entity
 {
+    //select entity
     private void EntitySelection(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(Keys.Z))
@@ -18,6 +19,7 @@ partial class Player : Entity
         }
     }
 
+    //update skills
     private void Skills(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(Keys.Q))
@@ -31,6 +33,7 @@ partial class Player : Entity
 
     private void RegenStamina(GameTime gameTime)
     {
+        //check stamina timers and add stamina
         if (stamina == maxstamina)
         {
             return;

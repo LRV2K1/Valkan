@@ -13,6 +13,7 @@ class GameMouse : SpriteGameObject
     {  
     }
     
+    //update mouseposition
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
@@ -21,6 +22,7 @@ class GameMouse : SpriteGameObject
         position = inputHelper.MousePosition;
     }
 
+    //select entities
     public bool SelectEntity() 
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
@@ -32,6 +34,7 @@ class GameMouse : SpriteGameObject
         string entity = "";
         float closedistance = 100f;
 
+        //check clicked area
         for (int x = gridpos.X - 1; x <= gridpos.X + 1; x++)
         {
             for (int y = gridpos.Y - 1; y <= gridpos.Y + 1; y++)
@@ -44,12 +47,14 @@ class GameMouse : SpriteGameObject
 
                 for (int i = 0; i < tile.Passengers.Count; i++)
                 {
+                    //check if enemy
                     Enemy enemy = GameWorld.GetObject(tile.Passengers[i]) as Enemy;
                     if (enemy == null)
                     {
                         continue;
                     }
 
+                    //check if closest
                     if (enemy.OnSprite(mousePos) && !enemy.Dead)
                     {
                         float xd = mousePos.X - enemy.GlobalPosition.X;
@@ -64,6 +69,7 @@ class GameMouse : SpriteGameObject
                 }
             }
         }
+        //update selected icon
         if (icon == null)
         {
             if (entity != "")
@@ -96,6 +102,7 @@ class GameMouse : SpriteGameObject
         return entity != "";
     }
 
+    //removeselected entity
     public void RemoveSelectedEntity()
     {
         Selected icon = GameWorld.GetObject("selected") as Selected;

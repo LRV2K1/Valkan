@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Level : GameObjectLibrary
 {
+    //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         foreach (string id in RootList.Children)

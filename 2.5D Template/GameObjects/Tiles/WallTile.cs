@@ -14,6 +14,7 @@ class WallTile : Tile
         tileobject = TileObject.WallTile;
     }
 
+    //set tile
     public override void InitializeTile()
     {
         base.InitializeTile();
@@ -24,6 +25,8 @@ class WallTile : Tile
 
         SetBoundingBox();
     }
+
+    //set sprite
     public override void SetSprite()
     {
         if (sprite.NumberSheetElements < 16)
@@ -36,6 +39,7 @@ class WallTile : Tile
         }
     }
 
+    //set boundingbox
     private void SetBoundingBox()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
@@ -62,7 +66,7 @@ class WallTile : Tile
             }
         }
     }
-
+    //autotiling alogrithm
     public override int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
@@ -88,6 +92,7 @@ class WallTile : Tile
 
     }
 
+    //autotiling alogrithm
     public override int CalculateSurroundingSideTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
