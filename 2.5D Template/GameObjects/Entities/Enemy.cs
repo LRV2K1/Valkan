@@ -27,7 +27,6 @@ class Enemy : Entity
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        CheckDie();
         if (die || dead)
         {
             if (Current.AnimationEnded)
@@ -36,7 +35,6 @@ class Enemy : Entity
             }
             return;
         }
-        health--;
     }
 
     private void CheckDie()

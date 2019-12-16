@@ -22,7 +22,7 @@ partial class Player : Entity
     {
         if (inputHelper.KeyPressed(Keys.Q))
         {
-            Health -= 3;
+            health -= 3;
         }
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
