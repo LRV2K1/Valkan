@@ -15,18 +15,22 @@ partial class Player : Entity
         {
             GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
             selected = mouse.SelectEntity();
-        }
+        }        
     }
 
     private void Skills(InputHelper inputHelper)
     {
+        if (playerEXP >= EXPThreshold)
+        {
+            LevelUp();
+        }
         if (inputHelper.KeyPressed(Keys.Q))
         {
             health -= 3;
         }
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
-        skill3.HandleInput(inputHelper);
+        skill3.HandleInput(inputHelper);       
     }
 
     private void RegenStamina(GameTime gameTime)

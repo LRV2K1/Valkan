@@ -28,7 +28,8 @@ partial class Player : Entity
     protected int health, stamina;
     protected int maxhealth, maxstamina;
     protected string name, job;
-    protected int playerlevel, playerEXP, EXPThreshold;
+    protected int playerlevel;
+    public static int playerEXP, EXPThreshold;
     public int playerID;
     protected Skill skill1, skill3;
     protected Block skill2;
@@ -52,7 +53,7 @@ partial class Player : Entity
         job = "Light";
         playerID = 1;
         playerlevel = 1;
-        playerEXP = 1;
+        playerEXP = 0;
         maxhealth = 10;
         maxstamina = 100;
         health = maxhealth;
@@ -141,8 +142,8 @@ partial class Player : Entity
         }
         if (inputHelper.KeyPressed(Keys.Q))
         {
-            WriteStats();
             ReadStats();
+            WriteStats();
         }
 
         float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
@@ -201,12 +202,9 @@ partial class Player : Entity
 
     public void LevelUp()
     {
-        if (playerEXP > EXPThreshold)
-        {
-            playerlevel++;
-            playerEXP = playerEXP - EXPThreshold;
-            EXPThreshold = EXPThreshold * 2;
-        }
+        playerlevel++;
+        playerEXP = playerEXP - EXPThreshold;
+        EXPThreshold = EXPThreshold * 2;
         WriteStats();
     }
 
@@ -241,9 +239,17 @@ partial class Player : Entity
             lines.Add(line);
             line = streamReader.ReadLine();
         }
+        name = Decrypt(lines[0]);
+        job = Decrypt(lines[1]);
+        playerID = Int32.Parse(Decrypt(lines[2]));
+        playerlevel = Int32.Parse(Decrypt(lines[3]));
+        playerEXP = Int32.Parse(Decrypt(lines[4]));
+        maxhealth = Int32.Parse(Decrypt(lines[5]));
+        maxstamina = Int32.Parse(Decrypt(lines[6]));
         for (int i = 0; i < lines.Count; i++)
         {
             lines[i] = Decrypt(lines[i]);
+            System.Diagnostics.Debug.WriteLine(lines[i]);
         }
         streamReader.Close();
     }

@@ -29,7 +29,6 @@ class Enemy : Entity
         base.Update(gameTime);       
         if (die || dead)
         {
-            this.sprite.Color = Color.Red;
             if (Current.AnimationEnded)
             {
                 dead = true;
@@ -44,12 +43,13 @@ class Enemy : Entity
         {
             die = true;
             PlayAnimation("die");
-            sprite.Color = Color.Pink;
+            sprite.Color = Color.Red;
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
                 mouse.RemoveSelectedEntity();
             }
+            Player.playerEXP = Player.playerEXP + 5;
         }
     }
 
