@@ -9,8 +9,7 @@ class EnemyInteraction
     {
         Enemy enemy = new Enemy();
         Player player = new Player();
-        Player.Attack();       
-        enemy.CheckDie();
+        Player.Attack(enemy);       
         Console.WriteLine(enemy.Health);
         Console.ReadLine();
     }
@@ -31,7 +30,7 @@ public class Enemy
         if (health <= 0)
         {
             die = true;
-            Console.WriteLine("Die" + die);
+            Console.WriteLine("Die = " + die);
         }
         else
         {
@@ -54,11 +53,10 @@ public class Player
         health = 30;
     }
 
-    public static Enemy Attack()
+    public static void Attack(Enemy e)
     {
-        Enemy health = new Enemy();
-        health.Health = 0;
-        return health;
+        e.Health = 0;
+        e.CheckDie();
     }
 }
 

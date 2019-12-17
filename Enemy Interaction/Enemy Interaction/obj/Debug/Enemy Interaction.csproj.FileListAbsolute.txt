@@ -4,3 +4,9 @@ C:\Users\leung\source\repos\Enemy Interaction\Enemy Interaction\bin\Debug\Enemy 
 C:\Users\leung\source\repos\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.csprojAssemblyReference.cache
 C:\Users\leung\source\repos\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.exe
 C:\Users\leung\source\repos\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.pdb
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\bin\Debug\Enemy Interaction.exe.config
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\bin\Debug\Enemy Interaction.exe
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\bin\Debug\Enemy Interaction.pdb
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.csprojAssemblyReference.cache
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.exe
+C:\Users\leung\Documents\GitHub\Valkan\Enemy Interaction\Enemy Interaction\obj\Debug\Enemy Interaction.pdb
