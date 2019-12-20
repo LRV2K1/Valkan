@@ -8,6 +8,7 @@ class OverlayManager : GameObject
     Dictionary<string, GameObject> overlays;
     GameObject currentOverlay;
 
+    //updates current overlay
     public OverlayManager(int layer = 101, string id = "overlay")
         : base(layer, id)
     {

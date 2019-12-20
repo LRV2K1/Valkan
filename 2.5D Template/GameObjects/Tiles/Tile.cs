@@ -19,11 +19,13 @@ enum TextureType
     None,
     Grass,
     Water,
+    Mine
 }
 
 enum TileObject
 {
     Tile,
+    GrassTile,
     WallTile,
     TreeTile
 }
@@ -54,6 +56,7 @@ class Tile : SpriteGameObject
         InitializeTile();
     }
 
+    //add passenger
     public void AddPassenger(GameObject obj)
     {
         for (int i = 0; i < passengers.Count; i++)
@@ -67,6 +70,7 @@ class Tile : SpriteGameObject
         passengers.Add(obj.Id);
     }
 
+    //remove passenger
     public void RemovePassenger(string id)
     {
         for (int i = 0; i < Passengers.Count; i++)
@@ -79,6 +83,7 @@ class Tile : SpriteGameObject
         }
     }
 
+    //passenger order
     public void CheckPassengerPosition(GameObject obj)
     {
         for (int i = 0; i < passengers.Count; i++)
@@ -119,6 +124,12 @@ class Tile : SpriteGameObject
         get { return texturetype; }
     }
 
+    public TileObject TileObject
+    {
+        get { return tileobject; }
+    }
+
+    //set tile
     public virtual void InitializeTile()
     {
         if (type == TileType.Background)
@@ -138,8 +149,10 @@ class Tile : SpriteGameObject
         SetSprite();
     }
 
+    //sets sprite
     public virtual void SetSprite()
     {
+        //autotiling alogrithm
         int r = CalculateSurroundingStraightTiles();
         int s = CalculateSurroundingSideTiles();
         if (r != 0)
@@ -152,48 +165,50 @@ class Tile : SpriteGameObject
         }
     }
 
+    //autotiling algorithm
     public virtual int CalculateSurroundingStraightTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-        int i = 0;
-        if (levelGrid.GetTextureType(grid.X, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y - 1) != texturetype)
+        //regt
+        int r = 0;
+        if (levelGrid.GetTextureType(grid.X, grid.Y - 1) == texturetype)
         {
-            i += 1;
+            r += 1;
         }
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y) == texturetype)
         {
-            i += 2;
+            r += 2;
         }
-        if (levelGrid.GetTextureType(grid.X, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X, grid.Y + 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X, grid.Y + 1) == texturetype)
         {
-            i += 4;
+            r += 4;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y) == texturetype)
         {
-            i += 8;
+            r += 8;
         }
-        return i;
+        return r;
     }
 
-
+    //autotiling alogrithm
     public virtual int CalculateSurroundingSideTiles()
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         //schuin
         int s = 0;
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) == texturetype)
         {
             s += 1;
         }
-        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X + 1, grid.Y + 1) == texturetype)
         {
             s += 2;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y + 1) == texturetype)
         {
             s += 4;
         }
-        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != TextureType.None && levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) != texturetype)
+        if (levelGrid.GetTextureType(grid.X - 1, grid.Y - 1) == texturetype)
         {
             s += 8;
         }

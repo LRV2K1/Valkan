@@ -15,6 +15,7 @@ class Skill : GameObject
     protected Keys key;
     protected MouseButton button;
 
+    //generic skill class
     public Skill(string assetname, MouseButton button = MouseButton.None, Keys key = Keys.None)
         : base()
     {
@@ -23,12 +24,14 @@ class Skill : GameObject
         this.button = button;
     }
 
+    //setup skill
     public void Setup()
     {
         GameWorld.Add(this);
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         Overlay hud = overlay.GetOverlay("hud") as Overlay;
 
+        //add timer to the hud overlay
         hud.Add(timer);
     }
 

@@ -63,10 +63,12 @@
     <Compile Include="GameObjects\Skills\SecondairySkill.cs" />
     <Compile Include="GameObjects\Skills\Skill.cs" />
     <Compile Include="GameObjects\Skills\TertairySkill.cs" />
+    <Compile Include="GameObjects\Tiles\GrassTile.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />
     <Compile Include="Menu\Button.cs" />
+    <Compile Include="Menu\ScreenFade.cs" />
     <Compile Include="Overlays\Hud.cs" />
     <Compile Include="Overlays\Inventory.cs" />
     <Compile Include="Overlays\Overlay.cs" />
@@ -93,7 +95,10 @@
     <Compile Include="GameManagment\SpriteGameObject.cs" />
     <Compile Include="GameManagment\SpriteSheet.cs" />
     <Compile Include="GameManagment\TextGameObject.cs" />
+    <Compile Include="States\IntroState.cs" />
     <Compile Include="States\PlayingState.cs" />
+    <Compile Include="States\SettingsState.cs" />
+    <Compile Include="States\TitleScreenState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

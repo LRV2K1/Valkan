@@ -6,41 +6,72 @@ public class Animation : SpriteSheet
     protected float frameTime;
     protected bool isLooping;
     protected float time;
-    protected bool looped;
+    protected bool isBackAndForth;
+    protected bool isBackWards;
+    protected bool goBack = false;
 
-    public Animation(string assetname, bool isLooping, float frameTime = 0.1f) : base(assetname)
+    public Animation(string assetname, bool isLooping, bool isBackAndForth, float frameTime = 0.05f) : base(assetname)
     {
         this.frameTime = frameTime;
         this.isLooping = isLooping;
-        looped = false;
+        this.isBackAndForth = isBackAndForth;
     }
 
-    public void Play()
+    public void Play(bool backWards)
     {
-        sheetIndex = 0;
+        isBackWards = backWards;
+        if (isBackWards)
+        {
+            sheetIndex = NumberSheetElements - 1;
+        }
+        else
+        {
+            sheetIndex = 0;
+        }
         time = 0.0f;
     }
 
     public void Update(GameTime gameTime)
     {
-        if (looped)
-        {
-            return;
-        }
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         while (time > frameTime)
         {
             time -= frameTime;
             if (isLooping)
             {
-                sheetIndex = (sheetIndex + 1) % NumberSheetElements;
+                if (isBackAndForth)
+                {
+                    if (sheetIndex == NumberSheetElements - 1)
+                    {
+                        goBack = true;
+                    }
+                    else if (sheetIndex == 0)
+                    {
+                        goBack = false;
+                    }
+                    if (goBack)
+                    {
+                        sheetIndex = (sheetIndex - 1) % NumberSheetElements;
+                    }
+                    else
+                    {
+                        sheetIndex = (sheetIndex + 1) % NumberSheetElements;
+                    }
+                }
+                else
+                {
+                    sheetIndex = (sheetIndex + 1) % NumberSheetElements;
+                }
             }
             else
             {
-                sheetIndex = Math.Min(sheetIndex + 1, NumberSheetElements - 1);
-                if (SheetIndex == NumberSheetElements - 1)
+                if (isBackWards)
                 {
-                    looped = true;
+                    sheetIndex = (sheetIndex - 1) % NumberSheetElements;
+                }
+                else
+                {
+                    sheetIndex = Math.Min(sheetIndex + 1, NumberSheetElements - 1);
                 }
             }
         }
@@ -54,6 +85,16 @@ public class Animation : SpriteSheet
     public bool IsLooping
     {
         get { return isLooping; }
+    }
+
+    public bool IsBackAndForth
+    {
+        get { return isBackAndForth; }
+    }
+
+    public bool IsBackWards
+    {
+        get { return isBackWards; }
     }
 
     public int CountFrames

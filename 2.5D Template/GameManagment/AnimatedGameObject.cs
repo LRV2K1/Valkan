@@ -11,25 +11,28 @@ public class AnimatedGameObject : SpriteGameObject
         animations = new Dictionary<string, Animation>();
     }
 
-    public void LoadAnimation(string assetName, string id, bool looping, 
+    public void LoadAnimation(string assetName, string id, bool looping = false, bool isBackAndForth = false,
                               float frameTime = 0.1f)
     {
-        Animation anim = new Animation(assetName, looping, frameTime);
+        Animation anim = new Animation(assetName, looping, isBackAndForth, frameTime);
         animations[id] = anim;        
     }
 
-    public virtual void PlayAnimation(string id)
+    public virtual void PlayAnimation(string id, bool backwards = false)
     {
         if (sprite == animations[id])
         {
             return;
         }
+        Color color = Color.White;
         if (sprite != null)
         {
             animations[id].Mirror = sprite.Mirror;
+            color = sprite.Color;
         }
-        animations[id].Play();
+        animations[id].Play(backwards);
         sprite = animations[id];
+        sprite.Color = color;
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
     }
 

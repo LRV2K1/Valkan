@@ -16,6 +16,7 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected SpriteGameObject spritemouse;
 
     protected static int randomid;
 
@@ -121,11 +122,13 @@ public class GameEnvironment : Game
     {
         DrawingHelper.Initialize(this.GraphicsDevice);
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        spritemouse = new SpriteGameObject("Sprites/Menu/spr_mouse", 200);
     }
 
     protected void HandleInput()
     {
         inputHelper.Update();
+        spritemouse.Position = inputHelper.MousePosition;
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             Exit();
@@ -149,6 +152,7 @@ public class GameEnvironment : Game
         GraphicsDevice.Clear(Color.Black);
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
         gameStateManager.Draw(gameTime, spriteBatch);
+        spritemouse.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }
 }

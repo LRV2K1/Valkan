@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 
 partial class Level : GameObjectLibrary
 {
+ //loads the levels
     public void LoadLevel(string path)
     {
         GameObjectList entities = new GameObjectList(2, "entities");
@@ -30,6 +31,7 @@ partial class Level : GameObjectLibrary
         LoadFile(path);
     }
 
+    //loads overlays
     public void LoadOverlays()
     {
         OverlayManager overlayManager = new OverlayManager();
@@ -41,6 +43,7 @@ partial class Level : GameObjectLibrary
         overlayManager.SwitchTo("hud");
     }
 
+    //loads the tilegrid
     private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
         LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
@@ -62,38 +65,13 @@ partial class Level : GameObjectLibrary
         }
     }
 
+    //loads tiles
     private Tile LoadTile(int x, int y, string tiletype)
     {
         string[] type = tiletype.Split(',');
         string asset = type[0];
-        TileType tp = TileType.Background;
-        TextureType tt = TextureType.None;
-
-        switch (type[1])
-        {
-            case "Floor":
-                tp = TileType.Floor;
-                break;
-            case "Background":
-                tp = TileType.Background;
-                break;
-            case "Wall":
-                tp = TileType.Wall;
-                break;
-        }
-
-        switch (type[2])
-        {
-            case "None":
-                tt = TextureType.None;
-                break;
-            case "Grass":
-                tt = TextureType.Grass;
-                break;
-            case "Water":
-                tt = TextureType.Water;
-                break;
-        }
+        TileType tp = (TileType) Enum.Parse(typeof(TileType), type[1]);
+        TextureType tt = (TextureType)Enum.Parse(typeof(TextureType), type[2]);
 
         switch (type[3])
         {
@@ -103,11 +81,14 @@ partial class Level : GameObjectLibrary
                 return new WallTile(new Point(x, y), asset, tp, tt);
             case "TreeTile":
                 return new TreeTile(new Point(x, y), asset, tp, tt);
+            case "GrassTile":
+                return new GrassTile(new Point(x, y), asset, tp, tt);
         }
 
         return new Tile(new Point(x, y));
     }
 
+    //loads all entities
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
         for (int x = 0; x < width; x++)
@@ -119,6 +100,7 @@ partial class Level : GameObjectLibrary
         }
     }
 
+    //load entity
     private void LoadEntity(int x, int y, string entitytype)
     {
         string[] type = entitytype.Split(',');
@@ -146,6 +128,7 @@ partial class Level : GameObjectLibrary
         }
     }
 
+    //load player
     private void LoadPlayer(int x, int y)
     {
         Player player = new Player();
@@ -155,9 +138,10 @@ partial class Level : GameObjectLibrary
         player.MovePositionOnGrid(x, y);
     }
 
-    private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string et)
+    //load item
+    private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)
     {
-        ItemType type = (ItemType)Enum.Parse(typeof(ItemType), et);
+        ItemType type = (ItemType)Enum.Parse(typeof(ItemType), it);
         Item item = new Item(asset, animated, type, boundingy);
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
@@ -166,6 +150,7 @@ partial class Level : GameObjectLibrary
         item.MovePositionOnGrid(x, y);
     }
 
+    //loadenemy
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
         Enemy enemy = new Enemy(asset, boundingy);

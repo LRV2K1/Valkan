@@ -28,6 +28,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         base.Update(gameTime);
 
+        //check if moved
         if (previousPos != position)
         {
             NewHost();
@@ -44,7 +45,9 @@ abstract partial class Entity : AnimatedGameObject
 
     private void NewHost()
     {
+        //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        //check if on new tile
         if (levelGrid.DrawGridPosition(position) != gridPos)
         {
             host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), gridPos, this, host);
@@ -56,7 +59,7 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    public void MovePositionOnGrid(int x, int y)
+    public virtual void MovePositionOnGrid(int x, int y)
     {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
@@ -69,7 +72,7 @@ abstract partial class Entity : AnimatedGameObject
         (parent as GameObjectList).Remove(id);
     }
 
-    public override void PlayAnimation(string id)
+    public override void PlayAnimation(string id, bool isBackWards = false)
     {
         base.PlayAnimation(id);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);

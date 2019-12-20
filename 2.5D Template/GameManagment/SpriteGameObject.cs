@@ -30,15 +30,18 @@ public class SpriteGameObject : GameObject
 
         if(GameWorld != null)
         {
+            //get camera
             Camera camera1 = GameWorld.GetObject("camera") as Camera;
             camera = camera1;
         }
+        //check layer
         if (this.layer > 90)
         {
             sprite.Draw(spriteBatch, this.GlobalPosition, origin);
         }
         else
         {
+            //draw in reference to camera
             if (camera != null)
             {
                 if (camera.OnScreen(GlobalPosition))
