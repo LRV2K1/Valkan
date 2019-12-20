@@ -34,9 +34,9 @@ public class Animation : SpriteSheet
     public void Update(GameTime gameTime)
     {
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        while (time > frameTime)
+        if (time > frameTime && !AnimationEnded)
         {
-            time -= frameTime;
+            int number = sheetIndex;
             if (isLooping)
             {
                 if (isBackAndForth)
@@ -74,6 +74,10 @@ public class Animation : SpriteSheet
                     sheetIndex = Math.Min(sheetIndex + 1, NumberSheetElements - 1);
                 }
             }
+            if(number != sheetIndex)
+            {
+                time -= frameTime;
+            }
         }
     }
 
@@ -104,7 +108,7 @@ public class Animation : SpriteSheet
 
     public bool AnimationEnded
     {
-        get { return !isLooping && sheetIndex >= NumberSheetElements - 1; }
+        get { return !isLooping && sheetIndex >= NumberSheetElements - 1 && time > frameTime; }
     }
 }
 

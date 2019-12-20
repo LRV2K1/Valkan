@@ -9,6 +9,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Player : Entity
 {
+    private void LoadSkills()
+    {
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
+        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
+        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
+        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+    }
+
     //select entity
     private void EntitySelection(InputHelper inputHelper)
     {
@@ -59,6 +69,8 @@ partial class Player : Entity
         if (health <= 0)
         {
             die = true;
+            DieAnimation();
+            velocity = Vector2.Zero;
         }
     }
 

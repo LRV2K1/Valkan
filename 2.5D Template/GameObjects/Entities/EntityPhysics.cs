@@ -17,7 +17,6 @@ abstract partial class Entity : AnimatedGameObject
     private void HandleCollisions()
     {
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
-        Vector2 gridPos = tiles.GridPosition(position);
         //check surrounding tiles
         for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {

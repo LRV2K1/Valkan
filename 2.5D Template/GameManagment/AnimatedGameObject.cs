@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 public class AnimatedGameObject : SpriteGameObject
 {
     protected Dictionary<string,Animation> animations;
+    string currentid;
 
     public AnimatedGameObject(int layer = 0, string id = "")
         : base("", layer, id)
@@ -31,6 +32,7 @@ public class AnimatedGameObject : SpriteGameObject
             color = sprite.Color;
         }
         animations[id].Play(backwards);
+        currentid = id;
         sprite = animations[id];
         sprite.Color = color;
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
@@ -54,5 +56,10 @@ public class AnimatedGameObject : SpriteGameObject
     public Animation Current
     {
         get { return sprite as Animation; }
+    }
+
+    public string CurrentId
+    {
+        get { return currentid; }
     }
 }

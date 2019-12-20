@@ -35,10 +35,9 @@ partial class Player : Entity
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
     protected string currentAnimation;
-    protected bool animationFinished = false;
     protected double lastDirection;
     protected bool input;
-    protected Vector2 stillVelocity;
+    protected int offset;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -61,20 +60,19 @@ partial class Player : Entity
         addstaminatimerreset = 0.02f;
         EXPThreshold = 5;
 
+        offset = 58;
+
         dead = false;
         die = false;
 
         speedMultipliers = new List<SpeedMultiplier>();
 
         direction = 0;
+        lastDirection = direction;
 
         LoadAnimations();
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
-        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+
+        LoadSkills();
     }
 
     //setup skills
@@ -90,6 +88,17 @@ partial class Player : Entity
     
     public override void HandleInput(InputHelper inputHelper)
     {
+        //health test
+        /*
+        if (inputHelper.KeyPressed(Keys.H))
+        {
+            health = maxhealth;
+            die = false;
+            dead = false;
+        }
+        */
+
+
         if (die || dead)
         {
             return;
@@ -113,6 +122,12 @@ partial class Player : Entity
             RegenStamina(gameTime);
         }
         base.Update(gameTime);
+    }
+
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        base.Draw(gameTime, spriteBatch);
+        skill1.Draw(gameTime, spriteBatch);
     }
 
     //move control player
@@ -153,7 +168,7 @@ partial class Player : Entity
         if (totalDir != 0)
         {
             input = true;
-            stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            Vector2 stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
             //change movement if selected
             if (selected)
@@ -171,6 +186,7 @@ partial class Player : Entity
             {
                 velocity = stillVelocity;
             }
+            //velocity = stillVelocity;
         }
         else
         {
