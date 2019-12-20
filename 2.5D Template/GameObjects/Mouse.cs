@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-class GameMouse : SpriteGameObject
+class GameMouse : GameObject
 {
     Vector2 mousePos;
     public GameMouse()
-        : base("Sprites/Menu/spr_mouse",200, "mouse")
+        : base(200, "mouse")
     {  
     }
     
