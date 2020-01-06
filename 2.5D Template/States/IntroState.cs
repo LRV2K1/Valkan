@@ -10,19 +10,19 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 class IntroState : GameObjectList
- {
+{
     Texture2D videoTexture;
     Video video;
     VideoPlayer videoPlayer;
     protected bool resume;
 
-    public IntroState(int layer = 101, string id = "intro") 
-        : base(layer,id)
+    public IntroState(int layer = 101, string id = "intro")
+        : base(layer, id)
     {
         video = GameEnvironment.AssetManager.Content.Load<Video>("Videos/Fragment 1(intro)");
         videoPlayer = new VideoPlayer();
         videoPlayer.Play(video);
-        Add(GameEnvironment.ScreenFade);
+        //Add(GameEnvironment.ScreenFade);
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -31,21 +31,21 @@ class IntroState : GameObjectList
         if (inputHelper.AnyKeyPressed)
         {
             resume = true;
-            GameEnvironment.ScreenFade.FadeBlack();
+            //GameEnvironment.ScreenFade.FadeBlack();
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        if(resume)
+        if (resume)
         {
-            videoPlayer.Volume = (float)((255 - GameEnvironment.ScreenFade.A) / 255);
-            if(videoPlayer.Volume == 0f)
+            //videoPlayer.Volume = (float)((255 - GameEnvironment.ScreenFade.A) / 255);
+            if (videoPlayer.Volume == 0f)
             {
                 GameEnvironment.GameStateManager.SwitchTo("titleScreen");
             }
         }
-        if(videoPlayer.State == MediaState.Stopped)
+        if (videoPlayer.State == MediaState.Stopped)
         {
             GameEnvironment.GameStateManager.SwitchTo("titleScreen");
         }

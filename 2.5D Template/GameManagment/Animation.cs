@@ -10,7 +10,7 @@ public class Animation : SpriteSheet
     protected bool isBackWards;
     protected bool goBack = false;
 
-    public Animation(string assetname, bool isLooping, bool isBackAndForth, float frameTime = 0.1f) : base(assetname)
+    public Animation(string assetname, bool isLooping, bool isBackAndForth, float frameTime = 0.05f) : base(assetname)
     {
         this.frameTime = frameTime;
         this.isLooping = isLooping;

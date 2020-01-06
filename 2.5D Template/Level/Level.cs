@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 partial class Level : GameObjectList
 {
+    //startup of the level
     public Level(string name)
         : base()
     {

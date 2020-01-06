@@ -6,41 +6,60 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 
 class PlayingState : IGameLoopObject
 {
     protected ContentManager content;
     protected Level level;
-    protected bool firstLoad;
-    ScreenFade screenFade;
+    protected bool paused;
+    protected bool level1;
 
     public PlayingState(ContentManager content)
     {
         this.content = content;
+        paused = false;
         level = new Level("Level_1");
-        firstLoad = true;
+        level1 = true;
     }
 
+    //handels the payingstate
+    //plays the current level
     public virtual void HandleInput(InputHelper inputHelper)
     {
-        if(screenFade.FadeToWhite)
+        if (inputHelper.KeyPressed(Keys.L))
         {
-            return;
+            if (level1)
+            {
+                level = null;
+                level = new Level("Level_2");
+            }
+            else
+            {
+                level = null;
+                level = new Level("Level_1");
+            }
+            level1 = !level1;
         }
-        level.HandleInput(inputHelper);
+
+        if (inputHelper.KeyPressed(Keys.P))
+        {
+            paused = !paused;
+        }
+
+        if (!paused)
+        {
+            level.HandleInput(inputHelper);
+        }
     }
 
     public virtual void Update(GameTime gameTime)
     {
-        if(firstLoad)
+        if (!paused)
         {
-            screenFade = new ScreenFade();
-            level.Add(screenFade);
-            screenFade.FadeWhite();
-            firstLoad = false;
+            level.Update(gameTime);
         }
-        level.Update(gameTime);
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -51,6 +70,6 @@ class PlayingState : IGameLoopObject
     public virtual void Reset()
     {
         level.Reset();
+        paused = false;
     }
 }
-
