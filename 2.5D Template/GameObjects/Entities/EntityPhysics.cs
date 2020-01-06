@@ -11,56 +11,28 @@ abstract partial class Entity : AnimatedGameObject
     //physics and collision handeling for entities
     private void DoPhysics()
     {
+        OutsideLevel();
         HandleCollisions();
     }
 
-    private void HandleCollisions()
+    private void OutsideLevel()
     {
-        /*
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
-
-        List<string> surroudingtiles = GetSurroundingTiles();
-        for(int i = 0; i < surroudingtiles.Count; i++)
+        Vector2 loc = tiles.GridPosition(position);
+        Tile currentTile = tiles.Get((int)loc.X, (int)loc.Y) as Tile;
+        if (currentTile == null)
         {
-            Tile currentTile = GameWorld.GetObject(surroudingtiles[i]) as Tile;
-            TileType tileType = currentTile.TileType;
-            Rectangle tileBounds = currentTile.GetBoundingBox();
-
-            for (int j = 0; j < currentTile.Passengers.Count; j++)
-            {
-                if (currentTile.Passengers[j] != id)
-                {
-                    //check tile passenger collision
-                    HandleEntityCollisions(currentTile.Passengers[j]);
-                }
-            }
-            //check collision
-            if (tileType == TileType.Floor)
-            {
-                continue;
-            }
-
-            if (!tileBounds.Intersects(BoundingBox))
-            {
-                continue;
-            }
-
-            //mouve position
-            Vector2 depth = Collision.CalculateIntersectionDepth(BoundingBox, tileBounds);
-            if (Math.Abs(depth.X) < Math.Abs(depth.Y))
-            {
-                position.X += depth.X;
-                continue;
-            }
-            position.Y += depth.Y;
+            RemoveSelf();
         }
-        */
+    }
 
+    protected virtual void HandleCollisions()
+    {
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
         //check surrounding tiles
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)gridPos.Y - 3; y <= (int)gridPos.Y + 3; y++)
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;

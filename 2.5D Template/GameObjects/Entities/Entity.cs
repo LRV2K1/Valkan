@@ -14,10 +14,12 @@ abstract partial class Entity : AnimatedGameObject
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
+    bool remove;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
+        remove = false;
         host = "";
         this.weight = weight;
         this.boundingy = boundingy;
@@ -31,9 +33,13 @@ abstract partial class Entity : AnimatedGameObject
         //check if moved
         if (previousPos != position)
         {
+            DoPhysics();
+            if (remove)
+            {
+                return;
+            }
             NewHost();
             previousPos = position;
-            DoPhysics();
         }
     }
 
@@ -70,6 +76,7 @@ abstract partial class Entity : AnimatedGameObject
         Tile host = GameWorld.GetObject(this.host) as Tile;
         host.RemovePassenger(id);
         (parent as GameObjectList).Remove(id);
+        remove = true;
     }
 
     public override void PlayAnimation(string id, bool isBackWards = false)

@@ -196,7 +196,10 @@ partial class Player : Entity
             {
                 velocity = stillVelocity;
             }
-            //velocity = stillVelocity;
+            else
+            {
+                velocity = Vector2.Zero;
+            }
         }
         else
         {

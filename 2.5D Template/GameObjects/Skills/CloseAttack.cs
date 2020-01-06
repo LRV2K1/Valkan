@@ -24,15 +24,6 @@ class CloseAttack : PrimairySkill
         Attack(timer);
     }
 
-    //hitbox test
-    /*
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        base.HandleInput(inputHelper);
-        GetTargets();
-    }
-    */
-
     public void Attack(float timer)
     {
         Player player = parent as Player;
@@ -46,7 +37,20 @@ class CloseAttack : PrimairySkill
             for (int i = 0; i < targets.Count; i++)
             {
                 Enemy enemy = GameWorld.GetObject(targets[i]) as Enemy;
-                enemy.Health -= 10;
+                enemy.Health -= normaldamage;
+            }
+        }
+        else if (heavy && player.Stamina >= 20)
+        {
+            base.Use(timer);
+            player.Stamina -= 20;
+            player.AttackAnimation();
+            //attack targets
+            List<string> targets = GetTargets();
+            for (int i = 0; i < targets.Count; i++)
+            {
+                Enemy enemy = GameWorld.GetObject(targets[i]) as Enemy;
+                enemy.Health -= longdamage;
             }
         }
     }
@@ -68,14 +72,6 @@ class CloseAttack : PrimairySkill
                 {
                     continue;
                 }
-
-                /*
-                currentTile.Sprite.Color = Color.Red;
-                if (x == (int)gridPos.X && y == (int)gridPos.Y)
-                {
-                    currentTile.Sprite.Color = Color.Blue;
-                }
-                */
 
                 for (int i = 0; i < currentTile.Passengers.Count; i++)
                 {
@@ -117,9 +113,6 @@ class CloseAttack : PrimairySkill
         Camera camera = GameWorld.GetObject("camera") as Camera;
         base.Draw(gameTime, spriteBatch);
         Player player = parent as Player;
-        //hitbox test
-        //spriteBatch.Draw(hit1, player.GlobalPosition - camera.CameraPosition, null, Color.White, (float)player.Direction + (float)angle, new Vector2(0, 1), new Vector2(range / 100, 1), SpriteEffects.None, 0);
-        //spriteBatch.Draw(hit2, player.GlobalPosition - camera.CameraPosition, null, Color.White, (float)player.Direction - (float)angle, new Vector2(0, 1), new Vector2(range / 100, 1), SpriteEffects.None, 0);
     }
 
     public float Range
