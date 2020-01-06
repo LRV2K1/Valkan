@@ -16,6 +16,46 @@ abstract partial class Entity : AnimatedGameObject
 
     private void HandleCollisions()
     {
+        /*
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+
+        List<string> surroudingtiles = GetSurroundingTiles();
+        for(int i = 0; i < surroudingtiles.Count; i++)
+        {
+            Tile currentTile = GameWorld.GetObject(surroudingtiles[i]) as Tile;
+            TileType tileType = currentTile.TileType;
+            Rectangle tileBounds = currentTile.GetBoundingBox();
+
+            for (int j = 0; j < currentTile.Passengers.Count; j++)
+            {
+                if (currentTile.Passengers[j] != id)
+                {
+                    //check tile passenger collision
+                    HandleEntityCollisions(currentTile.Passengers[j]);
+                }
+            }
+            //check collision
+            if (tileType == TileType.Floor)
+            {
+                continue;
+            }
+
+            if (!tileBounds.Intersects(BoundingBox))
+            {
+                continue;
+            }
+
+            //mouve position
+            Vector2 depth = Collision.CalculateIntersectionDepth(BoundingBox, tileBounds);
+            if (Math.Abs(depth.X) < Math.Abs(depth.Y))
+            {
+                position.X += depth.X;
+                continue;
+            }
+            position.Y += depth.Y;
+        }
+        */
+
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
         //check surrounding tiles
         for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
@@ -96,5 +136,27 @@ abstract partial class Entity : AnimatedGameObject
             return;
         }
         entity.position -= new Vector2(0, depth.Y * push);
+    }
+
+    public List<string> GetSurroundingTiles()
+    {
+        List<string> surroudingtiles = new List<string>();
+
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+
+        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        {
+            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            {
+                Tile currentTile = tiles.Get(x, y) as Tile;
+
+                if (currentTile != null)
+                {
+                    surroudingtiles.Add(currentTile.Id);
+                }
+            }
+        }
+
+        return surroudingtiles;
     }
 }

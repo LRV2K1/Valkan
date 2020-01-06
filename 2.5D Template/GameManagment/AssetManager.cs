@@ -26,9 +26,16 @@ public class AssetManager
         {
             return textures[assetName];
         }
-        Texture2D tex = contentManager.Load<Texture2D>(assetName);
-        textures.Add(assetName, tex);
-        return tex;
+        try
+        {
+            Texture2D tex = contentManager.Load<Texture2D>(assetName);
+            textures.Add(assetName, tex);
+            return tex;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public void PlaySound(string assetName)

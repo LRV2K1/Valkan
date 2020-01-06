@@ -20,6 +20,13 @@ struct SpeedMultiplier
     }
 }
 
+enum PlayerType
+{
+    Warrior,
+    Bard,
+    Wizzard,
+}
+
 partial class Player : Entity
 {
     const float speed = 400;
@@ -27,7 +34,7 @@ partial class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected string name, job;
+    protected string name;
     protected int playerlevel, playerEXP, EXPThreshold;
     public int playerID;
     protected Skill skill1, skill3;
@@ -38,6 +45,7 @@ partial class Player : Entity
     protected double lastDirection;
     protected bool input;
     protected int offset;
+    protected PlayerType playerType;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -47,17 +55,20 @@ partial class Player : Entity
     public Player()
         : base(30, 20, 2, "player")
     {
+        playerType = PlayerType.Wizzard;
+
         name = "Valkan";
-        job = "Light";
         playerID = 1;
         playerlevel = 1;
         playerEXP = 1;
+
         maxhealth = 10;
         maxstamina = 100;
         health = maxhealth;
         stamina = maxstamina;
         staminatimerreset = 1f;
         addstaminatimerreset = 0.02f;
+
         EXPThreshold = 5;
 
         offset = 58;
@@ -97,7 +108,6 @@ partial class Player : Entity
             dead = false;
         }
         */
-
 
         if (die || dead)
         {
@@ -241,7 +251,7 @@ partial class Player : Entity
         lines = new string[7];
         StreamWriter writer = new StreamWriter(statpath);
         lines[0] = Encrypt(name);
-        lines[1] = Encrypt(job);
+        lines[1] = Encrypt(playerType.ToString());
         lines[2] = Encrypt(playerID.ToString());
         lines[3] = Encrypt(playerlevel.ToString());
         lines[4] = Encrypt(playerEXP.ToString());

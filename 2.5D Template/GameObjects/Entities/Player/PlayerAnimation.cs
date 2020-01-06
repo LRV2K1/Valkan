@@ -9,9 +9,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Player : Entity
 {
+    bool idle_anim, walking_anim, attack_anim, die_anim;
+
     private void LoadAnimations()
     {
-        LoadAnimation("Sprites/Player/spr_boundingbox", "boundingbox", false, false);
+        idle_anim = true;
+        walking_anim = true;
+        attack_anim = true;
+        die_anim = true;
+
         int tempint = 6;
         for (int i = 0; i < 8; i++)
         {
@@ -19,10 +25,11 @@ partial class Player : Entity
             {
                 tempint = 0;
             }
-            LoadAnimation("Sprites/Player/Warrior/spr_idle_" + tempint + "@4", "idle_" + i, true, true);
-            LoadAnimation("Sprites/Player/Warrior/spr_walking_" + tempint + "@8", "walking_" + i, true, false);
-            LoadAnimation("Sprites/Player/Warrior/spr_attack_" + tempint + "@4", "attack_" + i, false, false);
-            LoadAnimation("Sprites/Player/Warrior/spr_die_" + tempint + "@8", "die_" + i, false, false);
+
+            LoadAnimation("Sprites/Player/"+ playerType + "/spr_idle_" + tempint + "@4", "idle_" + i, true, true);
+            LoadAnimation("Sprites/Player/" + playerType + "/spr_walking_" + tempint + "@8", "walking_" + i, true, false);
+            LoadAnimation("Sprites/Player/" + playerType + "/spr_attack_" + tempint + "@4", "attack_" + i, false, false);
+            LoadAnimation("Sprites/Player/" + playerType + "/spr_die_" + tempint + "@8", "die_" + i, false, false);
             tempint += 1;
         }
         PlayAnimation("idle_3");
