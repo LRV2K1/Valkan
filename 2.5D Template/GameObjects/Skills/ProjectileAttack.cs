@@ -30,13 +30,7 @@ class ProjectileAttack : PrimairySkill
             player.Stamina -= 20;
             player.AttackAnimation();
 
-            int dir = (int)((player.Direction + (Math.PI / 8) + (3*Math.PI / 2)) / (Math.PI / 4));
-            if (dir > 7)
-            {
-                dir = 0;
-            }
-
-            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + dir + "@8", true, 10, 3, normaldamage);
+            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + GetDirection() + "@8", true, 10, 3, normaldamage);
             projectile.Position = player.GlobalPosition;
             projectile.Sprite.Size = new Vector2(0.75f, 0.75f);
             SetProjectileDirection(projectile);
@@ -52,6 +46,28 @@ class ProjectileAttack : PrimairySkill
             SetProjectileDirection(projectile);
             GameWorld.RootList.Add(projectile);
         }
+    }
+
+    private int GetDirection()
+    {
+        int dir;
+        Player player = parent as Player;
+        double direction = player.Direction;
+        if (player.Selected)
+        {
+            Selected icon = GameWorld.GetObject("selected") as Selected;
+            float dx = icon.Position.X - player.Position.X;
+            float dy = icon.Position.Y - player.Position.Y;
+            direction = Math.Atan2(dy, dx);
+        }
+
+        dir = (int)((direction + (Math.PI / 8) + (3 * Math.PI / 2)) / (Math.PI / 4));
+        if (dir > 7)
+        {
+            dir -= 8;
+        }
+
+        return dir;
     }
 
     private void SetProjectileDirection(Projectile projectile)
