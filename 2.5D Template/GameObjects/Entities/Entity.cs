@@ -74,7 +74,10 @@ abstract partial class Entity : AnimatedGameObject
     public override void RemoveSelf()
     {
         Tile host = GameWorld.GetObject(this.host) as Tile;
-        host.RemovePassenger(id);
+        if (host != null)
+        {
+            host.RemovePassenger(id);
+        }
         (parent as GameObjectList).Remove(id);
         remove = true;
     }
