@@ -32,7 +32,10 @@ class ProjectileAttack : PrimairySkill
 
             Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + GetDirection() + "@8", true, 10, 3, normaldamage);
             projectile.Position = player.GlobalPosition;
-            projectile.Sprite.Size = new Vector2(0.75f, 0.75f);
+            if (projectile.Sprite != null)
+            {
+                projectile.Sprite.Size = new Vector2(0.75f, 0.75f);
+            }
             SetProjectileDirection(projectile);
             GameWorld.RootList.Add(projectile);
         }
@@ -41,7 +44,7 @@ class ProjectileAttack : PrimairySkill
             base.Use(timer);
             player.Stamina -= 20;
             player.AttackAnimation();
-            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_0@8", true, 10, 3, longdamage);
+            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + GetDirection() + "@8", true, 10, 3, longdamage);
             projectile.Position = player.GlobalPosition;
             SetProjectileDirection(projectile);
             GameWorld.RootList.Add(projectile);

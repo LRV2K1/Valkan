@@ -84,7 +84,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public override void PlayAnimation(string id, bool isBackWards = false)
     {
-        base.PlayAnimation(id);
+        base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 

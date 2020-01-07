@@ -45,11 +45,11 @@ public class AnimatedGameObject : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
-        if (sprite == null)
+        if (sprite != null)
         {
-            return;
+            Current.Update(gameTime);
         }
-        Current.Update(gameTime);
+
         base.Update(gameTime);
     }
 

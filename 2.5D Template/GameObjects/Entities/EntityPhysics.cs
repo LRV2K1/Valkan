@@ -30,9 +30,9 @@ abstract partial class Entity : AnimatedGameObject
     {
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
         //check surrounding tiles
-        for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
+        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 3; y <= (int)gridPos.Y + 3; y++)
+            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;
@@ -116,9 +116,9 @@ abstract partial class Entity : AnimatedGameObject
 
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
 
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)gridPos.Y - 3; y <= (int)gridPos.Y + 3; y++)
             {
                 Tile currentTile = tiles.Get(x, y) as Tile;
 
@@ -128,7 +128,28 @@ abstract partial class Entity : AnimatedGameObject
                 }
             }
         }
-
         return surroudingtiles;
+    }
+
+    public List<string> GetSurroundingEntities()
+    {
+        List<string> surroundingentities = new List<string>();
+        List<string> surroundingtiles = GetSurroundingTiles();
+
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+
+        foreach (string id in surroundingtiles)
+        {
+            Tile tile = GameWorld.GetObject(id) as Tile;
+
+            for (int i = 0; i < tile.Passengers.Count; i++)
+            {
+                if (tile.Passengers[i] != this.id)
+                {
+                    surroundingentities.Add(tile.Passengers[i]);
+                }
+            }
+        }
+        return surroundingentities;
     }
 }

@@ -19,8 +19,11 @@ class Item : Entity
     public Item(string asset = "Sprites/Items/spr_test_1", bool animated = false, ItemType it = ItemType.InMovible, int boundingy = 0, int weight = 10, int layer = -1, string id = "")
         : base (boundingy, weight, layer, id)
     {
-        LoadAnimation(asset, "sprite", true, false, 0.2f);
-        PlayAnimation("sprite");
+        if (asset != "")
+        {
+            LoadAnimation(asset, "sprite", true, false, 0.2f);
+            PlayAnimation("sprite");
+        }
         itemtype = it;
     }
 
@@ -29,7 +32,7 @@ class Item : Entity
         base.MovePositionOnGrid(x, y);
         if (itemtype == ItemType.InMovible)
         {
-            previousPos = position;
+            previousPos = position; 
         }
     }
 
