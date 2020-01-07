@@ -10,15 +10,15 @@ class Projectile : Item
     float lifetime;
     int damage;
     bool damaged;
-    Rectangle hitbox;
+    Point hitbox;
 
-    public Projectile(string assetname, bool animated, int boundingy, float lifetime, int damage)
-        : base(assetname, animated, ItemType.InMovible, boundingy)
+    public Projectile(string assetname, bool animated, float lifetime, int damage, int hitboxX = 10, int hitboxY = 10)
+        : base(assetname, animated)
     {
         this.damage = damage;
         this.lifetime = lifetime;
 
-        hitbox = BoundingBox;
+        hitbox = new Point(hitboxX, hitboxY);
         damaged = false;
     }
 
@@ -26,25 +26,24 @@ class Projectile : Item
     {
         base.Update(gameTime);
         lifetime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        CheckHit();
         if (lifetime <= 0)
         {
             RemoveSelf();
             return;
         }
+        CheckHit();
     }
 
     private void CheckHit()
     {
         List<string> surroundingentities = GetSurroundingEntities();
 
-        hitbox = BoundingBox;
         foreach(string id in surroundingentities)
         {            
             Enemy enemy = GameWorld.GetObject(id) as Enemy;
             if (enemy != null)
             {
-                if (!enemy.Dead && hitbox.Intersects(enemy.BoundingBox))
+                if (!enemy.Dead && HitBox.Intersects(enemy.BoundingBox))
                 {
                     enemy.Health -= damage;
                     damaged = true;                    
@@ -62,7 +61,15 @@ class Projectile : Item
     {
     }
 
-    public Rectangle HitBox
+    private Rectangle HitBox
+    {
+        get 
+        {
+            return new Rectangle((int)(GlobalPosition.X - hitbox.X/2), (int)(GlobalPosition.Y - hitbox.Y/2), hitbox.X, hitbox.Y); 
+        }
+    }
+
+    public Point SetHitBoxSize
     {
         get { return hitbox; }
         set { hitbox = value; }

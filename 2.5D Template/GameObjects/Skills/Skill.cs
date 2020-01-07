@@ -60,6 +60,28 @@ class Skill : GameObject
         }
     }
 
+    protected int GetSpriteDirection()
+    {
+        int dir;
+        Player player = parent as Player;
+        double direction = player.Direction;
+        if (player.Selected)
+        {
+            Selected icon = GameWorld.GetObject("selected") as Selected;
+            float dx = icon.Position.X - player.Position.X;
+            float dy = icon.Position.Y - player.Position.Y;
+            direction = Math.Atan2(dy, dx);
+        }
+
+        dir = (int)((direction + (Math.PI / 8) + (3 * Math.PI / 2)) / (Math.PI / 4));
+        if (dir > 7)
+        {
+            dir -= 8;
+        }
+
+        return dir;
+    }
+
     public virtual void Use(float timer = 2f)
     {
         this.timer.Use(timer);

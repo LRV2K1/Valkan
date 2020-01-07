@@ -55,7 +55,7 @@ partial class Player : Entity
     public Player()
         : base(30, 20, 2, "player")
     {
-        playerType = PlayerType.Wizzard;
+        playerType = PlayerType.Warrior;
 
         name = "Valkan";
         playerID = 1;

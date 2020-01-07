@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Player : Entity
 {
-    private void LoadSkills()
+    protected virtual void LoadSkills()
     {
-        skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_0");
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
         skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
