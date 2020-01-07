@@ -67,13 +67,9 @@ class ProjectileAttack : Skill
                 animated = true;
             }
 
-            Projectile projectile = new Projectile(prj_sprite, animated, 3, damage);
+            Projectile projectile = new Projectile(prj_sprite, animated, damage, 3, "Sprites/Items/Particles/spr_fire_explosion@3x4");
             
             projectile.Position = player.GlobalPosition;
-            if (projectile.Sprite != null)
-            {
-                projectile.Sprite.Size = new Vector2(0.75f, 0.75f);
-            }
             SetProjectileSpeed(projectile);
             GameWorld.RootList.Add(projectile);
         }

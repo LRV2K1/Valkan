@@ -16,12 +16,12 @@ class Item : Entity
 {
     protected ItemType itemtype;
 
-    public Item(string asset = "Sprites/Items/spr_test_1", bool animated = false, ItemType it = ItemType.InMovible, int boundingy = 0, int weight = 10, int layer = -1, string id = "")
+    public Item(string asset = "Sprites/Items/spr_test_1", bool looping = false, ItemType it = ItemType.InMovible, int boundingy = 0, int weight = 10, int layer = -1, string id = "")
         : base (boundingy, weight, layer, id)
     {
         if (asset != "")
         {
-            LoadAnimation(asset, "sprite", true, false, 0.2f);
+            LoadAnimation(asset, "sprite", looping, false, 0.2f);
             PlayAnimation("sprite");
         }
         itemtype = it;

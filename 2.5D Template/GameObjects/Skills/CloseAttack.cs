@@ -29,7 +29,7 @@ class CloseAttack : PrimairySkill
             base.Use(timer);
             player.Stamina -= 20;
             player.AttackAnimation();
-            Projectile projectile = new Projectile("", false, 0.1f, normaldamage, 25, 25);
+            Projectile projectile = new Projectile("", false, normaldamage, 0.1f, "", 25, 25);
             projectile.Position = player.GlobalPosition;
             SetAttackBox(projectile);
             GameWorld.RootList.Add(projectile);

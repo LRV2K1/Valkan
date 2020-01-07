@@ -8,8 +8,15 @@ using Microsoft.Xna.Framework;
 class ParticleEffect : Item
 {
     public ParticleEffect(string asset)
-        : base(asset, true)
+        : base(asset, false)
     {
+
+        if (asset != "")
+        {
+            LoadAnimation(asset, "sprite", false, false, 0.07f);
+            PlayAnimation("sprite");
+        }
+
     }
 
     public override void Update(GameTime gameTime)

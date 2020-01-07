@@ -11,12 +11,15 @@ class Projectile : Item
     int damage;
     bool damaged;
     Point hitbox;
+    string particle_asset;
 
-    public Projectile(string assetname, bool animated, float lifetime, int damage, int hitboxX = 10, int hitboxY = 10)
+    public Projectile(string assetname, bool animated, int damage, float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
         : base(assetname, animated)
     {
         this.damage = damage;
         this.lifetime = lifetime;
+
+        particle_asset = part_asset;
 
         hitbox = new Point(hitboxX, hitboxY);
         damaged = false;
@@ -53,6 +56,12 @@ class Projectile : Item
 
         if (damaged)
         {
+            if (particle_asset != "")
+            {
+                ParticleEffect particleEffect = new ParticleEffect(particle_asset);
+                particleEffect.Position = GlobalPosition;
+                GameWorld.RootList.Add(particleEffect);
+            }
             RemoveSelf();
         }
     }
@@ -75,4 +84,3 @@ class Projectile : Item
         set { hitbox = value; }
     }
 }
-
