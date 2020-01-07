@@ -6,17 +6,41 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-class ProjectileAttack : PrimairySkill
+class ProjectileAttack : Skill
 {
     float speed = 500;
+    int damage;
+    float resettimer;
 
-    public ProjectileAttack(string assetname, float normaltimer = 1f, float longtimer = 3f, int normaldamage = 10, int longdamage = 30)
-        : base(assetname, normaltimer, longtimer, normaldamage, longdamage)
+    string prj_asset, prj_ex_asset;
+    int number_frames;
+    bool directional;
+
+    public ProjectileAttack(string assetname, string prj_asset = "", int prj_frames = 1, string prj_ex_asset = "", float timer = 1f, int damage = 10, MouseButton button = MouseButton.Left)
+        : base(assetname, button)
     {
+        resettimer = timer;
+        this.damage = damage;
 
+        this.prj_asset = prj_asset;
+        this.prj_ex_asset = prj_ex_asset;
+
+        number_frames = prj_frames;
+        if (prj_asset != "")
+        {
+            directional = prj_asset[prj_asset.Length - 1] == '_';
+        }
     }
 
-    public override void Use(float timer = 2)
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (inputHelper.MouseButtonPressed(button) && timer.Ready)
+        {
+            Use(resettimer);
+        }
+    }
+
+    public override void Use(float timer = 2f)
     {
         Attack(timer);
     }
@@ -24,28 +48,32 @@ class ProjectileAttack : PrimairySkill
     private void Attack(float timer)
     {
         Player player = parent as Player;
-        if (!heavy && player.Stamina >= 20)
+        if (player.Stamina >= 20)
         {
             base.Use(timer);
             player.Stamina -= 20;
             player.AttackAnimation();
 
-            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + GetSpriteDirection() + "@8", true, 3, normaldamage);
+            string prj_sprite = prj_asset;
+            bool animated = false;
+
+            if (directional)
+            {
+                prj_sprite += GetSpriteDirection();
+            }
+            if (number_frames > 1)
+            {
+                prj_sprite += "@" + number_frames;
+                animated = true;
+            }
+
+            Projectile projectile = new Projectile(prj_sprite, animated, 3, damage);
+            
             projectile.Position = player.GlobalPosition;
             if (projectile.Sprite != null)
             {
                 projectile.Sprite.Size = new Vector2(0.75f, 0.75f);
             }
-            SetProjectileSpeed(projectile);
-            GameWorld.RootList.Add(projectile);
-        }
-        else if (heavy && player.Stamina >= 20)
-        {
-            base.Use(timer);
-            player.Stamina -= 20;
-            player.AttackAnimation();
-            Projectile projectile = new Projectile("Sprites/Items/Projectiles/spr_ice_" + GetSpriteDirection() + "@8", true, 3, longdamage);
-            projectile.Position = player.GlobalPosition;
             SetProjectileSpeed(projectile);
             GameWorld.RootList.Add(projectile);
         }

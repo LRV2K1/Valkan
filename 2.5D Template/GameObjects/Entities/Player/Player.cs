@@ -55,7 +55,7 @@ partial class Player : Entity
     public Player()
         : base(30, 20, 2, "player")
     {
-        playerType = PlayerType.Warrior;
+        playerType = PlayerType.Wizzard;
 
         name = "Valkan";
         playerID = 1;
@@ -79,7 +79,7 @@ partial class Player : Entity
         speedMultipliers = new List<SpeedMultiplier>();
 
         direction = 0;
-        lastDirection = direction;
+        lastDirection = 1;
 
         LoadAnimations();
 

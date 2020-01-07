@@ -133,6 +133,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public List<string> GetSurroundingEntities()
     {
+        //includes self
         List<string> surroundingentities = new List<string>();
         List<string> surroundingtiles = GetSurroundingTiles();
 
@@ -144,10 +145,7 @@ abstract partial class Entity : AnimatedGameObject
 
             for (int i = 0; i < tile.Passengers.Count; i++)
             {
-                if (tile.Passengers[i] != this.id)
-                {
-                    surroundingentities.Add(tile.Passengers[i]);
-                }
+                surroundingentities.Add(tile.Passengers[i]);
             }
         }
         return surroundingentities;
