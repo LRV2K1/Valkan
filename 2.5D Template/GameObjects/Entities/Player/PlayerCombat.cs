@@ -14,7 +14,8 @@ partial class Player : Entity
 
     protected virtual void LoadSkills()
     {
-        skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_6", "Sprites/Items/Projectiles/spr_ice_", 8, "Sprites/Items/Particles/spr_ice_explosion@4");
+        //skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_6", "Sprites/Items/Projectiles/spr_ice_", 8, "Sprites/Items/Particles/spr_ice_explosion@4");
+        skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_9", "Sprites/Items/Projectiles/spr_rock", 1, "Sprites/Items/Particles/spr_rock_explosion@4", 1, 5);
         //skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_3");
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_7", "Sprites/Items/Projectiles/spr_fire_", 8, "Sprites/Items/Particles/spr_fire_explosion@3x4", 1.5f, 12, MouseButton.Right);

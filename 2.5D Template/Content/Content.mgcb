@@ -98,6 +98,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Items/Particles/spr_ice_explosion@4.png
 
+#begin Sprites/Items/Particles/spr_rock_explosion@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Items/Particles/spr_rock_explosion@4.png
+
 #begin Sprites/Items/Particles/spr_shield@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -529,6 +541,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/Skills/spr_skill_8.png
+
+#begin Sprites/Menu/Skills/spr_skill_9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/Skills/spr_skill_9.png
 
 #begin Sprites/Menu/Skills/spr_skilloverlay.png
 /importer:TextureImporter
