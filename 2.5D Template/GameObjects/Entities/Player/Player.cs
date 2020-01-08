@@ -46,6 +46,7 @@ partial class Player : Entity
     protected bool input;
     protected int offset;
     protected PlayerType playerType;
+    protected bool inmovible;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -55,6 +56,8 @@ partial class Player : Entity
     public Player()
         : base(30, 20, 2, "player")
     {
+        inmovible = false;
+
         playerType = PlayerType.Wizzard;
 
         name = "Valkan";
@@ -99,16 +102,6 @@ partial class Player : Entity
     
     public override void HandleInput(InputHelper inputHelper)
     {
-        //health test
-        /*
-        if (inputHelper.KeyPressed(Keys.H))
-        {
-            health = maxhealth;
-            die = false;
-            dead = false;
-        }
-        */
-
         if (die || dead)
         {
             return;
@@ -143,6 +136,12 @@ partial class Player : Entity
     //move control player
     private void ControlMove(InputHelper inputHelper)
     {
+        if (inmovible)
+        {
+            input = false;
+            return;
+        }
+
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
         {
@@ -312,6 +311,18 @@ partial class Player : Entity
                 ICryptoTransform tr = trip.CreateDecryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 return UTF8Encoding.UTF8.GetString(results);
+            }
+        }
+    }
+
+    public bool InMovible
+    {
+        get { return inmovible; }
+        set { 
+            inmovible = value;
+            if (inmovible)
+            {
+                velocity = Vector2.Zero;
             }
         }
     }

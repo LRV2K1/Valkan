@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework;
 
 class ParticleEffect : Item
 {
-    public ParticleEffect(string asset)
-        : base(asset, false)
+    public ParticleEffect(string asset, bool looping = false)
+        : base(asset, looping)
     {
 
         if (asset != "")
         {
-            LoadAnimation(asset, "sprite", false, false, 0.07f);
+            LoadAnimation(asset, "sprite", looping, false, 0.07f);
             PlayAnimation("sprite");
         }
 

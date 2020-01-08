@@ -9,7 +9,7 @@ class Block : Skill
 {
     protected float resettimer;
 
-    public Block(string assetname, float timer = 1f, int damage = 10, MouseButton mouseButton = MouseButton.Right)
+    public Block(string assetname, float timer = 1f, MouseButton mouseButton = MouseButton.Right)
         : base(assetname, mouseButton)
     {
         resettimer = timer;
@@ -22,6 +22,7 @@ class Block : Skill
         if (player.Blocked)
         {
             player.Blocked = false;
+            player.Stamina -= 20;
             base.Use(resettimer);
         }
     }

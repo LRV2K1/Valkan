@@ -58,6 +58,7 @@
     <Compile Include="GameObjects\Mouse.cs" />
     <Compile Include="GameObjects\Entities\ParticleEffect.cs" />
     <Compile Include="GameObjects\Skills\Block.cs" />
+    <Compile Include="GameObjects\Skills\BlockHold.cs" />
     <Compile Include="GameObjects\Skills\CloseAttack.cs" />
     <Compile Include="GameObjects\Skills\Dodge.cs" />
     <Compile Include="GameObjects\Entities\Projectile.cs" />
