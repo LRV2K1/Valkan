@@ -33,6 +33,7 @@ public class GameStart : GameEnvironment
         //gameStateManager.AddGameState("introState", new IntroState());
         gameStateManager.AddGameState("titleScreen", new TitleScreenState());
         gameStateManager.AddGameState("playingState", new PlayingState(Content));
+        gameStateManager.AddGameState("settingsState", new SettingsState());
         gameStateManager.SwitchTo("titleScreen");
 
         framecounter = new TextGameObject("Fonts/Hud");
