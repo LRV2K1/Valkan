@@ -9,7 +9,6 @@ public abstract class GameObject : IGameLoopObject
     protected int layer;
     protected string id;
     protected bool visible;
-    protected bool removeSelf;
 
     public GameObject(int layer = 0, string id = "")
     {
@@ -22,7 +21,6 @@ public abstract class GameObject : IGameLoopObject
         position = Vector2.Zero;
         velocity = Vector2.Zero; 
         visible = true;
-        removeSelf = false;
     }
 
     public virtual void HandleInput(InputHelper inputHelper)
@@ -41,6 +39,11 @@ public abstract class GameObject : IGameLoopObject
     public virtual void Reset()
     {
         visible = true;
+    }
+
+    public virtual void RemoveSelf()
+    {
+
     }
 
     public virtual Vector2 Position
@@ -70,6 +73,7 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
+    //the rootlist of the gameworld
     public virtual GameObjectList RootList
     {
         get
@@ -85,6 +89,7 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
+    //the gameworld is a library
     public GameObjectLibrary GameWorld
     {
         get { return library; }
@@ -127,11 +132,5 @@ public abstract class GameObject : IGameLoopObject
         {
             return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
         }
-    }
-
-    public bool RemoveSelf
-    {
-        get { return removeSelf; }
-        set { removeSelf = value; }
     }
 }

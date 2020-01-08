@@ -30,15 +30,18 @@ public class SpriteGameObject : GameObject
 
         if(GameWorld != null)
         {
+            //get camera
             Camera camera1 = GameWorld.GetObject("camera") as Camera;
             camera = camera1;
         }
+        //check layer
         if (this.layer > 90)
         {
             sprite.Draw(spriteBatch, this.GlobalPosition, origin);
         }
         else
         {
+            //draw in reference to camera
             if (camera != null)
             {
                 if (camera.OnScreen(GlobalPosition))
@@ -123,6 +126,13 @@ public class SpriteGameObject : GameObject
             }
         }
         return false;
+    }
+
+    public bool OnSprite(Vector2 pos)
+    {
+        int left = (int)(GlobalPosition.X - origin.X);
+        int top = (int)(GlobalPosition.Y - origin.Y);
+        return new Rectangle(left, top, Width, Height).Contains(new Point((int)pos.X, (int)pos.Y));
     }
 }
 

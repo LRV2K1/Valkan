@@ -2,6 +2,7 @@
 
 public class Collision
 {
+    //basic collision calculation
     public static Vector2 CalculateIntersectionDepth(Rectangle rectA, Rectangle rectB)
     {
         Vector2 minDistance = new Vector2(rectA.Width + rectB.Width,
@@ -10,6 +11,7 @@ public class Collision
         Vector2 centerB = new Vector2(rectB.Center.X, rectB.Center.Y);
         Vector2 distance = centerA - centerB;
         Vector2 depth = Vector2.Zero;
+        //calculate depth
         if (distance.X > 0)
         {
             depth.X = minDistance.X - distance.X;
@@ -26,6 +28,7 @@ public class Collision
         {
             depth.Y = -minDistance.Y - distance.Y;
         }
+        //return minimum depth
         return depth;
     }
 

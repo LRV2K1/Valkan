@@ -12,14 +12,16 @@ class Enemy : Entity
     protected bool die, dead;
     protected bool selected;
 
+    //generic enemy
+    //no function yet
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, weight, layer, id)
     {
         selected = false;
         dead = false;
         health = 20;
-        LoadAnimation(assetname, "sprite", true);
-        LoadAnimation(assetname, "die", false);
+        LoadAnimation(assetname, "sprite", true, false);
+        LoadAnimation(assetname, "die", false, false);
         PlayAnimation("sprite");
     }
 

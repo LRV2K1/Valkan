@@ -24,6 +24,8 @@ class PlayingState : IGameLoopObject
         level1 = true;
     }
 
+    //handels the payingstate
+    //plays the current level
     public virtual void HandleInput(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(Keys.L))

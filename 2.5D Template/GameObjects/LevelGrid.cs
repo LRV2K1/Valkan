@@ -21,7 +21,6 @@ class LevelGrid : GameObjectGrid
         obj.Position = AnchorPosition(x,y);
     }
 
-
     public TileType GetTileType(int x, int y)
     {
         if (x < 0 || x >= Columns)
@@ -50,6 +49,21 @@ class LevelGrid : GameObjectGrid
         return current.TextureType;
     }
 
+    public TileObject GetTileObject(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return TileObject.Tile;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return TileObject.Tile;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.TileObject;
+    }
+
+    //giving passengers to tiles
     public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile tile;
@@ -96,6 +110,7 @@ class LevelGrid : GameObjectGrid
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        //draw tile with passengers
         List<string> tiles = ActiveTiles();
         for (int i = 0; i < tiles.Count; i++)
         {
@@ -109,6 +124,7 @@ class LevelGrid : GameObjectGrid
         }
     }
 
+    //checking for active tiles
     private List<string> ActiveTiles()
     {
         List<string> tiles = new List<string>();
@@ -140,7 +156,7 @@ class LevelGrid : GameObjectGrid
 
     public Vector2 GridPosition(Vector2 pos)
     {
-        return new Vector2(pos.X/cellWidth + pos.Y/cellHeight, -pos.X/CellWidth + pos.Y/cellHeight);
+        return new Vector2(pos.X / cellWidth + pos.Y / cellHeight, -pos.X / CellWidth + pos.Y / cellHeight);
     }
 
     public Vector2 DrawGridPosition(Vector2 pos)

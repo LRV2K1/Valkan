@@ -18,10 +18,12 @@ public class GameObjectList : GameObject
 
     public virtual void Add(GameObject obj)
     {
+        //add to gameworld
         GameWorld.Add(obj);
         obj.Parent = this;
         for (int i = 0; i < children.Count; i++)
         {
+            //check layers
             if (GameWorld.GetObject(children[i]).Layer > obj.Layer)
             {
                 children.Insert(i, obj.Id);
@@ -33,12 +35,14 @@ public class GameObjectList : GameObject
 
     public void RemoveFromList(string id)
     {
+        //still in gameworld
         children.Remove(id);
         GameWorld.GetObject(id).Parent = null;
     }
 
     public void Remove(string id)
     {
+        //remove completely
         children.Remove(id);
         GameWorld.GetObject(id).Parent = null;
         GameWorld.Remove(id);

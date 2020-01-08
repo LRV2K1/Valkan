@@ -5,17 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 public class GameObjectLibrary : GameObject
 {
-
-    public GameObjectList root;
+    //the gameobject library is also the gameworld
+    protected GameObjectList root;
     protected Dictionary<string, GameObject> objects;
 
     public GameObjectLibrary(int layer = 0, string id = "")
         : base (layer, id)
     {
+        //dictionary to save all objects with id
         objects = new Dictionary<string, GameObject>();
+
+        //has its onw internal list
         root = new GameObjectList();
         root.GameWorld = this;
     }
@@ -58,6 +62,11 @@ public class GameObjectLibrary : GameObject
             return objects[id];
         }
         return null;
+    }
+
+    public Dictionary<string, GameObject> Dictionary
+    {
+        get { return objects; }
     }
 
     public virtual void Remove(string id)

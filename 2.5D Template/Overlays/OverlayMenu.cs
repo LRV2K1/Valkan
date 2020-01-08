@@ -14,6 +14,7 @@ class OverlayMenu : Overlay
     public OverlayMenu(GameObjectLibrary gameworld, int layer = 101, string id = "")
         : base(gameworld, layer, id)
     {
+        //add buttons to menu
         Add(new SpriteGameObject("Sprites/Menu/spr_background", 101));
 
         invetory = new Button("Sprites/Menu/spr_button_inventory", 102);
@@ -39,6 +40,7 @@ class OverlayMenu : Overlay
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        //update buttons
         base.HandleInput(inputHelper);
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (inputHelper.KeyPressed(Keys.I) || exit.Pressed)
