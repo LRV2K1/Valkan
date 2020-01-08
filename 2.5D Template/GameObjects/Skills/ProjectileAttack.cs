@@ -67,7 +67,7 @@ class ProjectileAttack : Skill
                 animated = true;
             }
 
-            Projectile projectile = new Projectile(prj_sprite, animated, damage, 3, "Sprites/Items/Particles/spr_fire_explosion@3x4");
+            Projectile projectile = new Projectile(prj_sprite, animated, damage, 3, prj_ex_asset);
             
             projectile.Position = player.GlobalPosition;
             SetProjectileSpeed(projectile);

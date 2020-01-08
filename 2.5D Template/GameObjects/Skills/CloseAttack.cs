@@ -6,14 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-class CloseAttack : PrimairySkill
+class CloseAttack : Skill
 {
     protected float range;
+    protected int damage;
+    protected float resettimer;
 
-    public CloseAttack(string assetname, float normaltimer = 1f, float longtimer = 3f, int normaldamage = 10, int longdamage = 30)
-        : base(assetname, normaltimer, longtimer, normaldamage, longdamage)
+    public CloseAttack(string assetname, float timer = 1f, int damage = 10, float range = 50, MouseButton mouseButton = MouseButton.Left)
+        : base(assetname, mouseButton)
     {
-        range = 100;        
+        this.range = range;
+        this.damage = damage;
+        resettimer = timer;
+        
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (inputHelper.MouseButtonPressed(button) && timer.Ready)
+        {
+            Use(resettimer);
+        }
     }
 
     public override void Use(float timer = 2)
@@ -24,22 +37,15 @@ class CloseAttack : PrimairySkill
     public void Attack(float timer)
     {
         Player player = parent as Player;
-        if (!heavy && player.Stamina >= 20)
+        if (player.Stamina >= 20)
         {
             base.Use(timer);
             player.Stamina -= 20;
             player.AttackAnimation();
-            Projectile projectile = new Projectile("", false, normaldamage, 0.1f, "", 25, 25);
+            Projectile projectile = new Projectile("", false, damage, 0.1f, "", 25, 25);
             projectile.Position = player.GlobalPosition;
             SetAttackBox(projectile);
             GameWorld.RootList.Add(projectile);
-        }
-        else if (heavy && player.Stamina >= 20)
-        {
-            base.Use(timer);
-            player.Stamina -= 20;
-            player.AttackAnimation();
-            
         }
     }
 

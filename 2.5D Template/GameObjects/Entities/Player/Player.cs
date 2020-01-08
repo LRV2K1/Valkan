@@ -38,7 +38,7 @@ partial class Player : Entity
     protected int playerlevel, playerEXP, EXPThreshold;
     public int playerID;
     protected Skill skill1, skill3;
-    protected Block skill2;
+    protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
     protected string currentAnimation;

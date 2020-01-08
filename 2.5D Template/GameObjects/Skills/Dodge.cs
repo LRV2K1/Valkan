@@ -7,16 +7,26 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
-class Dodge : TertairySkill
+class Dodge : Skill
 {
     protected float speed;
     protected float runtime;
+    protected float resettimer;
 
-    public Dodge(string assetname, float time = 1f, float speed = 2f, float runtime = 0.2f)
-        : base(assetname, time)
+    public Dodge(string assetname, float timer = 1f, float speed = 2f, float runtime = 0.2f, Keys keys = Keys.Space)
+        : base(assetname, MouseButton.None, keys)
     {
         this.speed = speed;
         this.runtime = runtime;
+        resettimer = timer;
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (inputHelper.KeyPressed(key) && timer.Ready)
+        {
+            Use(resettimer);
+        }
     }
 
     public override void Use(float timer = 2)
