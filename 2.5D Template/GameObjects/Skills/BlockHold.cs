@@ -23,12 +23,12 @@ class BlockHold : Skill
     public override void HandleInput(InputHelper inputHelper)
     {
         Player player = parent as Player;
-        player.Block = inputHelper.IsKeyDown(key) && player.Stamina >= 1;
+        player.Block = inputHelper.IsKeyDown(key) && player.Stamina >= 2;
         if (player.Block)
         {
             if (timer.Ready)
             {
-                player.Stamina--;
+                player.Stamina-=2;
                 base.Use(staminatimer);
             }
             if (shield == null && block_asset != "")
@@ -55,4 +55,3 @@ class BlockHold : Skill
         }
     }
 }
-
