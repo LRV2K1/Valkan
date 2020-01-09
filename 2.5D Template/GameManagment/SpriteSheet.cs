@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 public class SpriteSheet
 {
@@ -17,7 +18,15 @@ public class SpriteSheet
     {
         size = Vector2.One;
         // retrieve the sprite
-        sprite = GameEnvironment.AssetManager.GetSprite(assetname);
+        try
+        {
+            sprite = GameEnvironment.AssetManager.GetSprite(assetname);
+        }
+        catch (ContentLoadException e)
+        {
+            assetname = GameEnvironment.AssetManager.TestSprite;
+            sprite = GameEnvironment.AssetManager.GetSprite(assetname);
+        }
         color = Color.White;
         /*
         // construct the collision mask

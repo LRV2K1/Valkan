@@ -6,18 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 partial class Player : Entity
 {
-    bool idle_anim, walking_anim, attack_anim, die_anim;
 
     private void LoadAnimations()
     {
-        idle_anim = true;
-        walking_anim = true;
-        attack_anim = true;
-        die_anim = true;
-
         int tempint = 6;
         for (int i = 0; i < 8; i++)
         {
@@ -25,7 +20,7 @@ partial class Player : Entity
             {
                 tempint = 0;
             }
-
+            
             LoadAnimation("Sprites/Player/"+ playerType + "/spr_idle_" + tempint + "@4", "idle_" + i, true, true);
             LoadAnimation("Sprites/Player/" + playerType + "/spr_walking_" + tempint + "@8", "walking_" + i, true, false);
             LoadAnimation("Sprites/Player/" + playerType + "/spr_attack_" + tempint + "@4", "attack_" + i, false, false);

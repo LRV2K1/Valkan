@@ -2558,6 +2558,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Player/Wizzard/spr_walking_7@8.png
 
+#begin Sprites/spr_test_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/spr_test_1.png
+
 #begin Sprites/Tiles/spr_cave_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
