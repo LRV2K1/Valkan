@@ -23,7 +23,8 @@ class CloseAttack : Skill
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.MouseButtonPressed(button) && timer.Ready)
+        Player player = parent as Player;
+        if (inputHelper.MouseButtonPressed(button) && timer.Ready && player.Stamina >= 20)
         {
             Use(resettimer);
         }
@@ -31,22 +32,19 @@ class CloseAttack : Skill
 
     public override void Use(float timer = 2)
     {
-        Attack(timer);
+        Player player = parent as Player;
+        base.Use(timer);
+        player.Stamina -= 20;
+        player.AttackAnimation();
+        MakeProjectile(player.GlobalPosition);
     }
 
-    public void Attack(float timer)
+    private void MakeProjectile(Vector2 position)
     {
-        Player player = parent as Player;
-        if (player.Stamina >= 20)
-        {
-            base.Use(timer);
-            player.Stamina -= 20;
-            player.AttackAnimation();
-            Projectile projectile = new Projectile("", false, damage, 0.1f, "", 25, 25);
-            projectile.Position = player.GlobalPosition;
-            SetAttackBox(projectile);
-            GameWorld.RootList.Add(projectile);
-        }
+        Projectile projectile = new Projectile("", false, damage, Vector2.Zero, 0.1f, "", 25, 25);
+        projectile.Position = position;
+        SetAttackBox(projectile);  
+        GameWorld.RootList.Add(projectile);
     }
 
     private void SetAttackBox(Projectile projectile)

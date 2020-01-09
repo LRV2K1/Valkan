@@ -58,7 +58,7 @@ partial class Player : Entity
     {
         inmovible = false;
 
-        playerType = PlayerType.Bard;
+        playerType = PlayerType.Warrior;
 
         name = "Valkan";
         playerID = 1;

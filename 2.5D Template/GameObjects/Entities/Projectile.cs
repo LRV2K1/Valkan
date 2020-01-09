@@ -12,17 +12,21 @@ class Projectile : Item
     bool damaged;
     Point hitbox;
     string particle_asset;
+    Vector2 offsetposition;
 
-    public Projectile(string assetname, bool animated, int damage, float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
+    public Projectile(string assetname, bool animated, int damage, Vector2 offsetposition, float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
         : base(assetname, animated)
     {
         this.damage = damage;
         this.lifetime = lifetime;
+        this.offsetposition = offsetposition;
 
         particle_asset = part_asset;
 
         hitbox = new Point(hitboxX, hitboxY);
         damaged = false;
+
+        origin += offsetposition;
     }
 
     public override void Update(GameTime gameTime)
@@ -60,6 +64,7 @@ class Projectile : Item
             {
                 ParticleEffect particleEffect = new ParticleEffect(particle_asset);
                 particleEffect.Position = GlobalPosition;
+                particleEffect.Origin += offsetposition;
                 GameWorld.RootList.Add(particleEffect);
             }
             RemoveSelf();
@@ -68,6 +73,13 @@ class Projectile : Item
 
     protected override void HandleCollisions()
     {
+    }
+
+    public override void PlayAnimation(string id, bool isBackWards = false)
+    {
+        base.PlayAnimation(id, isBackWards);
+        origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
+        origin += offsetposition;
     }
 
     private Rectangle HitBox

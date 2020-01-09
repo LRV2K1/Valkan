@@ -23,7 +23,8 @@ class Dodge : Skill
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(key) && timer.Ready)
+        Player player = parent as Player;
+        if (inputHelper.KeyPressed(key) && timer.Ready && player.Stamina >= 20)
         {
             Use(resettimer);
         }
@@ -32,11 +33,8 @@ class Dodge : Skill
     public override void Use(float timer = 2)
     {
         Player player = parent as Player;
-        if (player.Stamina >= 20)
-        {
-            base.Use(timer);
-            player.Stamina -= 20;
-            player.AddSpeedMultiplier(runtime, speed);
-        }
+        base.Use(timer);
+        player.Stamina -= 20;
+        player.AddSpeedMultiplier(runtime, speed);
     }
 }

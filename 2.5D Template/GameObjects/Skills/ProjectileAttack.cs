@@ -42,11 +42,6 @@ class ProjectileAttack : Skill
 
     public override void Use(float timer = 2f)
     {
-        Attack(timer);
-    }
-
-    private void Attack(float timer)
-    {
         Player player = parent as Player;
         if (player.Stamina >= 20)
         {
@@ -54,25 +49,29 @@ class ProjectileAttack : Skill
             player.Stamina -= 20;
             player.AttackAnimation();
 
-            string prj_sprite = prj_asset;
-            bool animated = false;
-
-            if (directional)
-            {
-                prj_sprite += GetSpriteDirection();
-            }
-            if (number_frames > 1)
-            {
-                prj_sprite += "@" + number_frames;
-                animated = true;
-            }
-
-            Projectile projectile = new Projectile(prj_sprite, animated, damage, 3, prj_ex_asset);
-            
-            projectile.Position = player.GlobalPosition;
-            SetProjectileSpeed(projectile);
-            GameWorld.RootList.Add(projectile);
+            MakeProjectile(player.GlobalPosition);
         }
+    }
+
+    private void MakeProjectile(Vector2 position)
+    {
+        string prj_sprite = prj_asset;
+        bool animated = false;
+
+        if (directional)
+        {
+            prj_sprite += GetSpriteDirection();
+        }
+        if (number_frames > 1)
+        {
+            prj_sprite += "@" + number_frames;
+            animated = true;
+        }
+
+        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) ,3, prj_ex_asset);
+        projectile.Position = position;
+        SetProjectileSpeed(projectile);
+        GameWorld.RootList.Add(projectile);
     }
 
     private void SetProjectileSpeed(Projectile projectile)
