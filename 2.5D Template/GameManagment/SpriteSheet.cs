@@ -13,9 +13,11 @@ public class SpriteSheet
     protected bool mirror;
     protected Color color;
     protected Vector2 size;
+    protected Rectangle cut;
 
     public SpriteSheet(string assetname, int sheetIndex = 0)
     {
+        cut = new Rectangle(0,0,0,0);
         size = Vector2.One;
         // retrieve the sprite
         try
@@ -63,7 +65,7 @@ public class SpriteSheet
     {
         int columnIndex = sheetIndex % sheetColumns;
         int rowIndex = sheetIndex / sheetColumns % sheetRows;
-        Rectangle spritePart = new Rectangle(columnIndex * Width, rowIndex * Height, Width, Height);
+        Rectangle spritePart = new Rectangle(columnIndex * Width + cut.X, rowIndex * Height + cut.Y, Width + cut.Width - cut.X, Height + cut.Height - cut.Y);
         SpriteEffects spriteEffects = SpriteEffects.None;
         if (mirror)
         {
@@ -139,5 +141,11 @@ public class SpriteSheet
     {
         get { return size; }
         set { size = value; }
+    }
+
+    public Rectangle Cut
+    {
+        get { return cut; }
+        set { cut = value; }
     }
 }
