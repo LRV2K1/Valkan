@@ -4,13 +4,11 @@ using Microsoft.Xna.Framework.Input;
 
 public class GameStart : GameEnvironment
 {
-
     protected TextGameObject framecounter, physicscounter;
     protected int frames = 0;
     protected int physics = 0;
     protected double time = 0;
     protected double time2 = 0;
-
 
     static void Main()
     {
