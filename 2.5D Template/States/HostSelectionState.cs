@@ -19,17 +19,17 @@ class HostSelectionState : GameObjectLibrary
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
-
-        startButton = new Button("Sprites/Menu/spr_button", 101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
+        //Start Button
+        startButton = new Button("Sprites/Menu/Start_Button", 101);
+        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - startButton.Height) / 6);
         RootList.Add(startButton);
-
-        settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
-        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
+        //Change Button
+        settingsButton = new Button("Sprites/Menu/Change_Button", 101);
+        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 2, (GameEnvironment.Screen.Y - settingsButton.Height) / 3);
         RootList.Add(settingsButton);
-
-        returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
-        returnButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        //Return Button
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
+        returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
 
 
@@ -39,9 +39,7 @@ class HostSelectionState : GameObjectLibrary
     {
         if (firstTime)
         {
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
-            startButton.Active = true;
         }
         base.Update(gameTime);
     }
@@ -59,7 +57,7 @@ class HostSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
+            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
 

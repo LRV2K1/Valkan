@@ -18,17 +18,20 @@ class ModeSelectionState : GameObjectLibrary
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        titleScreen.Sprite.Color = Color.Red;
         RootList.Add(titleScreen);
         //Offline button
-        startButton = new Button("Sprites/Menu/spr_button", 101);
-        startButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - startButton.Width / 2, (GameEnvironment.Screen.Y - startButton.Height) / 4);
+        startButton = new Button("Sprites/Menu/PlayOffline_Button", 101);
+        startButton.Sprite.Size = new Vector2(2f, 3f);
+        startButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - startButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - startButton.BoundingBox.Height) / 4);
         RootList.Add(startButton);
         //Online button
-        settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
-        settingsButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - settingsButton.Width / 2, (GameEnvironment.Screen.Y - settingsButton.Height) / 2);
+        settingsButton = new Button("Sprites/Menu/PlayOnline_Button", 101);
+        settingsButton.Sprite.Size = new Vector2(2f, 3f);
+        settingsButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - settingsButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - settingsButton.BoundingBox.Height) / 2);
         RootList.Add(settingsButton);
         //Return button
-        returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
     }
@@ -37,7 +40,6 @@ class ModeSelectionState : GameObjectLibrary
     {
         if (firstTime)
         {
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
         }
         base.Update(gameTime);
@@ -48,15 +50,15 @@ class ModeSelectionState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
+            GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState", 5);
         }
         else if (settingsButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
+            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
+            GameEnvironment.ScreenFade.TransitionToScene("titleScreen", 5);
         }
     }
 

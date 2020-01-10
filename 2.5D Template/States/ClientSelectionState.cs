@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 //This is the Online Selection Screen. Here you can choose to play Online 
 class ClientSelectionState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, returnButton;
+    protected Button startButton, returnButton;
     protected bool firstTime = true;
     public ClientSelectionState()
     {
@@ -19,29 +19,22 @@ class ClientSelectionState : GameObjectLibrary
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
-
-        startButton = new Button("Sprites/Menu/spr_button", 101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
+        //Ready Button
+        startButton = new Button("Sprites/Menu/Ready_Button", 101);
+        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - startButton.Height) / 6);
         RootList.Add(startButton);
-
-        settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
-        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
-        RootList.Add(settingsButton);
-
-        returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
-        returnButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        
+        //Return Button
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
+        returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
-
-
     }
 
     public override void Update(GameTime gameTime)
     {
         if (firstTime)
         {
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
-            startButton.Active = true;
         }
         base.Update(gameTime);
     }
@@ -53,13 +46,9 @@ class ClientSelectionState : GameObjectLibrary
         {
             
         }
-        else if (settingsButton.Pressed)
-        {
-            
-        }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
+            GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
     }
 

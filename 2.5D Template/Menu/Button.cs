@@ -37,7 +37,7 @@ class Button : SpriteGameObject
         pressed = inputHelper.MouseButtonPressed(MouseButton.Left) && highLighted;
         if (highLighted)
         {
-            this.Sprite.Color = Color.Black;
+            this.Sprite.Color = Color.LightSalmon;
         }
         else
         {

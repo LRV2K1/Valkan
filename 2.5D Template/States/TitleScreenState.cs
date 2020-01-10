@@ -19,15 +19,16 @@ class TitleScreenState : GameObjectLibrary
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Logo", 100, "background");
         RootList.Add(titleScreen);
 
-        startButton = new Button("Sprites/Menu/spr_button", 101);
+        startButton = new Button("Sprites/Menu/Play_Button", 101);
         startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
+        startButton.Sprite.Size = new Vector2(1,1.5f);
         RootList.Add(startButton);
 
-        settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
+        settingsButton = new Button("Sprites/Menu/Settings_Button", 101);
         settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(settingsButton);
 
-        exitButton = new Button("Sprites/Menu/spr_button_exit", 101);
+        exitButton = new Button("Sprites/Menu/Quit_Button", 101);
         exitButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
         RootList.Add(exitButton);
     }
@@ -52,11 +53,11 @@ class TitleScreenState : GameObjectLibrary
         if (startButton.Pressed)
         {
             //Go To Selection Screen
-            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
+            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
         }
         else if (settingsButton.Pressed)
         { 
-            GameEnvironment.ScreenFade.TransitionToScene("settingsState");
+            GameEnvironment.ScreenFade.TransitionToScene("settingsState", 5);
         }
         else if (exitButton.Pressed)
         {

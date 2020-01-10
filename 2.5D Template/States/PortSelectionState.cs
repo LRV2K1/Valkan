@@ -28,8 +28,9 @@ class PortSelectionState : GameObjectLibrary
         settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(settingsButton);
 
-        returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
-        returnButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        //Return Button
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
+        returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
 
 
@@ -39,9 +40,7 @@ class PortSelectionState : GameObjectLibrary
     {
         if (firstTime)
         {
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
-            startButton.Active = true;
         }
         base.Update(gameTime);
     }
@@ -51,7 +50,7 @@ class PortSelectionState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            
+            GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
         }
         else if (settingsButton.Pressed)
         {
@@ -59,7 +58,7 @@ class PortSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
+            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
 
