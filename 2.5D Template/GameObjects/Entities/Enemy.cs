@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-partial class Enemy : Entity
+partial class Enemy : MovingEntity
 {
     protected int health, damage;
     protected float speed;
@@ -15,12 +15,12 @@ partial class Enemy : Entity
     protected bool selected;
     protected string dataloc;
 
-    protected string currentAnimation;
+    protected bool input;
 
     //generic enemy
     //no function yet
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
-        : base(boundingy, weight, layer, id)
+        : base(boundingy, 40, weight, layer, id)
     {
         selected = false;
         dead = false;
@@ -28,6 +28,8 @@ partial class Enemy : Entity
         health = 20;
         damage = 10;
         speed = 300f;
+
+        input = false;
 
         dataloc = assetname;
 
@@ -51,6 +53,8 @@ partial class Enemy : Entity
             }
             return;
         }
+
+        ChangeAnimation();
     }
 
     private void CheckDie()
@@ -58,19 +62,16 @@ partial class Enemy : Entity
         if (health <=0)
         {
             die = true;
-            PlayAnimation("die_3");
+            if (die_anim)
+            {
+                SwitchAnimation("die", "D");
+            }
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
                 mouse.RemoveSelectedEntity();
             }
         }
-    }
-
-    public override void PlayAnimation(string id, bool isBackWards = false)
-    {
-        base.PlayAnimation(id, isBackWards);
-        origin.Y -= 40;
     }
 
     public int Health

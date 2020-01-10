@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-partial class Enemy
+partial class Enemy : MovingEntity
 {
     bool nodata;
     bool die_anim, idle_anim, walking_anim, attack_anim;
@@ -74,8 +74,6 @@ partial class Enemy
             }
         }
     }
-
-
 
     public bool NoData
     {
