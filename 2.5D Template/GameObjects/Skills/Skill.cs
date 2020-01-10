@@ -60,6 +60,58 @@ class Skill : GameObject
         }
     }
 
+    protected List<Player> SurroundingPlayers(List<string> surroundingentities, Vector2 position, float range)
+    {
+        List<Player> surroundingplayers = new List<Player>();
+        foreach (string id in surroundingentities)
+        {
+            if (GameWorld.GetObject(id) is Player)
+            {
+                Player player = GameWorld.GetObject(id) as Player;
+                float dx = player.GlobalPosition.X - position.X;
+                float dy = player.GlobalPosition.Y - position.Y;
+                double distance = Math.Sqrt(dx * dx + dy * dy);
+                if (distance <= range)
+                {
+                    surroundingplayers.Add(player);
+                }
+            }
+        }
+        return surroundingplayers;
+    }
+
+    protected int GetSpriteDirection()
+    {
+        int dir;
+        Player player = parent as Player;
+        double direction = player.Direction;
+        if (player.Selected)
+        {
+            Selected icon = GameWorld.GetObject("selected") as Selected;
+            float dx = icon.Position.X - player.Position.X;
+            float dy = icon.Position.Y - player.Position.Y;
+            direction = Math.Atan2(dy, dx);
+        }
+
+        dir = (int)((direction + (Math.PI / 8) + (3 * Math.PI / 2)) / (Math.PI / 4));
+        if (dir > 7)
+        {
+            dir -= 8;
+        }
+
+        return dir;
+    }
+
+    protected void MakeParticle(Vector2 position, string asset)
+    {
+        if (asset != "")
+        {
+            ParticleEffect particleEffect = new ParticleEffect(asset);
+            particleEffect.Position = position;
+            GameWorld.RootList.Add(particleEffect);
+        }
+    }
+
     public virtual void Use(float timer = 2f)
     {
         this.timer.Use(timer);

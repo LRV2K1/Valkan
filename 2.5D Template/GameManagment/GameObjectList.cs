@@ -58,9 +58,9 @@ public class GameObjectList : GameObject
 
     public override void Update(GameTime gameTime)
     {
-        foreach (string id in children)
+        for (int i = 0; i < children.Count; i++)
         {
-            GameWorld.GetObject(id).Update(gameTime);
+            GameWorld.GetObject(children[i]).Update(gameTime);
         }
     }
 

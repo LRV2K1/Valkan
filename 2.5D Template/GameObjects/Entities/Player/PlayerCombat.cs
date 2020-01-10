@@ -9,6 +9,28 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Player : Entity
 {
+    protected bool block;
+    protected bool blocked;
+
+    protected virtual void LoadSkills()
+    {
+        //skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_6", "Sprites/Items/Projectiles/spr_ice_", 8, "Sprites/Items/Particles/spr_ice_explosion@4");
+        //skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_9", "Sprites/Items/Projectiles/spr_rock", 1, "Sprites/Items/Particles/spr_rock_explosion@4", 1, 5);
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
+
+        //skill2 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_7", "Sprites/Items/Projectiles/spr_fire_", 8, "Sprites/Items/Particles/spr_fire_explosion@3x4", 1.5f, 12, MouseButton.Right);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
+        //skill2 = new SpeedBuff("Sprites/Menu/Skills/spr_skill_2", "Sprites/Items/Particles/spr_stamina@4");
+
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
+        //skill3 = new BlockHold("Sprites/Menu/Skills/spr_skill_8", "Sprites/Items/Particles/spr_shield@4");
+        //skill3 = new AreaHeal("Sprites/Menu/Skills/spr_skill_1", "Sprites/Items/Particles/spr_heal@6");
+
+        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+    }
+
     //select entity
     private void EntitySelection(InputHelper inputHelper)
     {
@@ -59,6 +81,8 @@ partial class Player : Entity
         if (health <= 0)
         {
             die = true;
+            DieAnimation();
+            velocity = Vector2.Zero;
         }
     }
 
@@ -67,12 +91,14 @@ partial class Player : Entity
         get { return health; }
         set
         {
-            if (skill2.Blocking)
+
+            if (block && value < health)
             {
-                skill2.Blocking = false;
+                blocked = true;
                 return;
             }
             health = value;
+
             if (health > maxhealth)
             {
                 health = maxhealth;
@@ -83,6 +109,17 @@ partial class Player : Entity
             }
             CheckDie();
         }
+    }
+
+    public bool Block
+    {
+        get { return block; }
+        set { block = value; }
+    }
+    public bool Blocked
+    {
+        get { return blocked; }
+        set { blocked = value; }
     }
 
     public int Stamina
