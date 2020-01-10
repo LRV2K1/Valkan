@@ -29,7 +29,6 @@ partial class Player : Entity
         }
         PlayAnimation("idle_3");
         currentAnimation = "A";
-        sprite.Color = new Color(225,173 , 164);
     }
 
     private void ChangeAnimation()
