@@ -8,14 +8,15 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-class SettingsState : GameObjectLibrary
+//This is the Selection Screen for Offline or Online mode.
+//If Offline is Selected, the screen will change options accordingly
+class Selection1State : GameObjectLibrary
 {
     protected Button startButton, settingsButton, returnButton;
     protected bool firstTime = true;
-    protected bool screen1, screen2;
-    public SettingsState()
+    protected bool offline, mapSelection;
+    public Selection1State()
     {
-
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
@@ -31,24 +32,31 @@ class SettingsState : GameObjectLibrary
         returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
         returnButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
         RootList.Add(returnButton);
-        
-
     }
 
     public override void Update(GameTime gameTime)
     {
-        if(firstTime)
+        if (firstTime)
         {
+            //In dit scherm selecteer je of je online of offline wilt spelen. Selecteer je online. Dan ga je naar de Online Selection State
+            //Offline Knop
+            startButton.Active = true;
+            //Online Knop
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
-            startButton.Active = true;
         }
-        if(screen1)
+        if(offline)
         {
+            //In dit scherm selecteer je welke Map je wilt spelen.
+            //Knop om de game te beginnen met de standaard geselecteerde map.
+            //Kleine afbeelding voor de map die geselecteerd is.
+            //Knop om de map te selecteren.
             settingsButton.Active = true;
         }
-        if(screen2)
+        if(mapSelection)
         {
+            //Hier selecteer je de map die je wilt spelen, zodra je iets hebt geselecteerd, dan verdwijnt dit scherm weer.
+            //Een kleine overlay met 9 slots voor maps te selecteren, elke map heeft n afbeelding en een naam.
             returnButton.Active = true;
         }
         base.Update(gameTime);
@@ -59,15 +67,16 @@ class SettingsState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            screen1 = true;
+            offline = true;
         }
         else if (settingsButton.Pressed)
         {
-            screen2 = true;
+            mapSelection = true;
         }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
+            mapSelection = false;
+            returnButton.Active = false;
         }
     }
 

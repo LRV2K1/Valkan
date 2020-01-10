@@ -21,7 +21,7 @@ class PlayingState : IGameLoopObject
     {
         this.content = content;
         paused = false;
-        level = new Level("Level_1");
+        //level = new Level("Level_1");
         level1 = true;
     }
 

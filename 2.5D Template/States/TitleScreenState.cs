@@ -38,6 +38,9 @@ class TitleScreenState : GameObjectLibrary
         {
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/Sad");
             firstTime = false;
+            startButton.Active = true;
+            settingsButton.Active = true;
+            exitButton.Active = true;
         }
         base.Update(gameTime);
     }
@@ -47,7 +50,8 @@ class TitleScreenState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("playingState");
+            //Go To Selection Screen
+            GameEnvironment.ScreenFade.TransitionToScene("selection1State");
         }
         else if (settingsButton.Pressed)
         { 
