@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-class Enemy : Entity
+partial class Enemy : Entity
 {
-    protected int health;
+    protected int health, damage;
+    protected float speed;
+
     protected bool die, dead;
     protected bool selected;
+    protected string dataloc;
 
     //generic enemy
     //no function yet
@@ -19,10 +22,20 @@ class Enemy : Entity
     {
         selected = false;
         dead = false;
+
         health = 20;
+        damage = 10;
+        speed = 300f;
+
+        dataloc = assetname;
+
+        LoadEnemyData();
+
+        /*
         LoadAnimation(assetname, "sprite", true, false);
         LoadAnimation(assetname, "die", false, false);
         PlayAnimation("sprite");
+        */
     }
 
     public override void Update(GameTime gameTime)
@@ -44,13 +57,18 @@ class Enemy : Entity
         {
             die = true;
             PlayAnimation("die");
-            sprite.Color = Color.Pink;
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
                 mouse.RemoveSelectedEntity();
             }
         }
+    }
+
+    public override void PlayAnimation(string id, bool isBackWards = false)
+    {
+        base.PlayAnimation(id, isBackWards);
+        origin.Y -= 40;
     }
 
     public int Health
