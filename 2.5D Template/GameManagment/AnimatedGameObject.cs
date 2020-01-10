@@ -21,7 +21,7 @@ public class AnimatedGameObject : SpriteGameObject
 
     public virtual void PlayAnimation(string id, bool backwards = false)
     {
-        if (sprite == animations[id])
+        if (!animations.ContainsKey(id) || sprite == animations[id])
         {
             return;
         }

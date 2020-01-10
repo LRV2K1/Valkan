@@ -149,7 +149,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Minotaur/spr_attack_7@4.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_0@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_0@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -159,9 +159,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_0@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_0@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_1@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_1@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -171,9 +171,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_1@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_1@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_2@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_2@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -183,9 +183,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_2@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_2@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_3@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_3@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -195,9 +195,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_3@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_3@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_4@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_4@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -207,9 +207,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_4@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_4@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_5@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_5@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -219,9 +219,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_5@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_5@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_6@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_6@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -231,9 +231,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_6@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_6@6.png
 
-#begin Sprites/Enemy/Minotaur/spr_die_7@8.png
+#begin Sprites/Enemy/Minotaur/spr_die_7@6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -243,7 +243,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Minotaur/spr_die_7@8.png
+/build:Sprites/Enemy/Minotaur/spr_die_7@6.png
 
 #begin Sprites/Enemy/Minotaur/spr_idle_0@4.png
 /importer:TextureImporter

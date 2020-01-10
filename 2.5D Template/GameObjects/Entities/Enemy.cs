@@ -15,6 +15,8 @@ partial class Enemy : Entity
     protected bool selected;
     protected string dataloc;
 
+    protected string currentAnimation;
+
     //generic enemy
     //no function yet
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
@@ -56,7 +58,7 @@ partial class Enemy : Entity
         if (health <=0)
         {
             die = true;
-            PlayAnimation("die");
+            PlayAnimation("die_3");
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;

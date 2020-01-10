@@ -8,6 +8,7 @@ using System.IO;
 partial class Enemy
 {
     bool nodata;
+    bool die_anim, idle_anim, walking_anim, attack_anim;
 
     private void LoadEnemyData()
     {
@@ -32,11 +33,49 @@ partial class Enemy
             line = streamReader.ReadLine();
         }
 
-        LoadAnimation(dataloc + "/spr_idle_0@4", "sprite", true, true);
-        LoadAnimation(dataloc + "/spr_die_0@8", "die", false, false);
-        PlayAnimation("sprite");
-
+        for (int i = 0; i < data.Count; i++)
+        {
+            string[] currentline = data[i].Split('/');
+            try
+            {
+                switch (currentline[0])
+                {
+                    default:
+                        break;
+                    case "idle":
+                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
+                        PlayAnimation("idle_3");
+                        currentAnimation = "A";
+                        idle_anim = true;
+                        break;
+                    case "attack":
+                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
+                        damage = int.Parse(currentline[2]);
+                        attack_anim = true;
+                        break;
+                    case "walking":
+                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
+                        speed = int.Parse(currentline[2]);
+                        walking_anim = true;
+                        break;
+                    case "die":
+                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), false);
+                        die_anim = true;
+                        break;
+                    case "health":
+                        health = int.Parse(currentline[1]);
+                        break;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Bad data for: " + currentline[0]);
+                continue;
+            }
+        }
     }
+
+
 
     public bool NoData
     {

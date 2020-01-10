@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 partial class Player : Entity
 {
+    int sprite_direction;
 
     private void LoadAnimations()
     {
@@ -27,9 +28,9 @@ partial class Player : Entity
             LoadAnimation("Sprites/Player/" + playerType + "/spr_die_" + tempint + "@8", "die_" + i, false, false);
             tempint += 1;
         }
+        sprite_direction = 3;
         PlayAnimation("idle_3");
         currentAnimation = "A";
-        sprite.Color = new Color(225,173 , 164);
     }
 
     private void ChangeAnimation()
@@ -46,7 +47,7 @@ partial class Player : Entity
         }
 
 
-        int dir = int.Parse(CurrentId.Split('_')[1]);
+        int dir = sprite_direction;
         if (velocity != Vector2.Zero)
         {
             direction = Math.Atan2((double)velocity.Y, (double)velocity.X);
@@ -63,6 +64,7 @@ partial class Player : Entity
                     dir = 0;
                 }
                 string[] anim = CurrentId.Split('_');
+                sprite_direction = dir;
                 PlayAnimation(anim[0] + '_' + dir);
             }
         }
@@ -88,14 +90,12 @@ partial class Player : Entity
     public void AttackAnimation()
     {
         currentAnimation = "B";
-        int dir = int.Parse(CurrentId.Split('_')[1]);
-        PlayAnimation("attack_" + dir);
+        PlayAnimation("attack_" + sprite_direction);
     }
 
     private void DieAnimation()
     {
-        int dir = int.Parse(CurrentId.Split('_')[1]);
-        PlayAnimation("die_" + dir);
+        PlayAnimation("die_" + sprite_direction);
     }
 
     public override void PlayAnimation(string id, bool isBackWards = false)
