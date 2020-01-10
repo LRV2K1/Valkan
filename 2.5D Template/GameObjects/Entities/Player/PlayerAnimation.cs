@@ -21,7 +21,7 @@ partial class Player : Entity
                 tempint = 0;
             }
             
-            LoadAnimation("Sprites/Player/"+ playerType + "/spr_idle_" + tempint + "@4", "idle_" + i, true, true);
+            LoadAnimation("Sprites/Player/"+ playerType + "/spr_idle_" + tempint + "@4", "idl_" + i, true, true);
             LoadAnimation("Sprites/Player/" + playerType + "/spr_walking_" + tempint + "@8", "walking_" + i, true, false);
             LoadAnimation("Sprites/Player/" + playerType + "/spr_attack_" + tempint + "@4", "attack_" + i, false, false);
             LoadAnimation("Sprites/Player/" + playerType + "/spr_die_" + tempint + "@8", "die_" + i, false, false);
@@ -46,7 +46,16 @@ partial class Player : Entity
         }
 
 
-        int dir = int.Parse(CurrentId.Split('_')[1]);
+        int dir;
+        try
+        {
+            dir = int.Parse(CurrentId.Split('_')[1]);
+        }
+        catch
+        {
+            dir = 0;
+        }
+
         if (velocity != Vector2.Zero)
         {
             direction = Math.Atan2((double)velocity.Y, (double)velocity.X);
