@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
 //This is the Online Selection Screen. Here you can choose to play Online 
-class Selection2State : GameObjectLibrary
+class PortSelectionState : GameObjectLibrary
 {
     protected Button startButton, settingsButton, returnButton;
     protected bool firstTime = true;
-    public Selection2State()
+    public PortSelectionState()
     {
 
         //Load all menu sprites (e.g. background images, overlay images, button sprites)

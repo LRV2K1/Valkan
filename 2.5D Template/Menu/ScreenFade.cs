@@ -55,8 +55,7 @@ public class ScreenFade : SpriteGameObject
                 return;
             }
             else
-            {
-                MediaPlayer.Volume = 1f;
+            { 
                 this.Visible = false;
                 fadeToWhite = false;
             }
@@ -72,7 +71,6 @@ public class ScreenFade : SpriteGameObject
         b = 0;
         a = 0;
         sprite.Color = new Color(r,g,b,a);
-        MediaPlayer.Volume = 1f;
         this.sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
         fadeToBlack = true;
         nextScene = sceneName;

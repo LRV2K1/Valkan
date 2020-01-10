@@ -34,8 +34,12 @@ public class GameStart : GameEnvironment
         gameStateManager.AddGameState("titleScreen", new TitleScreenState());
         gameStateManager.AddGameState("playingState", new PlayingState(Content));
         gameStateManager.AddGameState("settingsState", new SettingsState());
-        gameStateManager.AddGameState("selection1State", new Selection1State());
-        gameStateManager.AddGameState("selection2State", new Selection2State());
+        gameStateManager.AddGameState("modeSelectionState", new ModeSelectionState());
+        gameStateManager.AddGameState("offlineSelectionState", new OfflineSelectionState());
+        gameStateManager.AddGameState("hostClientSelectionState", new HostClientSelectionState());
+        gameStateManager.AddGameState("hostSelectionState", new HostSelectionState());
+        gameStateManager.AddGameState("portSelectionState", new PortSelectionState());
+        gameStateManager.AddGameState("clientSelectionState", new ClientSelectionState());
         gameStateManager.SwitchTo("titleScreen");
 
         framecounter = new TextGameObject("Fonts/Hud");

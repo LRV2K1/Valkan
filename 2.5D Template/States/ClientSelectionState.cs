@@ -8,15 +8,16 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-class TitleScreenState : GameObjectLibrary
+//This is the Online Selection Screen. Here you can choose to play Online 
+class ClientSelectionState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, exitButton;
+    protected Button startButton, settingsButton, returnButton;
     protected bool firstTime = true;
-    public TitleScreenState()
+    public ClientSelectionState()
     {
-        
+
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Logo", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
 
         startButton = new Button("Sprites/Menu/spr_button", 101);
@@ -27,21 +28,20 @@ class TitleScreenState : GameObjectLibrary
         settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(settingsButton);
 
-        exitButton = new Button("Sprites/Menu/spr_button_exit", 101);
-        exitButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
-        RootList.Add(exitButton);
+        returnButton = new Button("Sprites/Menu/spr_button_exit", 101);
+        returnButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        RootList.Add(returnButton);
+
+
     }
 
     public override void Update(GameTime gameTime)
     {
         if (firstTime)
         {
-            MediaPlayer.Volume = 0.01f;
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Sad");
+            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
             firstTime = false;
             startButton.Active = true;
-            settingsButton.Active = true;
-            exitButton.Active = true;
         }
         base.Update(gameTime);
     }
@@ -51,16 +51,15 @@ class TitleScreenState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            //Go To Selection Screen
-            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
+            
         }
         else if (settingsButton.Pressed)
-        { 
-            GameEnvironment.ScreenFade.TransitionToScene("settingsState");
-        }
-        else if (exitButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("exit");
+            
+        }
+        else if (returnButton.Pressed)
+        {
+            GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
         }
     }
 

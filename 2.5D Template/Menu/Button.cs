@@ -19,7 +19,7 @@ class Button : SpriteGameObject
         base(assetname, layer, id)
     {
         pressed = false;
-        active = false;
+        active = true;
     }
 
     public override void HandleInput(InputHelper inputHelper)

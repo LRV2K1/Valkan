@@ -95,10 +95,14 @@
     <Compile Include="GameManagment\SpriteGameObject.cs" />
     <Compile Include="GameManagment\SpriteSheet.cs" />
     <Compile Include="GameManagment\TextGameObject.cs" />
+    <Compile Include="States\ClientSelectionState.cs" />
+    <Compile Include="States\PortSelectionState.cs" />
     <Compile Include="States\IntroState.cs" />
+    <Compile Include="States\HostClientSelectionState.cs" />
+    <Compile Include="States\HostSelectionState.cs" />
     <Compile Include="States\PlayingState.cs" />
-    <Compile Include="States\Selection1State.cs" />
-    <Compile Include="States\Selection2State.cs" />
+    <Compile Include="States\ModeSelectionState.cs" />
+    <Compile Include="States\OfflineSelectionState.cs" />
     <Compile Include="States\SettingsState.cs" />
     <Compile Include="States\TitleScreenState.cs" />
   </ItemGroup>

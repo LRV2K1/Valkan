@@ -148,6 +148,10 @@ public class GameEnvironment : Game
     {
         inputHelper.Update();
         spritemouse.Position = inputHelper.MousePosition;
+        if (ScreenFade.FadeToBlack || ScreenFade.FadeToWhite)
+        {
+            return;
+        }
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             Exit();
