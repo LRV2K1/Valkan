@@ -23,14 +23,14 @@ partial class Enemy : MovingEntity
 
         if (input)
         {
-            if (currentAnimation != "C")
+            if (currentAnimation != "C" && walking_anim)
             {
                 SwitchAnimation("walking", "C");
             }
         }
         else
         {
-            if (currentAnimation != "A")
+            if (currentAnimation != "A" && idle_anim)
             {
                 SwitchAnimation("idle", "A");
             }

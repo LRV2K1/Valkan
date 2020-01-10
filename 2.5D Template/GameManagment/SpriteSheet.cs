@@ -26,6 +26,7 @@ public class SpriteSheet
         {
             assetname = GameEnvironment.AssetManager.TestSprite;
             sprite = GameEnvironment.AssetManager.GetSprite(assetname);
+            throw new TestSpriteExeption();
         }
         color = Color.White;
         /*

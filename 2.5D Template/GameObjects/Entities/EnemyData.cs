@@ -67,10 +67,31 @@ partial class Enemy : MovingEntity
                         break;
                 }
             }
-            catch
+            catch (IndexOutOfRangeException e)
             {
                 Console.WriteLine("Bad data for: " + currentline[0]);
                 continue;
+            }
+            catch(TestSpriteExeption e)
+            {
+                Console.WriteLine("Sprite not found for: " + currentline[0]);
+                switch (currentline[0])
+                {
+                    default:
+                        break;
+                    case "idle":
+                        idle_anim = false;
+                        break;
+                    case "attack":
+                        attack_anim = false;
+                        break;
+                    case "walking":
+                        walking_anim = false;
+                        break;
+                    case "die":
+                        die_anim = false;
+                        break;
+                }
             }
         }
     }

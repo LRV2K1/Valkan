@@ -34,12 +34,6 @@ partial class Enemy : MovingEntity
         dataloc = assetname;
 
         LoadEnemyData();
-
-        /*
-        LoadAnimation(assetname, "sprite", true, false);
-        LoadAnimation(assetname, "die", false, false);
-        PlayAnimation("sprite");
-        */
     }
 
     public override void Update(GameTime gameTime)
@@ -66,6 +60,10 @@ partial class Enemy : MovingEntity
             {
                 SwitchAnimation("die", "D");
             }
+            else
+            {
+                RemoveSelf();
+            }
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
@@ -77,7 +75,8 @@ partial class Enemy : MovingEntity
     public int Health
     {
         get { return health; }
-        set { 
+        set
+        { 
             health = value;
             CheckDie();
         }
@@ -94,4 +93,3 @@ partial class Enemy : MovingEntity
         set { selected = value; }
     }
 }
-
