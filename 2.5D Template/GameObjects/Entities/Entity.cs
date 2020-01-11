@@ -31,6 +31,8 @@ abstract partial class Entity : AnimatedGameObject
         //check if moved
         if (previousPos != position)
         {
+            ReceiveData();
+            SendData();
             NewHost();
             previousPos = position;
             DoPhysics();
@@ -43,6 +45,24 @@ abstract partial class Entity : AnimatedGameObject
         NewHost();
     }
 
+    private void SendData()
+    {
+        MultiplayerManager.Send("Entity: " + id + " " + position.X + " " + position.Y);
+    }
+    
+    private void ReceiveData()
+    {
+        string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+        if (variables[0] == "Entity:" && variables[1] == id) 
+        {
+            position.X = float.Parse(variables[2]);
+            position.Y = float.Parse(variables[3]);
+        }
+        else if(variables[0] == "World:")
+        {
+
+        }
+    }
     private void NewHost()
     {
         //become a passenger of a tile

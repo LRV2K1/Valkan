@@ -33,6 +33,11 @@ public class MultiplayerManager
 
     public void HandleInput(InputHelper inputHelper)
     {
+        if (inputHelper.KeyPressed(Keys.K)) //sendworld
+        {
+            Console.WriteLine("sendword");
+            connection.SendWorld();
+        }
         if (connection != null)
         {
             if (inputHelper.KeyPressed(Keys.M)) //disconnect
@@ -46,6 +51,7 @@ public class MultiplayerManager
         {
             if (inputHelper.KeyPressed(Keys.N)) //Create a new game
             {
+                Console.WriteLine("Created Game");
                 connection = new Connection();
 
 
@@ -58,13 +64,6 @@ public class MultiplayerManager
             }
             if (inputHelper.KeyPressed(Keys.C)) //Connect to a currently running game
             {
-                connection = new Connection();
-                //Level.LoadLevel(connection.GetWorld());
-                using (StreamWriter sw = File.AppendText("Content/Levels/level_1.txt"))
-                {
-                    Console.WriteLine("3");
-                    sw.WriteLine("hi");
-                }
 
                 //TODO
                 //get level

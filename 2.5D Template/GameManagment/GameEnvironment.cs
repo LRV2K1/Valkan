@@ -16,6 +16,7 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected static MultiplayerManager multiplayerManager;
     protected SpriteGameObject spritemouse;
 
     protected static int randomid;
@@ -30,6 +31,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
+        multiplayerManager = new MultiplayerManager();
 
         randomid = 0;
     }
@@ -139,6 +141,7 @@ public class GameEnvironment : Game
         }
 
         gameStateManager.HandleInput(inputHelper);
+        multiplayerManager.HandleInput(inputHelper);
     }
 
     protected override void Update(GameTime gameTime)
