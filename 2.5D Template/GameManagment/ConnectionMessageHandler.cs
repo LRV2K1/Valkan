@@ -22,9 +22,7 @@ public partial class Connection
         }
         else if (variables[0] == "World") //todo check if we are not having the world
         {
-            Console.WriteLine("test");
-            StoreWorld(variables[1].TrimEnd(':'), message);
-            Console.WriteLine("test2");
+            StoreWorld(variables[1].Remove(variables[1].Length - 1, 1), message); //remove method to remove ':' at the end of the variable[1]
         }
         else if (variables[0] == "GetPlayerList:")
         {
@@ -43,7 +41,7 @@ public partial class Connection
 
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
-        Console.WriteLine("test24");
+        Console.WriteLine("File " + file);
         string path = "Content/Levels/" + file + ".txt";
         Console.WriteLine("test33");
         StreamWriter writer = new StreamWriter(path, false);
