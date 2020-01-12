@@ -26,10 +26,12 @@ public partial class Connection
         }
         else if (variables[0] == "GetPlayerList:")
         {
+            Console.WriteLine("1");
             Send("Playerlist: " + PlayerListToString());
         }
         else if (variables[0] == "PlayerList:")
         {
+            Console.WriteLine("2");
             StorePlayerList(message);
         }
         else if (variables[0] == "AddToPlayerList")
