@@ -25,13 +25,13 @@ public class GameEnvironment : Game
     {
         graphics = new GraphicsDeviceManager(this);
 
+        multiplayerManager = new MultiplayerManager();
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-        multiplayerManager = new MultiplayerManager();
 
         randomid = 0;
     }

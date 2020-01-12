@@ -47,6 +47,7 @@
     <Compile Include="GameManagment\Camera.cs" />
     <Compile Include="GameManagment\Collision.cs" />
     <Compile Include="GameManagment\Connection.cs" />
+    <Compile Include="GameManagment\ConnectionMessageHandler.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
     <Compile Include="GameManagment\MultiplayerManager.cs" />

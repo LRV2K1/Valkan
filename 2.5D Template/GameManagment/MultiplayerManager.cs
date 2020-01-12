@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Net;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,14 +36,14 @@ public class MultiplayerManager
     {
         if (inputHelper.KeyPressed(Keys.K)) //sendworld
         {
-            Console.WriteLine("sendword");
-            connection.SendWorld();
+            connection.Send(connection.WorldToString("Online"));
         }
+
         if (connection != null)
         {
             if (inputHelper.KeyPressed(Keys.M)) //disconnect
             {
-                connection.Stop();
+                connection.Disconnect();
                 connection = null;
                 connection.Send("Close");
             }
@@ -51,23 +52,25 @@ public class MultiplayerManager
         {
             if (inputHelper.KeyPressed(Keys.N)) //Create a new game
             {
-                Console.WriteLine("Created Game");
                 connection = new Connection();
-
-
-                //TODO
-                //1 load level
-                //TODO
+                connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
+                //level = new Level("Level_1");
+                Console.WriteLine("Created Game");
 
 
                 Console.WriteLine("Setup Connection");
             }
             if (inputHelper.KeyPressed(Keys.C)) //Connect to a currently running game
             {
-
+                connection = new Connection();
+                connection.Send("GetPlayerList: all");
+                connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
+                connection.Send("AddToPlayerList");
+                connection.Send("GetWorld: Online");
+                //level = new Level("Online");
                 //TODO
                 //get level
-                //1 Create new txt file
+                //1 p
                 //2 receive data from running game
                 //2a let new player send GetLevel() to someone with a running game
                 //2b someone who is playing sends the level
