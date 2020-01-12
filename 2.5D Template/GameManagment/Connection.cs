@@ -7,7 +7,7 @@ using System.Text;
 //this class has the key methods in it like Send(), Receive(), Disconnect(), etc.
 public partial class Connection
 {
-    const int port = 15000;
+    const int port = 15020;
     UdpClient client = new UdpClient(port);
     IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
     IAsyncResult ar_ = null;
