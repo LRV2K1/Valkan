@@ -9,19 +9,19 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 
-class PlayingState : IGameLoopObject
+public class PlayingState : IGameLoopObject
 {
     protected ContentManager content;
-    protected Level level;
+    public Level level;
     protected bool paused;
     protected bool level1;
     protected bool firstTime = true;
 
-    public PlayingState(ContentManager content)
+    public PlayingState(ContentManager content, string level)
     {
         this.content = content;
         paused = false;
-        level = new Level("Level_1");
+        this.level = new Level(level);
         level1 = true;
     }
 

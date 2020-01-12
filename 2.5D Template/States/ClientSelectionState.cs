@@ -55,7 +55,8 @@ class ClientSelectionState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            
+            MultiplayerManager.SetupClient();
+            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online"));
         }
         else if (warriorButton.Pressed)
         {
