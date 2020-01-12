@@ -22,6 +22,7 @@ public partial class Connection
         }
         else if (variables[0] == "World") //todo check if we are not having the world
         {
+            Console.WriteLine("test");
             StoreWorld(variables[1].TrimEnd(':'), message);
         }
         else if (variables[0] == "GetPlayerList:")
@@ -63,7 +64,7 @@ public partial class Connection
             playerlist.Clear();
             playerlist.Add(IPAddress.Parse(lines[i]));
         }
-        Console.WriteLine("Successfully stored " + lines.Length + " players's IPs");
+        Console.WriteLine("Successfully stored " + (lines.Length - 1) + " players's IPs");
         data = "NICE";
     }
 
