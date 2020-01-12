@@ -26,7 +26,7 @@ public partial class Connection
         }
         else if (variables[0] == "GetPlayerList:")
         {
-            Send("Playerlist:\n" + PlayerListToString());
+            Send("Playerlist:" + PlayerListToString());
         }
         else if (variables[0] == "PlayerList:")
         {
@@ -34,7 +34,7 @@ public partial class Connection
         }
         else if (variables[0] == "AddToPlayerList")
         {
-            Send("Playerlist:\n" + PlayerListToString());
+            Send("Playerlist:" + PlayerListToString()); //TODO
         }
     }
 
@@ -84,7 +84,7 @@ public partial class Connection
         string message = "";
         for (int i = 0; i < playerlist.Count; i++)
         {
-            message += playerlist[i] + "\n";
+            message += "\n" + playerlist[i];
         }
         return message; ;
     }

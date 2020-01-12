@@ -41,10 +41,9 @@ public partial class Connection
 
             if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             {
-                Console.WriteLine(ip.Address + " " + MyIP());
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message);
-                Console.WriteLine("Received: {0}, from: {1} ", message, ip.Address.ToString());
+                Console.WriteLine("Received from {1}:\n {0}", message, ip.Address.ToString());
             }
             StartListening(); //repeat
             //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
@@ -60,7 +59,7 @@ public partial class Connection
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
         client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
-        Console.WriteLine("Sent: {0}", message);
+        Console.WriteLine("Sent:\n{0}", message);
     }
 
     public static IPAddress MyIP() //returns own IP address
