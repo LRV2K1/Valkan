@@ -11,13 +11,12 @@ public partial class Connection
     
     private void HandleReceivedData(string message) //inspect received data and take action
     {
-        Console.WriteLine("Handle");
         string[] variables = message.Split(' ');
         if (variables[0] == "Entity:")
         {
             data = message; //store received data locally as a string
         }
-        else if (variables[0] == "GetWorld: ")
+        else if (variables[0] == "GetWorld:")
         {
             Send("World " + variables[1] + ":\n" + WorldToString(variables[1]));
         }
@@ -27,13 +26,15 @@ public partial class Connection
         }
         else if (variables[0] == "GetPlayerList:")
         {
-            Console.WriteLine("1");
             Send("Playerlist: " + PlayerListToString());
         }
-        else
+        else if (variables[0] == "PlayerList:")
         {
-            Console.WriteLine("2");
             StorePlayerList(message);
+        }
+        else if (variables[0] == "AddToPlayerList")
+        {
+            Send("Playerlist: " + PlayerListToString()); //TODO
         }
     }
 
