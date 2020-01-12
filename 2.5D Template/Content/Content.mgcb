@@ -30,7 +30,9 @@
 /copy:Levels/Level_3.txt
 
 #begin Levels/online.txt
-/copy:Levels/online.txt;Levels/Online.txt
+/importer:
+/processor:
+/build:Levels/online.txt;Levels/Online.txt
 
 #begin PlayerStats/Stats.txt
 /copy:PlayerStats/Stats.txt

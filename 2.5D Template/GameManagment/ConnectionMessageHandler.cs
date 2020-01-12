@@ -45,7 +45,9 @@ public partial class Connection
     {
         Console.WriteLine("test24");
         string path = "Content/Levels/" + file + ".txt";
+        Console.WriteLine("test33");
         StreamWriter writer = new StreamWriter(path);
+        Console.WriteLine("tes44t");
         string[] lines = world.Split('\n');
         Console.WriteLine("File " + file);
         for (int i = 1; i < lines.Length; i++)
