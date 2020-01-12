@@ -14,6 +14,7 @@ public partial class Connection
     public List<IPAddress> playerlist = new List<IPAddress>();
 
     public string data = "Action: ID x y";
+    public string somedata = "";
     public string onlineworld = "";
 
     public Connection()
