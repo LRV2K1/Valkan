@@ -16,8 +16,11 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected static ScreenFade screenFade;
     protected static MultiplayerManager multiplayerManager;
     protected SpriteGameObject spritemouse;
+
+    protected static bool quitGame;
 
     protected static int randomid;
 
@@ -32,7 +35,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-
+        
         randomid = 0;
     }
 
@@ -70,6 +73,17 @@ public class GameEnvironment : Game
     public static GameSettingsManager GameSettingsManager
     {
         get { return gameSettingsManager; }
+    }
+
+    public static ScreenFade ScreenFade
+    {
+        get { return screenFade; }
+    }
+
+    public static bool QuitGame
+    {
+        get { return quitGame; }
+        set { quitGame = value; }
     }
 
     public bool FullScreen
@@ -125,12 +139,21 @@ public class GameEnvironment : Game
         DrawingHelper.Initialize(this.GraphicsDevice);
         spriteBatch = new SpriteBatch(GraphicsDevice);
         spritemouse = new SpriteGameObject("Sprites/Menu/spr_mouse", 200);
+        if(screenFade == null)
+        {
+            screenFade = new ScreenFade("Sprites/Menu/spr_button");
+            
+        }
     }
 
     protected void HandleInput()
     {
         inputHelper.Update();
         spritemouse.Position = inputHelper.MousePosition;
+        if (ScreenFade.FadeToBlack || ScreenFade.FadeToWhite)
+        {
+            return;
+        }
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             Exit();
@@ -148,6 +171,11 @@ public class GameEnvironment : Game
     {
         HandleInput();
         gameStateManager.Update(gameTime);
+        ScreenFade.Update(gameTime);
+        if(quitGame)
+        {
+            Exit();
+        }
     }
 
     protected override void Draw(GameTime gameTime)
@@ -156,6 +184,7 @@ public class GameEnvironment : Game
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
         gameStateManager.Draw(gameTime, spriteBatch);
         spritemouse.Draw(gameTime, spriteBatch);
+        screenFade.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }
 }

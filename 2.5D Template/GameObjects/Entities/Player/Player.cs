@@ -20,6 +20,13 @@ struct SpeedMultiplier
     }
 }
 
+enum PlayerType
+{
+    Warrior,
+    Bard,
+    Wizzard,
+}
+
 partial class Player : Entity
 {
     const float speed = 400;
@@ -27,18 +34,19 @@ partial class Player : Entity
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected string name, job;
+    protected string name;
     protected int playerlevel, playerEXP, EXPThreshold;
     public int playerID;
     protected Skill skill1, skill3;
-    protected Block skill2;
+    protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
     protected string currentAnimation;
-    protected bool animationFinished = false;
     protected double lastDirection;
     protected bool input;
-    protected Vector2 stillVelocity;
+    protected int offset;
+    protected PlayerType playerType;
+    protected bool inmovible;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
@@ -48,18 +56,25 @@ partial class Player : Entity
     public Player()
         : base(30, 20, 2, "player")
     {
+        inmovible = false;
+
+        playerType = PlayerType.Warrior;
+
         name = "Valkan";
-        job = "Light";
         playerID = 1;
         playerlevel = 1;
         playerEXP = 1;
+
         maxhealth = 10;
         maxstamina = 100;
         health = maxhealth;
         stamina = maxstamina;
         staminatimerreset = 1f;
         addstaminatimerreset = 0.02f;
+
         EXPThreshold = 5;
+
+        offset = 58;
 
         dead = false;
         die = false;
@@ -67,14 +82,11 @@ partial class Player : Entity
         speedMultipliers = new List<SpeedMultiplier>();
 
         direction = 0;
+        lastDirection = 1;
 
         LoadAnimations();
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
-        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+
+        LoadSkills();
     }
 
     //setup skills
@@ -115,9 +127,21 @@ partial class Player : Entity
         base.Update(gameTime);
     }
 
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        base.Draw(gameTime, spriteBatch);
+        skill1.Draw(gameTime, spriteBatch);
+    }
+
     //move control player
     private void ControlMove(InputHelper inputHelper)
     {
+        if (inmovible)
+        {
+            input = false;
+            return;
+        }
+
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
         {
@@ -153,7 +177,7 @@ partial class Player : Entity
         if (totalDir != 0)
         {
             input = true;
-            stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            Vector2 stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
 
             //change movement if selected
             if (selected)
@@ -170,6 +194,10 @@ partial class Player : Entity
             if (currentAnimation == "C")
             {
                 velocity = stillVelocity;
+            }
+            else
+            {
+                velocity = Vector2.Zero;
             }
         }
         else
@@ -225,7 +253,7 @@ partial class Player : Entity
         lines = new string[7];
         StreamWriter writer = new StreamWriter(statpath);
         lines[0] = Encrypt(name);
-        lines[1] = Encrypt(job);
+        lines[1] = Encrypt(playerType.ToString());
         lines[2] = Encrypt(playerID.ToString());
         lines[3] = Encrypt(playerlevel.ToString());
         lines[4] = Encrypt(playerEXP.ToString());
@@ -283,6 +311,18 @@ partial class Player : Entity
                 ICryptoTransform tr = trip.CreateDecryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 return UTF8Encoding.UTF8.GetString(results);
+            }
+        }
+    }
+
+    public bool InMovible
+    {
+        get { return inmovible; }
+        set { 
+            inmovible = value;
+            if (inmovible)
+            {
+                velocity = Vector2.Zero;
             }
         }
     }

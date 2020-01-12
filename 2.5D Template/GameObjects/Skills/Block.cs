@@ -3,34 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
-class Block : SecondairySkill
+class Block : Skill
 {
-    protected bool block;
-    public Block(string assetname, float time = 1f, int damage = 10)
-        : base(assetname, time, damage)
+    protected float resettimer;
+
+    public Block(string assetname, float timer = 1f, MouseButton mouseButton = MouseButton.Right)
+        : base(assetname, mouseButton)
     {
-        block = false;
+        resettimer = timer;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
         Player player = parent as Player;
-        block = inputHelper.MouseButtonDown(button) && timer.Ready && player.Stamina >= 20;
-    }
-
-    public bool Blocking
-    {
-        get { return block; }
-        set 
+        player.Block = inputHelper.MouseButtonDown(button) && timer.Ready && player.Stamina >= 20 && !player.Blocked;
+        if (player.Blocked)
         {
-            block = value;
-            if (!block)
-            {
-                Player player = parent as Player;
-                player.Stamina -= 20;
-                base.Use(time);
-            }
+            player.Blocked = false;
+            player.Stamina -= 20;
+            base.Use(resettimer);
         }
     }
 }

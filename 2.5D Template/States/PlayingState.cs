@@ -15,6 +15,7 @@ class PlayingState : IGameLoopObject
     protected Level level;
     protected bool paused;
     protected bool level1;
+    protected bool firstTime = true;
 
     public PlayingState(ContentManager content)
     {
@@ -69,6 +70,7 @@ class PlayingState : IGameLoopObject
 
     public virtual void Reset()
     {
+        firstTime = true;
         level.Reset();
         paused = false;
     }
