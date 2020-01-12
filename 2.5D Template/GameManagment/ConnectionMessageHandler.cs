@@ -32,9 +32,9 @@ public partial class Connection
         {
             StorePlayerList(message);
         }
-        else if (variables[0] == "AddToPlayerList")
+        else if (variables[0] == "AddToPlayerList:")
         {
-            Send("Playerlist: " + PlayerListToString()); //TODO
+            Send("Playerlist: " + PlayerListToString() + "\n" + variables[1]); //TODO
         }
     }
 
@@ -43,11 +43,12 @@ public partial class Connection
         string path = "Content/Levels/" + file + ".txt";
         StreamWriter writer = new StreamWriter(path);
         string[] lines = world.Split('\n');
+        Console.WriteLine("File " + file);
         for (int i = 1; i < lines.Length; i++)
         {
             writer.WriteLine(lines[i]);
         }
-        Console.WriteLine("Successfully wrote " + lines.Length + " lines to " + path);
+        Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
         writer.Close();
         data = "NICEWORLD";
     }

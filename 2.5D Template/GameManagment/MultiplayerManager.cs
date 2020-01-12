@@ -45,7 +45,7 @@ public class MultiplayerManager
             //check for recehived
 
             connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
-            connection.Send("AddToPlayerList");
+            connection.Send("Playerlist: " + connection.PlayerListToString());
             while (GetReceivedData() != "NICE")
             {
 
