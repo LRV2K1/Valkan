@@ -11,6 +11,7 @@ public partial class Connection
     
     private void HandleReceivedData(string message) //inspect received data and take action
     {
+        Console.WriteLine("Handle");
         string[] variables = message.Split(' ');
         if (variables[0] == "Entity:")
         {
@@ -29,14 +30,10 @@ public partial class Connection
             Console.WriteLine("1");
             Send("Playerlist: " + PlayerListToString());
         }
-        else if (variables[0] == "PlayerList:")
+        else
         {
             Console.WriteLine("2");
             StorePlayerList(message);
-        }
-        else if (variables[0] == "AddToPlayerList")
-        {
-            Send("Playerlist: " + PlayerListToString()); //TODO
         }
     }
 
