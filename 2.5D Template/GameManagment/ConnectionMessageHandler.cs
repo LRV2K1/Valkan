@@ -28,13 +28,14 @@ public partial class Connection
         {
             Send("Playerlist: " + PlayerListToString());
         }
-        else if (variables[0] == "PlayerList:")
-        {
-            StorePlayerList(message);
-        }
         else if (variables[0] == "AddToPlayerList:")
         {
             Send("Playerlist: " + PlayerListToString() + "\n" + variables[1]); //TODO
+        }
+        // if (variables[0] == "PlayerList:")
+        else
+        {
+            StorePlayerList(message);
         }
     }
 
