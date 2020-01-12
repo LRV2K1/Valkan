@@ -24,6 +24,7 @@ public partial class Connection
         {
             Console.WriteLine("test");
             StoreWorld(variables[1].TrimEnd(':'), message);
+            Console.WriteLine("test2");
         }
         else if (variables[0] == "GetPlayerList:")
         {
@@ -42,6 +43,7 @@ public partial class Connection
 
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
+        Console.WriteLine("test24");
         string path = "Content/Levels/" + file + ".txt";
         StreamWriter writer = new StreamWriter(path);
         string[] lines = world.Split('\n');
