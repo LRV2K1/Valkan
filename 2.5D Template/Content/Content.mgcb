@@ -13,11 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../Online.txt
-/importer:
-/processor:
-/build:../../../Online.txt;Levels/Online.txt
-
 #begin Fonts/Hud.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -33,6 +28,9 @@
 
 #begin Levels/Level_3.txt
 /copy:Levels/Level_3.txt
+
+#begin Levels/Online.txt
+/copy:Levels/Online.txt
 
 #begin PlayerStats/Stats.txt
 /copy:PlayerStats/Stats.txt
