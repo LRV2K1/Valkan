@@ -49,6 +49,7 @@ public partial class Connection
         }
         Console.WriteLine("Successfully wrote " + lines.Length + " lines to " + path);
         writer.Close();
+        data = "NICEWORLD";
     }
 
     private void StorePlayerList(string list) //store string of ips to array of IPs
@@ -59,6 +60,7 @@ public partial class Connection
             playerlist[i] = IPAddress.Parse(lines[i]);
         }
         Console.WriteLine("Successfully stored " + lines.Length + " players's IPs");
+        data = "NICE";
     }
 
     public string WorldToString(string file) //convert <file>.txt to string

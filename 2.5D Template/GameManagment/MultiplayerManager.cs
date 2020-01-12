@@ -38,9 +38,23 @@ public class MultiplayerManager
         {
             connection = new Connection();
             connection.Send("GetPlayerList: all");
+            while (GetReceivedData() != "NICE")
+            {
+
+            }
+            //check for recehived
+
             connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
             connection.Send("AddToPlayerList");
+            while (GetReceivedData() != "NICE")
+            {
+
+            }
             connection.Send("GetWorld: Online");
+            while (GetReceivedData() != "NICEWORLD")
+            {
+
+            }
             //level = new Level("Online");
             //TODO
             //get level
