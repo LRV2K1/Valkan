@@ -41,13 +41,9 @@ public partial class Connection
 
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
-        Console.WriteLine("File " + file);
         string path = "Content/Levels/" + file + ".txt";
-        Console.WriteLine("test33");
         StreamWriter writer = new StreamWriter(path, false);
-        Console.WriteLine("tes44t");
         string[] lines = world.Split('\n');
-        Console.WriteLine("File " + file);
         for (int i = 1; i < lines.Length; i++)
         {
             writer.WriteLine(lines[i]);

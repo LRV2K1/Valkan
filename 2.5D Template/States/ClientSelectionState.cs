@@ -59,6 +59,8 @@ class ClientSelectionState : GameObjectLibrary
             Console.WriteLine("Starting with setting up world");
             GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online"));
             Console.WriteLine("created world");
+            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+            Console.WriteLine("hi");
         }
         else if (warriorButton.Pressed)
         {
