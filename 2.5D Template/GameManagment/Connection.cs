@@ -39,8 +39,9 @@ public partial class Connection
         {
             byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
 
-            if (ip.Address != MyIP()) //check if we did not receive from local ip (we dont need our own data) 
+            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             {
+                Console.WriteLine(ip.Address + " " + MyIP());
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message);
                 Console.WriteLine("Received: {0}, from: {1} ", message, ip.Address.ToString());
