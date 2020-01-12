@@ -18,7 +18,7 @@ public partial class Connection
         }
         else if (variables[0] == "GetWorld:")
         {
-            Send("World " + variables[1] + ":\n" + WorldToString(variables[1]));
+            Send("World " + variables[1] + ": \n" + WorldToString(variables[1]));
         }
         else if (variables[0] == "World") //todo check if we are not having the world
         {
@@ -42,7 +42,7 @@ public partial class Connection
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
         Console.WriteLine("File " + file);
-        string path = "Content/Levels/Online.txt";
+        string path = "Content/Levels/" + file + ".txt";
         Console.WriteLine("test33");
         StreamWriter writer = new StreamWriter(path, false);
         Console.WriteLine("tes44t");
