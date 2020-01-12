@@ -11,7 +11,7 @@ public partial class Connection
     UdpClient client = new UdpClient(port);
     IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
     IAsyncResult ar_ = null;
-    public List<IPAddress> playerlist;
+    public List<IPAddress> playerlist = new List<IPAddress>();
 
     public string data = "Action: ID x y";
     public string onlineworld = "";
@@ -28,7 +28,7 @@ public partial class Connection
         Console.WriteLine("Stopped listening");
     }
 
-    private void StartListening()
+    public void StartListening()
     {
         ar_ = client.BeginReceive(Receive, new object());
     }
@@ -39,7 +39,7 @@ public partial class Connection
         {
             byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
 
-            if (ip.Address == MyIP()) //check if we did not receive from local ip (we dont need our own data) 
+            if (ip.Address != MyIP()) //check if we did not receive from local ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message);
