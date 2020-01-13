@@ -25,7 +25,10 @@ partial class Player : MovingEntity
         skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
         //skill3 = new BlockHold("Sprites/Menu/Skills/spr_skill_8", "Sprites/Items/Particles/spr_shield@4");
         //skill3 = new AreaHeal("Sprites/Menu/Skills/spr_skill_1", "Sprites/Items/Particles/spr_heal@6");
+    }
 
+    private void SetSkills()
+    {
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);

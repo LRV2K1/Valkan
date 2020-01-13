@@ -138,7 +138,30 @@ partial class Level : GameObjectLibrary
 
     private void LoadPlayer(int x, int y)
     {
-        Player player = new Player();
+        Player player;
+        try
+        {
+            PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
+            switch (playerType)
+            {
+                case PlayerType.Bard:
+                    player = new Bard();
+                    break;
+                case PlayerType.Warrior:
+                    player = new Warrior();
+                    break;
+                case PlayerType.Wizzard:
+                    player = new Wizzard();
+                    break;
+                default:
+                    player = new Player();
+                    break;
+            }
+        }
+        catch
+        {
+            player = new Player();
+        }
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
         player.SetupPlayer();
