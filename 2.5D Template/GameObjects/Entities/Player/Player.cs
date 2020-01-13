@@ -27,10 +27,9 @@ enum PlayerType
     Wizzard,
 }
 
-partial class Player : Entity
+partial class Player : MovingEntity
 {
     const float speed = 400;
-    protected double direction;
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
@@ -41,10 +40,7 @@ partial class Player : Entity
     protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
-    protected string currentAnimation;
-    protected double lastDirection;
     protected bool input;
-    protected int offset;
     protected PlayerType playerType;
     protected bool inmovible;
 
@@ -54,7 +50,7 @@ partial class Player : Entity
     public static string EncryptedText;
 
     public Player()
-        : base(30, 20, 2, "player")
+        : base(30, 58, 20, 2, "player")
     {
         inmovible = false;
 
@@ -74,17 +70,12 @@ partial class Player : Entity
 
         EXPThreshold = 5;
 
-        offset = 58;
-
         dead = false;
         die = false;
 
         speedMultipliers = new List<SpeedMultiplier>();
 
-        direction = 0;
-        lastDirection = 1;
-
-        LoadAnimations();
+        LoadPlayerAnimations();
 
         LoadSkills();
     }

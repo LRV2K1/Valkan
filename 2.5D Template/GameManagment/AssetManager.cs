@@ -39,23 +39,9 @@ public class AssetManager
             return textures[assetName];
         }
 
-        if (assetName != spr_test)
-        {
-            Texture2D tex = contentManager.Load<Texture2D>(assetName);
-            textures.Add(assetName, tex);
-            return tex;
-        }
-
-        try
-        {
-            Texture2D tex = contentManager.Load<Texture2D>(assetName);
-            textures.Add(assetName, tex);
-            return tex;
-        }
-        catch
-        {
-            throw new TestSpriteExeption();
-        }
+        Texture2D tex = contentManager.Load<Texture2D>(assetName);
+        textures.Add(assetName, tex);
+        return tex;
     }
 
     public void PlaySound(string assetName)

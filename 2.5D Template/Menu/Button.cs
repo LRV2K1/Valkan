@@ -12,21 +12,32 @@ class Button : SpriteGameObject
 {
     protected bool pressed;
     protected bool highLighted;
+    protected bool active;
 
     //simple button
     public Button(string assetname, int layer = 101, string id = "") :
         base(assetname, layer, id)
     {
         pressed = false;
+        active = true;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        if(!active)
+        {
+            this.Visible = false;
+            return;
+        }
+        else
+        {
+            this.Visible = true;
+        }
         highLighted = BoundingBox.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y);
         pressed = inputHelper.MouseButtonPressed(MouseButton.Left) && highLighted;
         if (highLighted)
         {
-            this.Sprite.Color = Color.Black;
+            this.Sprite.Color = Color.LightSalmon;
         }
         else
         {
@@ -53,6 +64,12 @@ class Button : SpriteGameObject
     public bool HighLighted
     {
         get { return highLighted; }
+    }
+
+    public bool Active
+    {
+        get { return active; }
+        set { active = value; }
     }
 }
 
