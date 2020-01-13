@@ -46,7 +46,14 @@ class LevelGrid : GameObjectGrid
             return TextureType.None;
         }
         Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
-        return current.TextureType;
+        if (current != null)
+        {
+            return current.TextureType;
+        }
+        else
+        {
+            return TextureType.None;
+        }
     }
 
     public TileObject GetTileObject(int x, int y)
