@@ -38,7 +38,6 @@ partial class Level : GameObjectLibrary
         RootList.Add(overlayManager);
 
         overlayManager.AddOverlay("hud", new Hud(this));
-        overlayManager.AddOverlay("inventory", new Inventory(this));
 
         overlayManager.SwitchTo("hud");
     }
@@ -59,8 +58,16 @@ partial class Level : GameObjectLibrary
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
-                level.Add(t, x, y);
+                try
+                {
+                    Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
+                    level.Add(t, x, y);
+                }
+                catch
+                {
+                    Tile t = LoadTile(x, y, tiletypechar['a']);
+                    level.Add(t, x, y);
+                }
             }
         }
     }
@@ -95,7 +102,14 @@ partial class Level : GameObjectLibrary
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                LoadEntity(x, y, entitytypechar[textlines[y][x]]);
+                try
+                {
+                    LoadEntity(x, y, entitytypechar[textlines[y][x]]);
+                }
+                catch
+                {
+                    LoadEntity(x, y, "None");
+                }
             }
         }
     }
@@ -146,7 +160,6 @@ partial class Level : GameObjectLibrary
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
-        //entities.Add(item);
         item.MovePositionOnGrid(x, y);
     }
 

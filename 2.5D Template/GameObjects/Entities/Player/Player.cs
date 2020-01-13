@@ -49,6 +49,8 @@ partial class Player : MovingEntity
     private static string hash = "_+*/(&!*";
     public static string EncryptedText;
 
+    Vector2 inputDirection;
+
     public Player()
         : base(30, 58, 20, 2, "player")
     {
@@ -124,7 +126,6 @@ partial class Player : MovingEntity
         skill1.Draw(gameTime, spriteBatch);
     }
 
-    //move control player
     private void ControlMove(InputHelper inputHelper)
     {
         if (inmovible)
@@ -133,42 +134,41 @@ partial class Player : MovingEntity
             return;
         }
 
+        inputDirection = Vector2.Zero;
+        if (inputHelper.IsKeyDown(Keys.A))
+        {
+            inputDirection.X = -2;
+        }
+        else if (inputHelper.IsKeyDown(Keys.D))
+        {
+            inputDirection.X = 2;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.W))
+        {
+            inputDirection.Y = -1;
+        }
+        else if (inputHelper.IsKeyDown(Keys.S))
+        {
+            inputDirection.Y = 1;
+        }
+    }
+
+    private void Move(GameTime gameTime)
+    {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
             return;
         }
-        Vector2 direction = Vector2.Zero;
-        if (inputHelper.IsKeyDown(Keys.A))
-        {
-            direction.X = -2;
-        }
-        else if (inputHelper.IsKeyDown(Keys.D))
-        {
-            direction.X = 2;
-        }
-
-        if (inputHelper.IsKeyDown(Keys.W))
-        {
-            direction.Y = -1;
-        }
-        else if (inputHelper.IsKeyDown(Keys.S))
-        {
-            direction.Y = 1;
-        }
-        if (inputHelper.KeyPressed(Keys.Q))
-        {
-            WriteStats();
-            ReadStats();
-        }
 
         //check direction and movement
-        float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        float totalDir = (float)Math.Sqrt(inputDirection.X * inputDirection.X + inputDirection.Y * inputDirection.Y);
         if (totalDir != 0)
         {
             input = true;
-            Vector2 stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            Vector2 stillVelocity = new Vector2(speed * (inputDirection.X / totalDir), speed * (inputDirection.Y / totalDir));
 
             //change movement if selected
             if (selected)
@@ -197,12 +197,11 @@ partial class Player : MovingEntity
             velocity = Vector2.Zero;
         }
 
+        Multipliers(gameTime);
     }
 
-    //move player
-    private void Move(GameTime gameTime)
+    private void Multipliers(GameTime gameTime)
     {
-        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -220,7 +219,6 @@ partial class Player : MovingEntity
         }
     }
 
-    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));
@@ -237,6 +235,21 @@ partial class Player : MovingEntity
         WriteStats();
     }
 
+    public bool InMovible
+    {
+        get { return inmovible; }
+        set
+        {
+            inmovible = value;
+            if (inmovible)
+            {
+                velocity = Vector2.Zero;
+            }
+        }
+    }
+
+
+    //obsolete
     public virtual void WriteStats()                        //Saves the player stats in a text file
     {
         string statpath = "Content/PlayerStats/Stats.txt";
@@ -302,18 +315,6 @@ partial class Player : MovingEntity
                 ICryptoTransform tr = trip.CreateDecryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 return UTF8Encoding.UTF8.GetString(results);
-            }
-        }
-    }
-
-    public bool InMovible
-    {
-        get { return inmovible; }
-        set { 
-            inmovible = value;
-            if (inmovible)
-            {
-                velocity = Vector2.Zero;
             }
         }
     }

@@ -35,63 +35,68 @@ partial class Enemy : MovingEntity
 
         for (int i = 0; i < data.Count; i++)
         {
-            string[] currentline = data[i].Split('/');
-            try
+            ProcesData(data[i]);
+        }
+    }
+
+    private void ProcesData(string line)
+    {
+        string[] linedata = line.Split('/');
+        try
+        {
+            switch (linedata[0])
             {
-                switch (currentline[0])
-                {
-                    default:
-                        break;
-                    case "idle":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        PlayAnimation("idle_3");
-                        currentAnimation = "A";
-                        idle_anim = true;
-                        break;
-                    case "attack":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        damage = int.Parse(currentline[2]);
-                        attack_anim = true;
-                        break;
-                    case "walking":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        speed = int.Parse(currentline[2]);
-                        walking_anim = true;
-                        break;
-                    case "die":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), false);
-                        die_anim = true;
-                        break;
-                    case "health":
-                        health = int.Parse(currentline[1]);
-                        break;
-                }
+                default:
+                    break;
+                case "idle":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    PlayAnimation("idle_3");
+                    currentAnimation = "A";
+                    idle_anim = true;
+                    break;
+                case "attack":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    damage = int.Parse(linedata[2]);
+                    attack_anim = true;
+                    break;
+                case "walking":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    speed = int.Parse(linedata[2]);
+                    walking_anim = true;
+                    break;
+                case "die":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), false);
+                    die_anim = true;
+                    break;
+                case "health":
+                    health = int.Parse(linedata[1]);
+                    break;
             }
-            catch (IndexOutOfRangeException e)
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Console.WriteLine("Bad data for: " + linedata[0]);
+            return;
+        }
+        catch (TestSpriteExeption e)
+        {
+            Console.WriteLine("Sprite not found for: " + linedata[0]);
+            switch (linedata[0])
             {
-                Console.WriteLine("Bad data for: " + currentline[0]);
-                continue;
-            }
-            catch(TestSpriteExeption e)
-            {
-                Console.WriteLine("Sprite not found for: " + currentline[0]);
-                switch (currentline[0])
-                {
-                    default:
-                        break;
-                    case "idle":
-                        idle_anim = false;
-                        break;
-                    case "attack":
-                        attack_anim = false;
-                        break;
-                    case "walking":
-                        walking_anim = false;
-                        break;
-                    case "die":
-                        die_anim = false;
-                        break;
-                }
+                default:
+                    break;
+                case "idle":
+                    idle_anim = false;
+                    break;
+                case "attack":
+                    attack_anim = false;
+                    break;
+                case "walking":
+                    walking_anim = false;
+                    break;
+                case "die":
+                    die_anim = false;
+                    break;
             }
         }
     }

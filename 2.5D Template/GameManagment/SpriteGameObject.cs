@@ -5,7 +5,6 @@ public class SpriteGameObject : GameObject
 {
     protected SpriteSheet sprite;
     protected Vector2 origin;
-    public bool PerPixelCollisionDetection = true;
 
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
         : base(layer, id)
@@ -102,30 +101,17 @@ public class SpriteGameObject : GameObject
 
     public bool CollidesWith(SpriteGameObject obj)
     {
-        if (!visible || !obj.visible || !BoundingBox.Intersects(obj.BoundingBox))
+        return SpriteBounds.Intersects(obj.SpriteBounds);
+    }
+
+    public Rectangle SpriteBounds 
+    {
+        get
         {
-            return false;
+            int left = (int)(GlobalPosition.X - origin.X);
+            int top = (int)(GlobalPosition.Y - origin.Y);
+            return new Rectangle(left, top, Width, Height);
         }
-        if (!PerPixelCollisionDetection)
-        {
-            return true;
-        }
-        Rectangle b = Collision.Intersection(BoundingBox, obj.BoundingBox);
-        for (int x = 0; x < b.Width; x++)
-        {
-            for (int y = 0; y < b.Height; y++)
-            {
-                int thisx = b.X - (int)(GlobalPosition.X - origin.X) + x;
-                int thisy = b.Y - (int)(GlobalPosition.Y - origin.Y) + y;
-                int objx = b.X - (int)(obj.GlobalPosition.X - obj.origin.X) + x;
-                int objy = b.Y - (int)(obj.GlobalPosition.Y - obj.origin.Y) + y;
-                if (sprite.IsTranslucent(thisx, thisy) && obj.sprite.IsTranslucent(objx, objy))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public bool OnSprite(Vector2 pos)
