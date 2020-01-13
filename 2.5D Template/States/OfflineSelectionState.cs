@@ -42,7 +42,7 @@ class OfflineSelectionState : GameObjectLibrary
         popup.LoadButtons();
         popup.Visible = false;
 
-        Selected = new SpriteGameObject("Sprites/Menu/Select_Button", 101);
+        Selected = new SpriteGameObject("Sprites/Menu/Selected_Button", 101);
         Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         RootList.Add(Selected);
     }
