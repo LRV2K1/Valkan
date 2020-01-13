@@ -8,28 +8,23 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-//This is the Selection Screen for Offline or Online mode.
-//If Offline is Selected, the screen will change options accordingly
+//This is the Selection Screen for creating or joining a game.
 class HostClientSelectionState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, returnButton;
-    protected bool firstTime = true;
+    protected Button createGameButton, joinGameButton, returnButton;
     public HostClientSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
-        //Create Game button
-        startButton = new Button("Sprites/Menu/CreateGame_Button", 101);
-        startButton.Sprite.Size = new Vector2(2f, 3f);
-        startButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - startButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - startButton.BoundingBox.Height) / 4);
-        RootList.Add(startButton);
-        //Join Game button
-        settingsButton = new Button("Sprites/Menu/JoinGame_Button", 101);
-        settingsButton.Sprite.Size = new Vector2(2f, 3f);
-        settingsButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - settingsButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - settingsButton.BoundingBox.Height) / 2);
-        RootList.Add(settingsButton);
-        //Return button
+        createGameButton = new Button("Sprites/Menu/CreateGame_Button", 101);
+        createGameButton.Sprite.Size = new Vector2(2f, 3f);
+        createGameButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - createGameButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - createGameButton.BoundingBox.Height) / 4);
+        RootList.Add(createGameButton);
+        joinGameButton = new Button("Sprites/Menu/JoinGame_Button", 101);
+        joinGameButton.Sprite.Size = new Vector2(2f, 3f);
+        joinGameButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - joinGameButton.BoundingBox.Width / 2, (GameEnvironment.Screen.Y - joinGameButton.BoundingBox.Height) / 2);
+        RootList.Add(joinGameButton);
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
@@ -37,21 +32,17 @@ class HostClientSelectionState : GameObjectLibrary
 
     public override void Update(GameTime gameTime)
     {
-        if (firstTime)
-        {
-            firstTime = false;
-        }
         base.Update(gameTime);
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (createGameButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("hostSelectionState", 5);
         }
-        else if (settingsButton.Pressed)
+        else if (joinGameButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
@@ -60,10 +51,4 @@ class HostClientSelectionState : GameObjectLibrary
             GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
         }
     }
-
-    public override void Reset()
-    {
-        firstTime = true;
-    }
-
 }

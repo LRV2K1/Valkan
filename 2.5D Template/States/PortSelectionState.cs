@@ -8,51 +8,39 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-//This is the Online Selection Screen. Here you can choose to play Online 
+//This is the state where you can select which host to join.
 class PortSelectionState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, returnButton;
-    protected bool firstTime = true;
+    protected Button selectButton, selectButton2, returnButton;
     public PortSelectionState()
     {
-
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
-
-        startButton = new Button("Sprites/Menu/spr_button", 101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
-        RootList.Add(startButton);
-
-        settingsButton = new Button("Sprites/Menu/spr_button_intel", 101);
-        settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
-        RootList.Add(settingsButton);
-
-        //Return Button
+        selectButton = new Button("Sprites/Menu/Select_Button", 101);
+        selectButton.Position = new Vector2((GameEnvironment.Screen.X - selectButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - selectButton.Height) / 4);
+        RootList.Add(selectButton);
+        selectButton2 = new Button("Sprites/Menu/Select_Button", 101);
+        selectButton2.Position = new Vector2((GameEnvironment.Screen.X - selectButton2.Width) / 16 * 13, (GameEnvironment.Screen.Y - selectButton.Height) / 2);
+        RootList.Add(selectButton2);
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
-
-
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (firstTime)
-        {
-            firstTime = false;
-        }
         base.Update(gameTime);
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (selectButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
         }
-        else if (settingsButton.Pressed)
+        else if (selectButton2.Pressed)
         {
             
         }
@@ -61,10 +49,4 @@ class PortSelectionState : GameObjectLibrary
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
-
-    public override void Reset()
-    {
-        firstTime = true;
-    }
-
 }

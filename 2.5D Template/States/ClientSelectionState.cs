@@ -8,34 +8,27 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-//This is the Online Selection Screen. Here you can choose to play Online 
+//This is the state where a player joins a host game and can choose a class before saying they're ready.
 class ClientSelectionState : GameObjectLibrary
 {
-    protected Button startButton, warriorButton, sorcererButton, bardButton, returnButton;
-    protected bool firstTime = true;
+    protected Button readyButton, warriorButton, sorcererButton, bardButton, returnButton;
     public ClientSelectionState()
     {
-
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
-        //Ready Button
-        startButton = new Button("Sprites/Menu/Ready_Button", 101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - startButton.Height) / 6);
-        RootList.Add(startButton);
-        //Select Warrior
+        readyButton = new Button("Sprites/Menu/Ready_Button", 101);
+        readyButton.Position = new Vector2((GameEnvironment.Screen.X - readyButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - readyButton.Height) / 6);
+        RootList.Add(readyButton);
         warriorButton = new Button("Sprites/Menu/Select_Button", 101);
         warriorButton.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 5);
         RootList.Add(warriorButton);
-        //Select Sorcerer
         sorcererButton = new Button("Sprites/Menu/Select_Button", 101);
         sorcererButton.Position = new Vector2((GameEnvironment.Screen.X - sorcererButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - sorcererButton.Height) / 12 * 6);
         RootList.Add(sorcererButton);
-        //Select Bard
         bardButton = new Button("Sprites/Menu/Select_Button", 101);
         bardButton.Position = new Vector2((GameEnvironment.Screen.X - bardButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - bardButton.Height) / 12 * 7);
         RootList.Add(bardButton);
-        //Return Button
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
@@ -43,17 +36,13 @@ class ClientSelectionState : GameObjectLibrary
 
     public override void Update(GameTime gameTime)
     {
-        if (firstTime)
-        {
-            firstTime = false;
-        }
         base.Update(gameTime);
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (readyButton.Pressed)
         {
             MultiplayerManager.SetupClient();
             GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content));
@@ -76,10 +65,4 @@ class ClientSelectionState : GameObjectLibrary
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
     }
-
-    public override void Reset()
-    {
-        firstTime = true;
-    }
-
 }

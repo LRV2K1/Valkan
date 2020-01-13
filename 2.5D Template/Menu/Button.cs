@@ -14,7 +14,7 @@ class Button : SpriteGameObject
     protected bool highLighted;
     protected bool active;
 
-    //simple button
+    //simple button, they're active from default
     public Button(string assetname, int layer = 101, string id = "") :
         base(assetname, layer, id)
     {
@@ -24,6 +24,7 @@ class Button : SpriteGameObject
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        //If you set a button to inactive, the button will be invisible as well
         if(!active)
         {
             this.Visible = false;
@@ -37,6 +38,7 @@ class Button : SpriteGameObject
         pressed = inputHelper.MouseButtonPressed(MouseButton.Left) && highLighted;
         if (highLighted)
         {
+            //The button will become slightly light red-ish to indicate the highlight.
             this.Sprite.Color = Color.LightSalmon;
         }
         else
@@ -45,10 +47,12 @@ class Button : SpriteGameObject
         }
         if (pressed)
         {
+            //It could play a sound here, but we've not yet made a sound ourselves.
             //GameEnvironment.AssetManager.PlaySound("Sounds/snd_button_select");
         }
     }
 
+    //This makes sure the button returns to its initial state.
     public override void Reset()
     {
         base.Reset();
