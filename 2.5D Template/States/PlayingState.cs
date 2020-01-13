@@ -25,7 +25,7 @@ class PlayingState : IGameLoopObject
         level1 = true;
     }
 
-    //handels the payingstate
+    //handles the playingstate
     //plays the current level
     public virtual void HandleInput(InputHelper inputHelper)
     {
