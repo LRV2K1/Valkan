@@ -45,7 +45,7 @@ class ClientSelectionState : GameObjectLibrary
         if (readyButton.Pressed)
         {
             MultiplayerManager.SetupClient();
-            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online"));
+            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content));
             GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
         }
         else if (warriorButton.Pressed)
