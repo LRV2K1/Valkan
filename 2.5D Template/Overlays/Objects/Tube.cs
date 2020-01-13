@@ -51,4 +51,3 @@ class Tube : SpriteGameObject
         set { targetSize = value; }
     }
 }
-
