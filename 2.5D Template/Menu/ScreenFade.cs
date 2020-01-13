@@ -13,7 +13,7 @@ public class ScreenFade : SpriteGameObject
 {
     protected bool fadeToWhite;
     protected bool fadeToBlack;
-    protected int r, g, b, a;
+    protected int red, green, bleu, alpha;
     protected int speed;
     protected string nextScene;
 
@@ -30,8 +30,8 @@ public class ScreenFade : SpriteGameObject
         {
             if (sprite.Color.A < 255)
             {
-                a += speed;
-                sprite.Color = new Color(r, g, b, a);
+                alpha += speed;
+                sprite.Color = new Color(red, green, bleu, alpha);
                 return;
             }
             else
@@ -50,8 +50,8 @@ public class ScreenFade : SpriteGameObject
         {
             if (sprite.Color.A > 0)
             {
-                a -= speed;
-                sprite.Color = new Color(r, g, b, a);
+                alpha -= speed;
+                sprite.Color = new Color(red, green, bleu, alpha);
                 return;
             }
             else
@@ -66,11 +66,11 @@ public class ScreenFade : SpriteGameObject
     {
         this.Visible = true;
         speed = newSpeed;
-        r = 0;
-        g = 0;
-        b = 0;
-        a = 0;
-        sprite.Color = new Color(r,g,b,a);
+        red = 0;
+        green = 0;
+        bleu = 0;
+        alpha = 0;
+        sprite.Color = new Color(red,green,bleu,alpha);
         this.sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
         fadeToBlack = true;
         nextScene = sceneName;
@@ -88,7 +88,7 @@ public class ScreenFade : SpriteGameObject
 
     public int A
     {
-        get { return a; }
+        get { return alpha; }
     }
 }
 

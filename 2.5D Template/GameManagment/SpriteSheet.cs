@@ -31,16 +31,6 @@ public class SpriteSheet
             throw new TestSpriteExeption();
         }
         color = Color.White;
-        /*
-        // construct the collision mask
-        Color[] colorData = new Color[sprite.Width * sprite.Height];
-        collisionMask = new bool[sprite.Width * sprite.Height];
-        sprite.GetData(colorData);
-        for (int i = 0; i < colorData.Length; ++i)
-        {
-            collisionMask[i] = colorData[i].A != 0;
-        }
-        */
 
         this.sheetIndex = sheetIndex;
         sheetColumns = 1;
@@ -82,7 +72,6 @@ public class SpriteSheet
         int row_index = sheetIndex / sheetColumns % sheetRows;
 
 
-        //return collisionMask[column_index * Width + x + (row_index * Height + y) * sprite.Width];
         return false;
     }
 

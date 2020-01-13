@@ -75,5 +75,4 @@ class SettingsState : GameObjectLibrary
     {
         firstTime = true;
     }
-
 }

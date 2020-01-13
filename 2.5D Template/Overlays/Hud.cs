@@ -41,14 +41,4 @@ class Hud : Overlay
             tube2.TargetSize = (float)player.Stamina / (float)player.MaxStamina;
         }
     }
-
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        base.HandleInput(inputHelper);
-        if (inputHelper.KeyPressed(Keys.I))
-        {
-            OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-            overlay.SwitchTo("inventory");
-        }
-    }
 }

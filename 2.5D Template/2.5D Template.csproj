@@ -76,7 +76,6 @@
     <Compile Include="Menu\Button.cs" />
     <Compile Include="Menu\ScreenFade.cs" />
     <Compile Include="Overlays\Hud.cs" />
-    <Compile Include="Overlays\Inventory.cs" />
     <Compile Include="Overlays\Overlay.cs" />
     <Compile Include="Overlays\Objects\Tube.cs" />
     <Compile Include="Overlays\OverlayManager.cs" />
@@ -95,7 +94,6 @@
     <Compile Include="Level\Level.cs" />
     <Compile Include="Level\LevelGameLoop.cs" />
     <Compile Include="Level\LevelLoading.cs" />
-    <Compile Include="Overlays\OverlayMenu.cs" />
     <Compile Include="Overlays\Objects\SkillTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameManagment\SpriteGameObject.cs" />

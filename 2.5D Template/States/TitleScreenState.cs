@@ -69,5 +69,4 @@ class TitleScreenState : GameObjectLibrary
     {
         firstTime = true;
     }
-
 }

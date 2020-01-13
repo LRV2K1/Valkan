@@ -15,7 +15,6 @@ class OfflineSelectionState : GameObjectLibrary
     protected bool firstTime = true;
     public OfflineSelectionState()
     {
-
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);

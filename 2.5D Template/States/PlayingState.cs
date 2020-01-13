@@ -21,6 +21,10 @@ class PlayingState : IGameLoopObject
     {
         this.content = content;
         paused = false;
+    }
+
+    public void LoadLevel()
+    {
         level = new Level("Level_1");
         level1 = true;
     }
@@ -29,6 +33,10 @@ class PlayingState : IGameLoopObject
     //plays the current level
     public virtual void HandleInput(InputHelper inputHelper)
     {
+        if (level == null)
+        {
+            return;
+        }
         if (inputHelper.KeyPressed(Keys.L))
         {
             if (level1)
@@ -57,6 +65,11 @@ class PlayingState : IGameLoopObject
 
     public virtual void Update(GameTime gameTime)
     {
+        if (level == null)
+        {
+            LoadLevel();
+            return;
+        }
         if (!paused)
         {
             level.Update(gameTime);
@@ -65,13 +78,18 @@ class PlayingState : IGameLoopObject
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        if (level == null)
+        {
+            return;
+        }
         level.Draw(gameTime, spriteBatch);
     }
 
     public virtual void Reset()
     {
         firstTime = true;
-        level.Reset();
+        level = null;
         paused = false;
+        LoadLevel();
     }
 }

@@ -22,7 +22,7 @@ class Camera : GameObject
         first = false;
         objid = folowObjid;
     }
-    //move camera
+
     public override void Update(GameTime gameTime)
     {
         GameObject folowObj = GameWorld.GetObject(objid);
@@ -53,7 +53,6 @@ class Camera : GameObject
         first = false;
     }
 
-    //calculate delayx
     public float DelayPositionX(float newPositionX, int amount=20)
     {
         if(Math.Abs(cameraPosition.X - newPositionX) != 0)
@@ -70,7 +69,6 @@ class Camera : GameObject
         return newPositionX;
     }
 
-    //calculate delayy
     public float DelayPositionY(float newPositionY, int amount = 20)
     {
         if (Math.Abs(cameraPosition.Y - newPositionY) != 0)
