@@ -70,7 +70,6 @@ class LevelGrid : GameObjectGrid
         return current.TileObject;
     }
 
-    //giving passengers to tiles
     public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile tile;
@@ -131,7 +130,6 @@ class LevelGrid : GameObjectGrid
         }
     }
 
-    //checking for active tiles
     private List<string> ActiveTiles()
     {
         List<string> tiles = new List<string>();
