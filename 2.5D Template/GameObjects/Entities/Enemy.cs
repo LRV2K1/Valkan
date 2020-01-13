@@ -52,6 +52,16 @@ partial class Enemy : MovingEntity
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+
+        if (die || dead)
+        {
+            if (Current.AnimationEnded)
+            {
+                dead = true;
+            }
+            return;
+        }
+
         if (start == 1) // de start positie moet 1 keer worden geintialized
         {
             Startup();
@@ -63,14 +73,6 @@ partial class Enemy : MovingEntity
             DesCalculate(player.GridPos);
         }
 
-        if (die || dead)
-        {
-            if (Current.AnimationEnded)
-            {
-                dead = true;
-            }
-            return;
-        }
         ChangeAnimation();
     }
 
