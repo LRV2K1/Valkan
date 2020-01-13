@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 
 partial class Level : GameObjectLibrary
 {
- //loads the levels
     public void LoadLevel(string path)
     {
         GameObjectList entities = new GameObjectList(2, "entities");
@@ -31,7 +30,6 @@ partial class Level : GameObjectLibrary
         LoadFile(path);
     }
 
-    //loads overlays
     public void LoadOverlays()
     {
         OverlayManager overlayManager = new OverlayManager();
@@ -42,7 +40,6 @@ partial class Level : GameObjectLibrary
         overlayManager.SwitchTo("hud");
     }
 
-    //loads the tilegrid
     private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
         LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
@@ -72,7 +69,6 @@ partial class Level : GameObjectLibrary
         }
     }
 
-    //loads tiles
     private Tile LoadTile(int x, int y, string tiletype)
     {
         string[] type = tiletype.Split(',');
@@ -95,7 +91,6 @@ partial class Level : GameObjectLibrary
         return new Tile(new Point(x, y));
     }
 
-    //loads all entities
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
         for (int x = 0; x < width; x++)
@@ -114,7 +109,6 @@ partial class Level : GameObjectLibrary
         }
     }
 
-    //load entity
     private void LoadEntity(int x, int y, string entitytype)
     {
         string[] type = entitytype.Split(',');
@@ -142,17 +136,38 @@ partial class Level : GameObjectLibrary
         }
     }
 
-    //load player
     private void LoadPlayer(int x, int y)
     {
-        Player player = new Player();
+        Player player;
+        try
+        {
+            PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
+            switch (playerType)
+            {
+                case PlayerType.Bard:
+                    player = new Bard();
+                    break;
+                case PlayerType.Warrior:
+                    player = new Warrior();
+                    break;
+                case PlayerType.Wizzard:
+                    player = new Wizzard();
+                    break;
+                default:
+                    player = new Player();
+                    break;
+            }
+        }
+        catch
+        {
+            player = new Player();
+        }
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
     }
 
-    //load item
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)
     {
         ItemType type = (ItemType)Enum.Parse(typeof(ItemType), it);
@@ -163,7 +178,6 @@ partial class Level : GameObjectLibrary
         item.MovePositionOnGrid(x, y);
     }
 
-    //loadenemy
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
         Enemy enemy = new Enemy(asset, boundingy);

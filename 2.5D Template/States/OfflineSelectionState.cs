@@ -13,6 +13,7 @@ class OfflineSelectionState : GameObjectLibrary
 {
     protected Button startButton, changeButton, warriorButton, sorcererButton, bardButton, returnButton;
     protected MapSelectionPopUp popup;
+    protected SpriteGameObject Selected;
     public OfflineSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
@@ -24,14 +25,14 @@ class OfflineSelectionState : GameObjectLibrary
         changeButton = new Button("Sprites/Menu/Change_Button", 101);
         changeButton.Position = new Vector2((GameEnvironment.Screen.X - changeButton.Width) / 8 * 7, (GameEnvironment.Screen.Y - changeButton.Height) / 3 * 2);
         RootList.Add(changeButton);
-        warriorButton = new Button("Sprites/Menu/Select_Button", 101);
+        warriorButton = new Button("Sprites/Menu/Player_Warrior_Button", 101);
         warriorButton.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 5);
         RootList.Add(warriorButton);
-        sorcererButton = new Button("Sprites/Menu/Select_Button", 101);
-        sorcererButton.Position = new Vector2((GameEnvironment.Screen.X - sorcererButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - sorcererButton.Height) / 12 * 6);
+        sorcererButton = new Button("Sprites/Menu/Player_Wizzard_Button", 101);
+        sorcererButton.Position = new Vector2((GameEnvironment.Screen.X - sorcererButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - sorcererButton.Height) / 12 * 5);
         RootList.Add(sorcererButton);
-        bardButton = new Button("Sprites/Menu/Select_Button", 101);
-        bardButton.Position = new Vector2((GameEnvironment.Screen.X - bardButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - bardButton.Height) / 12 * 7);
+        bardButton = new Button("Sprites/Menu/Player_Bard_Button", 101);
+        bardButton.Position = new Vector2((GameEnvironment.Screen.X - bardButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - bardButton.Height) / 12 * 5);
         RootList.Add(bardButton);
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
@@ -40,6 +41,10 @@ class OfflineSelectionState : GameObjectLibrary
         RootList.Add(popup);
         popup.LoadButtons();
         popup.Visible = false;
+
+        Selected = new SpriteGameObject("Sprites/Menu/Select_Button", 101);
+        Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
+        RootList.Add(Selected);
     }
 
     public override void Update(GameTime gameTime)
@@ -64,15 +69,18 @@ class OfflineSelectionState : GameObjectLibrary
         }
         else if(warriorButton.Pressed)
         {
-            //Player.Job = "warrior";
+            GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+            Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
-            //Player.Job = "sorcerer";
+            GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
+            Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
-            //Player.Job = "bard";
+            GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
+            Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (returnButton.Pressed)
         {

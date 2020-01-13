@@ -73,7 +73,6 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
-    //the rootlist of the gameworld
     public virtual GameObjectList RootList
     {
         get

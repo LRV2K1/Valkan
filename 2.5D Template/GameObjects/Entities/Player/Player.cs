@@ -29,7 +29,7 @@ enum PlayerType
 
 partial class Player : MovingEntity
 {
-    const float speed = 400;
+    protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
@@ -56,19 +56,10 @@ partial class Player : MovingEntity
     {
         inmovible = false;
 
-        playerType = PlayerType.Warrior;
-
         name = "Valkan";
         playerID = 1;
         playerlevel = 1;
         playerEXP = 1;
-
-        maxhealth = 10;
-        maxstamina = 100;
-        health = maxhealth;
-        stamina = maxstamina;
-        staminatimerreset = 1f;
-        addstaminatimerreset = 0.02f;
 
         EXPThreshold = 5;
 
@@ -77,9 +68,28 @@ partial class Player : MovingEntity
 
         speedMultipliers = new List<SpeedMultiplier>();
 
+        LoadStats();
+        SetStats();
+
         LoadPlayerAnimations();
 
         LoadSkills();
+        SetSkills();
+    }
+
+    protected virtual void LoadStats()
+    {
+        playerType = PlayerType.Warrior;
+        maxhealth = 10;
+        maxstamina = 100;
+        staminatimerreset = 1f;
+        addstaminatimerreset = 0.02f;
+    }
+
+    private void SetStats()
+    {
+        health = maxhealth;
+        stamina = maxstamina;
     }
 
     //setup skills
@@ -128,13 +138,13 @@ partial class Player : MovingEntity
 
     private void ControlMove(InputHelper inputHelper)
     {
+        inputDirection = Vector2.Zero;
         if (inmovible)
         {
             input = false;
             return;
         }
 
-        inputDirection = Vector2.Zero;
         if (inputHelper.IsKeyDown(Keys.A))
         {
             inputDirection.X = -2;

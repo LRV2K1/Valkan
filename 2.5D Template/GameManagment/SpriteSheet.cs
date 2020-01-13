@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Content;
 public class SpriteSheet
 {
     protected Texture2D sprite;
-    //protected bool[] collisionMask;
     protected int sheetIndex;
     protected int sheetColumns;
     protected int sheetRows;
@@ -64,15 +63,6 @@ public class SpriteSheet
         }
         spriteBatch.Draw(sprite, position, spritePart, color,
             0.0f, origin, size, spriteEffects, 0.0f);
-    }
-
-    public bool IsTranslucent(int x, int y)
-    {
-        int column_index = sheetIndex % sheetColumns;
-        int row_index = sheetIndex / sheetColumns % sheetRows;
-
-
-        return false;
     }
 
     public Texture2D Sprite
