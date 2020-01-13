@@ -23,7 +23,7 @@ public class MultiplayerManager
         }
     }
 
-    public static string GetReceivedData()
+    public static string GetReceivedData() //returns received data
     {
         if (connection != null)
         {
@@ -32,7 +32,7 @@ public class MultiplayerManager
         return null;
     }
 
-    public static void SetupClient()
+    public static void SetupClient() //setup connection when joining a server
     {
         if (connection == null)
         {
@@ -55,16 +55,11 @@ public class MultiplayerManager
             {
 
             }
-            //level = new Level("Online");
             //TODO
-            //get level
-            //1 p
             //2 receive data from running game
             //2a let new player send GetLevel() to someone with a running game
             //2b someone who is playing sends the level
             //2c new player receives the level
-            //3 put data in txt file
-            //4 load the new txt file level
             //TODO
 
 
@@ -72,15 +67,15 @@ public class MultiplayerManager
         }
     }
     
-    public static void SetupHost()
+    public static void SetupHost() //setup connection when creating a server
     {
         if (connection == null)
         {
             connection = new Connection();
-            connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
+            connection.playerlist.Add(Connection.MyIP()); //add our own ip to the playerlist
         }
     }
-    public static void Disconnect()
+    public static void Disconnect() //disconnect connection
     {
         if (connection != null)
         {

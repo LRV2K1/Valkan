@@ -58,7 +58,6 @@ public partial class Connection
         string[] lines = list.Split('\n');
         for (int i = 1; i < lines.Length; i++)
         {
-            //playerlist[i] = IPAddress.Parse(lines[i]);
             playerlist.Clear();
             playerlist.Add(IPAddress.Parse(lines[i]));
         }

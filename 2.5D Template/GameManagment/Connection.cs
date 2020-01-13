@@ -15,25 +15,20 @@ public partial class Connection
 
     public string data = "Action: ID x y";
     public string somedata = "";
-    public string onlineworld = "";
 
     public Connection()
     {
+        ar_ = client.BeginReceive(Receive, new object());
         Console.WriteLine("Started listening");
-        StartListening();
-    }
-    
-    public void Disconnect()
-    {
-        client.Close();
-        Console.WriteLine("Stopped listening");
     }
 
-    public void StartListening()
+    public void Send(string message) //convert string to bytes to broadcast it
     {
-        ar_ = client.BeginReceive(Receive, new object());
+        byte[] bytes = Encoding.ASCII.GetBytes(message);
+        client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port)); //broadcast to specific port
+        Console.WriteLine("\nSent->\n{0}", message);
     }
-        
+
     private void Receive(IAsyncResult ar)
     {
         try
@@ -43,10 +38,10 @@ public partial class Connection
             if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                Console.WriteLine("\nReceived from {1}:\n{0}", message, ip.Address.ToString());
+                Console.WriteLine("\nReceived from {1}->\n{0}", message, ip.Address.ToString());
                 HandleReceivedData(message);
             }
-            StartListening(); //repeat
+            ar_ = client.BeginReceive(Receive, new object()); ; //repeat
             //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
             //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
             //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
@@ -55,13 +50,12 @@ public partial class Connection
         {
 
         }
-    }    
-    
-    public void Send(string message) //convert string to bytes to broadcast it
+    }
+
+    public void Disconnect()
     {
-        byte[] bytes = Encoding.ASCII.GetBytes(message);
-        client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
-        Console.WriteLine("\nSent:\n{0}", message);
+        client.Close();
+        Console.WriteLine("Stopped listening");
     }
 
     public static IPAddress MyIP() //returns own IP address

@@ -63,6 +63,7 @@ abstract partial class Entity : AnimatedGameObject
             string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
             if (variables[0] == "Entity:" && variables[1] == id)
             {
+                Console.WriteLine("id is the same");
                 position.X = float.Parse(variables[2]);
                 position.Y = float.Parse(variables[3]);
             }
