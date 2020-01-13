@@ -6,23 +6,34 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-class Enemy : Entity
+partial class Enemy : MovingEntity
 {
-    protected int health;
+    protected int health, damage;
+    protected float speed;
+
     protected bool die, dead;
     protected bool selected;
+    protected string dataloc;
+
+    protected bool input;
 
     //generic enemy
     //no function yet
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
-        : base(boundingy, weight, layer, id)
+        : base(boundingy, 40, weight, layer, id)
     {
         selected = false;
         dead = false;
+
         health = 20;
-        LoadAnimation(assetname, "sprite", true, false);
-        LoadAnimation(assetname, "die", false, false);
-        PlayAnimation("sprite");
+        damage = 10;
+        speed = 300f;
+
+        input = false;
+
+        dataloc = assetname;
+
+        LoadEnemyData();
     }
 
     public override void Update(GameTime gameTime)
@@ -36,6 +47,8 @@ class Enemy : Entity
             }
             return;
         }
+
+        ChangeAnimation();
     }
 
     private void CheckDie()
@@ -43,8 +56,14 @@ class Enemy : Entity
         if (health <=0)
         {
             die = true;
-            PlayAnimation("die");
-            sprite.Color = Color.Pink;
+            if (die_anim)
+            {
+                SwitchAnimation("die", "D");
+            }
+            else
+            {
+                RemoveSelf();
+            }
             if (selected)
             {
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
@@ -56,7 +75,8 @@ class Enemy : Entity
     public int Health
     {
         get { return health; }
-        set { 
+        set
+        { 
             health = value;
             CheckDie();
         }
@@ -73,4 +93,3 @@ class Enemy : Entity
         set { selected = value; }
     }
 }
-

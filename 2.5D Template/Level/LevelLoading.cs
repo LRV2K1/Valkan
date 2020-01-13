@@ -154,6 +154,10 @@ partial class Level : GameObjectLibrary
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
         Enemy enemy = new Enemy(asset, boundingy);
+        if (enemy.NoData)
+        {
+            return;
+        }
         GameObjectList enemies = GetObject("enemies") as GameObjectList;
         enemies.Add(enemy);
         enemy.MovePositionOnGrid(x, y);

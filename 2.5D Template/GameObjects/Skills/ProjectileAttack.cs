@@ -47,7 +47,7 @@ class ProjectileAttack : Skill
         {
             base.Use(timer);
             player.Stamina -= 20;
-            player.AttackAnimation();
+            player.SwitchAnimation("attack", "B");
 
             MakeProjectile(player.GlobalPosition);
         }

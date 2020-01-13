@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-partial class Player : Entity
+partial class Player : MovingEntity
 {
     protected bool block;
     protected bool blocked;
@@ -81,7 +81,7 @@ partial class Player : Entity
         if (health <= 0)
         {
             die = true;
-            DieAnimation();
+            SwitchAnimation("die", "D");
             velocity = Vector2.Zero;
         }
     }
