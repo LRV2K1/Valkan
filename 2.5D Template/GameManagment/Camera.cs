@@ -85,7 +85,6 @@ class Camera : GameObject
         return newPositionY;
     }
 
-    //check if on screen
     public bool OnScreen(Vector2 pos)
     {
         Rectangle screen = new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2);
