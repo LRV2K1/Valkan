@@ -4,13 +4,11 @@ using Microsoft.Xna.Framework.Input;
 
 public class GameStart : GameEnvironment
 {
-
     protected TextGameObject framecounter, physicscounter;
     protected int frames = 0;
     protected int physics = 0;
     protected double time = 0;
     protected double time2 = 0;
-
 
     static void Main()
     {
@@ -32,7 +30,7 @@ public class GameStart : GameEnvironment
         FullScreen = false;
         //gameStateManager.AddGameState("introState", new IntroState());
         gameStateManager.AddGameState("titleScreen", new TitleScreenState());
-        gameStateManager.AddGameState("playingState", new PlayingState(Content));
+        gameStateManager.AddGameState("playingState", new PlayingState(Content, "Level_1"));
         gameStateManager.AddGameState("settingsState", new SettingsState());
         gameStateManager.AddGameState("modeSelectionState", new ModeSelectionState());
         gameStateManager.AddGameState("offlineSelectionState", new OfflineSelectionState());

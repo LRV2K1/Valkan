@@ -17,6 +17,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
     protected static ScreenFade screenFade;
+    protected static MultiplayerManager multiplayerManager;
     protected SpriteGameObject spritemouse;
 
     protected static bool quitGame;
@@ -27,6 +28,7 @@ public class GameEnvironment : Game
     {
         graphics = new GraphicsDeviceManager(this);
 
+        multiplayerManager = new MultiplayerManager();
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
@@ -162,6 +164,7 @@ public class GameEnvironment : Game
         }
 
         gameStateManager.HandleInput(inputHelper);
+        multiplayerManager.HandleInput(inputHelper);
     }
 
     protected override void Update(GameTime gameTime)

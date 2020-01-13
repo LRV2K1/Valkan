@@ -47,7 +47,9 @@ class HostSelectionState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (startButton.Pressed)
         {
-            
+            MultiplayerManager.SetupHost();
+            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online")); //create playingstate with a variable world
+            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
         }
         else if (changeButton.Pressed)
         {
