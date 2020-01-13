@@ -15,12 +15,14 @@ abstract partial class Entity : AnimatedGameObject
     protected int weight;
     protected string host;
     bool remove;
+    string previousdata;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         remove = false;
         host = "";
+        previousdata = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
@@ -29,7 +31,8 @@ abstract partial class Entity : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
+        
+        ReceiveData();
         //check if moved
         if (previousPos != position)
         {
@@ -38,11 +41,11 @@ abstract partial class Entity : AnimatedGameObject
             {
                 return;
             }
-            ReceiveData();
             SendData();
             NewHost();
             previousPos = position;
         }
+        previousdata = MultiplayerManager.GetReceivedData();
     }
 
     public override void Reset()
@@ -60,17 +63,22 @@ abstract partial class Entity : AnimatedGameObject
     {
         try
         { 
-            string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
-            if (variables[0] == "Entity:" && variables[1] == id)
+            if (previousdata != MultiplayerManager.GetReceivedData())
             {
-                Console.WriteLine("id is the same");
-                position.X = float.Parse(variables[2]);
-                position.Y = float.Parse(variables[3]);
-            }
-            else if (variables[0] == "World:")
-            {
+                previousdata = MultiplayerManager.GetReceivedData();
+                string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                if (variables[0] == "Entity:" && variables[1] == id)
+                {
+                    Console.WriteLine("id is the same");
+                    position.X = float.Parse(variables[2]);
+                    position.Y = float.Parse(variables[3]);
+                }
+                else if (variables[0] == "World:")
+                {
 
+                }
             }
+           
         }
         catch
         {
