@@ -22,7 +22,6 @@ public class GameStateManager : IGameLoopObject
     {
         return gameStates[name];
     }
-
     public void SwitchTo(string name)
     {
         if (gameStates.ContainsKey(name))
