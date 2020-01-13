@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 class OfflineSelectionState : GameObjectLibrary
 {
     protected Button startButton, changeButton, warriorButton, sorcererButton, bardButton, returnButton;
+    protected MapSelectionPopUp popup;
     public OfflineSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
@@ -35,6 +36,10 @@ class OfflineSelectionState : GameObjectLibrary
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
+        popup = new MapSelectionPopUp("Sprites/Overlay/Menu_BG_Grey", new Vector2(0.5f, 0.7f));
+        RootList.Add(popup);
+        popup.LoadButtons();
+        popup.Visible = false;
     }
 
     public override void Update(GameTime gameTime)
@@ -45,13 +50,17 @@ class OfflineSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+        if (popup.active)
+        {
+            return;
+        }
         if (startButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("playingState");
         }
         else if (changeButton.Pressed)
         {
-            
+            popup.active = true;
         }
         else if(warriorButton.Pressed)
         {

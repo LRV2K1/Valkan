@@ -47,7 +47,7 @@ class Button : SpriteGameObject
         }
         if (pressed)
         {
-            //It could play a sound here, but we've not yet made a sound ourselves.
+            //It could play a sound here, but we've not yet made a sound ourselves. #copyright
             //GameEnvironment.AssetManager.PlaySound("Sounds/snd_button_select");
         }
     }
