@@ -71,9 +71,7 @@ class Projectile : Item
         }
     }
 
-    protected override void HandleCollisions()
-    {
-    }
+    protected override void HandleCollisions() { }
 
     public override void PlayAnimation(string id, bool isBackWards = false)
     {

@@ -46,7 +46,14 @@ class LevelGrid : GameObjectGrid
             return TextureType.None;
         }
         Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
-        return current.TextureType;
+        if (current != null)
+        {
+            return current.TextureType;
+        }
+        else
+        {
+            return TextureType.None;
+        }
     }
 
     public TileObject GetTileObject(int x, int y)
@@ -63,7 +70,6 @@ class LevelGrid : GameObjectGrid
         return current.TileObject;
     }
 
-    //giving passengers to tiles
     public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile tile;
@@ -124,7 +130,6 @@ class LevelGrid : GameObjectGrid
         }
     }
 
-    //checking for active tiles
     private List<string> ActiveTiles()
     {
         List<string> tiles = new List<string>();

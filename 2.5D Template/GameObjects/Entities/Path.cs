@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-class Path 
+class Path
 {
     public List<Vector2> nodesList { get; set; } //de path bestaat uit een lijst van nodes
     public Path()

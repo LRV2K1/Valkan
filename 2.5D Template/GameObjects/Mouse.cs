@@ -25,16 +25,20 @@ class GameMouse : GameObject
     //select entities
     public bool SelectEntity() 
     {
+        string entity = ClosestEnemy();
+        SwitchIcon(entity);
+
+        return entity != "";
+    }
+
+    private string ClosestEnemy()
+    {
         LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-        Level level = GameWorld as Level;
         Vector2 vpos = levelGrid.GridPosition(mousePos + new Vector2(0, levelGrid.CellHeight / 2));
         Point gridpos = new Point((int)vpos.X + 1, (int)vpos.Y + 1);
-        Selected icon = GameWorld.GetObject("selected") as Selected;
 
-        string entity = "";
+        string closest_enemy = "";
         float closedistance = 100f;
-
-        //check clicked area
         for (int x = gridpos.X - 1; x <= gridpos.X + 1; x++)
         {
             for (int y = gridpos.Y - 1; y <= gridpos.Y + 1; y++)
@@ -62,14 +66,20 @@ class GameMouse : GameObject
                         float distance = (float)Math.Sqrt(xd * xd + yd * yd);
                         if (distance < closedistance)
                         {
-                            entity = enemy.Id;
+                            closest_enemy = enemy.Id;
                             closedistance = distance;
                         }
                     }
                 }
             }
         }
-        //update selected icon
+        return closest_enemy;
+    }
+
+    private void SwitchIcon(string entity)
+    {
+        Selected icon = GameWorld.GetObject("selected") as Selected;
+        Level level = GameWorld as Level;
         if (icon == null)
         {
             if (entity != "")
@@ -99,10 +109,8 @@ class GameMouse : GameObject
                 enemy.Selected = true;
             }
         }
-        return entity != "";
     }
 
-    //removeselected entity
     public void RemoveSelectedEntity()
     {
         Selected icon = GameWorld.GetObject("selected") as Selected;

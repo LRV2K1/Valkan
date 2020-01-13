@@ -35,7 +35,7 @@ class CloseAttack : Skill
         Player player = parent as Player;
         base.Use(timer);
         player.Stamina -= 20;
-        player.AttackAnimation();
+        player.SwitchAnimation("attack", "B");
         MakeProjectile(player.GlobalPosition);
     }
 
