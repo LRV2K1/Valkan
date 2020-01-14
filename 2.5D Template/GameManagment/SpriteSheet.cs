@@ -1,34 +1,35 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 public class SpriteSheet
 {
     protected Texture2D sprite;
-    //protected bool[] collisionMask;
     protected int sheetIndex;
     protected int sheetColumns;
     protected int sheetRows;
     protected bool mirror;
     protected Color color;
     protected Vector2 size;
+    protected Rectangle cut;
 
     public SpriteSheet(string assetname, int sheetIndex = 0)
     {
+        cut = new Rectangle(0,0,0,0);
         size = Vector2.One;
         // retrieve the sprite
-        sprite = GameEnvironment.AssetManager.GetSprite(assetname);
-        color = Color.White;
-        /*
-        // construct the collision mask
-        Color[] colorData = new Color[sprite.Width * sprite.Height];
-        collisionMask = new bool[sprite.Width * sprite.Height];
-        sprite.GetData(colorData);
-        for (int i = 0; i < colorData.Length; ++i)
+        try
         {
-            collisionMask[i] = colorData[i].A != 0;
+            sprite = GameEnvironment.AssetManager.GetSprite(assetname);
         }
-        */
+        catch (ContentLoadException e)
+        {
+            assetname = GameEnvironment.AssetManager.TestSprite;
+            sprite = GameEnvironment.AssetManager.GetSprite(assetname);
+            throw new TestSpriteExeption();
+        }
+        color = Color.White;
 
         this.sheetIndex = sheetIndex;
         sheetColumns = 1;
@@ -54,7 +55,7 @@ public class SpriteSheet
     {
         int columnIndex = sheetIndex % sheetColumns;
         int rowIndex = sheetIndex / sheetColumns % sheetRows;
-        Rectangle spritePart = new Rectangle(columnIndex * Width, rowIndex * Height, Width, Height);
+        Rectangle spritePart = new Rectangle(columnIndex * Width + cut.X, rowIndex * Height + cut.Y, Width + cut.Width - cut.X, Height + cut.Height - cut.Y);
         SpriteEffects spriteEffects = SpriteEffects.None;
         if (mirror)
         {
@@ -62,16 +63,6 @@ public class SpriteSheet
         }
         spriteBatch.Draw(sprite, position, spritePart, color,
             0.0f, origin, size, spriteEffects, 0.0f);
-    }
-
-    public bool IsTranslucent(int x, int y)
-    {
-        int column_index = sheetIndex % sheetColumns;
-        int row_index = sheetIndex / sheetColumns % sheetRows;
-
-
-        //return collisionMask[column_index * Width + x + (row_index * Height + y) * sprite.Width];
-        return false;
     }
 
     public Texture2D Sprite
@@ -130,5 +121,11 @@ public class SpriteSheet
     {
         get { return size; }
         set { size = value; }
+    }
+
+    public Rectangle Cut
+    {
+        get { return cut; }
+        set { cut = value; }
     }
 }

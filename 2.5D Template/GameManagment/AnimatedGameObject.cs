@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System;
 
 public class AnimatedGameObject : SpriteGameObject
 {
     protected Dictionary<string,Animation> animations;
+    string currentid;
 
     public AnimatedGameObject(int layer = 0, string id = "")
         : base("", layer, id)
@@ -20,8 +22,15 @@ public class AnimatedGameObject : SpriteGameObject
 
     public virtual void PlayAnimation(string id, bool backwards = false)
     {
-        if (sprite == animations[id])
+        if (!animations.ContainsKey(id) || sprite == animations[id])
         {
+            Console.WriteLine("Can't load anmination with key: " + id);
+            if (sprite == null)
+            {
+                LoadAnimation(GameEnvironment.AssetManager.TestSprite, "test");
+                PlayAnimation("test");
+                Console.WriteLine("Using test sprite");
+            }
             return;
         }
         Color color = Color.White;
@@ -31,6 +40,7 @@ public class AnimatedGameObject : SpriteGameObject
             color = sprite.Color;
         }
         animations[id].Play(backwards);
+        currentid = id;
         sprite = animations[id];
         sprite.Color = color;
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);        
@@ -43,16 +53,21 @@ public class AnimatedGameObject : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
-        if (sprite == null)
+        if (sprite != null)
         {
-            return;
+            Current.Update(gameTime);
         }
-        Current.Update(gameTime);
+
         base.Update(gameTime);
     }
 
     public Animation Current
     {
         get { return sprite as Animation; }
+    }
+
+    public string CurrentId
+    {
+        get { return currentid; }
     }
 }

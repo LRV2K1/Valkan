@@ -14,11 +14,15 @@ abstract partial class Entity : AnimatedGameObject
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
+    bool remove;
+    string previousdata;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
+        remove = false;
         host = "";
+        previousdata = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
@@ -27,22 +31,65 @@ abstract partial class Entity : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
+        
+        ReceiveData();
         //check if moved
         if (previousPos != position)
         {
+            DoPhysics();
+            if (remove)
+            {
+                return;
+            }
+            SendData();
             NewHost();
             previousPos = position;
-            DoPhysics();
         }
+        previousdata = MultiplayerManager.GetReceivedData();
     }
 
     public override void Reset()
     {
         base.Reset();
+        OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         NewHost();
     }
 
+    private void SendData()
+    {
+        MultiplayerManager.Send("Entity: " + id + " " + position.X + " " + position.Y);
+    }
+    
+    private void ReceiveData()
+    {
+        try
+        { 
+            if (previousdata != MultiplayerManager.GetReceivedData())
+            {
+                previousdata = MultiplayerManager.GetReceivedData();
+                string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                if (variables[0] == "Entity:" && variables[1] == id)
+                {
+                    Console.WriteLine("id is the same: " + id);
+                    position.X = float.Parse(variables[2]);
+                    position.Y = float.Parse(variables[3]);
+                }
+                else if (variables[0] == "World:")
+                {
+
+                }
+            }
+           
+        }
+        catch
+        {
+
+        }
+    }
     private void NewHost()
     {
         //become a passenger of a tile
@@ -68,13 +115,17 @@ abstract partial class Entity : AnimatedGameObject
     public override void RemoveSelf()
     {
         Tile host = GameWorld.GetObject(this.host) as Tile;
-        host.RemovePassenger(id);
+        if (host != null)
+        {
+            host.RemovePassenger(id);
+        }
         (parent as GameObjectList).Remove(id);
+        remove = true;
     }
 
     public override void PlayAnimation(string id, bool isBackWards = false)
     {
-        base.PlayAnimation(id);
+        base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 

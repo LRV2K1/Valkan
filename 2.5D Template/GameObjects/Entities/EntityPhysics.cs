@@ -11,13 +11,24 @@ abstract partial class Entity : AnimatedGameObject
     //physics and collision handeling for entities
     private void DoPhysics()
     {
+        OutsideLevel();
         HandleCollisions();
     }
 
-    private void HandleCollisions()
+    private void OutsideLevel()
     {
         LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
-        Vector2 gridPos = tiles.GridPosition(position);
+        Vector2 loc = tiles.GridPosition(position);
+        Tile currentTile = tiles.Get((int)loc.X, (int)loc.Y) as Tile;
+        if (currentTile == null)
+        {
+            RemoveSelf();
+        }
+    }
+
+    protected virtual void HandleCollisions()
+    {
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
         //check surrounding tiles
         for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {
@@ -97,5 +108,46 @@ abstract partial class Entity : AnimatedGameObject
             return;
         }
         entity.position -= new Vector2(0, depth.Y * push);
+    }
+
+    public List<string> GetSurroundingTiles()
+    {
+        List<string> surroudingtiles = new List<string>();
+
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+
+        for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
+        {
+            for (int y = (int)gridPos.Y - 3; y <= (int)gridPos.Y + 3; y++)
+            {
+                Tile currentTile = tiles.Get(x, y) as Tile;
+
+                if (currentTile != null)
+                {
+                    surroudingtiles.Add(currentTile.Id);
+                }
+            }
+        }
+        return surroudingtiles;
+    }
+
+    public List<string> GetSurroundingEntities()
+    {
+        //includes self
+        List<string> surroundingentities = new List<string>();
+        List<string> surroundingtiles = GetSurroundingTiles();
+
+        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+
+        foreach (string id in surroundingtiles)
+        {
+            Tile tile = GameWorld.GetObject(id) as Tile;
+
+            for (int i = 0; i < tile.Passengers.Count; i++)
+            {
+                surroundingentities.Add(tile.Passengers[i]);
+            }
+        }
+        return surroundingentities;
     }
 }

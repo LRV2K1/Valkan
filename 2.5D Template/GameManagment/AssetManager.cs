@@ -5,15 +5,27 @@ using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
 
+public class TestSpriteExeption: Exception
+{
+    public TestSpriteExeption()
+        : base()
+    {
+        Console.WriteLine("Can't find the test sprite");
+    }
+}
+
 public class AssetManager
 {
     protected ContentManager contentManager;
     protected Dictionary<string, Texture2D> textures;
+    string spr_test;
 
     public AssetManager(ContentManager content)
     {
         contentManager = content;
         textures = new Dictionary<string, Texture2D>();
+
+        spr_test = "Sprites/spr_test_1";
     }
 
     public Texture2D GetSprite(string assetName)
@@ -26,6 +38,7 @@ public class AssetManager
         {
             return textures[assetName];
         }
+
         Texture2D tex = contentManager.Load<Texture2D>(assetName);
         textures.Add(assetName, tex);
         return tex;
@@ -50,5 +63,10 @@ public class AssetManager
     public ContentManager Content
     {
         get { return contentManager; }
+    }
+
+    public string TestSprite
+    {
+        get { return spr_test; }
     }
 }

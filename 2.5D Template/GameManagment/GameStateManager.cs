@@ -22,12 +22,20 @@ public class GameStateManager : IGameLoopObject
     {
         return gameStates[name];
     }
-
     public void SwitchTo(string name)
     {
         if (gameStates.ContainsKey(name))
         {
+            if (currentGameState is PlayingState)
+            {
+                (currentGameState as PlayingState).UnLoadLevel();
+            }
             currentGameState = gameStates[name];
+            if (currentGameState is PlayingState)
+            {
+                (currentGameState as PlayingState).LoadLevel();
+            }
+            Reset();
         }
         else
         {

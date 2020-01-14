@@ -20,45 +20,47 @@ struct SpeedMultiplier
     }
 }
 
-partial class Player : Entity
+enum PlayerType
 {
-    const float speed = 400;
-    protected double direction;
+    Warrior,
+    Bard,
+    Wizzard,
+}
+
+partial class Player : MovingEntity
+{
+    protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
-    protected string name, job;
+    protected string name;
     protected int playerlevel, playerEXP, EXPThreshold;
     public int playerID;
     protected Skill skill1, skill3;
-    protected Block skill2;
+    protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
-    protected string currentAnimation;
-    protected bool animationFinished = false;
-    protected double lastDirection;
     protected bool input;
-    protected Vector2 stillVelocity;
+    protected PlayerType playerType;
+    protected bool inmovible;
 
     protected List<SpeedMultiplier> speedMultipliers;
 
     private static string hash = "_+*/(&!*";
     public static string EncryptedText;
 
+    Vector2 inputDirection;
+
     public Player()
-        : base(30, 20, 2, "player")
+        : base(30, 58, 20, 2, "player")
     {
+        inmovible = false;
+
         name = "Valkan";
-        job = "Light";
         playerID = 1;
         playerlevel = 1;
         playerEXP = 1;
-        maxhealth = 10;
-        maxstamina = 100;
-        health = maxhealth;
-        stamina = maxstamina;
-        staminatimerreset = 1f;
-        addstaminatimerreset = 0.02f;
+
         EXPThreshold = 5;
 
         dead = false;
@@ -66,15 +68,28 @@ partial class Player : Entity
 
         speedMultipliers = new List<SpeedMultiplier>();
 
-        direction = 0;
+        LoadStats();
+        SetStats();
 
-        LoadAnimations();
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-        skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
-        skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
+        LoadPlayerAnimations();
+
+        LoadSkills();
+        SetSkills();
+    }
+
+    protected virtual void LoadStats()
+    {
+        playerType = PlayerType.Warrior;
+        maxhealth = 10;
+        maxstamina = 100;
+        staminatimerreset = 1f;
+        addstaminatimerreset = 0.02f;
+    }
+
+    private void SetStats()
+    {
+        health = maxhealth;
+        stamina = maxstamina;
     }
 
     //setup skills
@@ -115,8 +130,41 @@ partial class Player : Entity
         base.Update(gameTime);
     }
 
-    //move control player
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        base.Draw(gameTime, spriteBatch);
+        skill1.Draw(gameTime, spriteBatch);
+    }
+
     private void ControlMove(InputHelper inputHelper)
+    {
+        inputDirection = Vector2.Zero;
+        if (inmovible)
+        {
+            input = false;
+            return;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.A))
+        {
+            inputDirection.X = -2;
+        }
+        else if (inputHelper.IsKeyDown(Keys.D))
+        {
+            inputDirection.X = 2;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.W))
+        {
+            inputDirection.Y = -1;
+        }
+        else if (inputHelper.IsKeyDown(Keys.S))
+        {
+            inputDirection.Y = 1;
+        }
+    }
+
+    private void Move(GameTime gameTime)
     {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
@@ -124,36 +172,13 @@ partial class Player : Entity
             velocity = Vector2.Zero;
             return;
         }
-        Vector2 direction = Vector2.Zero;
-        if (inputHelper.IsKeyDown(Keys.A))
-        {
-            direction.X = -2;
-        }
-        else if (inputHelper.IsKeyDown(Keys.D))
-        {
-            direction.X = 2;
-        }
-
-        if (inputHelper.IsKeyDown(Keys.W))
-        {
-            direction.Y = -1;
-        }
-        else if (inputHelper.IsKeyDown(Keys.S))
-        {
-            direction.Y = 1;
-        }
-        if (inputHelper.KeyPressed(Keys.Q))
-        {
-            WriteStats();
-            ReadStats();
-        }
 
         //check direction and movement
-        float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        float totalDir = (float)Math.Sqrt(inputDirection.X * inputDirection.X + inputDirection.Y * inputDirection.Y);
         if (totalDir != 0)
         {
             input = true;
-            stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            Vector2 stillVelocity = new Vector2(speed * (inputDirection.X / totalDir), speed * (inputDirection.Y / totalDir));
 
             //change movement if selected
             if (selected)
@@ -171,6 +196,10 @@ partial class Player : Entity
             {
                 velocity = stillVelocity;
             }
+            else
+            {
+                velocity = Vector2.Zero;
+            }
         }
         else
         {
@@ -178,12 +207,11 @@ partial class Player : Entity
             velocity = Vector2.Zero;
         }
 
+        Multipliers(gameTime);
     }
 
-    //move player
-    private void Move(GameTime gameTime)
+    private void Multipliers(GameTime gameTime)
     {
-        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -201,7 +229,6 @@ partial class Player : Entity
         }
     }
 
-    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));
@@ -218,6 +245,21 @@ partial class Player : Entity
         WriteStats();
     }
 
+    public bool InMovible
+    {
+        get { return inmovible; }
+        set
+        {
+            inmovible = value;
+            if (inmovible)
+            {
+                velocity = Vector2.Zero;
+            }
+        }
+    }
+
+
+    //obsolete
     public virtual void WriteStats()                        //Saves the player stats in a text file
     {
         string statpath = "Content/PlayerStats/Stats.txt";
@@ -225,7 +267,7 @@ partial class Player : Entity
         lines = new string[7];
         StreamWriter writer = new StreamWriter(statpath);
         lines[0] = Encrypt(name);
-        lines[1] = Encrypt(job);
+        lines[1] = Encrypt(playerType.ToString());
         lines[2] = Encrypt(playerID.ToString());
         lines[3] = Encrypt(playerlevel.ToString());
         lines[4] = Encrypt(playerEXP.ToString());

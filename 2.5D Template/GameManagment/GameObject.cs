@@ -15,7 +15,7 @@ public abstract class GameObject : IGameLoopObject
         this.id = id;
         if (this.id == "")
         {
-            this.id = GameEnvironment.RandomID;
+            this.id = GameEnvironment.SpecialID;
         }
         this.layer = layer;
         position = Vector2.Zero;
@@ -73,7 +73,6 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
-    //the rootlist of the gameworld
     public virtual GameObjectList RootList
     {
         get

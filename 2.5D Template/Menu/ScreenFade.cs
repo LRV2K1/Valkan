@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System.IO;
 
 public class ScreenFade : SpriteGameObject
@@ -14,82 +15,67 @@ public class ScreenFade : SpriteGameObject
     protected bool fadeToBlack;
     protected int r, g, b, a;
     protected int speed;
+    protected string nextScene;
 
-    public ScreenFade(string assetname = "Sprites/Menu/spr_button", int layer = 105, string id = "screenFade") :
+    public ScreenFade(string assetname, int layer = 105, string id = "screenFade") :
         base(assetname, layer, id)
     {
-
+        this.Visible = false;
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        //When the screenfade is initiated, the opacity will increase from 0 to 255, this speed can be altered with the speed variable.
         if (fadeToBlack)
         {
             if (sprite.Color.A < 255)
             {
-                r += speed;
-                g += speed;
-                b += speed;
                 a += speed;
-                sprite.Color = new Color(r, g, b, a);
+                sprite.Color = new Color(0,0,0, a);
                 return;
             }
-            fadeToBlack = false;
+            else
+            {
+                //If the opacity 255 is met, the screenfade will make sure the next state is loaded and it will fade back to 0 opacity at the same time.
+                fadeToBlack = false;
+                fadeToWhite = true;
+                if(nextScene == "exit")
+                {
+                    GameEnvironment.QuitGame = true;
+                    return;
+                }
+                GameEnvironment.GameStateManager.SwitchTo(nextScene);
+            }
         }
+        //The screenfade goes from opacity 255 to 0
         else if (fadeToWhite)
         {
             if (sprite.Color.A > 0)
             {
-                r -= speed;
-                g -= speed;
-                b -= speed;
                 a -= speed;
-                sprite.Color = new Color(r, g, b, a);
+                sprite.Color = new Color(0,0,0, a);
                 return;
             }
-            this.Visible = false;
-            fadeToWhite = false;
+            else
+            { 
+                //When 0 is met, the screenfade will be invisible again.
+                this.Visible = false;
+                fadeToWhite = false;
+            }
         }
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-    {
-        //If fade Black
-        //Draw previous scene
-        //Draw black fade
-
-        //If fade White
-        //Draw current scene
-        //Draw white fade
-        //When finished, currentscene is currentscene -> gamestatemanager
-
-        base.Draw(gameTime, spriteBatch);
-    }
-
-    public void FadeWhite()
-    {
-        this.Sprite.Color = Color.Black;
-        this.Sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
-        this.Visible = true;
-        fadeToWhite = true;
-        speed = 2;
-        r = 255;
-        g = 255;
-        b = 255;
-        a = 255;
-        sprite.Color = new Color(r, g, b, a);
-    }
-    public void FadeBlack()
+    //This method starts a buffer between states, you can alter which state it goes to and the speed of the fade.
+    public void TransitionToScene(string sceneName = "titleScreen", int newSpeed = 2)
     {
         this.Visible = true;
-        fadeToBlack = true;
-        speed = 2;
-        r = 0;
-        g = 0;
-        b = 0;
+        speed = newSpeed;
         a = 0;
-        sprite.Color = new Color(r, g, b, a);
+        sprite.Color = new Color(0,0,0,a);
+        this.sprite.Size = new Vector2(GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
+        fadeToBlack = true;
+        nextScene = sceneName;
     }
 
     public bool FadeToWhite

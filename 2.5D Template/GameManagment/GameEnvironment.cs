@@ -16,29 +16,40 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected static ScreenFade screenFade;
+    protected static MultiplayerManager multiplayerManager;
+    protected SpriteGameObject spritemouse;
 
-    protected static int randomid;
+    protected static bool quitGame;
+
+    protected static int specialid;
+    protected static char charid;
 
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
 
+        multiplayerManager = new MultiplayerManager();
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-
-        randomid = 0;
+        
+        specialid = 0;
+        charid = (char)(0);
     }
 
-    public static string RandomID
+    public static string SpecialID
     {
         get
         {
-            string s = randomid.ToString();
-            randomid++;
+            string s = specialid.ToString();
+            specialid++;
+            //string ss = charid.ToString();
+            //charid = (char)((int)charid + 1);
+            //Console.WriteLine(ss);
             return s;
         }
     }
@@ -67,6 +78,17 @@ public class GameEnvironment : Game
     public static GameSettingsManager GameSettingsManager
     {
         get { return gameSettingsManager; }
+    }
+
+    public static ScreenFade ScreenFade
+    {
+        get { return screenFade; }
+    }
+
+    public static bool QuitGame
+    {
+        get { return quitGame; }
+        set { quitGame = value; }
     }
 
     public bool FullScreen
@@ -121,11 +143,22 @@ public class GameEnvironment : Game
     {
         DrawingHelper.Initialize(this.GraphicsDevice);
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        spritemouse = new SpriteGameObject("Sprites/Menu/spr_mouse", 200);
+        if(screenFade == null)
+        {
+            screenFade = new ScreenFade("Sprites/Menu/spr_button");
+            
+        }
     }
 
     protected void HandleInput()
     {
         inputHelper.Update();
+        spritemouse.Position = inputHelper.MousePosition;
+        if (ScreenFade.FadeToBlack || ScreenFade.FadeToWhite)
+        {
+            return;
+        }
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             Exit();
@@ -136,12 +169,18 @@ public class GameEnvironment : Game
         }
 
         gameStateManager.HandleInput(inputHelper);
+        multiplayerManager.HandleInput(inputHelper);
     }
 
     protected override void Update(GameTime gameTime)
     {
         HandleInput();
         gameStateManager.Update(gameTime);
+        ScreenFade.Update(gameTime);
+        if(quitGame)
+        {
+            Exit();
+        }
     }
 
     protected override void Draw(GameTime gameTime)
@@ -149,6 +188,8 @@ public class GameEnvironment : Game
         GraphicsDevice.Clear(Color.Black);
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
         gameStateManager.Draw(gameTime, spriteBatch);
+        spritemouse.Draw(gameTime, spriteBatch);
+        screenFade.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }
 }
