@@ -30,8 +30,7 @@ partial class Enemy : MovingEntity
     List<Node> closedNodesList = new List<Node>();
 
     int start = 1;
-    //generic enemy
-    //no function yet
+ 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
     {

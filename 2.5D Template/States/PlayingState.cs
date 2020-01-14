@@ -29,6 +29,11 @@ class PlayingState : IGameLoopObject
         level1 = true;
     }
 
+    public void UnLoadLevel()
+    {
+        level = null;
+    }
+
     //handles the playingstate
     //plays the current level
     public virtual void HandleInput(InputHelper inputHelper)
@@ -39,17 +44,25 @@ class PlayingState : IGameLoopObject
         }
         if (inputHelper.KeyPressed(Keys.L))
         {
-            if (level1)
+            try
             {
-                level = null;
-                level = new Level("Level_2");
+                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
+                {
+                    case "offline":
+                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
+                        break;
+                    case "online":
+                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
+                        break;
+                    default:
+                        break;
+                }
             }
-            else
+            catch
             {
-                level = null;
-                level = new Level("Level_1");
+                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
             }
-            level1 = !level1;
+            return;
         }
 
         if (inputHelper.KeyPressed(Keys.P))
@@ -88,8 +101,8 @@ class PlayingState : IGameLoopObject
     public virtual void Reset()
     {
         firstTime = true;
-        level = null;
+        //UnLoadLevel();
         paused = false;
-        LoadLevel();
+        //LoadLevel();
     }
 }

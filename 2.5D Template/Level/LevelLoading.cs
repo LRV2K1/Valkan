@@ -154,13 +154,13 @@ partial class Level : GameObjectLibrary
                     player = new Wizzard();
                     break;
                 default:
-                    player = new Player();
+                    player = new Warrior();
                     break;
             }
         }
         catch
         {
-            player = new Player();
+            player = new Warrior();
         }
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);

@@ -26,7 +26,15 @@ public class GameStateManager : IGameLoopObject
     {
         if (gameStates.ContainsKey(name))
         {
+            if (currentGameState is PlayingState)
+            {
+                (currentGameState as PlayingState).UnLoadLevel();
+            }
             currentGameState = gameStates[name];
+            if (currentGameState is PlayingState)
+            {
+                (currentGameState as PlayingState).LoadLevel();
+            }
             Reset();
         }
         else

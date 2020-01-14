@@ -51,6 +51,11 @@ abstract partial class Entity : AnimatedGameObject
     public override void Reset()
     {
         base.Reset();
+        OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         NewHost();
     }
 

@@ -18,7 +18,24 @@ partial class Level : GameObjectLibrary
         catch
         {
             Console.WriteLine("level not found for paht: " + path);
-            GameEnvironment.GameStateManager.SwitchTo("modeSelectionState");
+            try
+            {
+                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
+                {
+                    case "offline":
+                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
+                        break;
+                    case "online":
+                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch
+            {
+                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
+            }
             return;
         }  
 
