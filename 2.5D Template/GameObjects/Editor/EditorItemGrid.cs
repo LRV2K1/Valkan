@@ -72,7 +72,7 @@ class EditorItemGrid : GameObjectGrid
         {
             return TileType.Wall;
         }
-        EditorTile current = GameWorld.GetObject(Objects[x, y]) as EditorTile;
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
         return current.TileType;
     }
 

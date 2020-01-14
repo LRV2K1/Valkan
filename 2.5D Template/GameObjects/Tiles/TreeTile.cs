@@ -18,7 +18,7 @@ class TreeTile : Tile
     {
         base.InitializeTile();
 
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
         origin = new Vector2(Width / 2, sprite.Height - levelGrid.CellHeight / 2);
     }

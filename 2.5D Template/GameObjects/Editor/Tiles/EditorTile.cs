@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-class EditorTile : SpriteGameObject
+class test : SpriteGameObject
 {
 
     protected TileType type;
@@ -14,7 +14,7 @@ class EditorTile : SpriteGameObject
     protected TileObject tileobject;
     protected Point grid;
 
-    public EditorTile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.None, int layer = 0, string id = "")
+    public test(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.None, int layer = 0, string id = "")
         : base(assetname, layer, id, 0)
     {
         tileobject = TileObject.Tile;
@@ -42,7 +42,7 @@ class EditorTile : SpriteGameObject
         {
             for (int y = grid.Y - 1; y <= grid.Y + 1; y++)
             {
-                EditorTile tile = levelGrid.Get(x, y) as EditorTile;
+                Tile tile = levelGrid.Get(x, y) as Tile;
                 if (tile != null)
                 {
                     tile.InitializeTile();

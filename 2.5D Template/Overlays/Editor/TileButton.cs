@@ -40,13 +40,4 @@ class TileButton : Button
             mouse.Tile = true;
         }
     }
-    /*
-    public override bool Visible
-    {
-        get { return visible; }
-        set { visible = value;
-            active = value;
-        }
-    }
-    */
 }

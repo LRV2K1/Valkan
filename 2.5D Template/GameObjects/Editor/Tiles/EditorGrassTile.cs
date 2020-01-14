@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-class EditorGrassTile : EditorTile
+class EditorGrassTile : Tile
 {
     public EditorGrassTile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.Grass, int layer = 0, string id = "")
         : base(grid, assetname, tp, tt, layer, id)

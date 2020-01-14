@@ -52,15 +52,4 @@ class EntityButton : Button
     {
         set { itemtype = value; }
     }
-
-    /*
-public override bool Visible
-{
-    get { return visible; }
-    set { visible = value;
-        active = value;
-    }
-}
-*/
-
 }

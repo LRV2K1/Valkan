@@ -63,19 +63,19 @@ partial class LevelEditer : GameObjectLibrary
             {
                 try
                 {
-                    EditorTile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
+                    Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
                     level.Add(t, x, y);
                 }
                 catch
                 {
-                    EditorTile t = LoadTile(x, y, tiletypechar['a']);
+                    Tile t = LoadTile(x, y, tiletypechar['a']);
                     level.Add(t, x, y);
                 }
             }
         }
     }
 
-    private EditorTile LoadTile(int x, int y, string tiletype)
+    private Tile LoadTile(int x, int y, string tiletype)
     {
         string[] type = tiletype.Split(',');
         string asset = type[0];
@@ -85,7 +85,7 @@ partial class LevelEditer : GameObjectLibrary
         switch (type[3])
         {
             case "Tile":
-                return new EditorTile(new Point(x, y), asset, tp, tt);
+                return new Tile(new Point(x, y), asset, tp, tt);
             case "WallTile":
                 return new EditorWallTile(new Point(x, y), asset, tp, tt);
             case "TreeTile":
@@ -94,7 +94,7 @@ partial class LevelEditer : GameObjectLibrary
                 return new EditorGrassTile(new Point(x, y), asset, tp, tt);
         }
 
-        return new EditorTile(new Point(x, y));
+        return new Tile(new Point(x, y));
     }
 
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)

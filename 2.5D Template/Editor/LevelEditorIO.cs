@@ -24,7 +24,7 @@ partial class LevelEditer : GameObjectLibrary
             for (int x = 0; x < level.Columns; x++)
             {
                 char tilechar = ' ';
-                EditorTile tile = GetObject(level.Objects[x, y]) as EditorTile;
+                Tile tile = GetObject(level.Objects[x, y]) as Tile;
                 string tiletype = tile.Sprite.Sprite.ToString() + "," + tile.TileType.ToString() + "," + tile.TextureType.ToString() + "," + tile.TileObject.ToString();
 
                 //check for new tiles

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-class EditorTreeTile : EditorTile
+class EditorTreeTile : Tile
 {
     public EditorTreeTile(Point grid, string assetname = "", TileType tp = TileType.Wall, TextureType tt = TextureType.None, int layer = 0, string id = "")
     : base(grid, assetname, tp, tt, layer, id)

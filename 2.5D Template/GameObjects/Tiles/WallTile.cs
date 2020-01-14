@@ -19,7 +19,7 @@ class WallTile : Tile
     {
         base.InitializeTile();
 
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
         origin = new Vector2(Width / 2, sprite.Height - levelGrid.CellHeight / 2 - 1);
 
@@ -42,7 +42,7 @@ class WallTile : Tile
     //set boundingbox
     private void SetBoundingBox()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         int i = sprite.SheetIndex;
         if ((i%3 == 0 && i < 16) || i == 23 || i == 27 || i == 29 || i == 30)
         {
@@ -69,7 +69,7 @@ class WallTile : Tile
     //autotiling alogrithm
     public override int CalculateSurroundingStraightTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         int i = 0;
 
         if (levelGrid.GetTileObject(grid.X, grid.Y - 1) != TileObject.WallTile || levelGrid.GetTextureType(grid.X, grid.Y - 1) != this.texturetype)
@@ -95,7 +95,7 @@ class WallTile : Tile
     //autotiling alogrithm
     public override int CalculateSurroundingSideTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         int i = 0;
 
         if (levelGrid.GetTileType(grid.X + 1, grid.Y - 1) != TileType.Wall || levelGrid.GetTextureType(grid.X, grid.Y - 1) != this.texturetype)

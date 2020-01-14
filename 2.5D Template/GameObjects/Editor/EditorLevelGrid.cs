@@ -21,7 +21,7 @@ class EditorLevelGrid : GameObjectGrid
             for (int y = 0; y < Rows; y++)
             {
                 //Tile tile = new GrassTile(new Point(x, y), "Sprites/Tiles/spr_cave_sheet_0@4x8", TileType.Floor, TextureType.Grass);
-                EditorTile tile = new EditorGrassTile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x8", TileType.Floor, TextureType.Grass);
+                Tile tile = new EditorGrassTile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x8", TileType.Floor, TextureType.Grass);
                 Add(tile, x, y);
             }
         }
@@ -40,7 +40,7 @@ class EditorLevelGrid : GameObjectGrid
         //check selected tile
         Vector2 vpos = GridPosition(mousepos + new Vector2(0, cellHeight / 2));
         Point pos = new Point((int)vpos.X, (int)vpos.Y);
-        EditorTile tile = Get(pos.X, pos.Y) as EditorTile;
+        Tile tile = Get(pos.X, pos.Y) as Tile;
         if (tile != null)
         {
             //change tile
@@ -52,11 +52,11 @@ class EditorLevelGrid : GameObjectGrid
             {
                 //replace tile
                 Remove(tile.Id, pos.X, pos.Y);
-                EditorTile newtile;
+                Tile newtile;
                 switch (to)
                 {
                     case TileObject.Tile:
-                        newtile = new EditorTile(pos, asset, tp, tt);
+                        newtile = new Tile(pos, asset, tp, tt);
                         break;
                     case TileObject.WallTile:
                         newtile = new EditorWallTile(pos, asset, tp, tt);
@@ -68,7 +68,7 @@ class EditorLevelGrid : GameObjectGrid
                         newtile = new EditorGrassTile(pos, asset, tp, tt);
                         break;
                     default:
-                        newtile = new EditorTile(pos);
+                        newtile = new Tile(pos);
                         break;
                 }
                 Add(newtile, pos.X, pos.Y);
@@ -87,7 +87,7 @@ class EditorLevelGrid : GameObjectGrid
         {
             return TileType.Wall;
         }
-        EditorTile current = GameWorld.GetObject(Objects[x, y]) as EditorTile;
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
         return current.TileType;
     }
 
@@ -101,7 +101,7 @@ class EditorLevelGrid : GameObjectGrid
         {
             return TextureType.None;
         }
-        EditorTile current = GameWorld.GetObject(Objects[x, y]) as EditorTile;
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
         return current.TextureType;
     }
 
@@ -115,7 +115,7 @@ class EditorLevelGrid : GameObjectGrid
         {
             return TileObject.Tile;
         }
-        EditorTile current = GameWorld.GetObject(Objects[x, y]) as EditorTile;
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
         return current.TileObject;
     }
 
@@ -124,7 +124,7 @@ class EditorLevelGrid : GameObjectGrid
         List<string> tiles = ActiveTiles();
         for (int i = 0; i < tiles.Count; i++)
         {
-            EditorTile tile = GameWorld.GetObject(tiles[i]) as EditorTile;
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
             tile.HandleInput(inputHelper);
         }
     }
@@ -134,7 +134,7 @@ class EditorLevelGrid : GameObjectGrid
         List<string> tiles = ActiveTiles();
         for (int i = 0; i < tiles.Count; i++)
         {
-            EditorTile tile = GameWorld.GetObject(tiles[i]) as EditorTile;
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
             tile.Update(gameTime);
         }
     }
@@ -144,7 +144,7 @@ class EditorLevelGrid : GameObjectGrid
         List<string> tiles = ActiveTiles();
         for (int i = 0; i < tiles.Count; i++)
         {
-            EditorTile tile = GameWorld.GetObject(tiles[i]) as EditorTile;
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
             tile.Draw(gameTime, spriteBatch);
         }
     }
