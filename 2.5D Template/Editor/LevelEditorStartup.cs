@@ -9,13 +9,13 @@ partial class LevelEditer : GameObjectLibrary
 {
     public void NewLevel(int width, int height)
     {
-        EditorLevelGrid levelGrid = new EditorLevelGrid(width, height, 0, "levelgrid");
+        LevelGrid levelGrid = new LevelGrid(width, height, 0, "levelgrid");
         RootList.Add(levelGrid);
         levelGrid.CellWidth = 108;
         levelGrid.CellHeight = 54;
         levelGrid.SetupGrid();
 
-        EditorItemGrid itemGrid = new EditorItemGrid(width, height, 1, "itemgrid");
+        ItemGrid itemGrid = new ItemGrid(width, height, 1, "itemgrid");
         RootList.Add(itemGrid);
         itemGrid.CellWidth = 108;
         itemGrid.CellHeight = 54;
@@ -39,7 +39,7 @@ partial class LevelEditer : GameObjectLibrary
         overlay.AddStatus("Enemies", new EntityOverlay(this, "Content/Editor/Entities/Enemy.txt"));
         overlay.AddStatus("Spawn", new EntityOverlay(this, "Content/Editor/Entities/Spawn.txt"));
 
-        EditorLevelGrid levelGrid = GetObject("levelgrid") as EditorLevelGrid;
+        LevelGrid levelGrid = GetObject("levelgrid") as LevelGrid;
         Camera camera = new Camera();
         camera.SetupCamera = levelGrid.AnchorPosition(5, 5) - GameEnvironment.Screen.ToVector2() / 2;
         RootList.Add(camera);
@@ -52,7 +52,7 @@ partial class LevelEditer : GameObjectLibrary
 
     private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
-        EditorLevelGrid level = new EditorLevelGrid(width, textlines.Count, 0, "levelgrid");
+        LevelGrid level = new LevelGrid(width, textlines.Count, 0, "levelgrid");
         RootList.Add(level);
         level.CellWidth = 108;
         level.CellHeight = 54;
@@ -87,11 +87,11 @@ partial class LevelEditer : GameObjectLibrary
             case "Tile":
                 return new Tile(new Point(x, y), asset, tp, tt);
             case "WallTile":
-                return new EditorWallTile(new Point(x, y), asset, tp, tt);
+                return new WallTile(new Point(x, y), asset, tp, tt);
             case "TreeTile":
-                return new EditorTreeTile(new Point(x, y), asset, tp, tt);
+                return new TreeTile(new Point(x, y), asset, tp, tt);
             case "GrassTile":
-                return new EditorGrassTile(new Point(x, y), asset, tp, tt);
+                return new GrassTile(new Point(x, y), asset, tp, tt);
         }
 
         return new Tile(new Point(x, y));
@@ -99,7 +99,7 @@ partial class LevelEditer : GameObjectLibrary
 
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
-        EditorItemGrid level = new EditorItemGrid(width, textlines.Count, 0, "itemgrid");
+        ItemGrid level = new ItemGrid(width, textlines.Count, 0, "itemgrid");
         RootList.Add(level);
         level.CellWidth = 108;
         level.CellHeight = 54;

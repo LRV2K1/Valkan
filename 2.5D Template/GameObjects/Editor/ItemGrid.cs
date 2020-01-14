@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-class EditorItemGrid : GameObjectGrid
+class ItemGrid : GameObjectGrid
 {
-    public  EditorItemGrid(int collumns, int rows, int layer = 0, string id = "")
+    public  ItemGrid(int collumns, int rows, int layer = 0, string id = "")
         : base(collumns, rows, layer, id)
     {
 

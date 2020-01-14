@@ -62,11 +62,13 @@ class TitleScreenState : GameObjectLibrary
         else if (editorButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("editorState");
+            GameEnvironment.GameSettingsManager.SetValue("editor", "true");
         }
     }
 
     public override void Reset()
     {
         firstTime = true;
+        GameEnvironment.GameSettingsManager.SetValue("editor", "false");
     }
 }

@@ -15,8 +15,8 @@ class EditorState : IGameLoopObject
 
     public EditorState()
     {
-        //LoadLevel("Content/Levels/Level_1.txt");
-        NewLevel(200, 200);
+        LoadLevel("Content/Levels/Level_1.txt");
+        //NewLevel(200, 200);
     }
 
     public void NewLevel(int x, int y)

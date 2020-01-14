@@ -13,12 +13,67 @@ class LevelGrid : GameObjectGrid
     {
     }
 
+    public void SetupGrid()
+    {
+        for (int x = 0; x < Columns; x++)
+        {
+            for (int y = 0; y < Rows; y++)
+            {
+                //Tile tile = new GrassTile(new Point(x, y), "Sprites/Tiles/spr_cave_sheet_0@4x8", TileType.Floor, TextureType.Grass);
+                Tile tile = new GrassTile(new Point(x, y), "Sprites/Tiles/spr_grass_sheet_0@4x8", TileType.Floor, TextureType.Grass);
+                Add(tile, x, y);
+            }
+        }
+    }
+
     public override void Add(GameObject obj, int x, int y)
     {
         GameWorld.Add(obj);
         grid[x, y] = obj.Id;
         obj.Parent = this;
         obj.Position = AnchorPosition(x,y);
+    }
+
+    public void SwitchTile(Vector2 mousepos, TileType tp, TextureType tt, TileObject to, string asset)
+    {
+        //check selected tile
+        Vector2 vpos = GridPosition(mousepos + new Vector2(0, cellHeight / 2));
+        Point pos = new Point((int)vpos.X, (int)vpos.Y);
+        Tile tile = Get(pos.X, pos.Y) as Tile;
+        if (tile != null)
+        {
+            //change tile
+            if (tile.TileObject == to)
+            {
+                tile.ChangeTile(tp, tt, asset);
+            }
+            else
+            {
+                //replace tile
+                Remove(tile.Id, pos.X, pos.Y);
+                Tile newtile;
+                switch (to)
+                {
+                    case TileObject.Tile:
+                        newtile = new Tile(pos, asset, tp, tt);
+                        break;
+                    case TileObject.WallTile:
+                        newtile = new WallTile(pos, asset, tp, tt);
+                        break;
+                    case TileObject.TreeTile:
+                        newtile = new TreeTile(pos, asset, tp, tt);
+                        break;
+                    case TileObject.GrassTile:
+                        newtile = new GrassTile(pos, asset, tp, tt);
+                        break;
+                    default:
+                        newtile = new Tile(pos);
+                        break;
+                }
+                Add(newtile, pos.X, pos.Y);
+                newtile.ChangeTile(tp, tt, asset);
+            }
+        }
     }
 
     public TileType GetTileType(int x, int y)
@@ -123,9 +178,12 @@ class LevelGrid : GameObjectGrid
             Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
             tile.Draw(gameTime, spriteBatch);
 
-            for (int j = 0; j < tile.Passengers.Count; j++)
+            if (GameEnvironment.GameSettingsManager.GetValue("editor") != "true")
             {
-                GameWorld.GetObject(tile.Passengers[j]).Draw(gameTime, spriteBatch);
+                for (int j = 0; j < tile.Passengers.Count; j++)
+                {
+                    GameWorld.GetObject(tile.Passengers[j]).Draw(gameTime, spriteBatch);
+                }
             }
         }
     }

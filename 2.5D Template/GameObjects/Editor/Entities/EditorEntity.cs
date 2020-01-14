@@ -78,7 +78,7 @@ class EditorEntity : SpriteGameObject
         {
             return;
         }
-        EditorItemGrid itemGrid = GameWorld.GetObject("itemgrid") as EditorItemGrid;
+        ItemGrid itemGrid = GameWorld.GetObject("itemgrid") as ItemGrid;
 
         origin = new Vector2(Width / 2, sprite.Height - boundingy/2);
     }

@@ -65,7 +65,7 @@ partial class Tile : SpriteGameObject
         type = tp;
 
         //update surrounding tiles
-        EditorLevelGrid levelGrid = GameWorld.GetObject("levelgrid") as EditorLevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         for (int x = grid.X - 1; x <= grid.X + 1; x++)
         {
             for (int y = grid.Y - 1; y <= grid.Y + 1; y++)

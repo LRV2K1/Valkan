@@ -67,14 +67,14 @@ class EditorMouse : GameObject
     private void SwitchTile()
     {
         //give information to the levelgrid to switch tile
-        EditorLevelGrid level = GameWorld.GetObject("levelgrid") as EditorLevelGrid;
+        LevelGrid level = GameWorld.GetObject("levelgrid") as LevelGrid;
         level.SwitchTile(mousePos, tiletype, texturetype, tileobject, asset);
     }
 
     private void SwitchItem()
     {
         //give information to the item grid to switch item
-        EditorItemGrid itemGrid = GameWorld.GetObject("itemgrid") as EditorItemGrid;
+        ItemGrid itemGrid = GameWorld.GetObject("itemgrid") as ItemGrid;
         itemGrid.SwitchItem(mousePos, entitytype, asset, entityBoundingBox);
     }
 
