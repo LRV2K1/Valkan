@@ -14,7 +14,6 @@ class PlayingState : IGameLoopObject
     protected ContentManager content;
     protected Level level;
     protected bool paused;
-    protected bool level1;
     protected bool firstTime = true;
 
     public PlayingState(ContentManager content)
@@ -25,8 +24,8 @@ class PlayingState : IGameLoopObject
 
     public void LoadLevel()
     {
-        level = new Level("Level_1");
-        level1 = true;
+        string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
+        level = new Level(levelnum);
     }
 
     public void UnLoadLevel()

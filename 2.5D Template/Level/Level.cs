@@ -11,7 +11,7 @@ public partial class Level : GameObjectLibrary
     public Level(string name)
         : base()
     {
-        LoadLevel("Content/Levels/" + name + ".txt");
+        LoadLevel("Content/Levels/Level_" + name + ".txt");
         Reset();
     }
 }
