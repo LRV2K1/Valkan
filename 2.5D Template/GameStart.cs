@@ -38,6 +38,7 @@ public class GameStart : GameEnvironment
         gameStateManager.AddGameState("hostSelectionState", new HostSelectionState());
         gameStateManager.AddGameState("portSelectionState", new PortSelectionState());
         gameStateManager.AddGameState("clientSelectionState", new ClientSelectionState());
+        gameStateManager.AddGameState("selectEditState", new SelectEditState());
         gameStateManager.AddGameState("editorState", new EditorState());
         gameStateManager.SwitchTo("titleScreen");
 

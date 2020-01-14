@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 
-class PlayingState : IGameLoopObject
+class PlayingState : State
 {
     protected ContentManager content;
     protected Level level;
@@ -22,20 +22,20 @@ class PlayingState : IGameLoopObject
         paused = false;
     }
 
-    public void LoadLevel()
+    public override void Load()
     {
         string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
         level = new Level(levelnum);
     }
 
-    public void UnLoadLevel()
+    public override void UnLoad()
     {
         level = null;
     }
 
     //handles the playingstate
     //plays the current level
-    public virtual void HandleInput(InputHelper inputHelper)
+    public override void HandleInput(InputHelper inputHelper)
     {
         if (level == null)
         {
@@ -75,11 +75,11 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         if (level == null)
         {
-            LoadLevel();
+            Load();
             return;
         }
         if (!paused)
@@ -88,7 +88,7 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         if (level == null)
         {
@@ -97,7 +97,7 @@ class PlayingState : IGameLoopObject
         level.Draw(gameTime, spriteBatch);
     }
 
-    public virtual void Reset()
+    public override void Reset()
     {
         firstTime = true;
         //UnLoadLevel();

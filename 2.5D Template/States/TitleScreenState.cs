@@ -50,6 +50,7 @@ class TitleScreenState : GameObjectLibrary
         if (startButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
+            GameEnvironment.GameSettingsManager.SetValue("editor", "false");
         }
         else if (settingsButton.Pressed)
         { 
@@ -61,7 +62,7 @@ class TitleScreenState : GameObjectLibrary
         }
         else if (editorButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("editorState");
+            GameEnvironment.ScreenFade.TransitionToScene("selectEditState");
             GameEnvironment.GameSettingsManager.SetValue("editor", "true");
         }
     }

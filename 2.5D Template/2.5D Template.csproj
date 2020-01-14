@@ -132,7 +132,9 @@
     <Compile Include="States\PlayingState.cs" />
     <Compile Include="States\ModeSelectionState.cs" />
     <Compile Include="States\OfflineSelectionState.cs" />
+    <Compile Include="States\SelectEditState.cs" />
     <Compile Include="States\SettingsState.cs" />
+    <Compile Include="States\State.cs" />
     <Compile Include="States\TitleScreenState.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ public partial class LevelEditer : GameObjectLibrary
         }
         else
         {
-            Load(path);
+            Load("Content/Levels/Level_" + path + ".txt");
         }
         LoadOverlay();
 
