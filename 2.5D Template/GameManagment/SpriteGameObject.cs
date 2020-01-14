@@ -30,8 +30,8 @@ public class SpriteGameObject : GameObject
         if(GameWorld != null)
         {
             //get camera
-            Camera camera1 = GameWorld.GetObject("camera") as Camera;
-            camera = camera1;
+            camera = GameWorld.GetObject("camera") as Camera;
+
         }
         //check layer
         if (this.layer > 90)

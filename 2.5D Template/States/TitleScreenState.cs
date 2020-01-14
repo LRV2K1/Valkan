@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 //This is the title screen, here you can select start, settings or quit.
 class TitleScreenState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, exitButton;
+    protected Button startButton, settingsButton, exitButton, editorButton;
     protected bool firstTime = true;
     public TitleScreenState()
     {
@@ -22,6 +22,9 @@ class TitleScreenState : GameObjectLibrary
         startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
         startButton.Sprite.Size = new Vector2(1,1.5f);
         RootList.Add(startButton);
+        editorButton = new Button("Sprites/Menu/Play_Button", 101);
+        editorButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 3);
+        RootList.Add(editorButton);
         settingsButton = new Button("Sprites/Menu/Settings_Button", 101);
         settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(settingsButton);
@@ -55,6 +58,10 @@ class TitleScreenState : GameObjectLibrary
         else if (exitButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("exit");
+        }
+        else if (editorButton.Pressed)
+        {
+            GameEnvironment.ScreenFade.TransitionToScene("editorState");
         }
     }
 

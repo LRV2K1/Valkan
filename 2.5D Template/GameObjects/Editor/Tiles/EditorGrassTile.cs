@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 
-class GrassTile : Tile
+class EditorGrassTile : EditorTile
 {
-    public GrassTile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.Grass, int layer = 0, string id = "")
+    public EditorGrassTile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.Grass, int layer = 0, string id = "")
         : base(grid, assetname, tp, tt, layer, id)
     {
         tileobject = TileObject.GrassTile;
@@ -17,7 +17,8 @@ class GrassTile : Tile
     //autotiling algorithm
     public override int CalculateSurroundingStraightTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+
+        EditorLevelGrid levelGrid = GameWorld.GetObject("levelgrid") as EditorLevelGrid;
         //regt
         int r = 0;
         if (levelGrid.GetTextureType(grid.X, grid.Y - 1) == TextureType.Water)
@@ -39,10 +40,10 @@ class GrassTile : Tile
         return r;
     }
 
-    //autotiling alogrithm
+    //autotiling algorithm
     public override int CalculateSurroundingSideTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        EditorLevelGrid levelGrid = GameWorld.GetObject("levelgrid") as EditorLevelGrid;
         //schuin
         int s = 0;
         if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) == TextureType.Water)
@@ -64,3 +65,4 @@ class GrassTile : Tile
         return s;
     }
 }
+

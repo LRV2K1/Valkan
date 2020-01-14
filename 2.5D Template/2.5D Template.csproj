@@ -41,6 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Editor\LevelEditer.cs" />
+    <Compile Include="Editor\LevelEditorIO.cs" />
+    <Compile Include="Editor\LevelEditorLoop.cs" />
+    <Compile Include="Editor\LevelEditorStartup.cs" />
     <Compile Include="GameManagment\AnimatedGameObject.cs" />
     <Compile Include="GameManagment\Animation.cs" />
     <Compile Include="GameManagment\AssetManager.cs" />
@@ -51,6 +55,15 @@
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
     <Compile Include="GameManagment\MultiplayerManager.cs" />
+    <Compile Include="GameObjects\Editor\EditorCamera.cs" />
+    <Compile Include="GameObjects\Editor\EditorItemGrid.cs" />
+    <Compile Include="GameObjects\Editor\EditorLevelGrid.cs" />
+    <Compile Include="GameObjects\Editor\EditorMouse.cs" />
+    <Compile Include="GameObjects\Editor\Entities\EditorEntity.cs" />
+    <Compile Include="GameObjects\Editor\Tiles\EditorGrassTile.cs" />
+    <Compile Include="GameObjects\Editor\Tiles\EditorTile.cs" />
+    <Compile Include="GameObjects\Editor\Tiles\EditorTreeTile.cs" />
+    <Compile Include="GameObjects\Editor\Tiles\EditorWallTile.cs" />
     <Compile Include="GameObjects\Entities\Enemy.cs" />
     <Compile Include="GameObjects\Entities\EnemyAnimation.cs" />
     <Compile Include="GameObjects\Entities\EnemyData.cs" />
@@ -85,6 +98,13 @@
     <Compile Include="Menu\MapSelectionPopUp.cs" />
     <Compile Include="Menu\PopUp.cs" />
     <Compile Include="Menu\ScreenFade.cs" />
+    <Compile Include="Menu\TextButton.cs" />
+    <Compile Include="Overlays\Editor\EntityButton.cs" />
+    <Compile Include="Overlays\Editor\EntityOverlay.cs" />
+    <Compile Include="Overlays\Editor\OverlayButton.cs" />
+    <Compile Include="Overlays\Editor\OverlayStatus.cs" />
+    <Compile Include="Overlays\Editor\TileButton.cs" />
+    <Compile Include="Overlays\Editor\TileOverlay.cs" />
     <Compile Include="Overlays\Hud.cs" />
     <Compile Include="Overlays\Overlay.cs" />
     <Compile Include="Overlays\Objects\Tube.cs" />
@@ -110,6 +130,7 @@
     <Compile Include="GameManagment\SpriteSheet.cs" />
     <Compile Include="GameManagment\TextGameObject.cs" />
     <Compile Include="States\ClientSelectionState.cs" />
+    <Compile Include="States\EditorState.cs" />
     <Compile Include="States\PortSelectionState.cs" />
     <Compile Include="States\IntroState.cs" />
     <Compile Include="States\HostClientSelectionState.cs" />

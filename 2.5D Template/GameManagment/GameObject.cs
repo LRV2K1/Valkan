@@ -38,7 +38,7 @@ public abstract class GameObject : IGameLoopObject
 
     public virtual void Reset()
     {
-        visible = true;
+        //visible = true;
     }
 
     public virtual void RemoveSelf()
@@ -88,6 +88,11 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
+    public LevelEditer LevelEditor
+    {
+        get { return GameWorld as LevelEditer; }
+    }
+
     //the gameworld is a library
     public GameObjectLibrary GameWorld
     {
@@ -119,7 +124,7 @@ public abstract class GameObject : IGameLoopObject
         get { return id; }
     }
 
-    public bool Visible
+    public virtual bool Visible
     {
         get { return visible; }
         set { visible = value; }

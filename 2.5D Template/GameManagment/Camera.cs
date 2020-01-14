@@ -11,20 +11,58 @@ using Microsoft.Xna.Framework.Input;
 class Camera : GameObject
 {
     Vector2 cameraPosition;
+    Vector2 cameraSpeed;
     int width, height;
     bool first;
     string objid;
     const int edge = 300;
+    bool follow;
 
-    public Camera(string folowObjid, int layer = 0, string id = "")
+    public Camera(string folowObjid = "", int layer = 0, string id = "camera")
         : base(layer, id)
     {
+        follow = !(folowObjid == "");
         first = false;
         objid = folowObjid;
     }
 
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (inputHelper.IsKeyDown(Keys.Left))
+        {
+            cameraSpeed.X = -800;
+        }
+        else if (inputHelper.IsKeyDown(Keys.Right))
+        {
+            cameraSpeed.X = 800;
+        }
+        else
+        {
+            cameraSpeed.X = 0;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.Up))
+        {
+            cameraSpeed.Y = -800;
+        }
+        else if (inputHelper.IsKeyDown(Keys.Down))
+        {
+            cameraSpeed.Y = 800;
+        }
+        else
+        {
+            cameraSpeed.Y = 0;
+        }
+    }
+
     public override void Update(GameTime gameTime)
     {
+        if (!follow)
+        {
+            cameraPosition += cameraSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+
         GameObject folowObj = GameWorld.GetObject(objid);
         if (folowObj == null)
         {
@@ -111,5 +149,10 @@ class Camera : GameObject
     public Rectangle Screen
     {
         get { return new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2); }
+    }
+
+    public Vector2 SetupCamera
+    {
+        set { cameraPosition = value; }
     }
 }

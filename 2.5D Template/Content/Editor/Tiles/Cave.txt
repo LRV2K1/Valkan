@@ -1,0 +1,5 @@
+Sprites/Tiles/spr_cave_sheet_0@4x8,Floor,Grass,GrassTile
+Sprites/Tiles/spr_cave_track_0@4x4,Floor,Mine,Tile
+Sprites/Tiles/spr_water_1,Wall,Water,Tile
+Sprites/Tiles/spr_cave_wall_sheet_0@4x8,Wall,Grass,WallTile
+Sprites/Tiles/Trees/spr_stone_,Wall,Grass,TreeTile

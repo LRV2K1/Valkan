@@ -30,7 +30,7 @@ enum TileObject
     TreeTile
 }
 
-class Tile : SpriteGameObject
+partial class Tile : SpriteGameObject
 {
 
     protected TileType type;
@@ -55,6 +55,7 @@ class Tile : SpriteGameObject
         base.Reset();
         InitializeTile();
     }
+
 
     //add passenger
     public void AddPassenger(GameObject obj)
