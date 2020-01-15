@@ -42,7 +42,7 @@ partial class Level : GameObjectLibrary
 
     private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
-        LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
+        LevelGrid level = new LevelGrid(width, textlines.Count, 0, "levelgrid");
         RootList.Add(level);
         level.CellWidth = 108;
         level.CellHeight = 54;
@@ -154,13 +154,13 @@ partial class Level : GameObjectLibrary
                     player = new Wizzard();
                     break;
                 default:
-                    player = new Player();
+                    player = new Warrior();
                     break;
             }
         }
         catch
         {
-            player = new Player();
+            player = new Warrior();
         }
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);

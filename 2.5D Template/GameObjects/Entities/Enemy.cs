@@ -30,8 +30,7 @@ partial class Enemy : MovingEntity
     List<Node> closedNodesList = new List<Node>();
 
     int start = 1;
-    //generic enemy
-    //no function yet
+ 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
     {
@@ -52,6 +51,16 @@ partial class Enemy : MovingEntity
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+
+        if (die || dead)
+        {
+            if (Current.AnimationEnded)
+            {
+                dead = true;
+            }
+            return;
+        }
+
         if (start == 1) // de start positie moet 1 keer worden geintialized
         {
             Startup();
@@ -63,14 +72,6 @@ partial class Enemy : MovingEntity
             DesCalculate(player.GridPos);
         }
 
-        if (die || dead)
-        {
-            if (Current.AnimationEnded)
-            {
-                dead = true;
-            }
-            return;
-        }
         ChangeAnimation();
     }
 
@@ -98,7 +99,7 @@ partial class Enemy : MovingEntity
     {
         Player player = GameWorld.GetObject("player") as Player;
         destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
-        LevelGrid grid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
         hcost_playerX = (int)player.GridPos.X;
         hcost_playerY = (int)player.GridPos.Y;
         for (int y = 0; y < 40; y++)
@@ -207,7 +208,7 @@ partial class Enemy : MovingEntity
 
         hcost_playerX = (int)playerpos.X;
         hcost_playerY = (int)playerpos.Y;
-        LevelGrid grid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
         for (int y = 0; y < 20; y++)
         {
             for (int x = 0; x < 25; x++)
@@ -298,7 +299,7 @@ partial class Enemy : MovingEntity
     void Move(Vector2 pos)
     {
         Enemy enemy = this;
-        LevelGrid grid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
         Vector2 movpos = grid.AnchorPosition((int)pos.X, (int)pos.Y);
         this.Position = movpos; //de ai beweegt naar de gewezen positie
     }

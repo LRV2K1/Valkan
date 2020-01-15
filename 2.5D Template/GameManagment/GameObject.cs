@@ -15,7 +15,7 @@ public abstract class GameObject : IGameLoopObject
         this.id = id;
         if (this.id == "")
         {
-            this.id = GameEnvironment.RandomID;
+            this.id = GameEnvironment.SpecialID;
         }
         this.layer = layer;
         position = Vector2.Zero;
@@ -38,7 +38,7 @@ public abstract class GameObject : IGameLoopObject
 
     public virtual void Reset()
     {
-        visible = true;
+        //visible = true;
     }
 
     public virtual void RemoveSelf()
@@ -88,6 +88,11 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
+    public LevelEditer LevelEditor
+    {
+        get { return GameWorld as LevelEditer; }
+    }
+
     //the gameworld is a library
     public GameObjectLibrary GameWorld
     {
@@ -119,7 +124,7 @@ public abstract class GameObject : IGameLoopObject
         get { return id; }
     }
 
-    public bool Visible
+    public virtual bool Visible
     {
         get { return visible; }
         set { visible = value; }

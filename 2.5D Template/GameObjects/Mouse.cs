@@ -33,7 +33,7 @@ class GameMouse : GameObject
 
     private string ClosestEnemy()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         Vector2 vpos = levelGrid.GridPosition(mousePos + new Vector2(0, levelGrid.CellHeight / 2));
         Point gridpos = new Point((int)vpos.X + 1, (int)vpos.Y + 1);
 

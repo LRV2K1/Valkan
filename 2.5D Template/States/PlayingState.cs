@@ -9,12 +9,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 
-class PlayingState : IGameLoopObject
+class PlayingState : State
 {
     protected ContentManager content;
     protected Level level;
     protected bool paused;
-    protected bool level1;
     protected bool firstTime = true;
 
     public PlayingState(ContentManager content)
@@ -23,15 +22,20 @@ class PlayingState : IGameLoopObject
         paused = false;
     }
 
-    public void LoadLevel()
+    public override void Load()
     {
-        level = new Level("Level_1");
-        level1 = true;
+        string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
+        level = new Level(levelnum);
+    }
+
+    public override void UnLoad()
+    {
+        level = null;
     }
 
     //handles the playingstate
     //plays the current level
-    public virtual void HandleInput(InputHelper inputHelper)
+    public override void HandleInput(InputHelper inputHelper)
     {
         if (level == null)
         {
@@ -39,17 +43,25 @@ class PlayingState : IGameLoopObject
         }
         if (inputHelper.KeyPressed(Keys.L))
         {
-            if (level1)
+            try
             {
-                level = null;
-                level = new Level("Level_2");
+                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
+                {
+                    case "offline":
+                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
+                        break;
+                    case "online":
+                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
+                        break;
+                    default:
+                        break;
+                }
             }
-            else
+            catch
             {
-                level = null;
-                level = new Level("Level_1");
+                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
             }
-            level1 = !level1;
+            return;
         }
 
         if (inputHelper.KeyPressed(Keys.P))
@@ -63,11 +75,11 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         if (level == null)
         {
-            LoadLevel();
+            Load();
             return;
         }
         if (!paused)
@@ -76,7 +88,7 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         if (level == null)
         {
@@ -85,11 +97,11 @@ class PlayingState : IGameLoopObject
         level.Draw(gameTime, spriteBatch);
     }
 
-    public virtual void Reset()
+    public override void Reset()
     {
         firstTime = true;
-        level = null;
+        //UnLoadLevel();
         paused = false;
-        LoadLevel();
+        //LoadLevel();
     }
 }

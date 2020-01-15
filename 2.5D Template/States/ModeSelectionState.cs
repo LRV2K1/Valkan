@@ -41,10 +41,12 @@ class ModeSelectionState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (offlineButton.Pressed)
         {
+            GameEnvironment.GameSettingsManager.SetValue("connection", "offline");
             GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState", 5);
         }
         else if (onlineButton.Pressed)
         {
+            GameEnvironment.GameSettingsManager.SetValue("connection", "online");
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else if (returnButton.Pressed)

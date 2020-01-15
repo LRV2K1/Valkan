@@ -1,0 +1,6 @@
+Sprites/Items/spr_trashcan,0,None
+Sprites/Items/spr_stone_0,20,SpriteItem,Movible
+Sprites/Items/spr_stone_1,20,SpriteItem,Movible
+Sprites/Items/spr_stone_2,20,SpriteItem,Movible
+Sprites/Objects/spr_cart_0,40,SpriteItem,InMovible
+Sprites/Objects/spr_cart_1,40,SpriteItem,InMovible
