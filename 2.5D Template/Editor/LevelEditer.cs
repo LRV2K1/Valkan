@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public partial class LevelEditer : GameObjectLibrary
+public partial class LevelEditor : GameObjectLibrary
 {
-    public LevelEditer(int x, int y, bool load = false, string path = "")
+    public LevelEditor(int x, int y, bool load = false, string path = "")
         : base()
     {
         //check for load or new

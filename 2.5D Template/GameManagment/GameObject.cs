@@ -88,9 +88,9 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
-    public LevelEditer LevelEditor
+    public LevelEditor LevelEditor
     {
-        get { return GameWorld as LevelEditer; }
+        get { return GameWorld as LevelEditor; }
     }
 
     //the gameworld is a library

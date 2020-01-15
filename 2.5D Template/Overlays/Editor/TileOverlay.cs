@@ -30,20 +30,28 @@ class TileOverlay : GameObjectList
         int x = 20;
         while (line != "" && line != null)
         {
-            MakeButton(x, line);
-            x += 130;
+            Button button = MakeButton(x, line);
+            if (button == null)
+            {
+                continue;
+            }
+            if (button.Height > 230)
+            {
+                button.Sprite.Size = new Vector2(0.5f, 0.5f);
+            }
+            x += (int)(button.Width * button.Sprite.Size.X + 10);
             line = streamReader.ReadLine();
         }
         streamReader.Close();
     }
 
-    private void MakeButton(int x, string line)
+    private Button MakeButton(int x, string line)
     {
         string[] type = line.Split(',');
 
         if (type.Length != 4)
         {
-            return;
+            return null;
         }
 
         string asset = type[0];
@@ -52,8 +60,10 @@ class TileOverlay : GameObjectList
         TileObject to = (TileObject)Enum.Parse(typeof(TileObject), type[3]);
 
         TileButton button = new TileButton(asset, tp, tt, to);
-        button.Position = new Vector2(x, 10);
+        button.Position = new Vector2(x, 230);
+        button.Origin += new Vector2(0, button.Height);
         Add(button);
+        return button;
     }
 
     public override bool Visible

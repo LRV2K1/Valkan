@@ -11,50 +11,53 @@ using Microsoft.Xna.Framework.Input;
 class EditorState : State
 {
     //updates the level editor
-    protected LevelEditer LevelEditer;
+    protected LevelEditor LevelEditor;
+    protected TextButton save;
 
     public EditorState()
     {
+        save = new TextButton("Fonts/Hud", "save", 102);
+        save.Color = Color.Red;
+        save.Position = new Vector2(30, 20);
     }
 
     public override void Load()
     {
         string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
-        LevelEditer = new LevelEditer(200, 200, true, levelnum);
+        LevelEditor = new LevelEditor(200, 200, true, levelnum);
     }
 
     public override void UnLoad()
     {
-        LevelEditer = null;
-    }
-
-    public void NewLevel(int x, int y)
-    {
-        LevelEditer = new LevelEditer(x, y);
-    }
-
-    public void LoadLevel(string path)
-    {
-        LevelEditer = new LevelEditer(0, 0, true, path);
+        LevelEditor = null;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        LevelEditer.HandleInput(inputHelper);
+        save.HandleInput(inputHelper);
+        if (save.Pressed)
+        {
+            string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
+            LevelEditor.Save(levelnum);
+            return;
+        }
+        LevelEditor.HandleInput(inputHelper);
     }
 
     public override void Update (GameTime gameTime)
     {
-        LevelEditer.Update(gameTime);
+        save.Update(gameTime);
+        LevelEditor.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        LevelEditer.Draw(gameTime, spriteBatch);
+        LevelEditor.Draw(gameTime, spriteBatch);
+        save.Draw(gameTime, spriteBatch);
     }
 
     public override void Reset()
     {
-        LevelEditer.Reset();
+        LevelEditor.Reset();
     }
 }
