@@ -44,6 +44,7 @@ class HostClientSelectionState : GameObjectLibrary
         }
         else if (joinGameButton.Pressed)
         {
+            MultiplayerManager.Connect(1000);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         else if (returnButton.Pressed)

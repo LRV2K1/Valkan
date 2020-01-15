@@ -169,7 +169,6 @@ public class GameEnvironment : Game
         }
 
         gameStateManager.HandleInput(inputHelper);
-        multiplayerManager.HandleInput(inputHelper);
     }
 
     protected override void Update(GameTime gameTime)

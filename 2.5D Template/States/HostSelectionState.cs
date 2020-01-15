@@ -45,15 +45,22 @@ class HostSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (startButton.Pressed && MultiplayerManager.party != null) //start button
         {
-            MultiplayerManager.SetupHost();
-            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content)); //create playingstate with a variable world
-            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+            if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
+            {
+                GameEnvironment.GameSettingsManager.SetValue("level", "10");
+                GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+            }
+            else
+            {
+                Console.WriteLine("Someone is not ready yet");
+            }
         }
-        else if (changeButton.Pressed)
+        else if (changeButton.Pressed && MultiplayerManager.party == null)
         {
-            
+            MultiplayerManager.Connect(9999);
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), false, true);
         }
         else if (warriorButton.Pressed)
         {
@@ -69,6 +76,10 @@ class HostSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
+            if (MultiplayerManager.party != null)
+            {
+                MultiplayerManager.party.Disconnect();
+            }
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }

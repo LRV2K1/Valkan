@@ -36,9 +36,11 @@ class PortSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (selectButton.Pressed)
+        if (selectButton.Pressed && MultiplayerManager.party == null)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
+            MultiplayerManager.lobby.Disconnect();
+            MultiplayerManager.Connect(9999);
+            MultiplayerManager.party.Send("Join", 9999); //send to party that we joined
         }
         else if (selectButton2.Pressed)
         {
@@ -46,6 +48,10 @@ class PortSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
+            if (MultiplayerManager.lobby != null)
+            {
+                MultiplayerManager.lobby.Disconnect();
+            }
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
