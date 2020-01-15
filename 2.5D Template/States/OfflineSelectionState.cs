@@ -62,6 +62,7 @@ class OfflineSelectionState : GameObjectLibrary
         if (startButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("playingState");
+            GameEnvironment.GameSettingsManager.SetValue("playingState", "true");
         }
         else if (settingsButton.Pressed)
         {
@@ -88,6 +89,7 @@ class OfflineSelectionState : GameObjectLibrary
     public override void Reset()
     {
         firstTime = true;
+        GameEnvironment.GameSettingsManager.SetValue("playingState", "false");
     }
 
 }
