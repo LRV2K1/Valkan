@@ -89,6 +89,7 @@
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />
     <Compile Include="Menu\Button.cs" />
+    <Compile Include="Menu\InGameMenu.cs" />
     <Compile Include="Menu\MapSelectionPopUp.cs" />
     <Compile Include="Menu\PopUp.cs" />
     <Compile Include="Menu\ScreenFade.cs" />

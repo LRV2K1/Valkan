@@ -159,10 +159,6 @@ public class GameEnvironment : Game
         {
             return;
         }
-        if (inputHelper.KeyPressed(Keys.Escape))
-        {
-            Exit();
-        }
         if (inputHelper.KeyPressed(Keys.F5))
         {
             FullScreen = !FullScreen;

@@ -36,7 +36,7 @@ partial class Level : GameObjectLibrary
         RootList.Add(overlayManager);
 
         overlayManager.AddOverlay("hud", new Hud(this));
-
+        overlayManager.AddOverlay("menu", new InGameMenu(this));
         overlayManager.SwitchTo("hud");
     }
 
