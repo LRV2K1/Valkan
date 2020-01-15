@@ -17,8 +17,7 @@ class GrassTile : Tile
     //autotiling algorithm
     public override int CalculateSurroundingStraightTiles()
     {
-
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //regt
         int r = 0;
         if (levelGrid.GetTextureType(grid.X, grid.Y - 1) == TextureType.Water)
@@ -43,7 +42,7 @@ class GrassTile : Tile
     //autotiling alogrithm
     public override int CalculateSurroundingSideTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //schuin
         int s = 0;
         if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) == TextureType.Water)

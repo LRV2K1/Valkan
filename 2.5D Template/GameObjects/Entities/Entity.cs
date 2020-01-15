@@ -56,6 +56,11 @@ abstract partial class Entity : AnimatedGameObject
     public override void Reset()
     {
         base.Reset();
+        OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         NewHost();
     }
 
@@ -93,7 +98,7 @@ abstract partial class Entity : AnimatedGameObject
     private void NewHost()
     {
         //become a passenger of a tile
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check if on new tile
         if (levelGrid.DrawGridPosition(position) != gridPos)
         {
@@ -108,7 +113,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public virtual void MovePositionOnGrid(int x, int y)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System;
 
 public class AnimatedGameObject : SpriteGameObject
 {
@@ -21,8 +22,15 @@ public class AnimatedGameObject : SpriteGameObject
 
     public virtual void PlayAnimation(string id, bool backwards = false)
     {
-        if (sprite == animations[id])
+        if (!animations.ContainsKey(id) || sprite == animations[id])
         {
+            Console.WriteLine("Can't load anmination with key: " + id);
+            if (sprite == null)
+            {
+                LoadAnimation(GameEnvironment.AssetManager.TestSprite, "test");
+                PlayAnimation("test");
+                Console.WriteLine("Using test sprite");
+            }
             return;
         }
         Color color = Color.White;

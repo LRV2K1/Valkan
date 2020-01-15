@@ -30,7 +30,7 @@ enum TileObject
     TreeTile
 }
 
-class Tile : SpriteGameObject
+partial class Tile : SpriteGameObject
 {
 
     protected TileType type;
@@ -54,6 +54,29 @@ class Tile : SpriteGameObject
     {
         base.Reset();
         InitializeTile();
+    }
+
+    //change tile
+    public virtual void ChangeTile(TileType tp, TextureType tt, string assetName = "")
+    {
+        sprite = null;
+        sprite = new SpriteSheet(assetName);
+        texturetype = tt;
+        type = tp;
+
+        //update surrounding tiles
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        for (int x = grid.X - 1; x <= grid.X + 1; x++)
+        {
+            for (int y = grid.Y - 1; y <= grid.Y + 1; y++)
+            {
+                Tile tile = levelGrid.Get(x, y) as Tile;
+                if (tile != null)
+                {
+                    tile.InitializeTile();
+                }
+            }
+        }
     }
 
     //add passenger
@@ -137,13 +160,14 @@ class Tile : SpriteGameObject
             return;
         }
 
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
-
         origin = new Vector2(Width / 2, sprite.Height / 2);
-
-        if (boundingbox == Rectangle.Empty && TileType == TileType.Wall)
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        if (levelGrid != null)
         {
-            boundingbox = new Rectangle((int)(GlobalPosition.X - levelGrid.CellWidth/2), (int)(GlobalPosition.Y - levelGrid.CellHeight / 2), levelGrid.CellWidth, levelGrid.CellHeight);
+            if (boundingbox == Rectangle.Empty && TileType == TileType.Wall)
+            {
+                boundingbox = new Rectangle((int)(GlobalPosition.X - levelGrid.CellWidth / 2), (int)(GlobalPosition.Y - levelGrid.CellHeight / 2), levelGrid.CellWidth, levelGrid.CellHeight);
+            }
         }
 
         SetSprite();
@@ -168,7 +192,7 @@ class Tile : SpriteGameObject
     //autotiling algorithm
     public virtual int CalculateSurroundingStraightTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //regt
         int r = 0;
         if (levelGrid.GetTextureType(grid.X, grid.Y - 1) == texturetype)
@@ -193,7 +217,7 @@ class Tile : SpriteGameObject
     //autotiling alogrithm
     public virtual int CalculateSurroundingSideTiles()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //schuin
         int s = 0;
         if (levelGrid.GetTextureType(grid.X + 1, grid.Y - 1) == texturetype)

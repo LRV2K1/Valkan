@@ -80,9 +80,9 @@ public class GameObjectList : GameObject
     public override void Reset()
     {
         base.Reset();
-        foreach (string id in children)
+        for (int i = 0; i < children.Count; i++)
         {
-            GameWorld.GetObject(id).Reset();
+            GameWorld.GetObject(children[i]).Reset();
         }
     }
 }

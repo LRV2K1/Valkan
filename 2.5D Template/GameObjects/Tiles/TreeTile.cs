@@ -18,8 +18,17 @@ class TreeTile : Tile
     {
         base.InitializeTile();
 
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
         origin = new Vector2(Width / 2, sprite.Height - levelGrid.CellHeight / 2);
+    }
+
+    public override void ChangeTile(TileType tp, TextureType tt, string assetName = "")
+    {
+        base.ChangeTile(tp, tt, assetName);
+        //set random tree sprite
+        sprite = null;
+        sprite = new SpriteSheet(assetName + GameEnvironment.Random.Next(0, 5));
+        InitializeTile();
     }
 }

@@ -1,0 +1,1 @@
+Sprites/Player/spr_idle_1,30,Player

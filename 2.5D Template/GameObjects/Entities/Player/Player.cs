@@ -27,10 +27,9 @@ enum PlayerType
     Wizzard,
 }
 
-partial class Player : Entity
+partial class Player : MovingEntity
 {
-    const float speed = 400;
-    protected double direction;
+    protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
     protected int maxhealth, maxstamina;
@@ -41,10 +40,7 @@ partial class Player : Entity
     protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
-    protected string currentAnimation;
-    protected double lastDirection;
     protected bool input;
-    protected int offset;
     protected PlayerType playerType;
     protected bool inmovible;
 
@@ -53,40 +49,47 @@ partial class Player : Entity
     private static string hash = "_+*/(&!*";
     public static string EncryptedText;
 
+    Vector2 inputDirection;
+
     public Player()
-        : base(30, 20, 2, "player")
+        : base(30, 58, 20, 2, "player")
     {
         inmovible = false;
-
-        playerType = PlayerType.Warrior;
 
         name = "Valkan";
         playerID = 1;
         playerlevel = 1;
         playerEXP = 1;
 
-        maxhealth = 10;
-        maxstamina = 100;
-        health = maxhealth;
-        stamina = maxstamina;
-        staminatimerreset = 1f;
-        addstaminatimerreset = 0.02f;
-
         EXPThreshold = 5;
-
-        offset = 58;
 
         dead = false;
         die = false;
 
         speedMultipliers = new List<SpeedMultiplier>();
 
-        direction = 0;
-        lastDirection = 1;
+        LoadStats();
+        SetStats();
 
-        LoadAnimations();
+        LoadPlayerAnimations();
 
         LoadSkills();
+        SetSkills();
+    }
+
+    protected virtual void LoadStats()
+    {
+        playerType = PlayerType.Warrior;
+        maxhealth = 10;
+        maxstamina = 100;
+        staminatimerreset = 1f;
+        addstaminatimerreset = 0.02f;
+    }
+
+    private void SetStats()
+    {
+        health = maxhealth;
+        stamina = maxstamina;
     }
 
     //setup skills
@@ -133,51 +136,49 @@ partial class Player : Entity
         skill1.Draw(gameTime, spriteBatch);
     }
 
-    //move control player
     private void ControlMove(InputHelper inputHelper)
     {
+        inputDirection = Vector2.Zero;
         if (inmovible)
         {
             input = false;
             return;
         }
 
+        if (inputHelper.IsKeyDown(Keys.A))
+        {
+            inputDirection.X = -2;
+        }
+        else if (inputHelper.IsKeyDown(Keys.D))
+        {
+            inputDirection.X = 2;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.W))
+        {
+            inputDirection.Y = -1;
+        }
+        else if (inputHelper.IsKeyDown(Keys.S))
+        {
+            inputDirection.Y = 1;
+        }
+    }
+
+    private void Move(GameTime gameTime)
+    {
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         if (!(overlay.CurrentOverlay is Hud))
         {
             velocity = Vector2.Zero;
             return;
         }
-        Vector2 direction = Vector2.Zero;
-        if (inputHelper.IsKeyDown(Keys.A))
-        {
-            direction.X = -2;
-        }
-        else if (inputHelper.IsKeyDown(Keys.D))
-        {
-            direction.X = 2;
-        }
-
-        if (inputHelper.IsKeyDown(Keys.W))
-        {
-            direction.Y = -1;
-        }
-        else if (inputHelper.IsKeyDown(Keys.S))
-        {
-            direction.Y = 1;
-        }
-        if (inputHelper.KeyPressed(Keys.Q))
-        {
-            WriteStats();
-            ReadStats();
-        }
 
         //check direction and movement
-        float totalDir = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        float totalDir = (float)Math.Sqrt(inputDirection.X * inputDirection.X + inputDirection.Y * inputDirection.Y);
         if (totalDir != 0)
         {
             input = true;
-            Vector2 stillVelocity = new Vector2(speed * (direction.X / totalDir), speed * (direction.Y / totalDir));
+            Vector2 stillVelocity = new Vector2(speed * (inputDirection.X / totalDir), speed * (inputDirection.Y / totalDir));
 
             //change movement if selected
             if (selected)
@@ -206,12 +207,11 @@ partial class Player : Entity
             velocity = Vector2.Zero;
         }
 
+        Multipliers(gameTime);
     }
 
-    //move player
-    private void Move(GameTime gameTime)
+    private void Multipliers(GameTime gameTime)
     {
-        //check speed multipliers
         for (int i = speedMultipliers.Count - 1; i >= 0; i--)
         {
             SpeedMultiplier s = speedMultipliers[i];
@@ -229,7 +229,6 @@ partial class Player : Entity
         }
     }
 
-    //add speed multiplier
     public void AddSpeedMultiplier(float time, float multiplier)
     {
         speedMultipliers.Add(new SpeedMultiplier(multiplier, time));
@@ -246,6 +245,21 @@ partial class Player : Entity
         WriteStats();
     }
 
+    public bool InMovible
+    {
+        get { return inmovible; }
+        set
+        {
+            inmovible = value;
+            if (inmovible)
+            {
+                velocity = Vector2.Zero;
+            }
+        }
+    }
+
+
+    //obsolete
     public virtual void WriteStats()                        //Saves the player stats in a text file
     {
         string statpath = "Content/PlayerStats/Stats.txt";
@@ -311,18 +325,6 @@ partial class Player : Entity
                 ICryptoTransform tr = trip.CreateDecryptor();
                 byte[] results = tr.TransformFinalBlock(file, 0, file.Length);
                 return UTF8Encoding.UTF8.GetString(results);
-            }
-        }
-    }
-
-    public bool InMovible
-    {
-        get { return inmovible; }
-        set { 
-            inmovible = value;
-            if (inmovible)
-            {
-                velocity = Vector2.Zero;
             }
         }
     }

@@ -22,7 +22,8 @@ public class GameEnvironment : Game
 
     protected static bool quitGame;
 
-    protected static int randomid;
+    protected static int specialid;
+    protected static char charid;
 
     public GameEnvironment()
     {
@@ -36,15 +37,19 @@ public class GameEnvironment : Game
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
         
-        randomid = 0;
+        specialid = 0;
+        charid = (char)(0);
     }
 
-    public static string RandomID
+    public static string SpecialID
     {
         get
         {
-            string s = randomid.ToString();
-            randomid++;
+            string s = specialid.ToString();
+            specialid++;
+            //string ss = charid.ToString();
+            //charid = (char)((int)charid + 1);
+            //Console.WriteLine(ss);
             return s;
         }
     }

@@ -17,7 +17,7 @@ abstract partial class Entity : AnimatedGameObject
 
     private void OutsideLevel()
     {
-        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
         Vector2 loc = tiles.GridPosition(position);
         Tile currentTile = tiles.Get((int)loc.X, (int)loc.Y) as Tile;
         if (currentTile == null)
@@ -28,7 +28,7 @@ abstract partial class Entity : AnimatedGameObject
 
     protected virtual void HandleCollisions()
     {
-        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check surrounding tiles
         for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {
@@ -114,7 +114,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         List<string> surroudingtiles = new List<string>();
 
-        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
 
         for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
         {
@@ -137,7 +137,7 @@ abstract partial class Entity : AnimatedGameObject
         List<string> surroundingentities = new List<string>();
         List<string> surroundingtiles = GetSurroundingTiles();
 
-        LevelGrid tiles = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
 
         foreach (string id in surroundingtiles)
         {

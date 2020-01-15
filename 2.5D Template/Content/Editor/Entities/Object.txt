@@ -1,0 +1,10 @@
+Sprites/Items/spr_trashcan,0,None
+Sprites/Objects/spr_anvil,40,SpriteItem,InMovible
+Sprites/Objects/spr_axe,40,SpriteItem,InMovible
+Sprites/Objects/spr_treestump,40,SpriteItem,InMovible
+Sprites/Objects/spr_grave_0,35,SpriteItem,InMovible
+Sprites/Objects/spr_grave_1,35,SpriteItem,InMovible
+Sprites/Objects/spr_grave_2,35,SpriteItem,InMovible
+Sprites/Objects/spr_grave_3,35,SpriteItem,InMovible
+Sprites/Objects/spr_sign_0,10,SpriteItem,InMovible
+Sprites/Objects/spr_sign_1,10,SpriteItem,InMovible
