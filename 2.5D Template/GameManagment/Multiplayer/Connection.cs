@@ -16,6 +16,7 @@ public partial class Connection
 
     public Connection(int port)
     {
+        this.port = port;
         client = new UdpClient(port);
         ip = new IPEndPoint(IPAddress.Any, port);
     }

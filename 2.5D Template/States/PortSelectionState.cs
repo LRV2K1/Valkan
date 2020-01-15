@@ -41,6 +41,7 @@ class PortSelectionState : GameObjectLibrary
             MultiplayerManager.lobby.Disconnect();
             MultiplayerManager.Connect(9999);
             MultiplayerManager.party.Send("Join", 9999); //send to party that we joined
+            Console.WriteLine(Connection.MyIP().ToString());
         }
         else if (selectButton2.Pressed)
         {

@@ -57,10 +57,8 @@ class HostSelectionState : GameObjectLibrary
                 Console.WriteLine("Someone is not ready yet");
             }
         }
-        else if (changeButton.Pressed && MultiplayerManager.party == null)
+        else if (changeButton.Pressed)
         {
-            MultiplayerManager.Connect(9999);
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), false, true);
         }
         else if (warriorButton.Pressed)
         {
