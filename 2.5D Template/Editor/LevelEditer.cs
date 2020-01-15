@@ -11,6 +11,7 @@ public partial class LevelEditer : GameObjectLibrary
         : base()
     {
         //check for load or new
+        //test
         if (!load)
         {
             NewLevel(x, y);
