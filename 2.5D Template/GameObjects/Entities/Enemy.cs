@@ -125,6 +125,7 @@ partial class Enemy : MovingEntity
     {
         Enemy enemy = this;
         count++;
+        float distance = Vector2.Distance(destinationQueue[0], this.GridPos);
         if (destinationQueue.Count() >= 1) //als er een distination  in de lijst staat zal de ai naar daar gaan
         {
             if (destinationQueue[0] == this.GridPos && pathFound) //de ai heeft de player gevonden door de path te gebruiken
@@ -133,7 +134,6 @@ partial class Enemy : MovingEntity
                 destinationQueue.RemoveAt(destinationQueue.Count() - 1); //de laatste destination wordt verwijderd
                 currentState = AiState.SLEEP;
                 pathFound = false;
-
             }
 
             else if (destinationQueue[0] == this.GridPos && !pathFound)  //de ai heeft de player gevonden maar zonder de path te gebruiken, dus de player kwam naar de ai

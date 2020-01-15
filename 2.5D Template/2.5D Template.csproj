@@ -66,6 +66,8 @@
     <Compile Include="GameObjects\LevelGrid.cs" />
     <Compile Include="GameObjects\Mouse.cs" />
     <Compile Include="GameObjects\Entities\ParticleEffect.cs" />
+    <Compile Include="GameObjects\Node.cs" />
+    <Compile Include="GameObjects\Path.cs" />
     <Compile Include="GameObjects\Skills\AreaHeal.cs" />
     <Compile Include="GameObjects\Skills\Block.cs" />
     <Compile Include="GameObjects\Skills\BlockHold.cs" />
