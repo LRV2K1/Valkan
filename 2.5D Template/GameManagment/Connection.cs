@@ -3,59 +3,32 @@ using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.IO;
 
 //this class has the key methods in it like Send(), Receive(), Disconnect(), etc.
 public partial class Connection
 {
-    const int port = 15020;
-    UdpClient client = new UdpClient(port);
-    IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
-    IAsyncResult ar_ = null;
-    public List<IPAddress> playerlist = new List<IPAddress>();
+    protected int port;
+    public UdpClient client;
+    protected IPEndPoint ip;
+    protected IAsyncResult ar_ = null;
+    public string data = "";
 
-    public string data = "Action: ID x y";
-    public string somedata = "";
-
-    public Connection()
+    public Connection(int port)
     {
-        ar_ = client.BeginReceive(Receive, new object());
-        Console.WriteLine("Started listening");
+        client = new UdpClient(port);
+        ip = new IPEndPoint(IPAddress.Any, port);
     }
 
-    public void Send(string message) //convert string to bytes to broadcast it
+    public string GetReceivedData()
+    {
+        return data;
+    }
+    public void Send(string message, int port) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
         client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port)); //broadcast to specific port
-        Console.WriteLine("\nSent->\n{0}", message);
-    }
-
-    private void Receive(IAsyncResult ar)
-    {
-        try
-        {
-            byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
-
-            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
-            {
-                string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                Console.WriteLine("\nReceived from {1}->\n{0}", message, ip.Address.ToString());
-                HandleReceivedData(message);
-            }
-            ar_ = client.BeginReceive(Receive, new object()); ; //repeat
-            //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
-            //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
-            //WARNING StartListening might need to be put in Entity.cs after the GetReceivedData method
-        }
-        catch
-        {
-
-        }
-    }
-
-    public void Disconnect()
-    {
-        client.Close();
-        Console.WriteLine("Stopped listening");
+        Console.WriteLine("\nSent on " + port + " ->\n{0}", message);
     }
 
     public static IPAddress MyIP() //returns own IP address

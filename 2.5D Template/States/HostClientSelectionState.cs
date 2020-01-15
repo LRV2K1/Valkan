@@ -47,12 +47,13 @@ class HostClientSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (startButton.Pressed) //create host connection
         {
             GameEnvironment.ScreenFade.TransitionToScene("hostSelectionState", 5);
         }
-        else if (settingsButton.Pressed)
+        else if (settingsButton.Pressed) //create client connection
         {
+            MultiplayerManager.Connect(1000);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         else if (returnButton.Pressed)

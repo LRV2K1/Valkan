@@ -47,10 +47,13 @@
     <Compile Include="GameManagment\Camera.cs" />
     <Compile Include="GameManagment\Collision.cs" />
     <Compile Include="GameManagment\Connection.cs" />
-    <Compile Include="GameManagment\ConnectionMessageHandler.cs" />
+    <Compile Include="GameManagment\ConnectionLobby.cs" />
+    <Compile Include="GameManagment\ConnectionParty.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
+    <Compile Include="GameManagment\LobbyPlayer.cs" />
     <Compile Include="GameManagment\MultiplayerManager.cs" />
+    <Compile Include="GameManagment\PlayerList.cs" />
     <Compile Include="GameObjects\Entities\Enemy.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\EntityPhysics.cs" />

@@ -43,6 +43,12 @@ class ClientSelectionState : GameObjectLibrary
 
     public override void Update(GameTime gameTime)
     {
+        if (false) //every update check if we stored the world after receiving so we can start
+        {
+            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online"));
+            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+        }
+
         if (firstTime)
         {
             firstTime = false;
@@ -53,11 +59,9 @@ class ClientSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (startButton.Pressed) //this is a I AM READY button
         {
-            MultiplayerManager.SetupClient();
-            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content, "Online"));
-            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+            MultiplayerManager.party.Send("Ready", 9999);
         }
         else if (warriorButton.Pressed)
         {
@@ -73,6 +77,7 @@ class ClientSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
+            MultiplayerManager.party.Disconnect();
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
     }

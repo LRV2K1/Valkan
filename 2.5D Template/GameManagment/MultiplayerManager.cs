@@ -8,84 +8,53 @@ using System.IO;
 //Send() and GetReceivedData() are the main 2 methods of this class
 public class MultiplayerManager
 {
-    public static Connection connection;
-
+    public static ConnectionParty party;
+    public static ConnectionLobby lobby;
+    public static bool online = false;
     public MultiplayerManager()
     {
     }
 
-
-    public static void Send(string data)
+    //setup connection for lobby or ingame
+    public static void Connect(int port)
     {
-        if (connection != null)
+        if (port == 1000)
         {
-            connection.Send(data);
-        }
-    }
-
-    public static string GetReceivedData() //returns received data
-    {
-        if (connection != null)
-        {
-            return connection.GetReceivedData();
-        }
-        return null;
-    }
-
-    public static void SetupClient() //setup connection when joining a server
-    {
-        if (connection == null)
-        {
-            connection = new Connection();
-            connection.Send("GetPlayerList: all");
-            while (GetReceivedData() != "NICE")
+            if (lobby == null)
             {
-
+                lobby = new ConnectionLobby(port);                
             }
-            //check for recehived
-
-            connection.playerlist.Add(Connection.MyIP()); //add our list with our own ip
-            connection.Send("Playerlist: " + connection.PlayerListToString());
-            while (GetReceivedData() != "NICE")
+            else
             {
-
+                Console.WriteLine("Already connected to port " + port);
             }
-            connection.Send("GetWorld: Online");
-            while (GetReceivedData() != "NICEWORLD")
+        }
+        else
+        {
+            if (party == null)
             {
-
+                    party = new ConnectionParty(port);
             }
-            //TODO
-            //2 receive data from running game
-            //2a let new player send GetLevel() to someone with a running game
-            //2b someone who is playing sends the level
-            //2c new player receives the level
-            //TODO
-
-
-            Console.WriteLine("Setup Connection");
+            else
+            {
+                Console.WriteLine("Already connected to port " + port);
+            }
         }
     }
-    
-    public static void SetupHost() //setup connection when creating a server
+
+    public void Update(GameTime gameTime)
     {
-        if (connection == null)
+        if (party != null)
         {
-            connection = new Connection();
-            connection.playerlist.Add(Connection.MyIP()); //add our own ip to the playerlist
+            party.Update(gameTime);
         }
-    }
-    public static void Disconnect() //disconnect connection
-    {
-        if (connection != null)
+        if (party == null && lobby == null)
         {
-            connection.Disconnect();
-            connection = null;
-            connection.Send("Close");
+            online = false;
         }
-    }
-
-    public void HandleInput(InputHelper inputHelper)
-    {
-    }
+        else
+        {
+            online = true;
+        }
+    }    
 }

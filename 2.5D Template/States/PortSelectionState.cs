@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -13,6 +14,8 @@ class PortSelectionState : GameObjectLibrary
 {
     protected Button startButton, settingsButton, returnButton;
     protected bool firstTime = true;
+    public List<IPAddress> gamelist = new List<IPAddress>();
+
     public PortSelectionState()
     {
 
@@ -48,9 +51,11 @@ class PortSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (startButton.Pressed && MultiplayerManager.party == null)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
+            MultiplayerManager.lobby.Disconnect();
+            MultiplayerManager.Connect(9999);
+            MultiplayerManager.party.Send("Join", 9999); //send to party that we joined
         }
         else if (settingsButton.Pressed)
         {
@@ -58,6 +63,10 @@ class PortSelectionState : GameObjectLibrary
         }
         else if (returnButton.Pressed)
         {
+            if (MultiplayerManager.lobby != null)
+            {
+                MultiplayerManager.lobby.Disconnect();
+            }
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
@@ -66,5 +75,7 @@ class PortSelectionState : GameObjectLibrary
     {
         firstTime = true;
     }
+    //drawmethod
+    //draw gamelist
 
 }

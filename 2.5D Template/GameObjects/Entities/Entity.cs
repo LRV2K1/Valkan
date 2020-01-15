@@ -31,8 +31,11 @@ abstract partial class Entity : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        
-        ReceiveData();
+        if (MultiplayerManager.online)
+        {
+            ReceiveData();
+            previousdata = MultiplayerManager.party.GetReceivedData();
+        }
         //check if moved
         if (previousPos != position)
         {
@@ -41,11 +44,13 @@ abstract partial class Entity : AnimatedGameObject
             {
                 return;
             }
-            SendData();
+            if (MultiplayerManager.online)
+            {
+                SendData();
+            }
             NewHost();
             previousPos = position;
         }
-        previousdata = MultiplayerManager.GetReceivedData();
     }
 
     public override void Reset()
@@ -56,17 +61,17 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.Send("Entity: " + id + " " + position.X + " " + position.Y);
+        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999);
     }
     
     private void ReceiveData()
     {
         try
         { 
-            if (previousdata != MultiplayerManager.GetReceivedData())
+            if (previousdata != MultiplayerManager.party.GetReceivedData())
             {
-                previousdata = MultiplayerManager.GetReceivedData();
-                string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                previousdata = MultiplayerManager.party.GetReceivedData();
+                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
                     Console.WriteLine("id is the same: " + id);
