@@ -12,13 +12,16 @@ class EditorState : State
 {
     //updates the level editor
     protected LevelEditor LevelEditor;
-    protected TextButton save;
+    protected TextButton save, exit;
 
     public EditorState()
     {
         save = new TextButton("Fonts/Hud", "save", 102);
         save.Color = Color.Red;
         save.Position = new Vector2(30, 20);
+        exit = new TextButton("Fonts/Hud", "exit", 102);
+        exit.Color = Color.Black;
+        exit.Position = new Vector2(30, 40);
     }
 
     public override void Load()
@@ -35,6 +38,13 @@ class EditorState : State
     public override void HandleInput(InputHelper inputHelper)
     {
         save.HandleInput(inputHelper);
+        exit.HandleInput(inputHelper);
+        if (exit.Pressed)
+        {
+            GameEnvironment.GameStateManager.SwitchTo("titleScreen");
+            return;
+        }
+
         if (save.Pressed)
         {
             string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
@@ -47,6 +57,7 @@ class EditorState : State
     public override void Update (GameTime gameTime)
     {
         save.Update(gameTime);
+        exit.Update(gameTime);
         LevelEditor.Update(gameTime);
     }
 
@@ -54,6 +65,7 @@ class EditorState : State
     {
         LevelEditor.Draw(gameTime, spriteBatch);
         save.Draw(gameTime, spriteBatch);
+        exit.Draw(gameTime, spriteBatch);
     }
 
     public override void Reset()

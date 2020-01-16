@@ -68,10 +68,6 @@ class ItemGrid : GameObjectGrid
                 EditorMouse mouse = GameWorld.GetObject("mouse") as EditorMouse;
                 newentity.ItemType = mouse.ItemType;
             }
-            if (et == EntityType.Player)
-            {
-                //SwitchSpawnLocation(pos.X, pos.Y);
-            }
             Add(newentity, pos.X, pos.Y);
             newentity.InitializeTile();
         }
