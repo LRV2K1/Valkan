@@ -55,6 +55,7 @@
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
     <Compile Include="GameManagment\MultiplayerManager.cs" />
+    <Compile Include="GameManagment\OutputText.cs" />
     <Compile Include="GameObjects\Editor\ItemGrid.cs" />
     <Compile Include="GameObjects\Editor\EditorMouse.cs" />
     <Compile Include="GameObjects\Editor\Entities\EditorEntity.cs" />

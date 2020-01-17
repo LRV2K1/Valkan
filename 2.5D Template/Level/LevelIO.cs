@@ -18,6 +18,7 @@ partial class Level : GameObjectLibrary
         catch
         {
             Console.WriteLine("level not found for paht: " + path);
+            GameEnvironment.OutputWindow("level not found for paht: " + path);
             try
             {
                 switch (GameEnvironment.GameSettingsManager.GetValue("connection"))

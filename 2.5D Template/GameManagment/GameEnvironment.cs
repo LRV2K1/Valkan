@@ -25,6 +25,7 @@ public class GameEnvironment : Game
 
     protected static int specialid;
     protected static char charid;
+    static List<OutputText> output;
 
     public GameEnvironment()
     {
@@ -40,7 +41,6 @@ public class GameEnvironment : Game
         
         specialid = 0;
         charid = (char)(0);
-        randomid = 0;
         output = new List<OutputText>();
     }
 
