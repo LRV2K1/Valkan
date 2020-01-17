@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 public class GameStart : GameEnvironment
 {
@@ -43,6 +44,7 @@ public class GameStart : GameEnvironment
         framecounter = new TextGameObject("Fonts/Hud");
         physicscounter = new TextGameObject("Fonts/Hud");
         physicscounter.Position = new Vector2(0, 30);
+
     }
 
     protected override void Update(GameTime gameTime)
@@ -67,6 +69,7 @@ public class GameStart : GameEnvironment
         spriteBatch.Begin();
         framecounter.Draw(gameTime, spriteBatch);
         physicscounter.Draw(gameTime, spriteBatch);
+        DrawOutput(gameTime);
         spriteBatch.End();
 
         frames++;

@@ -19,6 +19,7 @@ partial class Level : GameObjectLibrary
         {
             Console.WriteLine("level not found for paht: " + path);
             GameEnvironment.GameStateManager.SwitchTo("offlineSelectionState");
+            GameEnvironment.OutputWindow("level not found for paht: " + path);
             return;
         }  
 
