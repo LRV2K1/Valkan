@@ -64,9 +64,17 @@ class PlayingState : State
             return;
         }
 
-        if (inputHelper.KeyPressed(Keys.P))
+        if (inputHelper.KeyPressed(Keys.Escape))
         {
-            paused = !paused;
+            OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
+            if (overlay.CurrentOverlay is InGameMenu)
+            {
+                overlay.SwitchTo("hud");
+            }
+            else
+            {
+                overlay.SwitchTo("menu");
+            }
         }
 
         if (!paused)
