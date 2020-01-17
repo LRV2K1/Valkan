@@ -29,7 +29,7 @@ public class PlayerList
         bool newplayer = true;
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            if (lobbyplayer.ip == ip) //is this player already in the playerlist
+            if (lobbyplayer.ip.ToString() == ip.ToString()) //is this player already in the playerlist
             {
                 newplayer = false;
                 if (leave) //is this player leaving

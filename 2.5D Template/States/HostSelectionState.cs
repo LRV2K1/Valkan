@@ -60,21 +60,24 @@ class HostSelectionState : GameObjectLibrary
     public override void Update(GameTime gameTime) //draw all player buttons
     {
         base.Update(gameTime);
-        for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+        if (MultiplayerManager.party != null)
         {
-            buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
-            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
-            buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-            RootList.Add(buttonList[i]);
-            Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "a " + buttonList.Count);
-        }
+            for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+            {
+                buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                RootList.Add(buttonList[i]);
+                Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "a " + buttonList.Count);
+            }
 
-        for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
-        {
-            buttonList.RemoveAt(i);
-            Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "b " + buttonList.Count);
+            for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
+            {
+                buttonList.RemoveAt(i);
+                Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "b " + buttonList.Count);
+            }
+            //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
         }
-        //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -103,16 +106,22 @@ class HostSelectionState : GameObjectLibrary
         else if (warriorButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Warrior");
+            MultiplayerManager.party.Send(MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Wizzard");
+            MultiplayerManager.party.Send(MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Bard");
+            MultiplayerManager.party.Send(MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (returnButton.Pressed)
