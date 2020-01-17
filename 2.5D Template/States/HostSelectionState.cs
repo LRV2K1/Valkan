@@ -57,7 +57,7 @@ class HostSelectionState : GameObjectLibrary
         RootList.Add(Selected);
     }
 
-    public override void Update(GameTime gameTime) //draw all player buttons
+    public override void Update(GameTime gameTime) //create and remove player buttons
     {
         base.Update(gameTime);
         if (MultiplayerManager.party != null)
@@ -72,8 +72,8 @@ class HostSelectionState : GameObjectLibrary
 
             for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
             {
-                buttonList.RemoveAt(i - 1);
                 buttonList[i - 1].Visible = false;
+                buttonList.RemoveAt(i - 1);
             }
             //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
         }
