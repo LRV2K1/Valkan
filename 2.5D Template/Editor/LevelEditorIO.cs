@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-partial class LevelEditer : GameObjectLibrary
+partial class LevelEditor : GameObjectLibrary
 {
-    public void Save()
+    public void Save(string path)
     {
         Dictionary<string, char> tiletypeschar = new Dictionary<string, char>();
         List<string> tiletypes = new List<string>();
 
-        StreamWriter streamWriter = new StreamWriter("Content/Levels/Level_1.txt");
+        StreamWriter streamWriter = new StreamWriter("Content/Levels/Level_"+ path+ ".txt");
         LevelGrid level = GetObject("levelgrid") as LevelGrid;
         string[] map = new string[level.Rows];
         char type = 'a';
@@ -136,7 +136,7 @@ partial class LevelEditer : GameObjectLibrary
         catch
         {
             Console.WriteLine("level not found for paht: " + path);
-            GameEnvironment.GameStateManager.SwitchTo("offlineSelectionState");
+            NewLevel(200, 200);
             return;
         }
 

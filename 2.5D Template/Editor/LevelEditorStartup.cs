@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-partial class LevelEditer : GameObjectLibrary
+partial class LevelEditor : GameObjectLibrary
 {
     public void NewLevel(int width, int height)
     {
