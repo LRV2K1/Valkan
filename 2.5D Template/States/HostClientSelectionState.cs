@@ -41,7 +41,7 @@ class HostClientSelectionState : GameObjectLibrary
         if (createGameButton.Pressed && MultiplayerManager.party == null)
         {
             MultiplayerManager.Connect(9999);
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), false, true);
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), true, true);
             GameEnvironment.ScreenFade.TransitionToScene("hostSelectionState", 5);
         }
         else if (joinGameButton.Pressed)
