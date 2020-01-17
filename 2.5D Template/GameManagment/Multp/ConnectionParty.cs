@@ -51,6 +51,8 @@ public class ConnectionParty : Connection
     public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         //todo if playing
+        string[] lines = message.Split('\n');
+        string[] variables = message.Split(' ');
         if (playerlist.IsHost(MyIP()))
         {
             if (message == "Join")
@@ -69,6 +71,10 @@ public class ConnectionParty : Connection
                 Send(playerlist.PlayerListToString(), 1000);
                 Send(playerlist.PlayerListToString(), port);
             }
+            else if (variables[0] == "Character")
+            {
+                playerlist.Modify(sender, "Warrior");
+            }
             else
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
@@ -76,7 +82,6 @@ public class ConnectionParty : Connection
         }
         else
         {
-            string[] lines = message.Split('\n');
             if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
