@@ -75,7 +75,7 @@ class HostSelectionState : GameObjectLibrary
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
             }
-            //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
+            //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.party.playerlist.playerlist.Count);
         }
     }
 

@@ -35,6 +35,8 @@ public class PlayerList
                 if (leave) //is this player leaving
                 {
                     playerlist.RemoveAt(count);
+                    Console.WriteLine("Removed lobby player at " + count);
+                    break;
                 }
                 else if (isready) //modify otherwise
                 {
@@ -50,6 +52,7 @@ public class PlayerList
         if (newplayer)
         {
             playerlist.Add(new LobbyPlayer(ip, isready, ishost));
+            Console.WriteLine("Added lobbyplayer");
         }
     }
 

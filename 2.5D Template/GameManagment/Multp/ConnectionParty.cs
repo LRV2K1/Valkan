@@ -41,7 +41,7 @@ public class ConnectionParty : Connection
     {
         //if currentgamestate is playing TODO
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (playerlist.IsHost(MyIP()) && time > 30)
+        if (playerlist.IsHost(MyIP()) && time > 1000)
         {
             Send(playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
@@ -53,7 +53,7 @@ public class ConnectionParty : Connection
         //todo if playing
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
-        if (playerlist.IsHost(MyIP()))
+        if (playerlist.IsHost(MyIP())) //data for host only
         {
             if (message == "Join")
             {
@@ -80,7 +80,7 @@ public class ConnectionParty : Connection
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
-        else
+        else //data for everyone but host
         {
             if (lines[0] == "Playerlist:")
             {
@@ -90,6 +90,8 @@ public class ConnectionParty : Connection
             {
                 Disconnect();
                 GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
+                MultiplayerManager.Connect(1000);
+                MultiplayerManager.party = null;
             }
             else
             {
