@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.IO;
+using System.Net.NetworkInformation;
 
 //this class has the key methods in it like Send(), Receive(), Disconnect(), etc.
 public partial class Connection
@@ -20,6 +21,36 @@ public partial class Connection
         client = new UdpClient(port);
         ip = new IPEndPoint(IPAddress.Any, port);
     }
+    private IPAddress GetBroadCastIP()
+    {
+        try
+        {
+            string ipadress;
+            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName()); // get a list of all local IPs
+            IPAddress localIpAddress = ipHostInfo.AddressList[0]; // choose the first of the list
+            ipadress = Convert.ToString(localIpAddress); // convert to string
+            ipadress = ipadress.Substring(0, ipadress.LastIndexOf(".") + 1); // cuts of the last octet of the given IP 
+            ipadress += "255"; // adds 255 witch represents the local broadcast
+            return IPAddress.Parse(ipadress);
+        }
+        catch (Exception e)
+        {
+            return IPAddress.Parse("127.0.0.1");// in case of error return the local loopback
+        }
+    }
+
+    IPAddress GetBroadCastIP(IPAddress host, IPAddress mask)
+    {
+        byte[] broadcastIPBytes = new byte[4];
+        byte[] hostBytes = host.GetAddressBytes();
+        byte[] maskBytes = mask.GetAddressBytes();
+        for (int i = 0; i < 4; i++)
+        {
+            broadcastIPBytes[i] = (byte)(hostBytes[i] | (byte)~maskBytes[i]);
+        }
+        return new IPAddress(broadcastIPBytes);
+    }
+
 
     public string GetReceivedData()
     {
@@ -28,8 +59,8 @@ public partial class Connection
     public void Send(string message, int port) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
-        client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port)); //broadcast to specific port
-        Console.WriteLine("\nSent on " + port + " ->\n{0}", message);
+        client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Broadcast, port)); //broadcast to specific port
+        Console.WriteLine("\nSent on " + IPAddress.Broadcast.ToString() + ":" + port + " ->\n{0}", message);
     }
 
     public static IPAddress MyIP() //returns own IP address

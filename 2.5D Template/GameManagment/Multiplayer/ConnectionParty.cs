@@ -24,7 +24,7 @@ public class ConnectionParty : Connection
         try
         {
             byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
-            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            if (ip.Address.ToString() == MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, ip.Address.ToString());
