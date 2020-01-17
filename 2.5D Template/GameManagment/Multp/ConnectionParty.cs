@@ -41,7 +41,7 @@ public class ConnectionParty : Connection
     {
         //if currentgamestate is playing TODO
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (playerlist.IsHost(MyIP()) && time > 3)
+        if (playerlist.IsHost(MyIP()) && time > 30)
         {
             Send(playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;

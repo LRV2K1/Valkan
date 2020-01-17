@@ -67,7 +67,8 @@ class ClientSelectionState : GameObjectLibrary
 
             for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
             {
-                buttonList.RemoveAt(i);
+                buttonList[i - 1].Visible = false;
+                buttonList.RemoveAt(i - 1);
             }
         }        
         //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
