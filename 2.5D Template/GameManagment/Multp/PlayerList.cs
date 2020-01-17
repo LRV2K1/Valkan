@@ -49,7 +49,7 @@ public class PlayerList
         }
         if (newplayer)
         {
-            playerlist.Add(new LobbyPlayer(ip, ishost));
+            playerlist.Add(new LobbyPlayer(ip, isready, ishost));
         }
     }
 

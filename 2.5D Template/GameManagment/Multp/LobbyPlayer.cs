@@ -12,9 +12,10 @@ public class LobbyPlayer
     public bool isready = false;
     public string character = "Warrior";
 
-    public LobbyPlayer(IPAddress ip, bool ishost = false)
+    public LobbyPlayer(IPAddress ip, bool isready = false, bool ishost = false)
     {
         this.ip = ip;
+        this.isready = isready;
         this.ishost = ishost;
     }
 }
