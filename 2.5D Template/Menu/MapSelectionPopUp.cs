@@ -72,9 +72,4 @@ class MapSelectionPopUp : PopUp
         }
     }
 
-    public void ActivatePopup()
-    {
-        this.Visible = true;
-    }
-
 }

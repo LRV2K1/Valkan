@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,6 +25,7 @@ public class GameEnvironment : Game
 
     protected static int specialid;
     protected static char charid;
+    static List<OutputText> output;
 
     public GameEnvironment()
     {
@@ -39,6 +41,7 @@ public class GameEnvironment : Game
         
         specialid = 0;
         charid = (char)(0);
+        output = new List<OutputText>();
     }
 
     public static string SpecialID
@@ -51,6 +54,19 @@ public class GameEnvironment : Game
             //charid = (char)((int)charid + 1);
             //Console.WriteLine(ss);
             return s;
+        }
+    }
+
+    public static void OutputWindow(string text)
+    {
+        output.Add(new OutputText(text));
+    }
+
+    protected void DrawOutput(GameTime gameTime)
+    {
+        foreach (OutputText text in output)
+        {
+            text.Draw(gameTime, spriteBatch);
         }
     }
 
@@ -159,10 +175,6 @@ public class GameEnvironment : Game
         {
             return;
         }
-        if (inputHelper.KeyPressed(Keys.Escape))
-        {
-            Exit();
-        }
         if (inputHelper.KeyPressed(Keys.F5))
         {
             FullScreen = !FullScreen;
@@ -179,6 +191,21 @@ public class GameEnvironment : Game
         if(quitGame)
         {
             Exit();
+        }
+
+        int outputx = 0;
+        for (int i = output.Count - 1; i >= 0; i--)
+        {
+            output[i].Update(gameTime);
+            if (output[i].Timer <= 0)
+            {
+                output.RemoveAt(i);
+            }
+            else
+            {
+                output[i].Position = new Vector2(60, outputx);
+                outputx += 30;
+            }
         }
     }
 

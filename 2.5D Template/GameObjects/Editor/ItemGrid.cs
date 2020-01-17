@@ -8,10 +8,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 class ItemGrid : GameObjectGrid
 {
+    Point spawnLocation;
+
     public  ItemGrid(int collumns, int rows, int layer = 0, string id = "")
         : base(collumns, rows, layer, id)
     {
-
+        spawnLocation = new Point(-1, -1);
     }
 
     public void SetupGrid()
@@ -32,6 +34,15 @@ class ItemGrid : GameObjectGrid
         grid[x, y] = obj.Id;
         obj.Parent = this;
         obj.Position = AnchorPosition(x, y);
+
+        EditorEntity player = obj as EditorEntity;
+        if (player != null)
+        {
+            if (player.EntityType == EntityType.Player)
+            {
+                SwitchSpawnLocation(x,y);
+            }
+        }
     }
 
     public void SwitchItem(Vector2 mousepos, EntityType et, string asset, int boundingy = 0)
@@ -60,6 +71,16 @@ class ItemGrid : GameObjectGrid
             Add(newentity, pos.X, pos.Y);
             newentity.InitializeTile();
         }
+    }
+
+    private void SwitchSpawnLocation(int x, int y)
+    {
+        if (spawnLocation.X != -1 && spawnLocation.Y != -1)
+        {
+            Remove(Objects[spawnLocation.X, spawnLocation.Y], spawnLocation.X, spawnLocation.Y);
+            Add(new EditorEntity(spawnLocation), spawnLocation.X, spawnLocation.Y);
+        }
+        spawnLocation = new Point(x, y);
     }
 
     public TileType GetTileType(int x, int y)
