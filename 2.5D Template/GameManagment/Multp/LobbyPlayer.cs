@@ -10,7 +10,7 @@ public class LobbyPlayer
     public IPAddress ip;
     public bool ishost = false;
     public bool isready = false;
-    public string character = "null";
+    public string character = "Warrior";
 
     public LobbyPlayer(IPAddress ip, bool ishost = false)
     {

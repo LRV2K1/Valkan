@@ -86,16 +86,19 @@ class ClientSelectionState : GameObjectLibrary
         }
         else if (warriorButton.Pressed)
         {
+            MultiplayerManager.party.Send("Character: Warrior", 9999);
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
+            MultiplayerManager.party.Send("Character: Wizzard", 9999);
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
+            MultiplayerManager.party.Send("Character: Bard", 9999);
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }

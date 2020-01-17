@@ -71,9 +71,9 @@ public class ConnectionParty : Connection
                 Send(playerlist.PlayerListToString(), 1000);
                 Send(playerlist.PlayerListToString(), port);
             }
-            else if (variables[0] == "Character")
+            else if (variables[0] == "Character:")
             {
-                playerlist.Modify(sender, "Warrior");
+                playerlist.Modify(sender, character: variables[1]);
             }
             else
             {
