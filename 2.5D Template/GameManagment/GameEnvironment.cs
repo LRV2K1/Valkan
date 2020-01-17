@@ -186,6 +186,7 @@ public class GameEnvironment : Game
     protected override void Update(GameTime gameTime)
     {
         HandleInput();
+        multiplayerManager.Update(gameTime);
         gameStateManager.Update(gameTime);
         ScreenFade.Update(gameTime);
         if(quitGame)
