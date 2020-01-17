@@ -13,9 +13,11 @@ class ClientSelectionState : GameObjectLibrary
 {
     protected Button readyButton, warriorButton, sorcererButton, bardButton, returnButton, hostButton, youButton, player3Button, player4Button;
     protected SpriteGameObject Selected;
+    List<Button> buttonList;
     public ClientSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
+        buttonList = new List<Button>();
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
         SpriteGameObject lobbyBackground = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 101, "lobby");
@@ -40,25 +42,6 @@ class ClientSelectionState : GameObjectLibrary
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
 
-        hostButton = new Button("Sprites/Menu/Standard_Button", 101);
-        hostButton.Sprite.Size = new Vector2(1.3f, 2f);
-        hostButton.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 2);
-        RootList.Add(hostButton);
-        youButton = new Button("Sprites/Menu/Standard_Button", 101);
-        youButton.Sprite.Size = new Vector2(1.3f, 2f);
-        youButton.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 3 + youButton.Height / 2);
-        RootList.Add(youButton);
-        player3Button = new Button("Sprites/Menu/Standard_Button", 101);
-        player3Button.Sprite.Size = new Vector2(1.3f, 2f);
-        player3Button.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 4 + player3Button.Height);
-        RootList.Add(player3Button);
-        player3Button.Visible = false;
-        player4Button = new Button("Sprites/Menu/Standard_Button", 101);
-        player4Button.Sprite.Size = new Vector2(1.3f, 2f);
-        player4Button.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 5 + player4Button.Height * 1.5f);
-        RootList.Add(player4Button);
-        player4Button.Visible = false;
-
         Selected = new SpriteGameObject("Sprites/Menu/Selected_Button", 101);
         Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         RootList.Add(Selected);
@@ -66,12 +49,25 @@ class ClientSelectionState : GameObjectLibrary
 
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         if (false) //every update check if we stored the world after receiving so we can start
         {
             GameEnvironment.GameSettingsManager.SetValue("level", "10");
             GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
         }
-        base.Update(gameTime);
+        for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+        {
+            buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+            buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+            RootList.Add(buttonList[i]);
+        }
+
+        for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
+        {
+            buttonList.RemoveAt(i);
+        }
+        //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
         //if player 3 has connected ---> player3Button.Visible = true;
         //if player 4 has connected ---> player4Button.Visible = true;
 

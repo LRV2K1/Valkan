@@ -109,8 +109,8 @@ public class ConnectionParty : Connection
             Send("Leave", 9999);
         }
         client.Close();
-        MultiplayerManager.party = null;
         Console.WriteLine("Disconnect from party");
+        MultiplayerManager.party = null;
     }
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {

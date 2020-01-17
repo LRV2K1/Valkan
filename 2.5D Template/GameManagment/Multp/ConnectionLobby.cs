@@ -6,7 +6,7 @@ using System.Text;
 
 public class ConnectionLobby : Connection
 {
-    public PlayerList playerlist;
+    public List<PlayerList> playerlists = new List<PlayerList>();
 
     public ConnectionLobby(int port)
         : base(port)
@@ -25,7 +25,7 @@ public class ConnectionLobby : Connection
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, ip.Address.ToString());
-                HandleReceivedData(message);
+                HandleReceivedData(message, ip.Address);
             }
             ar_ = client.BeginReceive(Receive, new object()); ; //repeat
         }
@@ -35,13 +35,43 @@ public class ConnectionLobby : Connection
         }
     }
 
-    public void HandleReceivedData(string message) //inspect received data and take action
+    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         if (lines[0] == "Playerlist:")
         {
-            playerlist.Store(message);
+            if (playerlists.Count == 0)
+            {
+                playerlists.Add(new PlayerList());
+                playerlists[playerlists.Count - 1].Store(message);
+            }
+            foreach (PlayerList playerlist in playerlists)
+            {
+                if (playerlist.IsHost(sender))
+                {
+                    playerlist.Store(message);
+                }
+                else //this ip does not exist so create new playerlist
+                {
+                    playerlists.Add(new PlayerList());
+                    playerlists[playerlists.Count - 1].Store(message);
+                    GameEnvironment.GameStateManager.GetGameState("hostSelectionState");
+                    
+                }
+            }
         }
+    }
+    private void StorePlayerLists(IPAddress sender)
+    {
+        foreach (PlayerList playerlist in playerlists)
+        {
+            if (playerlist.IsHost(sender))
+            {
+
+            }
+        }
+        playerlists.Add(new PlayerList());
+
     }
 
     public void Disconnect() //stop receiving and sending data

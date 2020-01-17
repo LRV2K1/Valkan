@@ -53,7 +53,7 @@ public class PlayerList
         }
     }
 
-    public bool IsHost(IPAddress ip)
+    public bool IsHost(IPAddress ip) //goes over all lobbyplayers until it finds a matching ip, then checks then returns the bool ishost
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
@@ -70,13 +70,13 @@ public class PlayerList
         string message = "Playerlist:";
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost;
+            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character;
         }
         return message;
         //Playerlist: 
-        //196.168.21.4, false, true
-        //196.168.21.24, false, false
-        //196.168.21.3, false, false
+        //196.168.21.4, false, true bard
+        //196.168.21.24, false, false warrior
+        //196.168.21.3, false, false warrior
     }
 
     public bool AllReady()
