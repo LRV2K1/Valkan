@@ -72,7 +72,7 @@ class HostSelectionState : GameObjectLibrary
         {
             buttonList.RemoveAt(i);
         }
-        Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
+        //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
     }
 
     public override void HandleInput(InputHelper inputHelper)

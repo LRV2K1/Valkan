@@ -55,18 +55,21 @@ class ClientSelectionState : GameObjectLibrary
             GameEnvironment.GameSettingsManager.SetValue("level", "10");
             GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
         }
-        for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+        if (MultiplayerManager.party != null)
         {
-            buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
-            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
-            buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-            RootList.Add(buttonList[i]);
-        }
+            for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+            {
+                buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                RootList.Add(buttonList[i]);
+            }
 
-        for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
-        {
-            buttonList.RemoveAt(i);
-        }
+            for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
+            {
+                buttonList.RemoveAt(i);
+            }
+        }        
         //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
         //if player 3 has connected ---> player3Button.Visible = true;
         //if player 4 has connected ---> player4Button.Visible = true;
