@@ -93,8 +93,8 @@ public class SpriteGameObject : GameObject
     {
         get
         {
-            int left = (int)(GlobalPosition.X - origin.X);
-            int top = (int)(GlobalPosition.Y - origin.Y);
+            int left = (int)(GlobalPosition.X - (origin.X * sprite.Size.X));
+            int top = (int)(GlobalPosition.Y - (origin.Y * sprite.Size.X));
             return new Rectangle(left, top, (int)(Width * sprite.Size.X), (int)(Height * sprite.Size.Y));
         }
     }

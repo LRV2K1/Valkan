@@ -87,7 +87,6 @@ class PlayingState : State
     {
         if (level == null)
         {
-            Load();
             return;
         }
         if (!paused)
