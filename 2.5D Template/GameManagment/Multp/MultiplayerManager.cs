@@ -11,6 +11,7 @@ public class MultiplayerManager
     public static ConnectionParty party;
     public static ConnectionLobby lobby;
     public static bool online = false;
+    int count = 0;
     public MultiplayerManager()
     {
     }
@@ -55,6 +56,10 @@ public class MultiplayerManager
         else
         {
             online = true;
+        }
+        if (count > 200)
+        {
+            Console.WriteLine(party.playerlist.ToString());
         }
     }
 }

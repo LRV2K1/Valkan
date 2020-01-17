@@ -43,7 +43,7 @@ public class ConnectionParty : Connection
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 3)
         {
-            Send(playerlist.PlayerListToString(), 1000); //broadcast playerlist to port 1000
+            Send(playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
         }
     }
@@ -58,8 +58,8 @@ public class ConnectionParty : Connection
             if (message == "Join")
             {
                 playerlist.Modify(sender);
-                Send(playerlist.PlayerListToString(), 1000);
-                Send(playerlist.PlayerListToString(), port);
+                Send(playerlist.ToString(), 1000);
+                Send(playerlist.ToString(), port);
             }
             else if (message == "Leave")
             {
@@ -68,8 +68,8 @@ public class ConnectionParty : Connection
             else if (message == "Ready")
             {
                 playerlist.Modify(sender, true);
-                Send(playerlist.PlayerListToString(), 1000);
-                Send(playerlist.PlayerListToString(), port);
+                Send(playerlist.ToString(), 1000);
+                Send(playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
             {

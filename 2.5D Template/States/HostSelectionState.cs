@@ -66,11 +66,13 @@ class HostSelectionState : GameObjectLibrary
             buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
             buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
             RootList.Add(buttonList[i]);
+            Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "a " + buttonList.Count);
         }
 
         for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
         {
             buttonList.RemoveAt(i);
+            Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + "b " + buttonList.Count);
         }
         //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
     }

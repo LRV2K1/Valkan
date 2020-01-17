@@ -65,7 +65,7 @@ public class PlayerList
         return false;
     }
 
-    public string PlayerListToString()
+    public string ToString()
     {
         string message = "Playerlist:";
         foreach (LobbyPlayer lobbyplayer in playerlist)
