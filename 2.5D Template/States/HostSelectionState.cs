@@ -68,7 +68,7 @@ class HostSelectionState : GameObjectLibrary
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1)
             {
-                if (MultiplayerManager.party.playerlist.AllReceivedWorld())
+                if (!MultiplayerManager.party.playerlist.AllReceivedWorld())
                 {
                     MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 }
