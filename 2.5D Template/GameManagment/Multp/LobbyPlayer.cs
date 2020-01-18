@@ -15,9 +15,16 @@ public class LobbyPlayer
 
     public LobbyPlayer(IPAddress ip, bool isready = false, bool ishost = false, string character = "Warrior")
     {
+        if (character == "null")
+        {
+            this.character = "Warrior";
+        }
+        else
+        {
+            this.character = character;
+        }
         this.ip = ip;
         this.isready = isready;
         this.ishost = ishost;
-        this.character = character;
     }
 }
