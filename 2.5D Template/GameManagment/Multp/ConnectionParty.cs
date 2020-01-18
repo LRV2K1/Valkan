@@ -46,6 +46,7 @@ public class ConnectionParty : Connection
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
                 Send("Host is still connected", port); //message send by host only, if host crashes the clients wont be stuck
+                playerlist.Modify(MyIP(), timeunactive: 0);
                 foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
                 {
                     lobbyplayer.timeunactive += 1;
@@ -62,6 +63,7 @@ public class ConnectionParty : Connection
         else if (time > 1)
         {
             Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
+            playerlist.Modify(MyIP(), timeunactive: 0);
             time = 0;
         }
     }
@@ -91,6 +93,10 @@ public class ConnectionParty : Connection
             else if (variables[0] == "Character:")
             {
                 playerlist.Modify(sender, character: variables[1]);
+            }
+            else if (lines[0] == "Playerlist:")
+            {
+                playerlist.Store(message);
             }
             else if (message == "I am still connected")
             {
