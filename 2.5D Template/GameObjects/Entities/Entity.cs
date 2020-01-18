@@ -31,12 +31,6 @@ abstract partial class Entity : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (MultiplayerManager.online)
-        {
-            ReceiveData();
-            previousdata = MultiplayerManager.party.GetReceivedData();
-        }
-        ReceiveData();
         //check if moved
         if (previousPos != position)
         {
@@ -51,6 +45,10 @@ abstract partial class Entity : AnimatedGameObject
             }
             NewHost();
             previousPos = position;
+        }
+        if (MultiplayerManager.online)
+        {
+            ReceiveData();
         }
     }
 
@@ -74,20 +72,12 @@ abstract partial class Entity : AnimatedGameObject
     {
         try
         {
-            if (previousdata != MultiplayerManager.party.GetReceivedData())
+            string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+            if (variables[0] == "Entity:" && variables[1] == id)
             {
-                previousdata = MultiplayerManager.party.GetReceivedData();
-                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
-                if (variables[0] == "Entity:" && variables[1] == id)
-                {
-                    Console.WriteLine("id is the same: " + id);
-                    position.X = float.Parse(variables[2]);
-                    position.Y = float.Parse(variables[3]);
-                }
-                else if (variables[0] == "World:")
-                {
-
-                }
+                Console.WriteLine("id is the same: " + id);
+                position.X = float.Parse(variables[2]);
+                position.Y = float.Parse(variables[3]);
             }
 
         }
