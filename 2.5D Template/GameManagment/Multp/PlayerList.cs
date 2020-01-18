@@ -36,7 +36,7 @@ public class PlayerList
                 if (leave) //is this player leaving
                 {
                     playerlist.RemoveAt(count);
-                    Console.WriteLine("Removed lobby player at " + count);
+                    Console.WriteLine("Removed lobby player at " + count + " ip: " + lobbyplayer.ip.ToString() + " class: " + lobbyplayer.character);
                     break;
                 }
                 else if (isready) //modify otherwise
