@@ -50,21 +50,24 @@ class PortSelectionState : GameObjectLibrary
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        for (int i = buttonList.Count; i < MultiplayerManager.lobby.playerlists.Count; i++)
+        if (MultiplayerManager.lobby != null)
         {
-            buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
-            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
-            buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-            RootList.Add(buttonList[i]);
-        }
+            for (int i = buttonList.Count; i < MultiplayerManager.lobby.playerlists.Count; i++)
+            {
+                buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                RootList.Add(buttonList[i]);
+            }
 
-        for (int i = buttonList.Count; i > MultiplayerManager.lobby.playerlists.Count; i--)
-        {
-            buttonList[i - 1].Visible = false;
-            buttonList.RemoveAt(i - 1);
+            for (int i = buttonList.Count; i > MultiplayerManager.lobby.playerlists.Count; i--)
+            {
+                buttonList[i - 1].Visible = false;
+                buttonList.RemoveAt(i - 1);
+            }
+            //Als je een broadcast hebt ontvangen: ConnectionMade("vul hier het ip in");
+            //Als je connection hebt verloren: ConnectionLost("vul hier het ip in");
         }
-        //Als je een broadcast hebt ontvangen: ConnectionMade("vul hier het ip in");
-        //Als je connection hebt verloren: ConnectionLost("vul hier het ip in");
     }
 
     public override void HandleInput(InputHelper inputHelper)
