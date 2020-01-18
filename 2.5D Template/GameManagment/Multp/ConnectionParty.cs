@@ -165,7 +165,7 @@ public class ConnectionParty : Connection
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port);
-                    log = false;
+                    log = true;
                 }
             }
             else if (variables[0] == "World")
