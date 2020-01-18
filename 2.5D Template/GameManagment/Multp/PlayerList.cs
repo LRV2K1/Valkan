@@ -42,7 +42,7 @@ public class PlayerList
                 {
                     lobbyplayer.isready = isready;
                 }
-                else if (character != null)
+                else if (character == "Warrior" || character == "Wizzard" || character == "Bard")
                 {
                     lobbyplayer.character = character;
                 }
