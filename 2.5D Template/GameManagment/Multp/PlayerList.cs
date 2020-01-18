@@ -46,7 +46,7 @@ public class PlayerList
                 {
                     lobbyplayer.timeunactive = 0;
                 }
-                else if (character == "Warrior" || character == "Wizzard" || character == "Bard")
+                else
                 {
                     lobbyplayer.character = character;
                 }
