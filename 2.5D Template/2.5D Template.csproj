@@ -55,6 +55,7 @@
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
     <Compile Include="GameManagment\MultiplayerManager.cs" />
+    <Compile Include="GameManagment\OutputText.cs" />
     <Compile Include="GameObjects\Editor\ItemGrid.cs" />
     <Compile Include="GameObjects\Editor\EditorMouse.cs" />
     <Compile Include="GameObjects\Editor\Entities\EditorEntity.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
     <Compile Include="Level\LevelIO.cs" />
     <Compile Include="Menu\Button.cs" />
+    <Compile Include="Menu\InGameMenu.cs" />
     <Compile Include="Menu\MapSelectionPopUp.cs" />
     <Compile Include="Menu\PopUp.cs" />
     <Compile Include="Menu\ScreenFade.cs" />

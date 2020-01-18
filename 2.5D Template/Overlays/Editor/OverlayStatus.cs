@@ -10,7 +10,6 @@ class OverlayStatus : GameObjectList
 {
     //shows current selected overlay
     Dictionary<string, string> status;
-    TextButton save;
     string activestatus;
     int height;
     public OverlayStatus(GameObjectLibrary gameworld ,int layer = 101, string id = "overlay")
@@ -21,24 +20,10 @@ class OverlayStatus : GameObjectList
         status = new Dictionary<string, string>();
         activestatus = "";
 
-        save = new TextButton("Fonts/Hud", "save", 102);
-        save.Color = Color.Red;
-        save.Position = new Vector2(30, 20);
-        Add(save);
-
         Add(new SpriteGameObject("Sprites/Menu/spr_overlay2", 101));
         SpriteGameObject overlay1 = new SpriteGameObject("Sprites/Menu/spr_overlay1", 101);
         overlay1.Position = new Vector2(0, 830);
         Add(overlay1);
-    }
-
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        base.HandleInput(inputHelper);
-        if (save.Pressed)
-        {
-            LevelEditor.Save();
-        }
     }
 
     public void AddStatus(string key, GameObject obj)
