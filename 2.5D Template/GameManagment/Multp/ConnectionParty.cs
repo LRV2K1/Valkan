@@ -44,7 +44,7 @@ public class ConnectionParty : Connection
         {
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
-                Send("Host is still connected", port, true); //message send by host only, if host crashes the clients wont be stuck
+                Send("Host is still connected", port, false); //message send by host only, if host crashes the clients wont be stuck
                 playerlist.Modify(MyIP(), timeunactive: 0);
                 foreach (LobbyPlayer lobbyplayer in playerlist.playerlist) //remove unactive players
                 {
@@ -52,7 +52,7 @@ public class ConnectionParty : Connection
                     if (lobbyplayer.timeunactive >= 5)
                     {
                         playerlist.Modify(lobbyplayer.ip, false, false, true); //remove 1 player from the party
-                        Send("Playerlist:" + playerlist.ToString(), port);
+                        Send("Playerlist:" + playerlist.ToString(), port, false);
                         isopen = true; //since 1 player has been kicked, there is space
                         break;
                     }
@@ -165,7 +165,7 @@ public class ConnectionParty : Connection
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port);
-                    log = true;
+                    log = false;
                 }
             }
             else if (variables[0] == "World")
