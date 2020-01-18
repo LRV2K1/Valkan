@@ -73,7 +73,7 @@ public class PlayerList
         string message = "";
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            message += lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character + "\n";
+            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character;
         }
         return message;
         //Playerlist: 

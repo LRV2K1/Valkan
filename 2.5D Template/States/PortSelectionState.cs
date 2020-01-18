@@ -87,6 +87,7 @@ class PortSelectionState : GameObjectLibrary
         }
         if (returnButton.Pressed)
         {
+            MultiplayerManager.lobby.Disconnect();
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }

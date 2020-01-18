@@ -43,7 +43,7 @@ public class ConnectionParty : Connection
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
-            Send("Playerlist " + port + " : \n" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
         }
     }

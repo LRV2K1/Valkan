@@ -45,22 +45,27 @@ public class ConnectionLobby : Connection
             {
                 playerlists.Add(new PlayerList());
                 portlist.Add(int.Parse(variables[1]));
-                playerlists[playerlists.Count - 1].Store(message);
+                playerlists[0].Store(message);
             }
-            foreach (PlayerList playerlist in playerlists)
+            /*else
             {
-                if (playerlist.IsHost(sender))
+                foreach (PlayerList playerlist in playerlists)
                 {
-                    playerlist.Store(message);
+                    if (playerlist.IsHost(sender))
+                    {
+                        playerlist.Store(message);
+                        break;
+                    }
+                    else //this ip does not exist so create new playerlist
+                    {
+                        playerlists.Add(new PlayerList());
+                        portlist.Add(int.Parse(variables[1]));
+                        playerlists[playerlists.Count - 1].Store(message);
+                        GameEnvironment.GameStateManager.GetGameState("hostSelectionState");
+                        break;
+                    }
                 }
-                else //this ip does not exist so create new playerlist
-                {
-                    playerlists.Add(new PlayerList());
-                    portlist.Add(int.Parse(variables[1]));
-                    playerlists[playerlists.Count - 1].Store(message);
-                    GameEnvironment.GameStateManager.GetGameState("hostSelectionState");                    
-                }
-            }
+            }*/
         }
         else if (variables[0] == "Closed:")
         {
