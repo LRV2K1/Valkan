@@ -54,16 +54,28 @@ public class ConnectionParty : Connection
                     {
                         playerlist.Modify(lobbyplayer.ip, false, false, true);
                         Send("Playerlist:" + playerlist.ToString(), port);
+                        break;
                     }
                 }
             }            
             Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
         }
-        else if (time > 1)
+        else if (time > 1) //not host
         {
             Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
             playerlist.Modify(MyIP(), timeunactive: 0);
+            foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+            {
+                if (lobbyplayer.ishost)
+                {
+                    lobbyplayer.timeunactive += 1;
+                    if (lobbyplayer.timeunactive >= 5)
+                    {
+                        Disconnect();
+                    }
+                }
+            }
             time = 0;
         }
     }
