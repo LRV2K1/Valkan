@@ -101,7 +101,11 @@ public class ConnectionParty : Connection
         bool log = true;
         if (playerlist.IsHost(MyIP())) //data for host only
         {
-            if (message == "Join")
+            if (variables[0] == "Entity:")
+            {
+                log = false;
+            }
+            else if (message == "Join")
             {
                 playerlist.Modify(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
@@ -140,10 +144,6 @@ public class ConnectionParty : Connection
                 playerlist.Modify(sender, timeunactive: 0);
                 log = false;
             }
-            else if (variables[0] == "Entity:")
-            {
-                log = false;
-            }
             else
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
@@ -151,7 +151,11 @@ public class ConnectionParty : Connection
         }
         else //data for everyone but host
         {
-            if (lines[0] == "Playerlist:")
+            if (variables[0] == "Entity:")
+            {
+                log = false;
+            }
+            else if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
                 if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
@@ -176,10 +180,6 @@ public class ConnectionParty : Connection
             {
                 Console.WriteLine("Received a world");
                 StoreWorld(variables[1], message);
-            }
-            else if (variables[0] == "Entity:")
-            {
-                log = false;
             }
             else
             {

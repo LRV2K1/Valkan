@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Entity : AnimatedGameObject
 {
     int count;
+    int count2;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
@@ -82,7 +83,7 @@ abstract partial class Entity : AnimatedGameObject
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
                     count++;
-                    Console.WriteLine(count);
+                    Console.WriteLine("Count1: " + count);
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;
