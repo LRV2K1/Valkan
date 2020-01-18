@@ -10,7 +10,7 @@ public class ConnectionParty : Connection
 {
     public PlayerList playerlist;
     float time;
-    bool isopen = true;
+    public bool isopen = true;
 
     public ConnectionParty(int port)
         : base(port)
@@ -167,6 +167,10 @@ public class ConnectionParty : Connection
                     log = false;
                 }
             }
+            else if (variables[0] == "World")
+            {
+                StoreWorld(variables[1], message);
+            }
             else if (variables[0] != "Entity:")
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
@@ -208,6 +212,8 @@ public class ConnectionParty : Connection
         }
         Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
         writer.Close();
+        GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
+        GameEnvironment.ScreenFade.TransitionToScene("playingState");
     }
     public string WorldToString(string file) //convert <file>.txt to string
     {
@@ -219,7 +225,7 @@ public class ConnectionParty : Connection
         {
             while (line != null)
             {
-                message += line + "\n";
+                message += "\n" + line;
                 line = streamReader.ReadLine();
             }
         }

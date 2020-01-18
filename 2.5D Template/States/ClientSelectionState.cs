@@ -50,11 +50,6 @@ class ClientSelectionState : GameObjectLibrary
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (false) //every update check if we stored the world after receiving so we can start
-        {
-            GameEnvironment.GameSettingsManager.SetValue("level", "10");
-            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
-        }
         if (MultiplayerManager.party != null)
         {
             for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)

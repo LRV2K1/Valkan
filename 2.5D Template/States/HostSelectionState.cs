@@ -92,6 +92,8 @@ class HostSelectionState : GameObjectLibrary
             if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
             {
                 MultiplayerManager.party.Send("Closed: " + Connection.MyIP().ToString() + ":" + MultiplayerManager.party.port, 1000);
+                MultiplayerManager.party.isopen = false;
+                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
             }
             else
