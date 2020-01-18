@@ -20,7 +20,7 @@ public class PlayerList
             //variables[2] = ishost
             //variables[3] = character
             string[] variables = lines[i].Split(new string[] { ", " }, StringSplitOptions.None);
-            Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3]); //modify playerlist with this data
+            Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4])); //modify playerlist with this data
         }
     }
     public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "Warrior", float timeunactive = 0)
@@ -72,12 +72,12 @@ public class PlayerList
         return false;
     }
 
-    public string ToString()
+    public override string ToString()
     {
         string message = "";
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character;
+            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character + ", " + lobbyplayer.timeunactive;
         }
         return message;
         //Playerlist: 
