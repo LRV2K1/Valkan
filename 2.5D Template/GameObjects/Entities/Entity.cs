@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
+    int count;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
@@ -80,6 +81,8 @@ abstract partial class Entity : AnimatedGameObject
                 string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
+                    count++;
+                    Console.WriteLine(count);
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;
