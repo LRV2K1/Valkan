@@ -43,7 +43,16 @@ public class ConnectionParty : Connection
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
+            foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+            {
+                lobbyplayer.timeunactive += 1;
+            }
             Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            time = 0;
+        }
+        else if (time > 1)
+        {
+            Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
             time = 0;
         }
     }
@@ -72,6 +81,10 @@ public class ConnectionParty : Connection
             else if (variables[0] == "Character:")
             {
                 playerlist.Modify(sender, character: variables[1]);
+            }
+            else if (message == "I am still connected")
+            {
+                playerlist.Modify(sender, timeunactive: 0);
             }
             else
             {
