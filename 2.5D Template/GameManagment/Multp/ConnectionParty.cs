@@ -46,6 +46,11 @@ public class ConnectionParty : Connection
             foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
             {
                 lobbyplayer.timeunactive += 1;
+                if (lobbyplayer.timeunactive >= 5)
+                {
+                    playerlist.Modify(lobbyplayer.ip, false, false, true);
+                    Send("Playerlist:" + playerlist.ToString(), port);
+                }
             }
             Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
@@ -72,6 +77,7 @@ public class ConnectionParty : Connection
             else if (message == "Leave")
             {
                 playerlist.Modify(sender, false, false, true);
+                Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (message == "Ready")
             {
