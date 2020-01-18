@@ -62,7 +62,22 @@ public class ConnectionLobby : Connection
                 }
             }
         }
+        else if (variables[0] == "Closed:")
+        {
+            string[] parts = variables[1].Split(':');
+            for (int i = 0; i < playerlists.Count; i++)
+            {
+                if (playerlists[i].IsHost(IPAddress.Parse(parts[1])))
+                {
+                    playerlists.RemoveAt(i);
+                    portlist.RemoveAt(i);
+                    break;
+                }
+            }
+        }
     }
+
+
     private void StorePlayerLists(IPAddress sender)
     {
         foreach (PlayerList playerlist in playerlists)

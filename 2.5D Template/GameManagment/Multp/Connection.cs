@@ -9,7 +9,7 @@ using System.Net.NetworkInformation;
 //this class has the key methods in it like Send(), Receive(), Disconnect(), etc.
 public partial class Connection
 {
-    protected int port;
+    public int port;
     public UdpClient client;
     protected IPEndPoint ip;
     protected IAsyncResult ar_ = null;
