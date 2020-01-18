@@ -48,6 +48,7 @@ public class MultiplayerManager
         if (party != null)
         {
             party.Update(gameTime);
+            lobby.Update(gameTime);
         }
         if (party == null && lobby == null)
         {
