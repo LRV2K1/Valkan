@@ -53,7 +53,7 @@ public class MultiplayerManager
         {
             lobby.Update(gameTime);
         }
-        if (party == null && lobby == null)
+        if (party == null)
         {
             online = false;
         }

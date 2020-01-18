@@ -93,8 +93,10 @@ class HostSelectionState : GameObjectLibrary
             {
                 MultiplayerManager.party.Send("Closed: " + Connection.MyIP().ToString() + ":" + MultiplayerManager.party.port, 1000);
                 MultiplayerManager.party.isopen = false;
-                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                Console.WriteLine("Sending world:");
+                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+                Console.WriteLine("Send world");
             }
             else
             {
