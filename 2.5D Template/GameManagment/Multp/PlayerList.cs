@@ -42,13 +42,13 @@ public class PlayerList
                 {
                     lobbyplayer.isready = isready;
                 }
+                else if (character == "Warrior" || character == "Wizzard" || character == "Bard")
+                {
+                    lobbyplayer.character = character;
+                }
                 else if (timeunactive == 0)
                 {
                     lobbyplayer.timeunactive = 0;
-                }
-                else
-                {
-                    lobbyplayer.character = character;
                 }
             }
             count++;
