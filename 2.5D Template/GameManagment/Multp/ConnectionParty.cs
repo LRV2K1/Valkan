@@ -41,9 +41,9 @@ public class ConnectionParty : Connection
     {
         //if currentgamestate is playing TODO
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (playerlist.IsHost(MyIP()) && time > 1000)
+        if (playerlist.IsHost(MyIP()) && time > 3)
         {
-            Send(playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            Send("Playerlist " + port + " : \n" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             time = 0;
         }
     }
@@ -58,7 +58,6 @@ public class ConnectionParty : Connection
             if (message == "Join")
             {
                 playerlist.Modify(sender);
-                Send(playerlist.ToString(), 1000);
                 Send(playerlist.ToString(), port);
             }
             else if (message == "Leave")
@@ -68,7 +67,6 @@ public class ConnectionParty : Connection
             else if (message == "Ready")
             {
                 playerlist.Modify(sender, true);
-                Send(playerlist.ToString(), 1000);
                 Send(playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")

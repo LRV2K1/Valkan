@@ -18,6 +18,7 @@ class HostSelectionState : GameObjectLibrary
 
     public HostSelectionState()
     {
+        GameEnvironment.GameSettingsManager.SetValue("level", "1"); //load level 1 by default
         buttonList = new List<Button>();
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
@@ -90,7 +91,6 @@ class HostSelectionState : GameObjectLibrary
         {
             if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
             {
-                GameEnvironment.GameSettingsManager.SetValue("level", "10");
                 GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
             }
             else

@@ -70,10 +70,10 @@ public class PlayerList
 
     public string ToString()
     {
-        string message = "Playerlist:";
+        string message = "";
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character;
+            message += lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character + "\n";
         }
         return message;
         //Playerlist: 

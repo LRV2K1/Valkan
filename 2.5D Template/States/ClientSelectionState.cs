@@ -71,10 +71,6 @@ class ClientSelectionState : GameObjectLibrary
                 buttonList.RemoveAt(i - 1);
             }
         }        
-        //Console.WriteLine(MultiplayerManager.party.playerlist.playerlist.Count + " " + buttonList.Count);
-        //if player 3 has connected ---> player3Button.Visible = true;
-        //if player 4 has connected ---> player4Button.Visible = true;
-
     }
 
     public override void HandleInput(InputHelper inputHelper)

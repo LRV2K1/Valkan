@@ -41,16 +41,28 @@ class PortSelectionState : GameObjectLibrary
         buttonList = new List<Button>();
         portList = new List<Button>();
         ipList = new List<string>();
-        LoadButtons();
 
         //Dit voegt dus en regel toe
-        ConnectionMade("123.123.123.123:15099");
-        ConnectionMade("123.123.123.123:15099");
+        //ConnectionMade("123.123.123.123:15099");
+        //ConnectionMade("123.123.123.123:15099");
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        for (int i = buttonList.Count; i < MultiplayerManager.lobby.playerlists.Count; i++)
+        {
+            buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+            buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+            RootList.Add(buttonList[i]);
+        }
+
+        for (int i = buttonList.Count; i > MultiplayerManager.lobby.playerlists.Count; i--)
+        {
+            buttonList[i - 1].Visible = false;
+            buttonList.RemoveAt(i - 1);
+        }
         //Als je een broadcast hebt ontvangen: ConnectionMade("vul hier het ip in");
         //Als je connection hebt verloren: ConnectionLost("vul hier het ip in");
     }
@@ -62,8 +74,8 @@ class PortSelectionState : GameObjectLibrary
         {
             if (buttonList[i].Pressed)
             {
-                MultiplayerManager.Connect(9999);
-                MultiplayerManager.party.Send("Join", 9999);
+                MultiplayerManager.Connect(MultiplayerManager.lobby.portlist[i]);
+                MultiplayerManager.party.Send("Join", MultiplayerManager.lobby.portlist[i]);
                 MultiplayerManager.lobby.Disconnect();
                 // Connect with ipList[i] (dit is het ip die connection heeft gemaakt in string vorm)
                 //Voor nu heb ik de transition naar ClientSelectionState maar die moet absoluut weg uiteindelijk.
@@ -78,6 +90,7 @@ class PortSelectionState : GameObjectLibrary
 
     public void LoadButtons()
     {
+
         Vector2 startposition = new Vector2(GameEnvironment.Screen.X / 2 + returnButton.Width, (GameEnvironment.Screen.Y / 13) * 3);
         Vector2 newPosition;
         int yOffset = (int)(GameEnvironment.Screen.Y / 16);
@@ -90,6 +103,7 @@ class PortSelectionState : GameObjectLibrary
             button.Position = new Vector2(startposition.X, newPosition.Y);
             RootList.Add(button);
             Button port = new Button("Sprites/Menu/Standard_Button", 109);
+
             portList.Add(port);
             port.Sprite.Size = new Vector2(2.5f,0.6f);
             port.Position = new Vector2(GameEnvironment.Screen.X / 8, newPosition.Y);

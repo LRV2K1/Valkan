@@ -40,12 +40,15 @@ abstract partial class Entity : AnimatedGameObject
         //check if moved
         if (previousPos != position)
         {
+            if (MultiplayerManager.online) //send data if online
+            {
+                SendData();
+            }
             DoPhysics();
             if (remove)
             {
                 return;
             }
-            SendData();
             NewHost();
             previousPos = position;
         }
