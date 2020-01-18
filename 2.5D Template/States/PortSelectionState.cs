@@ -64,8 +64,6 @@ class PortSelectionState : GameObjectLibrary
                 MultiplayerManager.Connect(MultiplayerManager.lobby.portlist[i]);
                 MultiplayerManager.party.Send("Join", MultiplayerManager.lobby.portlist[i]);
                 MultiplayerManager.lobby.Disconnect();
-                // Connect with ipList[i] (dit is het ip die connection heeft gemaakt in string vorm)
-                //Voor nu heb ik de transition naar ClientSelectionState maar die moet absoluut weg uiteindelijk.
                 GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
             }
         }

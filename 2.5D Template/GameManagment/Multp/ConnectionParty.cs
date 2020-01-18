@@ -10,6 +10,7 @@ public class ConnectionParty : Connection
 {
     public PlayerList playerlist;
     float time;
+    bool isopen = true;
 
     public ConnectionParty(int port)
         : base(port)
@@ -53,33 +54,44 @@ public class ConnectionParty : Connection
                     {
                         playerlist.Modify(lobbyplayer.ip, false, false, true);
                         Send("Playerlist:" + playerlist.ToString(), port);
+                        isopen = true;
                         break;
                     }
                 }
             }
 
-            if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState")
+            if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
                 Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
             }
             time = 0;
         }
-        else if (time > 1 && playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //for player2 only
+        else
         {
-            Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
-            playerlist.Modify(MyIP(), timeunactive: 0);
-            foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+            try
             {
-                if (lobbyplayer.ishost)
+                if (time > 1 && playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //for player2 only
                 {
-                    lobbyplayer.timeunactive += 1;
-                    if (lobbyplayer.timeunactive >= 5)
+                    Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
+                    playerlist.Modify(MyIP(), timeunactive: 0);
+                    foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
                     {
-                        Disconnect();
+                        if (lobbyplayer.ishost)
+                        {
+                            lobbyplayer.timeunactive += 1;
+                            if (lobbyplayer.timeunactive >= 5)
+                            {
+                                Disconnect();
+                            }
+                        }
                     }
+                    time = 0;
                 }
             }
-            time = 0;
+            catch
+            {
+
+            }
         }
     }
 
@@ -93,11 +105,17 @@ public class ConnectionParty : Connection
             {
                 playerlist.Modify(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
+                if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
+                {
+                    Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+                    isopen = false;
+                }
             }
             else if (message == "Leave")
             {
                 playerlist.Modify(sender, false, false, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
+                isopen = true;
             }
             else if (message == "Ready")
             {
@@ -152,6 +170,7 @@ public class ConnectionParty : Connection
         {
             Send("HostLeaves", 9999);
             Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+            isopen = false;
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
