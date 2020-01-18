@@ -48,15 +48,16 @@ public class ConnectionLobby : Connection
             {
                 inactivitytimer[i]++;
             }
-        }
-        for (int i = 0; i < playerlists.Count; i++)
-        {
-            if (inactivitytimer[i] >= 5)
+            for (int i = 0; i < playerlists.Count; i++)
             {
-                playerlists.RemoveAt(i);
-                portlist.RemoveAt(i);
-                inactivitytimer.RemoveAt(i);
+                if (inactivitytimer[i] >= 5)
+                {
+                    playerlists.RemoveAt(i);
+                    portlist.RemoveAt(i);
+                    inactivitytimer.RemoveAt(i);
+                }
             }
+            time = 0;
         }
     }
 
