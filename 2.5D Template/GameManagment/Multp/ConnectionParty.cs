@@ -53,6 +53,7 @@ public class ConnectionParty : Connection
                 }
             }
             Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            Send("Host is still connected", port); //message send by host only, if host crashes the clients wont be stuck
             time = 0;
         }
         else if (time > 1)
@@ -109,6 +110,14 @@ public class ConnectionParty : Connection
                 GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
                 MultiplayerManager.Connect(1000);
                 MultiplayerManager.party = null;
+            }
+            else if (message == "Host is still connected")
+            {
+                playerlist.Modify(sender, timeunactive: 0);
+                if (playerlist.playerlist[1].ip == MyIP()) //send only by player2
+                {
+                    Send("Playerlist:" + playerlist.ToString(), port);
+                }
             }
             else
             {
