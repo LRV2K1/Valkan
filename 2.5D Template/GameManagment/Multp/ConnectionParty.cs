@@ -158,6 +158,7 @@ public class ConnectionParty : Connection
             else if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
+                
                 if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
                 {
                     log = false;
