@@ -57,9 +57,5 @@ public class MultiplayerManager
         {
             online = true;
         }
-        if (count > 200 && party != null)
-        {
-            Console.WriteLine(party.playerlist.ToString());
-        }
     }
 }

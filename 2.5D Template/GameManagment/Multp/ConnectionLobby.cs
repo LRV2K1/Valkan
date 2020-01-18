@@ -47,7 +47,7 @@ public class ConnectionLobby : Connection
                 portlist.Add(int.Parse(variables[1]));
                 playerlists[0].Store(message);
             }
-            /*else
+            else
             {
                 foreach (PlayerList playerlist in playerlists)
                 {
@@ -65,15 +65,16 @@ public class ConnectionLobby : Connection
                         break;
                     }
                 }
-            }*/
+            }
         }
         else if (variables[0] == "Closed:")
         {
             string[] parts = variables[1].Split(':');
             for (int i = 0; i < playerlists.Count; i++)
             {
-                if (playerlists[i].IsHost(IPAddress.Parse(parts[1])))
+                if (playerlists[i].IsHost(IPAddress.Parse(parts[0])))
                 {
+
                     playerlists.RemoveAt(i);
                     portlist.RemoveAt(i);
                     break;

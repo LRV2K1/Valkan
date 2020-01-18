@@ -58,7 +58,7 @@ public class ConnectionParty : Connection
             if (message == "Join")
             {
                 playerlist.Modify(sender);
-                Send(playerlist.ToString(), port);
+                Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (message == "Leave")
             {
@@ -67,7 +67,7 @@ public class ConnectionParty : Connection
             else if (message == "Ready")
             {
                 playerlist.Modify(sender, true);
-                Send(playerlist.ToString(), port);
+                Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
             {
