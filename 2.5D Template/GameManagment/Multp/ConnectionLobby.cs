@@ -83,20 +83,6 @@ public class ConnectionLobby : Connection
         }
     }
 
-
-    private void StorePlayerLists(IPAddress sender)
-    {
-        foreach (PlayerList playerlist in playerlists)
-        {
-            if (playerlist.IsHost(sender))
-            {
-
-            }
-        }
-        playerlists.Add(new PlayerList());
-
-    }
-
     public void Disconnect() //stop receiving and sending data
     {
         client.Close();

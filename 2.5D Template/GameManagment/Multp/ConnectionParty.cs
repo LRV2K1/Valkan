@@ -37,9 +37,8 @@ public class ConnectionParty : Connection
         {
         }
     }
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime) //manage unexpected disconnect
     {
-        //if currentgamestate is playing TODO
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
@@ -57,11 +56,15 @@ public class ConnectionParty : Connection
                         break;
                     }
                 }
-            }            
-            Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            }
+
+            if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState")
+            {
+                Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+            }
             time = 0;
         }
-        else if (time > 1) //not host
+        else if (time > 1 && playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //for player2 only
         {
             Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
             playerlist.Modify(MyIP(), timeunactive: 0);
@@ -82,7 +85,6 @@ public class ConnectionParty : Connection
 
     public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
-        //todo if playing
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
         if (playerlist.IsHost(MyIP())) //data for host only
@@ -132,7 +134,7 @@ public class ConnectionParty : Connection
             else if (message == "Host is still connected")
             {
                 playerlist.Modify(sender, timeunactive: 0);
-                if (true) //send only by player2
+                if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port);
                 }
