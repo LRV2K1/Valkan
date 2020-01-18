@@ -18,7 +18,7 @@ partial class Enemy : MovingEntity
 
     int count = 0;
 
-    float[,] hcost_grid = new float[20, 20];
+    float[,] hcost_grid = new float[30, 30];
     bool pathFound = false;
     // nieuw path word aangemaakt
     enum AiState { SLEEP, RUNNING } // de ai heeft 2 states waarin hij switched
@@ -26,7 +26,7 @@ partial class Enemy : MovingEntity
     Node nodeStart;
     Node nodeEnd;
     List<Node> path = new List<Node>();
-    Node[,] nodes = new Node[20, 20];
+    Node[,] nodes = new Node[30, 30];
     List<Vector2> destinationQueue = new List<Vector2>();
     List<Node> untestedNodesList = new List<Node>();
     int counter;
@@ -72,8 +72,9 @@ partial class Enemy : MovingEntity
             Player player = GameWorld.GetObject("player") as Player;
             // this.Position *= EnemyVelocity(player.Position);
             DesCalculate(player.GridPos);
-
         }
+        else if (!InRange()|| die || dead)
+            this.velocity = Vector2.Zero;
 
         ChangeAnimation();
     }
@@ -105,9 +106,9 @@ partial class Enemy : MovingEntity
         destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = 0; y < 20; y++)
+        for (int y = 0; y < 30; y++)
         {
-            for (int x = 0; x < 20; x++)
+            for (int x = 0; x < 30; x++)
             {
                 hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), player.GridPos); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
 
@@ -141,12 +142,12 @@ partial class Enemy : MovingEntity
         counter++;
         if (destinationQueue.Count() >= 1) //als er een distination  in de lijst staat zal de ai naar daar gaan
         {
-            float distance = Vector2.Distance(destinationQueue[0], this.GridPos);
+            float distance = Vector2.Distance(playerpos, this.GridPos);
             if (distance < 2 && pathFound) //de ai heeft de player gevonden door de path te gebruiken
             {
-                //found
-                destinationQueue.RemoveAt(destinationQueue.Count() - 1); //de laatste destination wordt verwijderd
+                //found 
                 currentState = AiState.SLEEP;
+                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
                 pathFound = false;
                 path.Clear();
                 count = 0;
@@ -158,7 +159,7 @@ partial class Enemy : MovingEntity
                 currentState = AiState.SLEEP;
                 pathFound = false;
                 path.Clear();
-                destinationQueue.RemoveAt(destinationQueue.Count() - 1); //de laatste destination wordt verwijderd
+                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
                 count = 0;
             }
             else if (distance > 2 && !pathFound) //de ai moet de path naar de player vinden 
@@ -185,14 +186,21 @@ partial class Enemy : MovingEntity
                 break;
 
             case AiState.RUNNING:
-                if (path.Count() > 0) //wanneer de path berekend
+                if (path.Count() != 0) //wanneer de path berekend
                 {
-                    if (counter > 10)
+                    if (counter > 20)
                     {
                         Move(path[path.Count() - 1].nodeXY); //beweeg naar de eerste positie in de list
                         path.RemoveAt(path.Count() - 1); // verwijder de positie na het bewegen
                         counter = 0;
                     }
+
+                }
+                else
+                {
+                    pathFound = false;
+                    destinationQueue.RemoveAt(0);
+                    currentState = AiState.SLEEP;
                 }
                 break;
         }
@@ -238,11 +246,11 @@ partial class Enemy : MovingEntity
             }
             Console.WriteLine("|" + (nodeCurrent.nodeXY == nodeEnd.nodeXY) + "|" + nodeCurrent.nodeXY + "|" + nodeEnd.nodeXY + "|");
         }
+
         pathFound = true;
         untestedNodesList.Clear();
         AddParentToPath(nodeCurrent);
-        if (nodeEnd.parent != null)
-            Console.WriteLine("ik heb vader");
+
     }
 
     public void AddParentToPath(Node n)
@@ -256,17 +264,17 @@ partial class Enemy : MovingEntity
     public void CalculateHcost(Vector2 playerpos) //dit is de hcost die wordt berekend wanneer de player een nieuwe positie heeft 
     {
         Enemy enemy = this;
-        Player player = GameWorld.GetObject("player") as Player;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        for (int y = 0; y < 20; y++)
+        for (int y = 0; y < 30; y++)
         {
-            for (int x = 0; x < 20; x++)
+            for (int x = 0; x < 30; x++)
             {
                 hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), playerpos);
+
                 Vector2 nodepos = new Vector2(x, y);
-                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, player.GridPos));
-                nodeEnd = new Node(player.GridPos, 0);
-                if (nodepos == player.GridPos)
+                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
+                nodeEnd = new Node(playerpos, 0);
+                if (nodepos == playerpos)
                 {
                     nodes[x, y] = nodeEnd;
                 }
@@ -296,52 +304,67 @@ partial class Enemy : MovingEntity
     {
         foreach (Node n in nodes)
         {
-
-
             //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
-            if (n.nodeXY == new Vector2(currentNode.nodeXY.X + 1, currentNode.nodeXY.Y + 1))
+            if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X - 1, currentNode.nodeXY.Y - 1))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X + 1, currentNode.nodeXY.Y - 1))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X - 1, currentNode.nodeXY.Y + 1))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X + 1, currentNode.nodeXY.Y))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X, currentNode.nodeXY.Y + 1))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y + 1))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X - 1, currentNode.nodeXY.Y))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y))
             {
                 currentNode.neighbours.Add(n);
             }
-            else if (n.nodeXY == new Vector2(currentNode.nodeXY.X, currentNode.nodeXY.Y - 1))
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y - 1))
             {
                 currentNode.neighbours.Add(n);
             }
         }
     }/// <summary>
-    /// //////////////////////9999
-    /// </summary>
-    /// <param name="pos"></param>
+     /// //////////////////////9999
+     /// </summary>
+     /// <param name="pos"></param>
     void Move(Vector2 pos)
     {
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        Player player = GameWorld.GetObject("player") as Player;
         Vector2 movpos = grid.AnchorPosition((int)pos.X, (int)pos.Y);
-        this.Position = movpos; //de ai beweegt naar de gewezen positie
+        //  Vector2 enemypos = new Vector2((int)this.GridPos.X, (int)this.GridPos.Y);
+        //  Vector2 endpos = new Vector2((int)nodeEnd.nodeXY.X,(int)nodeEnd.nodeXY.Y);
+        //de ai beweegt naar de gewezen positie
+        float dx = movpos.X - this.Position.X;
+        float dy = movpos.Y - this.Position.Y;
+        float distance = Vector2.Distance(movpos, this.Position);
+        float scale = 100 / distance;
+
+        float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
+
+        if (aiplayerdistance < 2.2f|| die || dead)
+            this.velocity = Vector2.Zero;
+        else
+        {
+            this.velocity.X = dx * scale;
+            this.velocity.Y = dy * scale;
+        }
     }
 
     public int Health
@@ -378,14 +401,5 @@ partial class Enemy : MovingEntity
         return range;
     }
 
-    float EnemyVelocity(Vector2 playerpos)
-    {
-        Enemy enemy = this;
-        float dx = playerpos.X - this.Position.X;
-        float dy = playerpos.Y - this.Position.Y;
-        float distance = (float)Math.Sqrt(dx * dx + dy * dy);
-        float velocity = 2f / distance;
-        return velocity;
-    }
 }
 
