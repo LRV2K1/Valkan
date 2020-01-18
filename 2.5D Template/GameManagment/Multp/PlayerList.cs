@@ -83,13 +83,13 @@ public class PlayerList
         string message = "";
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character + ", " + lobbyplayer.timeunactive;
+            message += "\n" + lobbyplayer.ip.ToString() + ", " + lobbyplayer.isready + ", " + lobbyplayer.ishost + ", " + lobbyplayer.character + ", " + lobbyplayer.timeunactive + ", " + lobbyplayer.receivedworld;
         }
         return message;
         //Playerlist: 
-        //196.168.21.4, false, true bard
-        //196.168.21.24, false, false warrior
-        //196.168.21.3, false, false warrior
+        //196.168.21.4, false, true, bard, 0 false
+        //196.168.21.24, false, false, warrior, 0 false
+        //196.168.21.3, false, false, warrior, 0 false
     }
 
     public bool AllReady()
