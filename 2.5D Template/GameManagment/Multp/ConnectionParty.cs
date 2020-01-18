@@ -128,9 +128,6 @@ public class ConnectionParty : Connection
             else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
             {
                 Disconnect();
-                GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
-                MultiplayerManager.Connect(1000);
-                MultiplayerManager.party = null;
             }
             else if (message == "Host is still connected")
             {
@@ -153,10 +150,13 @@ public class ConnectionParty : Connection
         {
             Send("HostLeaves", 9999);
             Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
         {
             Send("Leave", 9999);
+            MultiplayerManager.Connect(1000);
+            GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         client.Close();
         Console.WriteLine("Disconnect from party");

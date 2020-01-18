@@ -101,8 +101,6 @@ class ClientSelectionState : GameObjectLibrary
         else if (returnButton.Pressed)
         {
             MultiplayerManager.party.Disconnect();
-            MultiplayerManager.Connect(1000);
-            GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
     }
 }

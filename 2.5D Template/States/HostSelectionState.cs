@@ -130,7 +130,6 @@ class HostSelectionState : GameObjectLibrary
             {
                 MultiplayerManager.party.Disconnect();
             }
-            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
 }
