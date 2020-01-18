@@ -28,7 +28,7 @@ public class ConnectionLobby : Connection
             if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                Console.WriteLine("\nReceived from {1}" + port + " ->\n{0}", message, ip.Address.ToString());
+                Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, ip.Address.ToString());
                 HandleReceivedData(message, ip.Address, ip.Port);
             }
             ar_ = client.BeginReceive(Receive, new object()); ; //repeat

@@ -176,7 +176,6 @@ public class ConnectionParty : Connection
             else if (variables[0] != "Entity:")
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
-                log = false;
             }
         }
         if (log) //should the received data be put in console?

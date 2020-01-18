@@ -68,7 +68,7 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999);
+        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
     }
 
     private void ReceiveData()
