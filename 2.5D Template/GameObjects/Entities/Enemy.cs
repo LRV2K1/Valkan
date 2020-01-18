@@ -18,19 +18,20 @@ partial class Enemy : MovingEntity
 
     int count = 0;
 
-    int[,] hcost_grid = new int[40, 40];
-    int hcost_playerX;
-    int hcost_playerY;
+    float[,] hcost_grid = new float[30, 30];
     bool pathFound = false;
-    Path path1 = new Path(); // nieuw path word aangemaakt
+    // nieuw path word aangemaakt
     enum AiState { SLEEP, RUNNING } // de ai heeft 2 states waarin hij switched
     AiState currentState = AiState.SLEEP;
+    Node nodeStart;
+    Node nodeEnd;
+    List<Node> path = new List<Node>();
+    Node[,] nodes = new Node[30, 30];
     List<Vector2> destinationQueue = new List<Vector2>();
-    List<Node> nodes = new List<Node>();
-    List<Node> closedNodesList = new List<Node>();
-
+    List<Node> untestedNodesList = new List<Node>();
+    int counter;
     int start = 1;
- 
+
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
     {
@@ -68,8 +69,11 @@ partial class Enemy : MovingEntity
         if (InRange() == true) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
+            // this.Position *= EnemyVelocity(player.Position);
             DesCalculate(player.GridPos);
         }
+        else if (!InRange()|| die || dead)
+            this.velocity = Vector2.Zero;
 
         ChangeAnimation();
     }
@@ -96,86 +100,106 @@ partial class Enemy : MovingEntity
     }
     public void Startup()
     {
+        Enemy enemy = this;
         Player player = GameWorld.GetObject("player") as Player;
         destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        hcost_playerX = (int)player.GridPos.X;
-        hcost_playerY = (int)player.GridPos.Y;
-        for (int y = 0; y < 40; y++)
-        {
-            string line = "";
-            for (int x = 0; x < 40; x++)
-            {
-                hcost_grid[x, y] = Math.Abs(hcost_playerX - x) + Math.Abs(hcost_playerY - y); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
 
-                if (grid.GetTileType(x, y) == TileType.Wall)
-                {
-                    hcost_grid[x, y] = 999;  //wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
-                }
-                line += hcost_grid[x, y].ToString() + " , ";
+        for (int y = 0; y < 30; y++)
+        {
+            for (int x = 0; x < 30; x++)
+            {
+                hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), player.GridPos); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
 
                 Vector2 nodepos = new Vector2(x, y);
-                Node node = new Node(nodepos, hcost_grid[x, y]); //dehcost wordt toegevoegt aan de Node
-                nodes.Add(node); //node wordt toegovoegd aan de lijst van nodes 
+                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, player.GridPos));
+                nodeEnd = new Node(player.GridPos, 0);
+                if (nodepos == player.GridPos)
+                {
+                    nodes[x, y] = nodeEnd;
+                }
+                else if (nodepos == this.GridPos)
+                {
+                    nodes[x, y] = nodeStart;
+
+                }
+                else
+                {
+                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                    if (grid.GetTileType(x, y) == TileType.Wall)
+                    {
+                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                    }
+                }
             }
-            Console.WriteLine(line);
         }
     }
     public void DesCalculate(Vector2 playerpos)
     {
         Enemy enemy = this;
         count++;
+        counter++;
         if (destinationQueue.Count() >= 1) //als er een distination  in de lijst staat zal de ai naar daar gaan
         {
-            if (destinationQueue[0] == this.GridPos && pathFound) //de ai heeft de player gevonden door de path te gebruiken
+            float distance = Vector2.Distance(playerpos, this.GridPos);
+            if (distance < 2 && pathFound) //de ai heeft de player gevonden door de path te gebruiken
             {
-                //found
-                destinationQueue.RemoveAt(destinationQueue.Count() - 1); //de laatste destination wordt verwijderd
+                //found 
                 currentState = AiState.SLEEP;
+                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
                 pathFound = false;
-
+                path.Clear();
+                count = 0;
             }
 
-            else if (destinationQueue[0] == this.GridPos && !pathFound)  //de ai heeft de player gevonden maar zonder de path te gebruiken, dus de player kwam naar de ai
+            else if (distance < 2 && !pathFound)  //de ai heeft de player gevonden maar zonder de path te gebruiken, dus de player kwam naar de ai
             {
                 //found 
                 currentState = AiState.SLEEP;
                 pathFound = false;
-
-                destinationQueue.RemoveAt(destinationQueue.Count() - 1); //de laatste destination wordt verwijderd
-
+                path.Clear();
+                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
+                count = 0;
             }
-            else if (destinationQueue[0] != this.GridPos && !pathFound) //de ai moet de path naar de player vinden 
+            else if (distance > 2 && !pathFound) //de ai moet de path naar de player vinden 
             {
                 //new
                 currentState = AiState.SLEEP;
             }
-            else if (destinationQueue[0] != this.GridPos && pathFound) //de ai heeft de path gevonden maar de player nog niet
+            else if (distance > 2 && pathFound) //de ai heeft de path gevonden maar de player nog niet
             {
                 //busy
                 currentState = AiState.RUNNING;
-
+                count = 0;
             }
         }
         switch (currentState)
         {
             case AiState.SLEEP:
-                // if (count >= 10)//de ai heeft een delay van 1 sec
-                // {
-                destinationQueue.Add(playerpos); //de gegeven playerpostitie wordt toegevoegd aan de destinationQueue
-                FindPath(destinationQueue[0]); //Findpath word aanroepen om de pad te vinden van de destination dat vooraan de lijst staat
-                                               //    }
+                if (count >= 10)//de ai heeft een delay van 1 sec
+                {
+                    destinationQueue.Add(playerpos); //de gegeven playerpostitie wordt toegevoegd aan de destinationQueue
+                    FindPath(destinationQueue[0]); //Findpath word aanroepen om de pad te vinden van de destination dat vooraan de lijst staat
+                    Console.WriteLine("Gridpos :  " + playerpos);
+                }
                 break;
 
             case AiState.RUNNING:
-                if (path1.nodesList.Count() > 0) //wanneer de path berekend
+                if (path.Count() != 0) //wanneer de path berekend
                 {
-                    if (count > 50)
+                    if (counter > 20)
                     {
-                        Move(path1.nodesList[0]); //beweeg naar de eerste positie in de list
-                        path1.nodesList.RemoveAt(0); // verwijder de positie na het bewegen
-                        count = 0;
+                        Move(path[path.Count() - 1].nodeXY); //beweeg naar de eerste positie in de list
+                        path.RemoveAt(path.Count() - 1); // verwijder de positie na het bewegen
+                        counter = 0;
                     }
+
+                }
+                else
+                {
+                    pathFound = false;
+                    destinationQueue.RemoveAt(0);
+                    currentState = AiState.SLEEP;
                 }
                 break;
         }
@@ -184,123 +208,162 @@ partial class Enemy : MovingEntity
     public void FindPath(Vector2 playerpos)
     {
         Enemy enemy = this;
-        if (currentState == AiState.SLEEP)
+
+        CalculateHcost(playerpos); //de Hcost wordt berekend wanneer de player een nieuwe positie heeft
+
+        Node nodeCurrent = nodeStart;
+        nodeStart.fLocalGoal = 0.0f;
+        untestedNodesList.Add(nodeStart);
+
+        while (untestedNodesList.Count() > 0 && nodeCurrent.nodeXY != new Vector2((int)nodeEnd.nodeXY.X, (int)nodeEnd.nodeXY.Y)) //zolang er waardes in de lijst zijn
         {
-            closedNodesList.Clear(); //de closedNodesList wordt helemaal leeg gemaakt
-            path1.nodesList.Clear(); //de openNodesList wordt helemaal leeg gemaakt
-            CalculateHcost(playerpos); //de Hcost wordt berekend wanneer de player een nieuwe positie heeft
-            path1.nodesList.Add(CalculateNextPosition(this.GridPos)); //de nodeslist van de path word de volgendepositie hier toegevoegd vanaf de huidige positie
-
-            while (path1.nodesList[path1.nodesList.Count() - 1] != playerpos) //terwijl de laatste positie in de path niet gelijk staat aan de positie van de player zal de path extra posities toevoegen
+            untestedNodesList.OrderBy(n => n.fGlobalGoal).ToList();         // order by laag naar hoog
+            while (untestedNodesList.Count() != 0 && untestedNodesList[0].bvisited)       //zolang te testen nodes niet leeg is en de node met laagste cost visited is
             {
-                path1.nodesList.Add(CalculateNextPosition(path1.nodesList[path1.nodesList.Count() - 1])); //de volgende positie vanaf de laatste positie wordt hier berekend
+                untestedNodesList.RemoveAt(0);
             }
+            if (untestedNodesList.Count() == 0)
+            {
+                Console.WriteLine("LIST IS 0 :)");
+                break;
+            }
+            nodeCurrent = untestedNodesList[0];
+            nodeCurrent.bvisited = true;
 
-            Console.WriteLine("Path Count =    " + path1.nodesList.Count());
-
-            pathFound = true;
+            CalculateNeighbours(nodeCurrent);
+            foreach (Node neighbour in nodeCurrent.neighbours)
+            {
+                if (!neighbour.bvisited && !neighbour.obstacle)
+                    untestedNodesList.Add(neighbour);
+                float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
+                if (possiblyLowerGoal < neighbour.fLocalGoal)
+                {
+                    neighbour.parent = nodeCurrent;
+                    neighbour.fLocalGoal = possiblyLowerGoal;
+                    neighbour.fGlobalGoal = neighbour.fLocalGoal + Vector2.Distance(neighbour.nodeXY, nodeEnd.nodeXY);
+                }
+            }
+            Console.WriteLine("|" + (nodeCurrent.nodeXY == nodeEnd.nodeXY) + "|" + nodeCurrent.nodeXY + "|" + nodeEnd.nodeXY + "|");
         }
 
+        pathFound = true;
+        untestedNodesList.Clear();
+        AddParentToPath(nodeCurrent);
+
+    }
+
+    public void AddParentToPath(Node n)
+    {
+        if (n.parent != null)
+        {
+            path.Add(n.parent);
+            AddParentToPath(n.parent);
+        }
     }
     public void CalculateHcost(Vector2 playerpos) //dit is de hcost die wordt berekend wanneer de player een nieuwe positie heeft 
     {
-
-        hcost_playerX = (int)playerpos.X;
-        hcost_playerY = (int)playerpos.Y;
+        Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        for (int y = 0; y < 20; y++)
+        for (int y = 0; y < 30; y++)
         {
-            for (int x = 0; x < 25; x++)
+            for (int x = 0; x < 30; x++)
             {
-                hcost_grid[x, y] = Math.Abs(hcost_playerX - x) + Math.Abs(hcost_playerY - y);
-                if (grid.GetTileType(x, y) == TileType.Wall)
-                {
-                    hcost_grid[x, y] = 999;
-                }
-                Vector2 nodepos = new Vector2(x, y);
+                hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), playerpos);
 
+                Vector2 nodepos = new Vector2(x, y);
+                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
+                nodeEnd = new Node(playerpos, 0);
+                if (nodepos == playerpos)
+                {
+                    nodes[x, y] = nodeEnd;
+                }
+                else if (nodepos == this.GridPos)
+                {
+                    nodes[x, y] = nodeStart;
+                }
+                else
+                {
+                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                    if (grid.GetTileType(x, y) == TileType.Wall)
+                    {
+                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                    }
+                }
                 foreach (Node node in nodes)
                 {
                     if (node.nodeXY == nodepos)
                     {
-                        node.fcost = hcost_grid[x, y];
+                        node.fGlobalGoal = hcost_grid[x, y];
                     }
                 }
             }
         }
     }
-    public Vector2 CalculateNextPosition(Vector2 aipos)
+    void CalculateNeighbours(Node currentNode)
     {
-        List<Node> openNodesList = new List<Node>();
-
         foreach (Node n in nodes)
         {
-            if (closedNodesList.Any(item => item == n))
+            //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
+            if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
             {
-                //als de huidige node al in closedNodes zit, dan doe je niks
+                currentNode.neighbours.Add(n);
             }
-            else
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
             {
-                if (n.nodeXY == aipos)
-                {
-                    closedNodesList.Add(n); //de aipos wordt toegevoegd aan de closedNodesList
-                }
-                //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
-                if (n.nodeXY == new Vector2(aipos.X + 1, aipos.Y + 1))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X - 1, aipos.Y - 1))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X + 1, aipos.Y - 1))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X - 1, aipos.Y + 1))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X + 1, aipos.Y))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X, aipos.Y + 1))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X - 1, aipos.Y))
-                {
-                    openNodesList.Add(n);
-                }
-                else if (n.nodeXY == new Vector2(aipos.X, aipos.Y - 1))
-                {
-                    openNodesList.Add(n);
-                }
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y + 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y - 1))
+            {
+                currentNode.neighbours.Add(n);
             }
         }
-        openNodesList = openNodesList.OrderBy(n => n.fcost).ToList(); //de OpenNodesList word georderd op fcost dus de optie waar de fcost het laagst is zal de ai als eerst uitvoeren
-        if (closedNodesList.Count() > 20)
-        {
-            closedNodesList.Clear(); //na 20 stappen worden de plekken waar de ai al is geweest uit de closedList gehaald omdat de Ai anders vast loopt
-        }
-        try
-        {
-            return openNodesList[0].nodeXY; //we returnen de stap dat het minste fcost heeft
-        }
-        catch
-        {
-            Console.WriteLine("error has occurred but idk how"); //er komt een error soms maar ik weet nog niet waardoor deze komt hierdoor heb ik een random positie gegeven aan de ai waardoor de code niet vast loopt
-            return new Vector2(20, 18);
-        }
-    }
+    }/// <summary>
+     /// //////////////////////9999
+     /// </summary>
+     /// <param name="pos"></param>
     void Move(Vector2 pos)
     {
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        Player player = GameWorld.GetObject("player") as Player;
         Vector2 movpos = grid.AnchorPosition((int)pos.X, (int)pos.Y);
-        this.Position = movpos; //de ai beweegt naar de gewezen positie
+        //  Vector2 enemypos = new Vector2((int)this.GridPos.X, (int)this.GridPos.Y);
+        //  Vector2 endpos = new Vector2((int)nodeEnd.nodeXY.X,(int)nodeEnd.nodeXY.Y);
+        //de ai beweegt naar de gewezen positie
+        float dx = movpos.X - this.Position.X;
+        float dy = movpos.Y - this.Position.Y;
+        float distance = Vector2.Distance(movpos, this.Position);
+        float scale = 100 / distance;
+
+        float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
+
+        if (aiplayerdistance < 2.2f|| die || dead)
+            this.velocity = Vector2.Zero;
+        else
+        {
+            this.velocity.X = dx * scale;
+            this.velocity.Y = dy * scale;
+        }
     }
 
     public int Health
@@ -336,5 +399,6 @@ partial class Enemy : MovingEntity
 
         return range;
     }
+
 }
 
