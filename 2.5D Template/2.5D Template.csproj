@@ -67,7 +67,6 @@
     <Compile Include="GameObjects\Entities\Item.cs" />
     <Compile Include="GameObjects\Entities\MovingEntity.cs" />
     <Compile Include="GameObjects\Entities\Node.cs" />
-    <Compile Include="GameObjects\Entities\Path.cs" />
     <Compile Include="GameObjects\Entities\Player\Classes\Bard.cs" />
     <Compile Include="GameObjects\Entities\Player\Classes\Warrior.cs" />
     <Compile Include="GameObjects\Entities\Player\Classes\Wizzard.cs" />
