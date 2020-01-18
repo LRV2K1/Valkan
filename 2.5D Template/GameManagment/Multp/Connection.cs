@@ -44,11 +44,14 @@ public partial class Connection
     {
         return data;
     }
-    public void Send(string message, int port) //convert string to bytes to broadcast it
+    public void Send(string message, int port, bool log = true) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
         client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Broadcast, port)); //broadcast to specific port
-        Console.WriteLine("\nSent on " + IPAddress.Broadcast.ToString() + ":" + port + " ->\n{0}", message);
+        if (log) //should the send message be put in console
+        {
+            Console.WriteLine("\nSent on " + IPAddress.Broadcast.ToString() + ":" + port + " ->\n{0}", message);
+        }
     }
 
     public static IPAddress MyIP() //returns own IP address

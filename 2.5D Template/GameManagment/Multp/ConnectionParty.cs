@@ -45,7 +45,7 @@ public class ConnectionParty : Connection
         {
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
-                Send("Host is still connected", port); //message send by host only, if host crashes the clients wont be stuck
+                Send("Host is still connected", port, false); //message send by host only, if host crashes the clients wont be stuck
                 playerlist.Modify(MyIP(), timeunactive: 0);
                 foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
                 {
@@ -72,7 +72,7 @@ public class ConnectionParty : Connection
             {
                 if (time > 1 && playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //for player2 only
                 {
-                    Send("I am still connected", port); //message send by clients, this prevents error when a client types alt + f4.
+                    Send("I am still connected", port, false); //message send by clients, this prevents error when a client types alt + f4.
                     playerlist.Modify(MyIP(), timeunactive: 0);
                     foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
                     {
@@ -134,7 +134,7 @@ public class ConnectionParty : Connection
             {
                 playerlist.Modify(sender, timeunactive: 0);
             }
-            else
+            else if (variables[0] != "Entity:")
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
@@ -157,7 +157,7 @@ public class ConnectionParty : Connection
                     Send("Playerlist:" + playerlist.ToString(), port);
                 }
             }
-            else
+            else if (variables[0] != "Entity:")
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
