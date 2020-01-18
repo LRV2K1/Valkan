@@ -2,3 +2,4 @@ Sprites/Enemy/Minotaur,25,Enemy,Close
 Sprites/Enemy/Skeleton,15,Enemy,Close
 Sprites/Enemy/Grave,15,Enemy,Close
 Sprites/Enemy/Zombie,15,Enemy,Close
+Sprites/Enemy/Antilion,10,Enemy,Close
