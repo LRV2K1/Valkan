@@ -44,16 +44,16 @@ public class ConnectionParty : Connection
         {
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
-                Send("Host is still connected", port, false); //message send by host only, if host crashes the clients wont be stuck
+                Send("Host is still connected", port, true); //message send by host only, if host crashes the clients wont be stuck
                 playerlist.Modify(MyIP(), timeunactive: 0);
-                foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+                foreach (LobbyPlayer lobbyplayer in playerlist.playerlist) //remove unactive players
                 {
                     lobbyplayer.timeunactive += 1;
                     if (lobbyplayer.timeunactive >= 5)
                     {
-                        playerlist.Modify(lobbyplayer.ip, false, false, true);
+                        playerlist.Modify(lobbyplayer.ip, false, false, true); //remove 1 player from the party
                         Send("Playerlist:" + playerlist.ToString(), port);
-                        isopen = true;
+                        isopen = true; //since 1 player has been kicked, there is space
                         break;
                     }
                 }
@@ -61,7 +61,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
+                Send("Playerlist " + port + " :" + playerlist.ToString(), 1000, false); //broadcast playerlist to port 1000
             }
             time = 0;
         }
@@ -125,6 +125,7 @@ public class ConnectionParty : Connection
             else if (variables[0] == "Character:")
             {
                 playerlist.Modify(sender, character: variables[1]);
+                Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (lines[0] == "Playerlist:")
             {
@@ -169,6 +170,7 @@ public class ConnectionParty : Connection
             }
             else if (variables[0] == "World")
             {
+                Console.WriteLine("Received a world");
                 StoreWorld(variables[1], message);
             }
             else if (variables[0] != "Entity:")

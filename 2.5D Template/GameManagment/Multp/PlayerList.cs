@@ -19,6 +19,7 @@ public class PlayerList
             //variables[1] = isready
             //variables[2] = ishost
             //variables[3] = character
+            //variables[4] = timeunactive
             string[] variables = lines[i].Split(new string[] { ", " }, StringSplitOptions.None);
             Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4])); //modify playerlist with this data
         }
