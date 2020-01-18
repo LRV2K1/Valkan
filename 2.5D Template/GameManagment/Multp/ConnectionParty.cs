@@ -28,8 +28,7 @@ public class ConnectionParty : Connection
             if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, ip.Address.ToString());
-                HandleReceivedData(message, ip.Address);
+                HandleReceivedData(message, ip.Address, ip.Port);
                 data = message;
             }
             ar_ = client.BeginReceive(Receive, new object()); ; //repeat
@@ -95,10 +94,11 @@ public class ConnectionParty : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
+    public void HandleReceivedData(string message, IPAddress sender, int port) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
+        bool log = true;
         if (playerlist.IsHost(MyIP())) //data for host only
         {
             if (message == "Join")
@@ -129,10 +129,15 @@ public class ConnectionParty : Connection
             else if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
+                if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
+                {
+                    log = false;
+                }
             }
             else if (message == "I am still connected")
             {
                 playerlist.Modify(sender, timeunactive: 0);
+                log = false;
             }
             else if (variables[0] != "Entity:")
             {
@@ -144,6 +149,10 @@ public class ConnectionParty : Connection
             if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
+                if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
+                {
+                    log = false;
+                }
             }
             else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
             {
@@ -155,12 +164,17 @@ public class ConnectionParty : Connection
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port);
+                    log = false;
                 }
             }
             else if (variables[0] != "Entity:")
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
+        }
+        if (log) //should the received data be put in console?
+        {
+            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, sender, port);
         }
     }
 
