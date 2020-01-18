@@ -140,7 +140,11 @@ public class ConnectionParty : Connection
                 playerlist.Modify(sender, timeunactive: 0);
                 log = false;
             }
-            else if (variables[0] != "Entity:")
+            else if (variables[0] == "Entity:")
+            {
+                log = false;
+            }
+            else
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
@@ -173,7 +177,11 @@ public class ConnectionParty : Connection
                 Console.WriteLine("Received a world");
                 StoreWorld(variables[1], message);
             }
-            else if (variables[0] != "Entity:")
+            else if (variables[0] == "Entity:")
+            {
+                log = false;
+            }
+            else
             {
                 Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
