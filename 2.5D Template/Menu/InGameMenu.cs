@@ -46,12 +46,18 @@ class InGameMenu : Overlay
         }
         else if(main.Pressed)
         {
-            MultiplayerManager.party.Disconnect();
+            if (MultiplayerManager.online)
+            {
+                MultiplayerManager.party.Disconnect();
+            }
             GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
         }
         else if (quit.Pressed)
         {
-            MultiplayerManager.party.Disconnect();
+            if (MultiplayerManager.online)
+            {
+                MultiplayerManager.party.Disconnect();
+            }
             GameEnvironment.QuitGame = true;
         }
     }

@@ -28,7 +28,10 @@ abstract partial class Entity : AnimatedGameObject
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
-        previousdata = MultiplayerManager.party.GetReceivedData();
+        if (MultiplayerManager.online)
+        {
+            previousdata = MultiplayerManager.party.GetReceivedData();
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -53,7 +56,6 @@ abstract partial class Entity : AnimatedGameObject
         {
             ReceiveData();
         }
-        ReceiveData();
     }
 
     public override void Reset()
