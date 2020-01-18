@@ -138,46 +138,47 @@ partial class Level : GameObjectLibrary
 
     private void LoadPlayer(int x, int y)
     {
+        Player player;
+        try
+        {
+            PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
+            switch (playerType)
+            {
+                case PlayerType.Bard:
+                    player = new Bard();
+                    break;
+                case PlayerType.Warrior:
+                    player = new Warrior();
+                    break;
+                case PlayerType.Wizzard:
+                    player = new Wizzard();
+                    break;
+                default:
+                    player = new Warrior();
+                    break;
+            }
+        }
+        catch
+        {
+            player = new Warrior();
+        }
         GameObjectList entities = GetObject("entities") as GameObjectList;
+        entities.Add(player);
+        player.SetupPlayer();
+        player.MovePositionOnGrid(x, y);
+
         if (MultiplayerManager.online)
         {
             foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
             {
-                Player player = new Warrior();
-                entities.Add(player);
-                player.SetupPlayer();
-                player.MovePositionOnGrid(x, y);
-            }
-        }
-        else
-        {
-            Player player;
-            try
-            {
-                PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
-                switch (playerType)
+                if (lobbyplayer.ishost == false)
                 {
-                    case PlayerType.Bard:
-                        player = new Bard();
-                        break;
-                    case PlayerType.Warrior:
-                        player = new Warrior();
-                        break;
-                    case PlayerType.Wizzard:
-                        player = new Wizzard();
-                        break;
-                    default:
-                        player = new Warrior();
-                        break;
+                    Item item = new Item(id: "player2");
+                    GameObjectList items = GetObject("items") as GameObjectList;
+                    entities.Add(item);
+                    item.MovePositionOnGrid(50, 50);
                 }
             }
-            catch
-            {
-                player = new Warrior();
-            }
-            entities.Add(player);
-            player.SetupPlayer();
-            player.MovePositionOnGrid(x, y);
         }
     }
 
