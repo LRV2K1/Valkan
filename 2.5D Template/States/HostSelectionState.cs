@@ -14,6 +14,8 @@ class HostSelectionState : GameObjectLibrary
     protected Button startButton, changeButton, warriorButton, sorcererButton, bardButton, returnButton, hostButton, player2Button, player3Button, player4Button;
     protected SpriteGameObject Selected;
     protected MapSelectionPopUp popup;
+    bool timeron;
+    float time;
     List<Button> buttonList;
 
     public HostSelectionState()
@@ -61,6 +63,24 @@ class HostSelectionState : GameObjectLibrary
     public override void Update(GameTime gameTime) //create and remove player buttons
     {
         base.Update(gameTime);
+        if (timeron)
+        {
+            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (time > 1)
+            {
+                if (MultiplayerManager.party.playerlist.AllReceivedWorld())
+                {
+                    MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                }
+                else
+                {
+                    MultiplayerManager.party.Send("Start", 9999);
+                    GameEnvironment.ScreenFade.TransitionToScene("playingState");
+                    timeron = false;
+                }
+                time = 0;
+            }
+        }
         if (MultiplayerManager.party != null)
         {
             for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
@@ -92,11 +112,9 @@ class HostSelectionState : GameObjectLibrary
             if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
             {
                 MultiplayerManager.party.Send("Closed: " + Connection.MyIP().ToString() + ":" + MultiplayerManager.party.port, 1000);
-                MultiplayerManager.party.isopen = false;
+                MultiplayerManager.party.isopen = false;                
                 MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
-                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
-                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
-                GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+                timeron = true;
             }
             else
             {

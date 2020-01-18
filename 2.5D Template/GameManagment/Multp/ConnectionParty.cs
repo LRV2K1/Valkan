@@ -163,6 +163,10 @@ public class ConnectionParty : Connection
                     log = false;
                 }
             }
+            else if (message == "Start")
+            {
+                GameEnvironment.ScreenFade.TransitionToScene("playingState");
+            }
             else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
             {
                 Disconnect();
@@ -223,7 +227,7 @@ public class ConnectionParty : Connection
         Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
         writer.Close();
         GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
-        GameEnvironment.ScreenFade.TransitionToScene("playingState");
+        playerlist.Modify(MyIP(), receivedworld: true);
     }
     public string WorldToString(string file) //convert <file>.txt to string
     {
