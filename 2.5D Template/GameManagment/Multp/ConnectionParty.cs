@@ -164,7 +164,7 @@ public class ConnectionParty : Connection
                 playerlist.Modify(sender, timeunactive: 0);
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
-                    Send("Playerlist:" + playerlist.ToString(), port);
+                    Send("Playerlist:" + playerlist.ToString(), port, false);
                     log = false;
                 }
             }
