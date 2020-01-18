@@ -46,7 +46,7 @@ public class PlayerList
                 {
                     lobbyplayer.character = character;
                 }
-                else if (timeunactive == 0)
+                if (timeunactive == 0)
                 {
                     lobbyplayer.timeunactive = 0;
                 }
