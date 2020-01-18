@@ -23,7 +23,7 @@ public class PlayerList
             Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4])); //modify playerlist with this data
         }
     }
-    public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "Warrior", float timeunactive = 0)
+    public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "null", float timeunactive = 0)
     {
         int count = 0;
         bool newplayer = true;
@@ -42,13 +42,13 @@ public class PlayerList
                 {
                     lobbyplayer.isready = isready;
                 }
-                else if (character == "Warrior" || character == "Wizzard" || character == "Bard")
-                {
-                    lobbyplayer.character = character;
-                }
                 if (timeunactive == 0)
                 {
                     lobbyplayer.timeunactive = 0;
+                }
+                if (character == "Warrior" || character == "Wizzard" || character == "Bard")
+                {
+                    lobbyplayer.character = character;
                 }
             }
             count++;
