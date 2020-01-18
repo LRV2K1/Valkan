@@ -43,17 +43,20 @@ public class ConnectionParty : Connection
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
-            foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+            if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
-                lobbyplayer.timeunactive += 1;
-                if (lobbyplayer.timeunactive >= 5)
+                Send("Host is still connected", port); //message send by host only, if host crashes the clients wont be stuck
+                foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
                 {
-                    playerlist.Modify(lobbyplayer.ip, false, false, true);
-                    Send("Playerlist:" + playerlist.ToString(), port);
+                    lobbyplayer.timeunactive += 1;
+                    if (lobbyplayer.timeunactive >= 5)
+                    {
+                        playerlist.Modify(lobbyplayer.ip, false, false, true);
+                        Send("Playerlist:" + playerlist.ToString(), port);
+                    }
                 }
-            }
+            }            
             Send("Playerlist " + port + " :" + playerlist.ToString(), 1000); //broadcast playerlist to port 1000
-            Send("Host is still connected", port); //message send by host only, if host crashes the clients wont be stuck
             time = 0;
         }
         else if (time > 1)
@@ -114,7 +117,7 @@ public class ConnectionParty : Connection
             else if (message == "Host is still connected")
             {
                 playerlist.Modify(sender, timeunactive: 0);
-                if (playerlist.playerlist[1].ip == MyIP()) //send only by player2
+                if (true) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port);
                 }
