@@ -61,7 +61,6 @@ partial class Enemy : MovingEntity
             }
             return;
         }
-
         if (start == 1) // de start positie moet 1 keer worden geintialized
         {
             Startup();

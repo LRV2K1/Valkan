@@ -64,9 +64,17 @@ class PlayingState : State
             return;
         }
 
-        if (inputHelper.KeyPressed(Keys.P))
+        if (inputHelper.KeyPressed(Keys.Escape))
         {
-            paused = !paused;
+            OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
+            if (overlay.CurrentOverlay is InGameMenu)
+            {
+                overlay.SwitchTo("hud");
+            }
+            else
+            {
+                overlay.SwitchTo("menu");
+            }
         }
 
         if (!paused)
@@ -77,9 +85,13 @@ class PlayingState : State
 
     public override void Update(GameTime gameTime)
     {
+        if(firstTime)
+        {
+            GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
+            firstTime = false;
+        }
         if (level == null)
         {
-            Load();
             return;
         }
         if (!paused)
