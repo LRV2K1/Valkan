@@ -13,10 +13,11 @@ public class LobbyPlayer
     public string character = "Warrior";
     public float timeunactive = 0; //if this number reaches 5 the client is clearly no longer there and should be removed (e.g. alt f4)
 
-    public LobbyPlayer(IPAddress ip, bool isready = false, bool ishost = false)
+    public LobbyPlayer(IPAddress ip, bool isready = false, bool ishost = false, string character = "Warrior")
     {
         this.ip = ip;
         this.isready = isready;
         this.ishost = ishost;
+        this.character = character;
     }
 }

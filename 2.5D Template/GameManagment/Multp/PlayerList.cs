@@ -56,7 +56,7 @@ public class PlayerList
         }
         if (newplayer)
         {
-            playerlist.Add(new LobbyPlayer(ip, isready, ishost));
+            playerlist.Add(new LobbyPlayer(ip, isready, ishost, character));
             Console.WriteLine("Added lobbyplayer");
         }
     }
