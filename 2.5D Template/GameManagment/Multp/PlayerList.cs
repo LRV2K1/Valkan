@@ -114,22 +114,4 @@ public class PlayerList
         }
         return true;
     }
-    public bool ReceivedWorld(IPAddress ip)
-    {
-        foreach (LobbyPlayer lobbyplayer in playerlist)
-        {
-            if (lobbyplayer.ip.ToString() == ip.ToString()) //is someone is not ready and not host
-            {
-                if (!lobbyplayer.receivedworld)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-        return true;
-    }
 }
