@@ -39,7 +39,7 @@ public partial class Connection
     public void Send(string message, int port, bool log = true) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
-        udpclient.Send(bytes, bytes.Length, remoteep);
+        udpclient.Send(bytes, bytes.Length, new IPEndPoint(multicastaddress, port));
         if (log) //should the send message be put in console
         {
             Console.WriteLine("\nSentttt on " + remoteep.ToString() + ":" + port + " ->\n{0}", message);
