@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
-using System.Net.Sockets;
-using System.Net;
 using Microsoft.Xna.Framework;
 using System.IO;
+using System.Net;
 using System.Text;
 
 public class ConnectionParty : Connection
@@ -63,7 +62,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), 1000, false); //broadcast playerlist to port 1000
+                Send("Playerlist " + port + " :" + playerlist.ToString(), 9967, true); //broadcast playerlist to port 1000
             }
             time = 0;
         }
@@ -113,7 +112,7 @@ public class ConnectionParty : Connection
                 Send("Playerlist:" + playerlist.ToString(), port);
                 if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
-                    Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+                    Send("Closed: " + MyIP().ToString() + ":" + port, 9967);
                     isopen = false;
                 }
             }
@@ -204,14 +203,14 @@ public class ConnectionParty : Connection
         if (playerlist.IsHost(MyIP()))
         {
             Send("HostLeaves", 9999);
-            Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+            Send("Closed: " + MyIP().ToString() + ":" + port, 9967);
             isopen = false;
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
         {
             Send("Leave", 9999);
-            MultiplayerManager.Connect(1000);
+            MultiplayerManager.Connect(9967);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         udpclient.Close();

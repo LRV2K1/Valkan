@@ -41,7 +41,7 @@ public partial class Connection
         udpclient.Send(bytes, bytes.Length, remoteep);
         if (log) //should the send message be put in console
         {
-            Console.WriteLine("\nSent on " + IPAddress.Broadcast.ToString() + ":" + port + " ->\n{0}", message);
+            Console.WriteLine("\nSentttt on " + remoteep.ToString() + ":" + port + " ->\n{0}", message);
         }
     }
 
