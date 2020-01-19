@@ -40,13 +40,13 @@ class Projectile : Item
         lifetime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (lifetime <= 0)
         {
-            RemoveSelf();
+            Explode();
             return;
         }
         CheckHit();
     }
 
-    private void CheckHit()
+    protected void CheckHit()
     {
         List<string> surroundingentities = GetSurroundingEntities();
 
@@ -70,25 +70,59 @@ class Projectile : Item
 
         if (damaged)
         {
-            if (particle_asset != "")
-            {
-                ParticleEffect particleEffect = new ParticleEffect(particle_asset);
-                particleEffect.Position = GlobalPosition;
-                particleEffect.Origin += offsetposition;
-                GameWorld.RootList.Add(particleEffect);
-                GameEnvironment.AssetManager.PlaySound(explosionsound);
-            }
-            RemoveSelf();
+            Explode();
         }
     }
 
-    protected override void HandleCollisions() { }
+    protected override void HandleCollisions() 
+    {
+        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //check surrounding tiles
+        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        {
+            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            {
+                TileType tileType = tiles.GetTileType(x, y);
+                TextureType textureType = tiles.GetTextureType(x, y);
+                Tile currentTile = tiles.Get(x, y) as Tile;
+                Rectangle tileBounds;
+
+                if (currentTile == null)
+                {
+                    continue;
+                }
+                //check collision
+                if (tileType == TileType.Wall && textureType != TextureType.Water)
+                {
+                    tileBounds = currentTile.GetBoundingBox();
+                    if (tileBounds.Intersects(BoundingBox))
+                    {
+                        Explode();
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
     public override void PlayAnimation(string id, bool isBackWards = false)
     {
         base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
         origin += offsetposition;
+    }
+
+    protected void Explode()
+    {
+        if (particle_asset != "")
+        {
+            ParticleEffect particleEffect = new ParticleEffect(particle_asset);
+            particleEffect.Position = GlobalPosition;
+            particleEffect.Origin += offsetposition;
+            GameWorld.RootList.Add(particleEffect);
+            GameEnvironment.AssetManager.PlaySound(explosionsound);
+        }
+        RemoveSelf();
     }
 
     private Rectangle HitBox
