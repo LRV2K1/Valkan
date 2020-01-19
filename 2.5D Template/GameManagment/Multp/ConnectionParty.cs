@@ -248,12 +248,12 @@ public class ConnectionParty : Connection
             Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
             writer.Close();
             GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
-
+            receivedworldpart1 = true;
             if (receivedwholeworld)
             {
                 playerlist.Modify(MyIP(), receivedworld: true);
+                receivedworldpart1 = false;
             }
-
         }
     }
 
