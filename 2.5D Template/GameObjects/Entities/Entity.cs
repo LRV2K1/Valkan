@@ -30,7 +30,7 @@ abstract partial class Entity : AnimatedGameObject
         previousPos = position;
         if (MultiplayerManager.Online)
         {
-            previousdata = MultiplayerManager.Party.GetReceivedData();
+            previousdata = MultiplayerManager.Party.Data;
         }
     }
 
@@ -78,10 +78,10 @@ abstract partial class Entity : AnimatedGameObject
     {
         try
         {
-            if (previousdata != MultiplayerManager.Party.GetReceivedData())
+            if (previousdata != MultiplayerManager.Party.Data)
             {
-                previousdata = MultiplayerManager.Party.GetReceivedData();
-                string[] variables = MultiplayerManager.Party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                previousdata = MultiplayerManager.Party.Data;
+                string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
                     count++;

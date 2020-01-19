@@ -13,6 +13,7 @@ public partial class Connection
     protected IPEndPoint remoteep;
     protected IPEndPoint localEp;
     protected IAsyncResult ar_ = null;
+    public string Data { get { return data; } }
 
     public Connection(int port)
     {
@@ -50,10 +51,5 @@ public partial class Connection
             }
         }
         throw new Exception("No network adapters with an IPv4 address in the system");
-    }
-
-    public string GetReceivedData()
-    {
-        return data;
     }
 }

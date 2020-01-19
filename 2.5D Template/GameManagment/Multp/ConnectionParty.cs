@@ -10,6 +10,7 @@ public class ConnectionParty : Connection
     public PlayerList playerlist;
     public bool isopen = true;
     float time;
+    int count = 0;
 
     public ConnectionParty(int port)
         : base(port)
@@ -106,6 +107,8 @@ public class ConnectionParty : Connection
             if (variables[0] == "Entity:")
             {
                 data = message;
+                count++;
+                Console.WriteLine(count);
             }
             else if (message == "Join")
             {
