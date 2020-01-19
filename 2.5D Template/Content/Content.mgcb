@@ -4952,3 +4952,27 @@
 /processorParam:Quality=Best
 /build:SFX/Player/Warrior_Death.wav
 
+#begin SFX/Player/Mage_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Damage.wav
+
+#begin SFX/Player/Mage_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Death.wav
+
+#begin SFX/Player/Bard_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Damage.wav
+
+#begin SFX/Player/Bard_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Death.wav
+
