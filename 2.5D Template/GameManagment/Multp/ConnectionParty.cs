@@ -158,7 +158,8 @@ public class ConnectionParty : Connection
             if (variables[0] == "Entity:")
             {
                 data = message;
-                log = false;
+                count++;
+                Console.WriteLine(count);
             }
             else if (lines[0] == "Playerlist:")
             {
