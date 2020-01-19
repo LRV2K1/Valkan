@@ -11,6 +11,7 @@ abstract partial class Entity : AnimatedGameObject
 {
     int count1;
     int count2;
+    int count3;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
@@ -36,6 +37,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
+
         count1++;
         base.Update(gameTime);
         //check if moved
@@ -57,7 +59,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             ReceiveData();
         }
-        Console.WriteLine(count1 + " " + count2);
+        Console.WriteLine(count1 + " " + count2 + " " + count3);
     }
 
     public override void Reset()
@@ -78,6 +80,8 @@ abstract partial class Entity : AnimatedGameObject
 
     private void ReceiveData()
     {
+
+        count3++;
         try
         {
             if (previousdata != MultiplayerManager.Party.Data)
