@@ -28,11 +28,11 @@ class Camera : GameObject
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.IsKeyDown(Keys.Left))
+        if (inputHelper.IsKeyDown(Keys.A))
         {
             cameraSpeed.X = -800;
         }
-        else if (inputHelper.IsKeyDown(Keys.Right))
+        else if (inputHelper.IsKeyDown(Keys.D))
         {
             cameraSpeed.X = 800;
         }
@@ -41,11 +41,11 @@ class Camera : GameObject
             cameraSpeed.X = 0;
         }
 
-        if (inputHelper.IsKeyDown(Keys.Up))
+        if (inputHelper.IsKeyDown(Keys.W))
         {
             cameraSpeed.Y = -800;
         }
-        else if (inputHelper.IsKeyDown(Keys.Down))
+        else if (inputHelper.IsKeyDown(Keys.S))
         {
             cameraSpeed.Y = 800;
         }

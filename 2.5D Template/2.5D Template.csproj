@@ -50,11 +50,8 @@
     <Compile Include="GameManagment\AssetManager.cs" />
     <Compile Include="GameManagment\Camera.cs" />
     <Compile Include="GameManagment\Collision.cs" />
-    <Compile Include="GameManagment\ConnectionLobby.cs" />
-    <Compile Include="GameManagment\ConnectionParty.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
-    <Compile Include="GameManagment\LobbyPlayer.cs" />
     <Compile Include="GameManagment\Multp\Connection.cs" />
     <Compile Include="GameManagment\Multp\ConnectionLobby.cs" />
     <Compile Include="GameManagment\Multp\ConnectionParty.cs" />
@@ -62,7 +59,6 @@
     <Compile Include="GameManagment\Multp\MultiplayerManager.cs" />
     <Compile Include="GameManagment\Multp\PlayerList.cs" />
     <Compile Include="GameManagment\OutputText.cs" />
-    <Compile Include="GameManagment\PlayerList.cs" />
     <Compile Include="GameObjects\Editor\ItemGrid.cs" />
     <Compile Include="GameObjects\Editor\EditorMouse.cs" />
     <Compile Include="GameObjects\Editor\Entities\EditorEntity.cs" />
