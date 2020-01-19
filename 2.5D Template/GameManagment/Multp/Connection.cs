@@ -23,7 +23,8 @@ public partial class Connection
         localEp = new IPEndPoint(IPAddress.Any, port);
 
         udpclient.JoinMulticastGroup(multicastaddress);
-        udpclient.Client.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 10);
+        udpclient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        udpclient.Client.Ttl = 0;
         udpclient.ExclusiveAddressUse = false;
         udpclient.Client.Bind(localEp);
         Send("Send first message", port, false);
