@@ -4670,3 +4670,57 @@
 /processorParam:Quality=Best
 /build:Soundtracks/ToT_OST04.mp3
 
+#begin SFX/Player/Magic_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Magic_Shield.wav
+
+#begin SFX/Menu/Button_Press.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Button_Press.wav
+
+#begin SFX/Menu/Quit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Quit.wav
+
+#begin SFX/Player/Warrior_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Shield.wav
+
+#begin SFX/Player/Bard_Speed.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Speed.wav
+
+#begin SFX/Player/Bard_Heal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Heal.wav
+
+#begin Soundtracks/Valkan's Fate - Electric.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate - Electric.mp3
+
+#begin SFX/Editor/Editor_Place.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Editor/Editor_Place.wav
+
+#begin Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
+
