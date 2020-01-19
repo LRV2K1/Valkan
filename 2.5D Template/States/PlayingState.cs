@@ -42,28 +42,6 @@ class PlayingState : State
         {
             return;
         }
-        if (inputHelper.KeyPressed(Keys.L))
-        {
-            try
-            {
-                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
-                {
-                    case "offline":
-                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
-                        break;
-                    case "online":
-                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch
-            {
-                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
-            }
-            return;
-        }
 
         if (inputHelper.KeyPressed(Keys.Escape))
         {

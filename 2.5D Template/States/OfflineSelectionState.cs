@@ -14,6 +14,7 @@ class OfflineSelectionState : GameObjectLibrary
     protected Button startButton, changeButton, warriorButton, sorcererButton, bardButton, returnButton;
     protected string[,] skillbuttons;
     protected string[,] skilltext;
+    protected List<string> levels;
     protected MapSelectionPopUp popup;
     protected SpriteGameObject Selected;
     public OfflineSelectionState()
@@ -54,6 +55,27 @@ class OfflineSelectionState : GameObjectLibrary
         LoadSkillButtons();
 
         GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+
+        levels = new List<string>();
+        for (int i = 0; i < 10; i++)
+        {
+            if (i == 0)
+            {
+                SpriteGameObject level = new SpriteGameObject("Sprites/Menu/Level_Button", 101);
+                levels.Add(level.Id);
+                level.Position = new Vector2((GameEnvironment.Screen.X - changeButton.Width) / 8 * 7, (GameEnvironment.Screen.Y - changeButton.Height) / 3 * 2 - 300);
+                level.Visible = false;
+                RootList.Add(level);
+            }
+            else
+            {
+                SpriteGameObject level = new SpriteGameObject("Sprites/Menu/Level_Button_" + i, 101);
+                levels.Add(level.Id);
+                level.Position = new Vector2((GameEnvironment.Screen.X - changeButton.Width) / 8 * 7, (GameEnvironment.Screen.Y - changeButton.Height) / 3 * 2 - 300);
+                level.Visible = false;
+                RootList.Add(level);
+            }
+        }
     }
 
     private void LoadSkillText()
@@ -139,6 +161,27 @@ class OfflineSelectionState : GameObjectLibrary
                 (GetObject(skillbuttons[2, 2]) as Button).Visible = true;
                 break;
         }
+
+        int levelnum = 0;
+        try
+        {
+            levelnum = int.Parse(GameEnvironment.GameSettingsManager.GetValue("level"));
+        }
+        catch
+        {
+        }
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if (i != levelnum)
+            {
+                (GetObject(levels[i]) as SpriteGameObject).Visible = false;
+            }
+            else
+            {
+                (GetObject(levels[i]) as SpriteGameObject).Visible = true;
+            }
+        }
+
     }
 
     public override void HandleInput(InputHelper inputHelper)
