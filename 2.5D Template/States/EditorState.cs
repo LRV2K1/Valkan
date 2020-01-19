@@ -27,7 +27,7 @@ class EditorState : State
     public override void Load()
     {
         string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
-        LevelEditer = new LevelEditer(200, 200, true, levelnum);
+        LevelEditor = new LevelEditor(200, 200, true, levelnum);
         GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1");
     }
 
