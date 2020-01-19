@@ -12,6 +12,10 @@ abstract partial class Entity : AnimatedGameObject
     private void DoPhysics()
     {
         OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         HandleCollisions();
     }
 

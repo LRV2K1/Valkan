@@ -31,11 +31,12 @@ partial class LevelEditor : GameObjectLibrary
 
         overlay.AddStatus("Floor", new TileOverlay(this, "Content/Editor/Tiles/Floor.txt"));
         overlay.AddStatus("Wall", new TileOverlay(this, "Content/Editor/Tiles/Wall.txt"));
-        overlay.AddStatus("Cave", new TileOverlay(this, "Content/Editor/Tiles/Cave.txt"));
+        //overlay.AddStatus("Cave", new TileOverlay(this, "Content/Editor/Tiles/Cave.txt"));
         overlay.AddStatus("Tree", new TileOverlay(this, "Content/Editor/Tiles/Tree.txt"));
         overlay.AddStatus("Items", new EntityOverlay(this, "Content/Editor/Entities/Item.txt"));
-        overlay.AddStatus("Objects", new EntityOverlay(this, "Content/Editor/Entities/Object.txt"));
-        overlay.AddStatus("Cave_Objects", new EntityOverlay(this, "Content/Editor/Entities/Cave_Object.txt"));
+        overlay.AddStatus("Objects-1", new EntityOverlay(this, "Content/Editor/Entities/Object.txt"));
+        overlay.AddStatus("Objects-2", new EntityOverlay(this, "Content/Editor/Entities/Objects2.txt"));
+        //overlay.AddStatus("Cave_Objects", new EntityOverlay(this, "Content/Editor/Entities/Cave_Object.txt"));
         overlay.AddStatus("Enemies", new EntityOverlay(this, "Content/Editor/Entities/Enemy.txt"));
         overlay.AddStatus("Spawn", new EntityOverlay(this, "Content/Editor/Entities/Spawn.txt"));
 
