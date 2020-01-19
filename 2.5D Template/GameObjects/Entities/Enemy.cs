@@ -18,7 +18,7 @@ partial class Enemy : MovingEntity
 
     int count = 0;
 
-    float[,] hcost_grid = new float[30, 30];
+    float[,] hcost_grid = new float[200, 200];
     bool pathFound = false;
     // nieuw path word aangemaakt
     enum AiState { SLEEP, RUNNING } // de ai heeft 2 states waarin hij switched
@@ -26,7 +26,7 @@ partial class Enemy : MovingEntity
     Node nodeStart;
     Node nodeEnd;
     List<Node> path = new List<Node>();
-    Node[,] nodes = new Node[30, 30];
+    Node[,] nodes = new Node[200, 200];
     List<Vector2> destinationQueue = new List<Vector2>();
     List<Node> untestedNodesList = new List<Node>();
     int counter;
@@ -69,10 +69,9 @@ partial class Enemy : MovingEntity
         if (InRange() == true) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
-            // this.Position *= EnemyVelocity(player.Position);
             DesCalculate(player.GridPos);
         }
-        else if (!InRange()|| die || dead)
+        else if (!InRange())
             this.velocity = Vector2.Zero;
 
         ChangeAnimation();
@@ -105,35 +104,40 @@ partial class Enemy : MovingEntity
         destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = 0; y < 30; y++)
+        for (int y = (int)player.GridPos.Y - 10; y <= (int)player.GridPos.Y + 10; y++)
         {
-            for (int x = 0; x < 30; x++)
+            for (int x = (int)player.GridPos.X - 10; x <= (int)player.GridPos.X + 10; x++)
             {
-                hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), player.GridPos); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
+                if (x > 0 && y > 0)
+                {
+                    hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), player.GridPos); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
 
-                Vector2 nodepos = new Vector2(x, y);
-                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, player.GridPos));
-                nodeEnd = new Node(player.GridPos, 0);
-                if (nodepos == player.GridPos)
-                {
-                    nodes[x, y] = nodeEnd;
-                }
-                else if (nodepos == this.GridPos)
-                {
-                    nodes[x, y] = nodeStart;
-
-                }
-                else
-                {
-                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
-                    if (grid.GetTileType(x, y) == TileType.Wall)
+                    Vector2 nodepos = new Vector2(x, y);
+                    nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, player.GridPos));
+                    nodeEnd = new Node(player.GridPos, 0);
+                    if (nodepos == player.GridPos)
                     {
-                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                        nodes[x, y] = nodeEnd;
+                    }
+
+                    else if (nodepos == this.GridPos)
+                    {
+                        nodes[x, y] = nodeStart;
+                    }
+
+                    else
+                    {
+                        nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                        if (grid.GetTileType(x, y) == TileType.Wall)
+                        {
+                            nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                        }
                     }
                 }
             }
         }
     }
+
     public void DesCalculate(Vector2 playerpos)
     {
         Enemy enemy = this;
@@ -224,7 +228,6 @@ partial class Enemy : MovingEntity
             }
             if (untestedNodesList.Count() == 0)
             {
-                Console.WriteLine("LIST IS 0 :)");
                 break;
             }
             nodeCurrent = untestedNodesList[0];
@@ -243,13 +246,11 @@ partial class Enemy : MovingEntity
                     neighbour.fGlobalGoal = neighbour.fLocalGoal + Vector2.Distance(neighbour.nodeXY, nodeEnd.nodeXY);
                 }
             }
-            Console.WriteLine("|" + (nodeCurrent.nodeXY == nodeEnd.nodeXY) + "|" + nodeCurrent.nodeXY + "|" + nodeEnd.nodeXY + "|");
         }
 
         pathFound = true;
         untestedNodesList.Clear();
         AddParentToPath(nodeCurrent);
-
     }
 
     public void AddParentToPath(Node n)
@@ -264,77 +265,87 @@ partial class Enemy : MovingEntity
     {
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        for (int y = 0; y < 30; y++)
-        {
-            for (int x = 0; x < 30; x++)
-            {
-                hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), playerpos);
 
-                Vector2 nodepos = new Vector2(x, y);
-                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
-                nodeEnd = new Node(playerpos, 0);
-                if (nodepos == playerpos)
+        for (int y = (int)playerpos.Y - 10; y <= (int)playerpos.Y + 10; y++)
+        {
+            for (int x = (int)playerpos.X - 10; x <= (int)playerpos.X + 10; x++)
+            {
+                if (x > 0 && y> 0)
                 {
-                    nodes[x, y] = nodeEnd;
-                }
-                else if (nodepos == this.GridPos)
-                {
-                    nodes[x, y] = nodeStart;
-                }
-                else
-                {
-                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
-                    if (grid.GetTileType(x, y) == TileType.Wall)
+                    hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), playerpos);
+
+                    Vector2 nodepos = new Vector2(x, y);
+                    nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
+                    nodeEnd = new Node(playerpos, 0);
+                    if (nodepos == playerpos)
                     {
-                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                        nodes[x, y] = nodeEnd;
                     }
-                }
-                foreach (Node node in nodes)
-                {
-                    if (node.nodeXY == nodepos)
+                    else if (nodepos == this.GridPos)
                     {
-                        node.fGlobalGoal = hcost_grid[x, y];
+                        nodes[x, y] = nodeStart;
+                    }
+                    else
+                    {
+                        nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                        if (grid.GetTileType(x, y) == TileType.Wall)
+                        {
+                            nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                        }
+                    }
+
+                    foreach (Node node in nodes)
+                    {
+                        if (node != null)
+                            if (node.nodeXY == nodepos)
+                            {
+                                node.fGlobalGoal = hcost_grid[x, y];
+                            }
                     }
                 }
             }
         }
+
     }
     void CalculateNeighbours(Node currentNode)
     {
         foreach (Node n in nodes)
         {
-            //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
-            if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
+            if (n != null)
             {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y + 1))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y))
-            {
-                currentNode.neighbours.Add(n);
-            }
-            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y - 1))
-            {
-                currentNode.neighbours.Add(n);
+                //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
+                if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y + 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y))
+                {
+                    currentNode.neighbours.Add(n);
+                }
+                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y - 1))
+                {
+                    currentNode.neighbours.Add(n);
+                }
             }
         }
     }/// <summary>
@@ -347,8 +358,7 @@ partial class Enemy : MovingEntity
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
         Player player = GameWorld.GetObject("player") as Player;
         Vector2 movpos = grid.AnchorPosition((int)pos.X, (int)pos.Y);
-        //  Vector2 enemypos = new Vector2((int)this.GridPos.X, (int)this.GridPos.Y);
-        //  Vector2 endpos = new Vector2((int)nodeEnd.nodeXY.X,(int)nodeEnd.nodeXY.Y);
+
         //de ai beweegt naar de gewezen positie
         float dx = movpos.X - this.Position.X;
         float dy = movpos.Y - this.Position.Y;
@@ -357,7 +367,7 @@ partial class Enemy : MovingEntity
 
         float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (aiplayerdistance < 2.2f|| die || dead)
+        if (aiplayerdistance < 2.2f || die || dead)
             this.velocity = Vector2.Zero;
         else
         {
