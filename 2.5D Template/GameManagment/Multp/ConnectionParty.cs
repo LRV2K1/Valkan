@@ -40,6 +40,7 @@ public class ConnectionParty : Connection
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
+        Send("Plaaaaaaaayerlist " + port + " :" + playerlist.ToString(), 9967, true); //broadcast playerlist to port 1000
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
