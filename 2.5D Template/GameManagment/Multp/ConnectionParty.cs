@@ -107,8 +107,6 @@ public class ConnectionParty : Connection
             if (variables[0] == "Entity:")
             {
                 data = message;
-                count++;
-                Console.WriteLine(count);
             }
             else if (message == "Join")
             {
@@ -158,8 +156,6 @@ public class ConnectionParty : Connection
             if (variables[0] == "Entity:")
             {
                 data = message;
-                count++;
-                Console.WriteLine(count);
             }
             else if (lines[0] == "Playerlist:")
             {

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
-    int count;
+    int count1;
     int count2;
     protected Vector2 gridPos;
     protected int boundingy;
@@ -36,6 +36,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
+        count1++;
         base.Update(gameTime);
         //check if moved
         if (previousPos != position)
@@ -56,6 +57,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             ReceiveData();
         }
+        Console.WriteLine(count1 + " " + count2);
     }
 
     public override void Reset()
@@ -84,7 +86,7 @@ abstract partial class Entity : AnimatedGameObject
                 string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
-                    count++;
+                    count2++;
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;
