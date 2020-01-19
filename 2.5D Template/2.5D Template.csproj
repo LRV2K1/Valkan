@@ -96,6 +96,7 @@
     <Compile Include="Menu\MapSelectionPopUp.cs" />
     <Compile Include="Menu\PopUp.cs" />
     <Compile Include="Menu\ScreenFade.cs" />
+    <Compile Include="Menu\SkillHoverButton.cs" />
     <Compile Include="Menu\TextButton.cs" />
     <Compile Include="Overlays\Editor\EntityButton.cs" />
     <Compile Include="Overlays\Editor\EntityOverlay.cs" />
