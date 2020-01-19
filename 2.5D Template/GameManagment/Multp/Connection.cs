@@ -24,7 +24,7 @@ public partial class Connection
 
         udpclient.JoinMulticastGroup(multicastaddress);
         udpclient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-        udpclient.Client.Ttl = 0;
+        udpclient.Client.Ttl = 10020;
         udpclient.ExclusiveAddressUse = false;
         udpclient.Client.Bind(localEp);
         Send("Send first message", port, false);
