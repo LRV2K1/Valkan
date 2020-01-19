@@ -28,6 +28,7 @@ public class ConnectionLobby : Connection
             if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
+                Console.WriteLine("re " + message);
                 HandleReceivedData(message, remoteep.Address);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
