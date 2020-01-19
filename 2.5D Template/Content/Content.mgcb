@@ -4940,3 +4940,15 @@
 /processorParam:Quality=Best
 /build:Sprites/Enemy/Skeleton/Death.wav
 
+#begin SFX/Player/Warrior_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Damage.wav
+
+#begin SFX/Player/Warrior_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Death.wav
+
