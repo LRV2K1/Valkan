@@ -4871,3 +4871,27 @@
 /processorParam:Quality=Best
 /build:Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
 
+#begin SFX/Player/Fire_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Explosion.wav
+
+#begin SFX/Player/Fire_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Shoot.wav
+
+#begin SFX/Player/Ice_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Explosion.wav
+
+#begin SFX/Player/Ice_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Shoot.wav
+
