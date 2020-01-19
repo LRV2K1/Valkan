@@ -167,9 +167,9 @@ partial class Level : GameObjectLibrary
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
 
-        if (MultiplayerManager.online && false)
+        if (MultiplayerManager.Online && false)
         {
-            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
+            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
             {
                 if (lobbyplayer.ishost == false)
                 {

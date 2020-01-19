@@ -8,8 +8,8 @@ using System.Text;
 public class ConnectionParty : Connection
 {
     public PlayerList playerlist;
-    float time;
     public bool isopen = true;
+    float time;
 
     public ConnectionParty(int port)
         : base(port)
@@ -21,30 +21,22 @@ public class ConnectionParty : Connection
 
     private void Receive(IAsyncResult ar)
     {
-        try
-        {
             byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
 
-            //if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
-            //{
-            string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-            //Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
-            HandleReceivedData(message);
-            //}
+            if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            {
+                string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
+                HandleReceivedData(message, remoteep.Address);
+            }
             ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
-        }
-        catch
-        {
-
-        }
     }
+
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
-        Send("Plaaaaaaaayerlist " + port + " :" + playerlist.ToString(), 9967, false); //broadcast playerlist to port 1000
-        Send("Hoooooooooooooooooost is still connected", port, false);
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
+            Console.WriteLine("hi");
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
                 Send("Host is still connected", port, false); //message send by host only, if host crashes the clients wont be stuck
@@ -64,7 +56,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), 9967, true); //broadcast playerlist to port 1000
+                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort); //broadcast playerlist to port 1000
             }
             time = 0;
         }
@@ -97,43 +89,41 @@ public class ConnectionParty : Connection
         }
     }
 
-    public void HandleReceivedData(string message) //inspect received data and take action
+    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
         bool log = true;
-        if (true) //data for host only playerlist.IsHost(MyIP()
+        if (playerlist.IsHost(MyIP())) //data for host only playerlist.IsHost(MyIP()
         {
             if (variables[0] == "Entity:")
             {
-                Console.WriteLine("h9");
                 data = message;
                 log = false;
             }
             else if (message == "Join")
             {
-                //playerlist.Modify(sender);
+                playerlist.Modify(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
                 if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
-                    Send("Closed: " + MyIP().ToString() + ":" + port, 9967);
-                    isopen = false;
+                    CloseParty();
                 }
             }
             else if (message == "Leave")
             {
-               // playerlist.Modify(sender, false, false, true);
+                playerlist.Modify(sender, false, false, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
                 isopen = true;
             }
             else if (message == "Ready")
             {
-                //playerlist.Modify(sender, true);
+                playerlist.Modify(sender, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
             {
-               // playerlist.Modify(sender, character: variables[1]);
+                playerlist.Modify(sender, character: variables[1]);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (lines[0] == "Playerlist:")
@@ -146,18 +136,19 @@ public class ConnectionParty : Connection
             }
             else if (message == "I am still connected")
             {
-              //  playerlist.Modify(sender, timeunactive: 0);
+                playerlist.Modify(sender, timeunactive: 0);
                 log = false;
             }
             else
             {
-             //   Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
+                Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
             }
         }
         else //data for everyone but host
         {
             if (variables[0] == "Entity:")
             {
+                data = message;
                 log = false;
             }
             else if (lines[0] == "Playerlist:")
@@ -179,7 +170,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "Host is still connected")
             {
-                //playerlist.Modify(sender, timeunactive: 0);
+                playerlist.Modify(sender, timeunactive: 0);
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port, false);
@@ -193,19 +184,40 @@ public class ConnectionParty : Connection
             }
             else
             {
-            //    Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
         if (log) //should the received data be put in console?
         {
-            //Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
         }
+    }
+
+    public void CloseParty()
+    {
+        Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
+        isopen = false;
     }
 
     public void Disconnect() //stop receiving and sending data
     {
-        
+        if (playerlist.IsHost(MyIP()))
+        {
+            Send("HostLeaves", 9999);
+            CloseParty();
+            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
+        }
+        else
+        {
+            Send("Leave", 9999);
+            MultiplayerManager.Connect(1000);
+            GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
+        }
+        udpclient.Close();
+        Console.WriteLine("Disconnect from party");
+        MultiplayerManager.Party = null;
     }
+
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
         string path = "Content/Levels/" + file + ".txt";

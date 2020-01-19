@@ -38,15 +38,15 @@ class HostClientSelectionState : GameObjectLibrary
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
-        if (createGameButton.Pressed && MultiplayerManager.party == null)
+        if (createGameButton.Pressed && MultiplayerManager.Party == null)
         {
             MultiplayerManager.Connect(9999);
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), true, true);
+            MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), true, true);
             GameEnvironment.ScreenFade.TransitionToScene("hostSelectionState", 5);
         }
         else if (joinGameButton.Pressed)
         {
-            MultiplayerManager.Connect(9967);
+            MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         else if (returnButton.Pressed)

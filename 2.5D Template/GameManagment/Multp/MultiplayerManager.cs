@@ -8,10 +8,16 @@ using System.IO;
 //Send() and GetReceivedData() are the main 2 methods of this class
 public class MultiplayerManager
 {
-    public static ConnectionParty party;
-    public static ConnectionLobby lobby;
-    public static bool online = false;
-    int count = 0;
+    static ConnectionParty party;
+    static ConnectionLobby lobby;
+    static int lobbyport = 8888; 
+    static bool online = false;
+
+    public static int LobbyPort { get { return lobbyport; } }
+    static public bool Online { get { return online; } }
+    public static ConnectionParty Party { get { return party; } set { party = value; } }
+    public static ConnectionLobby Lobby { get { return lobby; } set { lobby = value; } }
+
     public MultiplayerManager()
     {
     }
@@ -19,7 +25,7 @@ public class MultiplayerManager
     //setup connection for lobby or ingame
     public static void Connect(int port)
     {
-        if (port == 9967)
+        if (port == LobbyPort)
         {
             if (lobby == null)
             {

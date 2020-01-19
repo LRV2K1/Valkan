@@ -34,9 +34,9 @@ class PortSelectionState : GameObjectLibrary
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (MultiplayerManager.lobby != null)
+        if (MultiplayerManager.Lobby != null)
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.lobby.playerlists.Count; i++)
+            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++)
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
@@ -44,7 +44,7 @@ class PortSelectionState : GameObjectLibrary
                 RootList.Add(buttonList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.lobby.playerlists.Count; i--)
+            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--)
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
@@ -61,15 +61,15 @@ class PortSelectionState : GameObjectLibrary
         {
             if (buttonList[i].Pressed)
             {
-                MultiplayerManager.Connect(MultiplayerManager.lobby.portlist[i]);
-                MultiplayerManager.party.Send("Join", MultiplayerManager.lobby.portlist[i]);
-                MultiplayerManager.lobby.Disconnect();
+                MultiplayerManager.Connect(MultiplayerManager.Lobby.portlist[i]);
+                MultiplayerManager.Party.Send("Join", MultiplayerManager.Lobby.portlist[i]);
+                MultiplayerManager.Lobby.Disconnect();
                 GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
             }
         }
         if (returnButton.Pressed)
         {
-            MultiplayerManager.lobby.Disconnect();
+            MultiplayerManager.Lobby.Disconnect();
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
     }
