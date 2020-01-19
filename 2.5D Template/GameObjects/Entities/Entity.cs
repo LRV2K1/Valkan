@@ -16,7 +16,7 @@ abstract partial class Entity : AnimatedGameObject
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
-    bool remove;
+    protected bool remove;
     string previousdata;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
