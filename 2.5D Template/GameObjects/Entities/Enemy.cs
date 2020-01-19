@@ -17,7 +17,7 @@ partial class Enemy : MovingEntity
     protected bool input;
 
     int count = 0;
-    Node[,] nodes = new Node[200, 200];
+
     float[,] hcost_grid = new float[200, 200];
     bool pathFound = false;
     // nieuw path word aangemaakt
@@ -26,10 +26,12 @@ partial class Enemy : MovingEntity
     Node nodeStart;
     Node nodeEnd;
     List<Node> path = new List<Node>();
-    
+    Node[,] nodes = new Node[200, 200];
     List<Vector2> destinationQueue = new List<Vector2>();
     List<Node> untestedNodesList = new List<Node>();
     int counter;
+    int start = 1;
+
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
     {
@@ -59,7 +61,11 @@ partial class Enemy : MovingEntity
             }
             return;
         }
-
+        if (start == 1) // de start positie moet 1 keer worden geintialized
+        {
+            //Startup();
+            start = 0;
+        }
         if (InRange() == true) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
@@ -91,7 +97,47 @@ partial class Enemy : MovingEntity
             }
         }
     }
-   
+    public void Startup()
+    {
+        Enemy enemy = this;
+        Player player = GameWorld.GetObject("player") as Player;
+        destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
+        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
+
+        for (int y = (int)player.GridPos.Y - 10; y <= (int)player.GridPos.Y + 10; y++)
+        {
+            for (int x = (int)player.GridPos.X - 10; x <= (int)player.GridPos.X + 10; x++)
+            {
+                if (x > 0 && y > 0)
+                {
+                    hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), player.GridPos); //de hcostgrid krijgt elk vakje een value, de value is de afstand vanaf het vakje naar de player (destination).
+
+                    Vector2 nodepos = new Vector2(x, y);
+                    nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, player.GridPos));
+                    nodeEnd = new Node(player.GridPos, 0);
+                    if (nodepos == player.GridPos)
+                    {
+                        nodes[x, y] = nodeEnd;
+                    }
+
+                    else if (nodepos == this.GridPos)
+                    {
+                        nodes[x, y] = nodeStart;
+                    }
+
+                    else
+                    {
+                        nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                        if (grid.GetTileType(x, y) == TileType.Wall)
+                        {
+                            nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void DesCalculate(Vector2 playerpos)
     {
         Enemy enemy = this;
@@ -190,7 +236,8 @@ partial class Enemy : MovingEntity
             CalculateNeighbours(nodeCurrent);
             foreach (Node neighbour in nodeCurrent.neighbours)
             {
-                if (!neighbour.bvisited && !neighbour.obstacle)
+                Vector2 distance = new Vector2((float)Math.Abs(nodeStart.nodeXY.X - neighbour.nodeXY.X), (float)Math.Abs(nodeStart.nodeXY.Y - neighbour.nodeXY.Y));
+                if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10)
                     untestedNodesList.Add(neighbour);
                 float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
                 if (possiblyLowerGoal < neighbour.fLocalGoal)
@@ -201,7 +248,7 @@ partial class Enemy : MovingEntity
                 }
             }
         }
-
+        
         pathFound = true;
         untestedNodesList.Clear();
         AddParentToPath(nodeCurrent);
@@ -220,9 +267,9 @@ partial class Enemy : MovingEntity
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = (int)playerpos.Y - 10; y <= (int)playerpos.Y + 10; y++)
+        for (int y = (int)playerpos.Y - 3; y <= (int)playerpos.Y + 3; y++)
         {
-            for (int x = (int)playerpos.X - 10; x <= (int)playerpos.X + 10; x++)
+            for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
             {
                 if (x > 0 && y> 0)
                 {
