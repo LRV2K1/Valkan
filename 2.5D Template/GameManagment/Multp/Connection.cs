@@ -20,6 +20,7 @@ public partial class Connection
         this.port = port;
         client = new UdpClient(port);
         ip = new IPEndPoint(IPAddress.Any, port);
+        client.Client.ReceiveBufferSize = 40000;
     }
     private IPAddress GetBroadCastIP()
     {
