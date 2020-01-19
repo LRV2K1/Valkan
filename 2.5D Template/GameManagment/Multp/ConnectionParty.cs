@@ -226,11 +226,11 @@ public class ConnectionParty : Connection
 
     private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
-        if (part == 2 && receivedworldpart1)
+        if (part == 2 && !receivedworldpart1)
         {
             return;
         }
-        if (part == 1)
+        if (!receivedworldpart1)
         {
             bool receivedwholeworld = false;
             string path = "Content/Levels/" + file + ".txt";
@@ -254,7 +254,7 @@ public class ConnectionParty : Connection
                 playerlist.Modify(MyIP(), receivedworld: true);
                 receivedworldpart1 = false;
             }
-        }
+        }       
     }
 
     public string WorldToString(string file, int part) //convert <file>.txt to string
