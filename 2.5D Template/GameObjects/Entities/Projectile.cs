@@ -13,14 +13,15 @@ class Projectile : Item
     Point hitbox;
     string particle_asset;
     Vector2 offsetposition;
+    string explosionsound;
 
-    public Projectile(string assetname, bool animated, int damage, Vector2 offsetposition, float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
+    public Projectile(string assetname, bool animated, int damage, Vector2 offsetposition, string sound = "", float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
         : base(assetname, animated)
     {
         this.damage = damage;
         this.lifetime = lifetime;
         this.offsetposition = offsetposition;
-
+        this.explosionsound = sound;
         particle_asset = part_asset;
 
         hitbox = new Point(hitboxX, hitboxY);
@@ -57,6 +58,11 @@ class Projectile : Item
                 if (!enemy.Dead && HitBox.Intersects(enemy.BoundingBox))
                 {
                     enemy.Health -= damage;
+                    GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                    if (enemy.Health > 0)
+                    {
+                        GameEnvironment.AssetManager.PlaySound(enemy.Damage_Sound);
+                    }
                     damaged = true;                    
                 }
             }            
@@ -70,6 +76,7 @@ class Projectile : Item
                 particleEffect.Position = GlobalPosition;
                 particleEffect.Origin += offsetposition;
                 GameWorld.RootList.Add(particleEffect);
+                GameEnvironment.AssetManager.PlaySound(explosionsound);
             }
             RemoveSelf();
         }

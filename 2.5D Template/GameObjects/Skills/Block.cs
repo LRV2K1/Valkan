@@ -21,6 +21,7 @@ class Block : Skill
         player.Block = inputHelper.MouseButtonDown(button) && timer.Ready && player.Stamina >= 20 && !player.Blocked;
         if (player.Blocked)
         {
+            GameEnvironment.AssetManager.PlaySound("SFX/Player/Warrior_Shield");
             player.Blocked = false;
             player.Stamina -= 20;
             base.Use(resettimer);

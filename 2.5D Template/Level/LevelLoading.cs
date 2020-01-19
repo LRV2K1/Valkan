@@ -166,6 +166,20 @@ partial class Level : GameObjectLibrary
         entities.Add(player);
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
+
+        if (MultiplayerManager.online && false)
+        {
+            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
+            {
+                if (lobbyplayer.ishost == false)
+                {
+                    Item item = new Item(id: "player2");
+                    GameObjectList items = GetObject("items") as GameObjectList;
+                    entities.Add(item);
+                    item.MovePositionOnGrid(50, 50);
+                }
+            }
+        }
     }
 
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)

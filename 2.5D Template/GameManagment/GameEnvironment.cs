@@ -181,12 +181,12 @@ public class GameEnvironment : Game
         }
 
         gameStateManager.HandleInput(inputHelper);
-        multiplayerManager.HandleInput(inputHelper);
     }
 
     protected override void Update(GameTime gameTime)
     {
         HandleInput();
+        multiplayerManager.Update(gameTime);
         gameStateManager.Update(gameTime);
         ScreenFade.Update(gameTime);
         if(quitGame)
