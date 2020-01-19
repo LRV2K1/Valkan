@@ -24,7 +24,7 @@ public class GameEnvironment : Game
     protected static bool quitGame;
 
     protected static int specialid;
-    protected static char charid;
+    protected static string stringid;
     static List<OutputText> output;
 
     public GameEnvironment()
@@ -40,7 +40,8 @@ public class GameEnvironment : Game
         gameSettingsManager = new GameSettingsManager();
         
         specialid = 0;
-        charid = (char)(0);
+        char charid = (char)(0);
+        stringid += charid;
         output = new List<OutputText>();
     }
 
@@ -48,13 +49,38 @@ public class GameEnvironment : Game
     {
         get
         {
-            string s = specialid.ToString();
+            string s = stringid;
+            stringid = AddChar(stringid);
             specialid++;
-            //string ss = charid.ToString();
-            //charid = (char)((int)charid + 1);
-            //Console.WriteLine(ss);
             return s;
         }
+    }
+
+    public static string AddChar(string s)
+    {
+        char letter = s[s.Length - 1];
+        string key = "";
+        if (s.Length > 1)
+        {
+            key = s.Substring(0, s.Length - 1);
+        }
+        int nummer = (int)letter + 1;
+        if (nummer > 255)
+        {
+            if (key == "")
+            {
+                key = ((char)(0)).ToString();
+            }
+            else
+            {
+                key = AddChar(key);
+            }
+            nummer = 0;
+        }
+        letter = (char)nummer;
+        string text = key;
+        text += letter.ToString();
+        return text;
     }
 
     public static void OutputWindow(string text)
