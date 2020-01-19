@@ -226,7 +226,7 @@ public class ConnectionParty : Connection
 
     private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
-        if (!playerlist.ReceivedWorld(MyIP()))
+        if (true)
         {
             if (part == 1 && !receivedworldpart1)
             {
@@ -240,6 +240,7 @@ public class ConnectionParty : Connection
                 Console.WriteLine("Successfully wrotae " + (lines.Length - 1) + " lines to " + path);
                 writer.Close();
                 GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
+                playerlist.Modify(MyIP(), receivedworld: 1);
                 receivedworldpart1 = true;
             }
             if (part == 2 && receivedworldpart1)
@@ -261,7 +262,7 @@ public class ConnectionParty : Connection
                 GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
                 receivedworldpart1 = true;
                 Console.WriteLine("ddd");
-                playerlist.Modify(MyIP(), receivedworld: true);
+                playerlist.Modify(MyIP(), receivedworld: 2);
                 receivedworldpart1 = false;
             }
         }

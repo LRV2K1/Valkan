@@ -68,15 +68,21 @@ class HostSelectionState : GameObjectLibrary
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1)
             {
-                if (!MultiplayerManager.Party.playerlist.AllReceivedWorld())
+                if (!MultiplayerManager.Party.playerlist.AllReceivedWorldPart(1))
                 {
                     MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 1 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 1), 9999);
-                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 2 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 2), 9999);
                 }
                 else
                 {
-                    MultiplayerManager.Party.Send("Start", 9999);
-                    GameEnvironment.ScreenFade.TransitionToScene("playingState");
+                    if (!MultiplayerManager.Party.playerlist.AllReceivedWorldPart(2))
+                    {
+                        MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 2 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 2), 9999);
+                    }
+                    else
+                    {
+                        MultiplayerManager.Party.Send("Start", 9999);
+                        GameEnvironment.ScreenFade.TransitionToScene("playingState");
+                    }
                     timeron = false;
                 }
                 time = 0;
@@ -114,7 +120,6 @@ class HostSelectionState : GameObjectLibrary
             {
                 MultiplayerManager.Party.CloseParty();
                 MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 1 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 1), 9999);
-                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 2 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 2), 9999);
                 timeron = true;
             }
             else
