@@ -184,8 +184,8 @@ public class ConnectionParty : Connection
             }
             else if (variables[0] == "World")
             {
-                Console.WriteLine("Received a world");
-                StoreWorld(variables[1], message);
+                Console.WriteLine("Received a world part");
+                StoreWorld(variables[1], int.Parse(variables[2]), message);
             }
             else
             {
@@ -223,10 +223,16 @@ public class ConnectionParty : Connection
         MultiplayerManager.Party = null;
     }
 
-    private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
+    private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
+        bool receivedwholeworld = false;
         string path = "Content/Levels/" + file + ".txt";
         StreamWriter writer = new StreamWriter(path, false);
+        if (part == 2)
+        {
+            receivedwholeworld = true;
+            writer = new StreamWriter(path, true);
+        }
         string[] lines = world.Split('\n');
         for (int i = 1; i < lines.Length; i++)
         {
@@ -235,9 +241,45 @@ public class ConnectionParty : Connection
         Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
         writer.Close();
         GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
-        playerlist.Modify(MyIP(), receivedworld: true);
+
+        if (receivedwholeworld)
+        {
+            playerlist.Modify(MyIP(), receivedworld: true);
+        }
     }
-    public string WorldToString(string file) //convert <file>.txt to string
+
+    public string WorldToString(string file, int part) //convert <file>.txt to string
+    {
+        string message = "";
+        string path = "Content/Levels/" + file + ".txt";
+        StreamReader streamReader = new StreamReader(path);
+        string line = streamReader.ReadLine();
+        for (int i = 0; i < 4; i++) //
+        {
+            while (line != null)
+            {
+                if (part == 1)
+                {
+                    if (i < 2){
+                        message += "\n" + line;
+                        line = streamReader.ReadLine();
+                    }
+                }
+                if (part == 2)
+                {
+                    if (i > 2)
+                    {
+                        message += "\n" + line;
+                        line = streamReader.ReadLine();
+                    }
+                }
+            }
+        }
+        streamReader.Close();
+        return message;
+    }
+
+    public string WorldToString34(string file) //convert <file>.txt to string
     {
         string message = "";
         string path = "Content/Levels/" + file + ".txt";

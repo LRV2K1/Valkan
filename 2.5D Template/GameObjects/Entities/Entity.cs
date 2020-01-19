@@ -40,7 +40,6 @@ abstract partial class Entity : AnimatedGameObject
             currentdata = MultiplayerManager.Party.Data;
         }
 
-        count1++;
         base.Update(gameTime);
         //check if moved
         if (previousPos != position)
@@ -61,7 +60,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             ReceiveData();
         }
-        Console.WriteLine(count1 + " " + count2 + " " + count3);
+        Console.WriteLine(count1 + " " + count2);
     }
 
     public override void Reset()
@@ -85,10 +84,10 @@ abstract partial class Entity : AnimatedGameObject
 
         try
         {
-            count2++;
+            count1++;
             if (currentdata != previousdata)
             {
-                count3++;
+                count2++;
                 string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
@@ -98,7 +97,10 @@ abstract partial class Entity : AnimatedGameObject
                 }
                 else
                 {
-
+                    //id = 2000
+                    //new object
+                    //SpriteGameObject hi = new SpriteGameObject("Sprites/Items/Projectiles/spr_fire_0@8"); //has id 1300  
+                    //here
                 }
             }
 
