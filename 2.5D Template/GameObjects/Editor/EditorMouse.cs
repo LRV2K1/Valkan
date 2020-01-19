@@ -43,6 +43,7 @@ class EditorMouse : GameObject
         //check when pressed
         if (inputHelper.MouseButtonPressed(MouseButton.Left) && position.X > 200 && position.Y < 830)
         {
+            GameEnvironment.AssetManager.PlaySound("SFX/Editor/Editor_Place");
             if (tile)
             {
                 SwitchTile();

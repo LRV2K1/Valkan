@@ -80,6 +80,7 @@ partial class Enemy : MovingEntity
             if (die_anim)
             {
                 SwitchAnimation("die", "D");
+                GameEnvironment.AssetManager.PlaySound(die_sound);
             }
             else
             {

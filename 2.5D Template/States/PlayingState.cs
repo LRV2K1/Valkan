@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 
 class PlayingState : State
@@ -25,7 +26,7 @@ class PlayingState : State
     public override void Load()
     {
         string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
-        level = new Level(levelnum);
+        level = new Level(levelnum); //also loads the level
     }
 
     public override void UnLoad()
@@ -39,28 +40,6 @@ class PlayingState : State
     {
         if (level == null)
         {
-            return;
-        }
-        if (inputHelper.KeyPressed(Keys.L))
-        {
-            try
-            {
-                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
-                {
-                    case "offline":
-                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
-                        break;
-                    case "online":
-                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch
-            {
-                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
-            }
             return;
         }
 
@@ -87,6 +66,7 @@ class PlayingState : State
     {
         if(firstTime)
         {
+            MediaPlayer.Volume = 0.4f;
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
             firstTime = false;
         }

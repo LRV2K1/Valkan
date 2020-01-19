@@ -50,11 +50,14 @@
     <Compile Include="GameManagment\AssetManager.cs" />
     <Compile Include="GameManagment\Camera.cs" />
     <Compile Include="GameManagment\Collision.cs" />
-    <Compile Include="GameManagment\Connection.cs" />
-    <Compile Include="GameManagment\ConnectionMessageHandler.cs" />
     <Compile Include="GameManagment\DrawingHelper.cs" />
     <Compile Include="GameManagment\GameObjectLibrary.cs" />
-    <Compile Include="GameManagment\MultiplayerManager.cs" />
+    <Compile Include="GameManagment\Multp\Connection.cs" />
+    <Compile Include="GameManagment\Multp\ConnectionLobby.cs" />
+    <Compile Include="GameManagment\Multp\ConnectionParty.cs" />
+    <Compile Include="GameManagment\Multp\LobbyPlayer.cs" />
+    <Compile Include="GameManagment\Multp\MultiplayerManager.cs" />
+    <Compile Include="GameManagment\Multp\PlayerList.cs" />
     <Compile Include="GameManagment\OutputText.cs" />
     <Compile Include="GameObjects\Editor\ItemGrid.cs" />
     <Compile Include="GameObjects\Editor\EditorMouse.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Menu\MapSelectionPopUp.cs" />
     <Compile Include="Menu\PopUp.cs" />
     <Compile Include="Menu\ScreenFade.cs" />
+    <Compile Include="Menu\SkillHoverButton.cs" />
     <Compile Include="Menu\TextButton.cs" />
     <Compile Include="Overlays\Editor\EntityButton.cs" />
     <Compile Include="Overlays\Editor\EntityOverlay.cs" />

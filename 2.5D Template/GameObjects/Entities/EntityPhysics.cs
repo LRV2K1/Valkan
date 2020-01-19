@@ -12,6 +12,10 @@ abstract partial class Entity : AnimatedGameObject
     private void DoPhysics()
     {
         OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         HandleCollisions();
     }
 
@@ -78,7 +82,7 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    private void HandleEntityCollisions(string id)
+    protected void HandleEntityCollisions(string id)
     {
         //check entity collision
         Entity entity = GameWorld.GetObject(id) as Entity;

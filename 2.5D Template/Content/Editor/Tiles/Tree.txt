@@ -1,2 +1,3 @@
 Sprites/Tiles/Trees/spr_tree_,Wall,Grass,TreeTile
 Sprites/Tiles/Trees/spr_deadtree_,Wall,Grass,TreeTile
+Sprites/Tiles/Trees/spr_stone_,Wall,Grass,TreeTile

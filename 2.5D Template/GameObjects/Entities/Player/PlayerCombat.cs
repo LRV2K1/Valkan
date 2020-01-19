@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 partial class Player : MovingEntity
 {
@@ -50,6 +51,8 @@ partial class Player : MovingEntity
         if (inputHelper.KeyPressed(Keys.Q))
         {
             Health -= 3;
+            GameEnvironment.AssetManager.PlaySound(damage_sound);
+            GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
         }
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
@@ -85,6 +88,8 @@ partial class Player : MovingEntity
         {
             die = true;
             SwitchAnimation("die", "D");
+            GameEnvironment.AssetManager.PlaySound(die_sound);
+            MediaPlayer.Stop();
             velocity = Vector2.Zero;
         }
     }
