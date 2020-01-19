@@ -71,7 +71,7 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
+        MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999);
     }
 
     private void ReceiveData()
@@ -85,7 +85,6 @@ abstract partial class Entity : AnimatedGameObject
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
                     count++;
-                    Console.WriteLine("Count1: " + count);
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;

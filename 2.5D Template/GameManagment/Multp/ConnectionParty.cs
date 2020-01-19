@@ -105,7 +105,6 @@ public class ConnectionParty : Connection
             if (variables[0] == "Entity:")
             {
                 data = message;
-                log = false;
             }
             else if (message == "Join")
             {
