@@ -19,7 +19,7 @@ public class MultiplayerManager
     //setup connection for lobby or ingame
     public static void Connect(int port)
     {
-        if (port == 1000)
+        if (port == 9967)
         {
             if (lobby == null)
             {
