@@ -74,6 +74,10 @@ class ProjectileAttack : Skill
         {
             GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
         }
+        else
+        {
+            explosionsound = "SFX/Player/Thud";
+        }
 
         if (directional)
         {

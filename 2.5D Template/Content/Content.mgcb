@@ -4892,3 +4892,51 @@
 /processorParam:Quality=Best
 /build:SFX/Player/Ice_Shoot.wav
 
+#begin SFX/Player/Thud.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Thud.wav
+
+#begin SFX/Player/Swoosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Swoosh.wav
+
+#begin Sprites/Enemy/Minotaur/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Attack.wav
+
+#begin Sprites/Enemy/Minotaur/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Damage.wav
+
+#begin Sprites/Enemy/Minotaur/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Death.wav
+
+#begin Sprites/Enemy/Skeleton/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Attack.wav
+
+#begin Sprites/Enemy/Skeleton/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Damage.wav
+
+#begin Sprites/Enemy/Skeleton/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Death.wav
+

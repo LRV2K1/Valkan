@@ -58,6 +58,11 @@ class Projectile : Item
                 if (!enemy.Dead && HitBox.Intersects(enemy.BoundingBox))
                 {
                     enemy.Health -= damage;
+                    GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                    if (enemy.Health > 0)
+                    {
+                        GameEnvironment.AssetManager.PlaySound(enemy.Damage_Sound);
+                    }
                     damaged = true;                    
                 }
             }            

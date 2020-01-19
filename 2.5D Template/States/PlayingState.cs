@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 
 class PlayingState : State
@@ -87,6 +88,7 @@ class PlayingState : State
     {
         if(firstTime)
         {
+            MediaPlayer.Volume = 0.4f;
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
             firstTime = false;
         }
