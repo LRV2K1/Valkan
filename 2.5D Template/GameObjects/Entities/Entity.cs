@@ -81,9 +81,9 @@ abstract partial class Entity : AnimatedGameObject
     private void ReceiveData()
     {
 
-        count3++;
         try
         {
+            count3++;
             if (previousdata != MultiplayerManager.Party.Data)
             {
                 previousdata = MultiplayerManager.Party.Data;
