@@ -18,7 +18,8 @@ abstract partial class Entity : AnimatedGameObject
     protected int weight;
     protected string host;
     protected bool remove;
-    string previousdata;
+    string previousdata = "";
+    string currentdata = "";
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
@@ -29,14 +30,15 @@ abstract partial class Entity : AnimatedGameObject
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
-        if (MultiplayerManager.Online)
-        {
-            previousdata = MultiplayerManager.Party.Data;
-        }
     }
 
     public override void Update(GameTime gameTime)
     {
+        if (MultiplayerManager.Online)
+        {
+            previousdata = currentdata;
+            currentdata = MultiplayerManager.Party.Data;
+        }
 
         count1++;
         base.Update(gameTime);
@@ -83,14 +85,13 @@ abstract partial class Entity : AnimatedGameObject
 
         try
         {
-            count3++;
-            if (previousdata != MultiplayerManager.Party.Data)
+            count2++;
+            if (currentdata != previousdata)
             {
-                previousdata = MultiplayerManager.Party.Data;
+                count3++;
                 string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
-                    count2++;
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;
