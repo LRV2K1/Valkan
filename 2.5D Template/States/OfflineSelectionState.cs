@@ -61,11 +61,11 @@ class OfflineSelectionState : GameObjectLibrary
         skilltext[0, 0] = "<Left> \n A heavy sword attack to slay all.";
         skilltext[1, 0] = "<Right> \n A big shield to block all damage.";
         skilltext[2, 0] = "<Space> \n A fast dodge to get clear of enemies.";
-        skilltext[0, 1] = "<Left> \n A Powerfull ice spell to freeze all opponents.";
+        skilltext[0, 1] = "<Left> \n A powerful ice spell to freeze all opponents.";
         skilltext[1, 1] = "<Right> \n A fireball to blow up all who stand in your way.";
         skilltext[2, 1] = "<Space> \n A strong force shield to block all objects.";
         skilltext[0, 2] = "<Left> \n A slingshot to annoy everybody.";
-        skilltext[1, 2] = "<Right> \n A adrinaline dose to boost everybodies speed.";
+        skilltext[1, 2] = "<Right> \n An adrenaline dose to boost everybody's speed.";
         skilltext[2, 2] = "<Space> \n A medic kit to heal everybody back up.";
     }
 
