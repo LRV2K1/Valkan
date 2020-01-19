@@ -85,6 +85,11 @@ class PlayingState : State
 
     public override void Update(GameTime gameTime)
     {
+        if(firstTime)
+        {
+            GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
+            firstTime = false;
+        }
         if (level == null)
         {
             return;

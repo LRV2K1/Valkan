@@ -4811,3 +4811,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/Trees/spr_tree_4.png
 
+#begin Soundtracks/ToT_OST04.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/ToT_OST04.mp3
+
