@@ -11,6 +11,7 @@ public class ConnectionParty : Connection
     public bool isopen = true;
     float time;
     int count = 0;
+    bool receivedworldpart1;
 
     public ConnectionParty(int port)
         : base(port)
@@ -225,26 +226,34 @@ public class ConnectionParty : Connection
 
     private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
-        bool receivedwholeworld = false;
-        string path = "Content/Levels/" + file + ".txt";
-        StreamWriter writer = new StreamWriter(path, false);
-        if (part == 2)
+        if (part == 2 && receivedworldpart1)
         {
-            receivedwholeworld = true;
-            writer = new StreamWriter(path, true);
+            return;
         }
-        string[] lines = world.Split('\n');
-        for (int i = 1; i < lines.Length; i++)
+        if (part == 1)
         {
-            writer.WriteLine(lines[i]);
-        }
-        Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
-        writer.Close();
-        GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
+            bool receivedwholeworld = false;
+            string path = "Content/Levels/" + file + ".txt";
+            StreamWriter writer = new StreamWriter(path, false);
+            if (part == 2)
+            {
+                receivedwholeworld = true;
+                writer = new StreamWriter(path, true);
+            }
+            string[] lines = world.Split('\n');
+            for (int i = 1; i < lines.Length; i++)
+            {
+                writer.WriteLine(lines[i]);
+            }
+            Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
+            writer.Close();
+            GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
 
-        if (receivedwholeworld)
-        {
-            playerlist.Modify(MyIP(), receivedworld: true);
+            if (receivedwholeworld)
+            {
+                playerlist.Modify(MyIP(), receivedworld: true);
+            }
+
         }
     }
 
@@ -254,26 +263,27 @@ public class ConnectionParty : Connection
         string path = "Content/Levels/" + file + ".txt";
         StreamReader streamReader = new StreamReader(path);
         string line = streamReader.ReadLine();
-        for (int i = 0; i < 4; i++) //
+        int emptylines = 0;
+        while (line != null)
         {
-            while (line != null)
+            if (line == "")
             {
-                if (part == 1)
-                {
-                    if (i < 2){
-                        message += "\n" + line;
-                        line = streamReader.ReadLine();
-                    }
-                }
-                if (part == 2)
-                {
-                    if (i > 2)
-                    {
-                        message += "\n" + line;
-                        line = streamReader.ReadLine();
-                    }
+                emptylines++;
+            }
+            if (part == 1)
+            {
+                if (emptylines < 2){
+                    message += "\n" + line;
                 }
             }
+            if (part == 2)
+            {
+                if (emptylines >= 2)
+                {
+                    message += "\n" + line;
+                }
+            }
+            line = streamReader.ReadLine();
         }
         streamReader.Close();
         return message;
