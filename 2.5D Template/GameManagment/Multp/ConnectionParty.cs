@@ -41,6 +41,7 @@ public class ConnectionParty : Connection
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
         Send("Plaaaaaaaayerlist " + port + " :" + playerlist.ToString(), 9967, true); //broadcast playerlist to port 1000
+        Send("Hoooooooooooooooooost is still connected", port);
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
@@ -201,22 +202,7 @@ public class ConnectionParty : Connection
 
     public void Disconnect() //stop receiving and sending data
     {
-        if (playerlist.IsHost(MyIP()))
-        {
-            Send("HostLeaves", 9999);
-            Send("Closed: " + MyIP().ToString() + ":" + port, 9967);
-            isopen = false;
-            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
-        }
-        else
-        {
-            Send("Leave", 9999);
-            MultiplayerManager.Connect(9967);
-            GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
-        }
-        udpclient.Close();
-        Console.WriteLine("Disconnect from party");
-        MultiplayerManager.party = null;
+        
     }
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
