@@ -28,7 +28,7 @@ public class ConnectionParty : Connection
             //if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
             //{
             string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-            Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
+            //Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
             HandleReceivedData(message);
             //}
             ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
@@ -40,8 +40,8 @@ public class ConnectionParty : Connection
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
-        Send("Plaaaaaaaayerlist " + port + " :" + playerlist.ToString(), 9967, true); //broadcast playerlist to port 1000
-        Send("Hoooooooooooooooooost is still connected", port);
+        Send("Plaaaaaaaayerlist " + port + " :" + playerlist.ToString(), 9967, false); //broadcast playerlist to port 1000
+        Send("Hoooooooooooooooooost is still connected", port, false);
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
@@ -102,10 +102,12 @@ public class ConnectionParty : Connection
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
         bool log = true;
-        if (playerlist.IsHost(MyIP())) //data for host only
+        if (true) //data for host only playerlist.IsHost(MyIP()
         {
             if (variables[0] == "Entity:")
             {
+                Console.WriteLine("h9");
+                data = message;
                 log = false;
             }
             else if (message == "Join")
@@ -149,7 +151,7 @@ public class ConnectionParty : Connection
             }
             else
             {
-                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+             //   Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
             }
         }
         else //data for everyone but host
@@ -191,12 +193,12 @@ public class ConnectionParty : Connection
             }
             else
             {
-                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+            //    Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
         if (log) //should the received data be put in console?
         {
-            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+            //Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
         }
     }
 
