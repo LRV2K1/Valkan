@@ -90,6 +90,10 @@ abstract partial class Entity : AnimatedGameObject
                     position.Y = float.Parse(variables[3]);
                     previousPos = position;
                 }
+                else
+                {
+
+                }
             }
 
         }
