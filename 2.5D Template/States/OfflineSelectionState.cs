@@ -176,4 +176,11 @@ class OfflineSelectionState : GameObjectLibrary
             GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
         }
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+        Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
+    }
 }
