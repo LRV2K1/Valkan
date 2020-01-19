@@ -70,8 +70,7 @@ class HostSelectionState : GameObjectLibrary
             {
                 if (!MultiplayerManager.Party.playerlist.AllReceivedWorld())
                 {
-                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 1 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 1), 9999);
-                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 2 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 2), 9999);
+                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 }
                 else
                 {
@@ -112,9 +111,8 @@ class HostSelectionState : GameObjectLibrary
         {
             if (MultiplayerManager.Party.playerlist.AllReady()) //if everyone is ready
             {
-                MultiplayerManager.Party.CloseParty();
-                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 1 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 1), 9999);
-                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " 2 " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level"), 2), 9999);
+                MultiplayerManager.Party.CloseParty();               
+                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 timeron = true;
             }
             else
