@@ -32,6 +32,10 @@ class Projectile : Item
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        if (remove)
+        {
+            return;
+        }
         lifetime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (lifetime <= 0)
         {

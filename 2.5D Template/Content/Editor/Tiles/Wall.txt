@@ -1,2 +1,4 @@
 Sprites/Tiles/spr_grass_wall_sheet_0@4x8,Wall,Grass,WallTile
 Sprites/Tiles/spr_castle_wall_sheet_1@4x8,Wall,Grass,WallTile
+Sprites/Tiles/spr_castle_wall_sheet_2@4x4,Wall,Grass,WallTile
+Sprites/Tiles/spr_cave_wall_sheet_0@4x8,Wall,Grass,WallTile

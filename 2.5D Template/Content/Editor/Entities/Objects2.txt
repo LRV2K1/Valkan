@@ -1,0 +1,7 @@
+Sprites/Items/spr_trashcan,0,None
+Sprites/Objects/spr_boat_0,60,SpriteItem,InMovible
+Sprites/Objects/spr_boat_1,60,SpriteItem,InMovible
+Sprites/Objects/spr_tomb_0,60,SpriteItem,InMovible
+Sprites/Objects/spr_tomb_1,60,SpriteItem,InMovible
+Sprites/Objects/spr_tomb_2,60,SpriteItem,InMovible
+Sprites/Objects/spr_tomb_3,60,SpriteItem,InMovible

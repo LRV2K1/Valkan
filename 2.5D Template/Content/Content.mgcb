@@ -25,6 +25,9 @@
 #begin Editor/Entities/Object.txt
 /copy:Editor/Entities/Object.txt
 
+#begin Editor/Entities/Objects2.txt
+/copy:Editor/Entities/Objects2.txt
+
 #begin Editor/Entities/Spawn.txt
 /copy:Editor/Entities/Spawn.txt
 
@@ -2420,6 +2423,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Items/spr_campfire@1x4.png
 
+#begin Sprites/Items/spr_jar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Items/spr_jar.png
+
 #begin Sprites/Items/spr_potion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3008,6 +3023,54 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Objects/spr_axe.png
 
+#begin Sprites/Objects/spr_banner_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_banner_0.png
+
+#begin Sprites/Objects/spr_banner_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_banner_1.png
+
+#begin Sprites/Objects/spr_boat_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_boat_0.png
+
+#begin Sprites/Objects/spr_boat_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_boat_1.png
+
 #begin Sprites/Objects/spr_cart_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3103,6 +3166,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Objects/spr_sign_1.png
+
+#begin Sprites/Objects/spr_tomb_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_tomb_0.png
+
+#begin Sprites/Objects/spr_tomb_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_tomb_1.png
+
+#begin Sprites/Objects/spr_tomb_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_tomb_2.png
+
+#begin Sprites/Objects/spr_tomb_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Objects/spr_tomb_3.png
 
 #begin Sprites/Objects/spr_treestump.png
 /importer:TextureImporter
@@ -4364,6 +4475,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/spr_castle_wall_sheet_1@4x8.png
 
+#begin Sprites/Tiles/spr_castle_wall_sheet_2@4x4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_castle_wall_sheet_2@4x4.png
+
 #begin Sprites/Tiles/spr_cave_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -4411,6 +4534,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/spr_cave_wall_sheet_0@4x8.png
+
+#begin Sprites/Tiles/spr_farmland_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_farmland_0.png
 
 #begin Sprites/Tiles/spr_grass_sheet_0@4x8.png
 /importer:TextureImporter
