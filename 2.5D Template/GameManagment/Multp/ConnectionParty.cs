@@ -226,12 +226,16 @@ public class ConnectionParty : Connection
 
     private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
+
+        Console.WriteLine("aaa");
         if (part == 2 && !receivedworldpart1)
         {
             return;
         }
+        Console.WriteLine("bbb");
         if (!receivedworldpart1)
         {
+            Console.WriteLine("ccc");
             bool receivedwholeworld = false;
             string path = "Content/Levels/" + file + ".txt";
             StreamWriter writer = new StreamWriter(path, false);
