@@ -40,7 +40,7 @@ class PortSelectionState : GameObjectLibrary
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - buttonList[i].Width / 2, (GameEnvironment.Screen.Y / 13) * 3 + (int)(GameEnvironment.Screen.Y / 9) * i);
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - (buttonList[i].Width * buttonList[i].Sprite.Size.X) / 2, (GameEnvironment.Screen.Y / 13) * 3 + (int)(GameEnvironment.Screen.Y / 9) * i);
                 RootList.Add(buttonList[i]);
             }
 
@@ -54,6 +54,16 @@ class PortSelectionState : GameObjectLibrary
         }
     }
 
+    private void ClearButtonsList()
+    {
+        for (int i = buttonList.Count; i > 0; i--)
+        {
+            buttonList[i - 1].Visible = false;
+            buttonList.RemoveAt(i - 1);
+            MultiplayerManager.Lobby.portlist.Clear();
+            MultiplayerManager.Lobby.playerlists.Clear();
+        }
+    }
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
@@ -63,6 +73,7 @@ class PortSelectionState : GameObjectLibrary
             {
                 MultiplayerManager.Connect(MultiplayerManager.Lobby.portlist[i]);
                 MultiplayerManager.Party.Send("Join", MultiplayerManager.Lobby.portlist[i]);
+                ClearButtonsList();
                 MultiplayerManager.Lobby.Disconnect();
                 GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);
             }

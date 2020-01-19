@@ -60,7 +60,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             ReceiveData();
         }
-        Console.WriteLine(count1 + " " + count2);
+        //Console.WriteLine(count1 + " " + count2);
     }
 
     public override void Reset()
