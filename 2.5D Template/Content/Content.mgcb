@@ -4976,3 +4976,39 @@
 /processorParam:Quality=Best
 /build:SFX/Player/Bard_Death.wav
 
+#begin Sprites/Enemy/Zombie/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Attack.wav
+
+#begin Sprites/Enemy/Zombie/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Damage.wav
+
+#begin Sprites/Enemy/Zombie/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Death.wav
+
+#begin Sprites/Enemy/Antilion/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Attack.wav
+
+#begin Sprites/Enemy/Antilion/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Death.wav
+
+#begin Sprites/Enemy/Antilion/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Damage.wav
+
