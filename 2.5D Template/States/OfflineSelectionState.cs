@@ -15,7 +15,7 @@ class OfflineSelectionState : GameObjectLibrary
     protected string[,] skillbuttons;
     protected string[,] skilltext;
     protected MapSelectionPopUp popup;
-    protected SpriteGameObject Selected;
+    protected SpriteGameObject Selected, level;
     public OfflineSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
@@ -54,6 +54,10 @@ class OfflineSelectionState : GameObjectLibrary
         LoadSkillButtons();
 
         GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+
+        level = new SpriteGameObject("Sprites/Menu/Level_Button", 101);
+        level.Position = new Vector2((GameEnvironment.Screen.X - changeButton.Width) / 8 * 7, (GameEnvironment.Screen.Y - changeButton.Height) / 3 * 2 - 300);
+        RootList.Add(level);
     }
 
     private void LoadSkillText()
@@ -139,6 +143,20 @@ class OfflineSelectionState : GameObjectLibrary
                 (GetObject(skillbuttons[2, 2]) as Button).Visible = true;
                 break;
         }
+
+        int levelnum = 0;
+        try
+        {
+            levelnum = int.Parse(GameEnvironment.GameSettingsManager.GetValue("level"));
+            level = new SpriteGameObject("Sprites/Menu/Level_Button_" + levelnum, 101);
+            RootList.Add(level);
+        }
+        catch
+        {
+            level = new SpriteGameObject("Sprites/Menu/Level_Button", 101);
+            RootList.Add(level);
+        }
+
     }
 
     public override void HandleInput(InputHelper inputHelper)

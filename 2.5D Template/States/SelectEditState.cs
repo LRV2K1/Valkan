@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 class SelectEditState : GameObjectLibrary
 {
     List<Button> buttonList;
+    protected Button returnButton;
     public SelectEditState()
         : base()
     {
@@ -34,10 +35,18 @@ class SelectEditState : GameObjectLibrary
                 RootList.Add(button);
             }
         }
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
+        returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 16 * 15);
+        RootList.Add(returnButton);
     }
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+        if (returnButton.Pressed)
+        {
+            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
+            return;
+        }
         for (int i = 0; i < buttonList.Count; i++)
         {
             if (buttonList[i].Pressed)
