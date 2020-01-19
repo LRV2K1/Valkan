@@ -15,7 +15,7 @@ public class ConnectionLobby : Connection
     public ConnectionLobby(int port)
         : base(port)
     {
-        ar_ = client.BeginReceive(Receive, new object());
+        ar_ = udpclient.BeginReceive(Receive, new object());
         Console.WriteLine("Created lobby connection");
     }
 
@@ -23,15 +23,15 @@ public class ConnectionLobby : Connection
     {
         try
         {
-            byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
+            byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
 
-            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
-            {
-                string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, ip.Address.ToString());
-                HandleReceivedData(message, ip.Address, ip.Port);
-            }
-            ar_ = client.BeginReceive(Receive, new object()); ; //repeat
+            //if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            //{
+            string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
+            Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
+            HandleReceivedData(message);
+            //}
+            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
         }
         catch
         {
@@ -61,7 +61,7 @@ public class ConnectionLobby : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender, int port) //inspect received data and take action
+    public void HandleReceivedData(string message) //inspect received data and take action
     {
         string[] variables = message.Split(' ');
         if (variables[0] == "Playerlist")
@@ -79,7 +79,7 @@ public class ConnectionLobby : Connection
                 bool newplayerlist = true;
                 foreach (PlayerList playerlist in playerlists)
                 {
-                    if (playerlist.IsHost(sender))
+                    //if (playerlist.IsHost(sender))
                     {
                         newplayerlist = false;
                         inactivitytimer[count] = 0;
@@ -122,7 +122,7 @@ public class ConnectionLobby : Connection
 
     public void Disconnect() //stop receiving and sending data
     {
-        client.Close();
+        udpclient.Close();
         MultiplayerManager.lobby = null;
         Console.WriteLine("Disconnect from Lobby");
     }
