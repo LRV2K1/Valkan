@@ -43,6 +43,7 @@ class EditorMouse : GameObject
         //check when pressed
         if (inputHelper.MouseButtonPressed(MouseButton.Left) && position.X > 200 && position.Y < 830)
         {
+            GameEnvironment.AssetManager.PlaySound("SFX/Editor/Editor_Place");
             if (tile)
             {
                 SwitchTile();
@@ -66,7 +67,6 @@ class EditorMouse : GameObject
     //switch tile
     private void SwitchTile()
     {
-        GameEnvironment.AssetManager.PlaySound("SFX/Editor/Editor_Place");
         //give information to the levelgrid to switch tile
         LevelGrid level = GameWorld.GetObject("levelgrid") as LevelGrid;
         level.SwitchTile(mousePos, tiletype, texturetype, tileobject, asset);
@@ -74,7 +74,6 @@ class EditorMouse : GameObject
 
     private void SwitchItem()
     {
-        GameEnvironment.AssetManager.PlaySound("SFX/Editor/Editor_Place");
         //give information to the item grid to switch item
         ItemGrid itemGrid = GameWorld.GetObject("itemgrid") as ItemGrid;
         itemGrid.SwitchItem(mousePos, entitytype, asset, entityBoundingBox);
