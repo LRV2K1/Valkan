@@ -14,8 +14,14 @@ class HostSelectionState : GameObjectLibrary
     protected Button startButton, changeButton, warriorButton, sorcererButton, bardButton, returnButton, hostButton, player2Button, player3Button, player4Button;
     protected SpriteGameObject Selected;
     protected MapSelectionPopUp popup;
+    bool timeron;
+    float time;
+    List<Button> buttonList;
+
     public HostSelectionState()
     {
+        GameEnvironment.GameSettingsManager.SetValue("level", "1"); //load level 1 by default
+        buttonList = new List<Button>();
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
@@ -44,26 +50,6 @@ class HostSelectionState : GameObjectLibrary
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
 
-        hostButton = new Button("Sprites/Menu/Standard_Button", 101);
-        hostButton.Sprite.Size = new Vector2(1.3f,2f);
-        hostButton.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 2);
-        RootList.Add(hostButton);
-        player2Button = new Button("Sprites/Menu/Standard_Button", 101);
-        player2Button.Sprite.Size = new Vector2(1.3f, 2f);
-        player2Button.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 3 + player2Button.Height / 2);
-        RootList.Add(player2Button);
-        player2Button.Visible = false;
-        player3Button = new Button("Sprites/Menu/Standard_Button", 101);
-        player3Button.Sprite.Size = new Vector2(1.3f, 2f);
-        player3Button.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 4 + player3Button.Height);
-        RootList.Add(player3Button);
-        player3Button.Visible = false;
-        player4Button = new Button("Sprites/Menu/Standard_Button", 101);
-        player4Button.Sprite.Size = new Vector2(1.3f, 2f);
-        player4Button.Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - hostButton.Height) / 10 * 5 + player4Button.Height * 1.5f);
-        RootList.Add(player4Button);
-        player4Button.Visible = false;
-
         popup = new MapSelectionPopUp("Sprites/Overlay/Menu_BG_Grey", new Vector2(0.5f, 0.7f));
         RootList.Add(popup);
         popup.LoadButtons();
@@ -74,12 +60,44 @@ class HostSelectionState : GameObjectLibrary
         RootList.Add(Selected);
     }
 
-    public override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime) //create and remove player buttons
     {
         base.Update(gameTime);
-        //if player 2 has connected ---> player2Button.Visible = true;
-        //if player 3 has connected ---> player3Button.Visible = true;
-        //if player 4 has connected ---> player4Button.Visible = true;
+        if (timeron)
+        {
+            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (time > 1)
+            {
+                if (!MultiplayerManager.party.playerlist.AllReceivedWorld())
+                {
+                    MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                }
+                else
+                {
+                    MultiplayerManager.party.Send("Start", 9999);
+                    GameEnvironment.ScreenFade.TransitionToScene("playingState");
+                    timeron = false;
+                }
+                time = 0;
+            }
+        }
+        if (MultiplayerManager.party != null)
+        {
+            for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+            {
+                buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                RootList.Add(buttonList[i]);
+            }
+
+            for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
+            {
+                buttonList[i - 1].Visible = false;
+                buttonList.RemoveAt(i - 1);
+            }
+            //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.party.playerlist.playerlist.Count);
+        }
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -91,9 +109,17 @@ class HostSelectionState : GameObjectLibrary
         }
         if (startButton.Pressed)
         {
-            MultiplayerManager.SetupHost();
-            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState(GameStart.AssetManager.Content)); //create playingstate with a variable world
-            GameEnvironment.ScreenFade.TransitionToScene("playingState"); //finally switch to playing scene
+            if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
+            {
+                MultiplayerManager.party.Send("Closed: " + Connection.MyIP().ToString() + ":" + MultiplayerManager.party.port, 1000);
+                MultiplayerManager.party.isopen = false;                
+                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                timeron = true;
+            }
+            else
+            {
+                Console.WriteLine("Someone is not ready yet");
+            }
         }
         else if (changeButton.Pressed)
         {
@@ -102,21 +128,30 @@ class HostSelectionState : GameObjectLibrary
         else if (warriorButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Warrior");
+            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Wizzard");
+            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
+            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Bard");
+            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
+            if (MultiplayerManager.party != null)
+            {
+                MultiplayerManager.party.Disconnect();
+            }
         }
     }
 }

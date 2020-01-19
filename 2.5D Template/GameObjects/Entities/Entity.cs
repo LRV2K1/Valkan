@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
+    int count;
+    int count2;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
@@ -26,26 +28,34 @@ abstract partial class Entity : AnimatedGameObject
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
+        if (MultiplayerManager.online)
+        {
+            previousdata = MultiplayerManager.party.GetReceivedData();
+        }
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        
-        ReceiveData();
         //check if moved
         if (previousPos != position)
         {
+            if (MultiplayerManager.online) //send data if online
+            {
+                SendData();
+            }
             DoPhysics();
             if (remove)
             {
                 return;
             }
-            SendData();
             NewHost();
             previousPos = position;
         }
-        previousdata = MultiplayerManager.GetReceivedData();
+        if (MultiplayerManager.online)
+        {
+            ReceiveData();
+        }
     }
 
     public override void Reset()
@@ -61,29 +71,31 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.Send("Entity: " + id + " " + position.X + " " + position.Y);
+        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
     }
-    
+
     private void ReceiveData()
     {
         try
-        { 
-            if (previousdata != MultiplayerManager.GetReceivedData())
+        {
+            if (previousdata != MultiplayerManager.party.GetReceivedData())
             {
-                previousdata = MultiplayerManager.GetReceivedData();
-                string[] variables = MultiplayerManager.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                previousdata = MultiplayerManager.party.GetReceivedData();
+                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
-                    Console.WriteLine("id is the same: " + id);
+                    count++;
+                    Console.WriteLine("Count1: " + count);
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
+                    previousPos = position;
                 }
-                else if (variables[0] == "World:")
+                else
                 {
 
                 }
             }
-           
+
         }
         catch
         {

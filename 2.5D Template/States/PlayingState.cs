@@ -25,7 +25,7 @@ class PlayingState : State
     public override void Load()
     {
         string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
-        level = new Level(levelnum);
+        level = new Level(levelnum); //also loads the level
     }
 
     public override void UnLoad()

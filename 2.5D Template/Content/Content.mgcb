@@ -53,6 +53,9 @@
 #begin Levels/Level_1.txt
 /copy:Levels/Level_1.txt
 
+#begin Levels/Level_10.txt
+/copy:Levels/Level_10.txt
+
 #begin Levels/Level_2.txt
 /copy:Levels/Level_2.txt
 
@@ -76,12 +79,6 @@
 
 #begin Levels/Level_9.txt
 /copy:Levels/Level_9.txt
-
-#begin Levels/online.txt
-/copy:Levels/online.txt
-
-#begin Levels/Online.txt
-/copy:Levels/Online.txt
 
 #begin PlayerStats/Stats.txt
 /copy:PlayerStats/Stats.txt
