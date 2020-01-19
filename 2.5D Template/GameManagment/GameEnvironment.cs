@@ -23,7 +23,6 @@ public class GameEnvironment : Game
 
     protected static bool quitGame;
 
-    protected static int specialid;
     protected static string stringid;
     static List<OutputText> output;
 
@@ -39,7 +38,6 @@ public class GameEnvironment : Game
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
         
-        specialid = 0;
         char charid = (char)(0);
         stringid += charid;
         output = new List<OutputText>();
@@ -51,7 +49,6 @@ public class GameEnvironment : Game
         {
             string s = stringid;
             stringid = AddChar(stringid);
-            specialid++;
             return s;
         }
     }
