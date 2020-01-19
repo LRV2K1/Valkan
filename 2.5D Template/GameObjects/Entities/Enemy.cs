@@ -63,7 +63,7 @@ partial class Enemy : MovingEntity
         }
         if (start == 1) // de start positie moet 1 keer worden geintialized
         {
-            Startup();
+            //Startup();
             start = 0;
         }
         if (InRange() == true) // als de player in bereik is zal de ai bewegen
@@ -236,7 +236,8 @@ partial class Enemy : MovingEntity
             CalculateNeighbours(nodeCurrent);
             foreach (Node neighbour in nodeCurrent.neighbours)
             {
-                if (!neighbour.bvisited && !neighbour.obstacle)
+                Vector2 distance = new Vector2((float)Math.Abs(nodeStart.nodeXY.X - neighbour.nodeXY.X), (float)Math.Abs(nodeStart.nodeXY.Y - neighbour.nodeXY.Y));
+                if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10)
                     untestedNodesList.Add(neighbour);
                 float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
                 if (possiblyLowerGoal < neighbour.fLocalGoal)
@@ -247,7 +248,7 @@ partial class Enemy : MovingEntity
                 }
             }
         }
-
+        
         pathFound = true;
         untestedNodesList.Clear();
         AddParentToPath(nodeCurrent);
@@ -266,9 +267,9 @@ partial class Enemy : MovingEntity
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = (int)playerpos.Y - 10; y <= (int)playerpos.Y + 10; y++)
+        for (int y = (int)playerpos.Y - 3; y <= (int)playerpos.Y + 3; y++)
         {
-            for (int x = (int)playerpos.X - 10; x <= (int)playerpos.X + 10; x++)
+            for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
             {
                 if (x > 0 && y> 0)
                 {
