@@ -10,36 +10,26 @@ using System.Net.NetworkInformation;
 public partial class Connection
 {
     public int port;
-    public UdpClient client;
-    protected IPEndPoint ip;
-    protected IAsyncResult ar_ = null;
     public string data = "";
+    protected UdpClient udpclient;
+    protected IPAddress multicastaddress = IPAddress.Parse("239.0.0.222");
+    protected IPEndPoint remoteep;
+    protected IPEndPoint localEp;
+    protected IAsyncResult ar_ = null;
 
     public Connection(int port)
     {
         this.port = port;
-        client = new UdpClient(port);
-        ip = new IPEndPoint(IPAddress.Any, port);
-        client.Client.ReceiveBufferSize = 40000;
-    }
-    private IPAddress GetBroadCastIP()
-    {
-        try
-        {
-            string ipadress;
-            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName()); // get a list of all local IPs
-            IPAddress localIpAddress = ipHostInfo.AddressList[0]; // choose the first of the list
-            ipadress = Convert.ToString(localIpAddress); // convert to string
-            ipadress = ipadress.Substring(0, ipadress.LastIndexOf(".") + 1); // cuts of the last octet of the given IP 
-            ipadress += "255"; // adds 255 witch represents the local broadcast
-            return IPAddress.Parse(ipadress);
-        }
-        catch (Exception e)
-        {
-            return IPAddress.Parse("127.0.0.1");// in case of error return the local loopback
-        }
-    }
+        udpclient = new UdpClient();
+        remoteep = new IPEndPoint(multicastaddress, port);
+        localEp = new IPEndPoint(IPAddress.Any, port);
 
+        udpclient.JoinMulticastGroup(multicastaddress);
+        udpclient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        udpclient.ExclusiveAddressUse = false;
+        udpclient.Client.Bind(localEp);
+    }
+   
 
     public string GetReceivedData()
     {
@@ -48,7 +38,7 @@ public partial class Connection
     public void Send(string message, int port, bool log = true) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
-        client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Broadcast, port)); //broadcast to specific port
+        udpclient.Send(bytes, bytes.Length, remoteep);
         if (log) //should the send message be put in console
         {
             Console.WriteLine("\nSent on " + IPAddress.Broadcast.ToString() + ":" + port + " ->\n{0}", message);

@@ -16,7 +16,7 @@ public class ConnectionParty : Connection
         : base(port)
     {
         playerlist = new PlayerList();
-        ar_ = client.BeginReceive(Receive, new object());
+        ar_ = udpclient.BeginReceive(Receive, new object());
         Console.WriteLine("Created party connection");
     }
 
@@ -24,17 +24,19 @@ public class ConnectionParty : Connection
     {
         try
         {
-            byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
-            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
-            {
-                string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                HandleReceivedData(message, ip.Address, ip.Port);
-                data = message;
-            }
-            ar_ = client.BeginReceive(Receive, new object()); ; //repeat
+            byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
+
+            //if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            //{
+            string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
+            Console.WriteLine("\nReceivedd from {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
+            HandleReceivedData(message);
+            //}
+            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
         }
         catch
         {
+
         }
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
@@ -94,7 +96,7 @@ public class ConnectionParty : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender, int port) //inspect received data and take action
+    public void HandleReceivedData(string message) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
@@ -107,7 +109,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "Join")
             {
-                playerlist.Modify(sender);
+                //playerlist.Modify(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
                 if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
@@ -117,18 +119,18 @@ public class ConnectionParty : Connection
             }
             else if (message == "Leave")
             {
-                playerlist.Modify(sender, false, false, true);
+               // playerlist.Modify(sender, false, false, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
                 isopen = true;
             }
             else if (message == "Ready")
             {
-                playerlist.Modify(sender, true);
+                //playerlist.Modify(sender, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
             {
-                playerlist.Modify(sender, character: variables[1]);
+               // playerlist.Modify(sender, character: variables[1]);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (lines[0] == "Playerlist:")
@@ -141,7 +143,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "I am still connected")
             {
-                playerlist.Modify(sender, timeunactive: 0);
+              //  playerlist.Modify(sender, timeunactive: 0);
                 log = false;
             }
             else
@@ -174,7 +176,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "Host is still connected")
             {
-                playerlist.Modify(sender, timeunactive: 0);
+                //playerlist.Modify(sender, timeunactive: 0);
                 if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
                 {
                     Send("Playerlist:" + playerlist.ToString(), port, false);
@@ -193,7 +195,7 @@ public class ConnectionParty : Connection
         }
         if (log) //should the received data be put in console?
         {
-            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, sender, port);
+            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
         }
     }
 
@@ -212,7 +214,7 @@ public class ConnectionParty : Connection
             MultiplayerManager.Connect(1000);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
-        client.Close();
+        udpclient.Close();
         Console.WriteLine("Disconnect from party");
         MultiplayerManager.party = null;
     }
