@@ -21,6 +21,8 @@ public class ConnectionParty : Connection
 
     private void Receive(IAsyncResult ar)
     {
+        try //if connection closes catches errors
+        {
             byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
 
             if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
@@ -29,6 +31,11 @@ public class ConnectionParty : Connection
                 HandleReceivedData(message, remoteep.Address);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
+        }
+        catch
+        {
+
+        }
     }
 
     public void Update(GameTime gameTime) //manage unexpected disconnect
@@ -36,7 +43,6 @@ public class ConnectionParty : Connection
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
-            Console.WriteLine("hi");
             if (playerlist.playerlist.Count > 1) //do only if host is not alone in a party
             {
                 Send("Host is still connected", port, false); //message send by host only, if host crashes the clients wont be stuck

@@ -21,14 +21,21 @@ public class ConnectionLobby : Connection
 
     private void Receive(IAsyncResult ar)
     {
-        byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
-
-        if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+        try //if connection closes catches errors
         {
-            string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-            HandleReceivedData(message);
+            byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
+
+            if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            {
+                string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
+                HandleReceivedData(message, remoteep.Address);
+            }
+            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
         }
-        ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
+        catch
+        {
+
+        }
     }
 
     public void Update(GameTime gameTime)
@@ -53,7 +60,7 @@ public class ConnectionLobby : Connection
         }
     }
 
-    public void HandleReceivedData(string message) //inspect received data and take action
+    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] variables = message.Split(' ');
         if (variables[0] == "Playerlist")
@@ -71,7 +78,7 @@ public class ConnectionLobby : Connection
                 bool newplayerlist = true;
                 foreach (PlayerList playerlist in playerlists)
                 {
-                    //if (playerlist.IsHost(sender))
+                    if (playerlist.IsHost(sender))
                     {
                         newplayerlist = false;
                         inactivitytimer[count] = 0;
