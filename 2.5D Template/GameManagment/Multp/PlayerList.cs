@@ -22,10 +22,10 @@ public class PlayerList
             //variables[4] = timeunactive
             //variables[5] = receivedworld
             string[] variables = lines[i].Split(new string[] { ", " }, StringSplitOptions.None);
-            Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4]), receivedworld: int.Parse(variables[5])); //modify playerlist with this data
+            Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4]), receivedworld: bool.Parse(variables[5])); //modify playerlist with this data
         }
     }
-    public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "null", float timeunactive = 0, int receivedworld = 0)
+    public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "null", float timeunactive = 0, bool receivedworld = false)
     {
         int count = 0;
         bool newplayer = true;
@@ -52,9 +52,9 @@ public class PlayerList
                 {
                     lobbyplayer.character = character;
                 }
-                if (receivedworld > 0)
+                if (receivedworld)
                 {
-                    lobbyplayer.receivedworld = receivedworld;
+                    lobbyplayer.receivedworld = true;
                 }
             }
             count++;
@@ -103,18 +103,18 @@ public class PlayerList
         }
         return true;
     }
-    public bool AllReceivedWorldPart(int part)
+    public bool AllReceivedWorld()
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            if (!lobbyplayer.ishost && !(lobbyplayer.receivedworld == part)) //is someone is not ready and not host
+            if (!lobbyplayer.ishost && !lobbyplayer.receivedworld) //is someone is not ready and not host
             {
                 return false;
             }
         }
         return true;
     }
-    /*public bool ReceivedWorld(IPAddress ip)
+    public bool ReceivedWorld(IPAddress ip)
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
@@ -131,5 +131,5 @@ public class PlayerList
             }
         }
         return true;
-    }*/
+    }
 }

@@ -186,7 +186,7 @@ public class ConnectionParty : Connection
             else if (variables[0] == "World")
             {
                 Console.WriteLine("Received a world part");
-                StoreWorld(variables[1], int.Parse(variables[2]), message);
+                StoreWorld(variables[1], message);
             }
             else
             {
@@ -224,7 +224,22 @@ public class ConnectionParty : Connection
         MultiplayerManager.Party = null;
     }
 
-    private void StoreWorld(string file, int part, string world) //write to <file>.txt from a single string containing the world
+    private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
+    {
+        string path = "Content/Levels/" + file + ".txt";
+        StreamWriter writer = new StreamWriter(path, false);
+        string[] lines = world.Split('\n');
+        for (int i = 1; i < lines.Length; i++)
+        {
+            writer.WriteLine(lines[i]);
+        }
+        Console.WriteLine("Successfully wrote " + (lines.Length - 1) + " lines to " + path);
+        writer.Close();
+        GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
+        playerlist.Modify(MyIP(), receivedworld: true);
+    }
+
+    private void StoreWorld3(string file, int part, string world) //write to <file>.txt from a single string containing the world
     {
         if (true)
         {
@@ -240,7 +255,6 @@ public class ConnectionParty : Connection
                 Console.WriteLine("Successfully wrotae " + (lines.Length - 1) + " lines to " + path);
                 writer.Close();
                 GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
-                playerlist.Modify(MyIP(), receivedworld: 1);
                 receivedworldpart1 = true;
             }
             if (part == 2 && receivedworldpart1)
@@ -262,14 +276,14 @@ public class ConnectionParty : Connection
                 GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
                 receivedworldpart1 = true;
                 Console.WriteLine("ddd");
-                playerlist.Modify(MyIP(), receivedworld: 2);
+                playerlist.Modify(MyIP(), receivedworld: true);
                 receivedworldpart1 = false;
             }
         }
         
     }
 
-    public string WorldToString(string file, int part) //convert <file>.txt to string
+    public string WorldToString2(string file, int part) //convert <file>.txt to string
     {
         string message = "";
         string path = "Content/Levels/" + file + ".txt";
@@ -301,7 +315,7 @@ public class ConnectionParty : Connection
         return message;
     }
 
-    public string WorldToString34(string file) //convert <file>.txt to string
+    public string WorldToString(string file) //convert <file>.txt to string
     {
         string message = "";
         string path = "Content/Levels/" + file + ".txt";

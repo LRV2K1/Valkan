@@ -10,7 +10,7 @@ public class LobbyPlayer
     public IPAddress ip;
     public bool ishost = false;
     public bool isready = false;
-    public int receivedworld = 0;
+    public bool receivedworld = false;
     public string character = "Warrior";
     public float timeunactive = 0; //if this number reaches 5 the client is clearly no longer there and should be removed (e.g. alt f4)
 
