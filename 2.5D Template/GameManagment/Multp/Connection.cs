@@ -26,7 +26,7 @@ public partial class Connection
         udpclient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
         udpclient.ExclusiveAddressUse = false;
         udpclient.Client.Bind(localEp);
-        Send("Send first message", port, false);
+        Send("Send first message", port);
     }
 
     public void Send(string message, int port, bool log = true) //convert string to bytes to broadcast it
