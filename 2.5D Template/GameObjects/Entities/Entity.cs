@@ -28,9 +28,9 @@ abstract partial class Entity : AnimatedGameObject
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
-            previousdata = MultiplayerManager.party.GetReceivedData();
+            previousdata = MultiplayerManager.Party.GetReceivedData();
         }
     }
 
@@ -40,7 +40,7 @@ abstract partial class Entity : AnimatedGameObject
         //check if moved
         if (previousPos != position)
         {
-            if (MultiplayerManager.online) //send data if online
+            if (MultiplayerManager.Online) //send data if online
             {
                 SendData();
             }
@@ -52,7 +52,7 @@ abstract partial class Entity : AnimatedGameObject
             NewHost();
             previousPos = position;
         }
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
             ReceiveData();
         }
@@ -71,17 +71,17 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
+        MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
     }
 
     private void ReceiveData()
     {
         try
         {
-            if (previousdata != MultiplayerManager.party.GetReceivedData())
+            if (previousdata != MultiplayerManager.Party.GetReceivedData())
             {
-                previousdata = MultiplayerManager.party.GetReceivedData();
-                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                previousdata = MultiplayerManager.Party.GetReceivedData();
+                string[] variables = MultiplayerManager.Party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
                     count++;

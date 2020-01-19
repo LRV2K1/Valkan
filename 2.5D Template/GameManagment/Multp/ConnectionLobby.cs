@@ -21,22 +21,14 @@ public class ConnectionLobby : Connection
 
     private void Receive(IAsyncResult ar)
     {
-        try
-        {
-            byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
+        byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
 
-            //if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
-            //{
+        if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+        {
             string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-            Console.WriteLine("\nReceivedd from jaaaaaaaa {1}" + port + " ->\n{0}", message, remoteep.Address.ToString());
             HandleReceivedData(message);
-            //}
-            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
         }
-        catch
-        {
-
-        }
+        ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
     }
 
     public void Update(GameTime gameTime)
@@ -123,7 +115,7 @@ public class ConnectionLobby : Connection
     public void Disconnect() //stop receiving and sending data
     {
         udpclient.Close();
-        MultiplayerManager.lobby = null;
+        MultiplayerManager.Lobby = null;
         Console.WriteLine("Disconnect from Lobby");
     }
 }

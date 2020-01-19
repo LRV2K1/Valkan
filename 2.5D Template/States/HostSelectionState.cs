@@ -68,22 +68,22 @@ class HostSelectionState : GameObjectLibrary
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1)
             {
-                if (!MultiplayerManager.party.playerlist.AllReceivedWorld())
+                if (!MultiplayerManager.Party.playerlist.AllReceivedWorld())
                 {
-                    MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 }
                 else
                 {
-                    MultiplayerManager.party.Send("Start", 9999);
+                    MultiplayerManager.Party.Send("Start", 9999);
                     GameEnvironment.ScreenFade.TransitionToScene("playingState");
                     timeron = false;
                 }
                 time = 0;
             }
         }
-        if (MultiplayerManager.party != null)
+        if (MultiplayerManager.Party != null)
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.party.playerlist.playerlist.Count; i++)
+            for (int i = buttonList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
@@ -91,12 +91,12 @@ class HostSelectionState : GameObjectLibrary
                 RootList.Add(buttonList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.party.playerlist.playerlist.Count; i--)
+            for (int i = buttonList.Count; i > MultiplayerManager.Party.playerlist.playerlist.Count; i--)
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
             }
-            //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.party.playerlist.playerlist.Count);
+            //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.Party.playerlist.playerlist.Count);
         }
     }
 
@@ -109,11 +109,10 @@ class HostSelectionState : GameObjectLibrary
         }
         if (startButton.Pressed)
         {
-            if (MultiplayerManager.party.playerlist.AllReady()) //if everyone is ready
+            if (MultiplayerManager.Party.playerlist.AllReady()) //if everyone is ready
             {
-                MultiplayerManager.party.Send("Closed: " + Connection.MyIP().ToString() + ":" + MultiplayerManager.party.port, 9967);
-                MultiplayerManager.party.isopen = false;                
-                MultiplayerManager.party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                MultiplayerManager.Party.CloseParty();               
+                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
                 timeron = true;
             }
             else
@@ -128,29 +127,29 @@ class HostSelectionState : GameObjectLibrary
         else if (warriorButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Warrior");
-            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Warrior");
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Wizzard");
-            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Wizzard");
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
-            MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), character: "Bard");
-            MultiplayerManager.party.Send("Playerlist:" + MultiplayerManager.party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Bard");
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (returnButton.Pressed)
         {
-            if (MultiplayerManager.party != null)
+            if (MultiplayerManager.Party != null)
             {
-                MultiplayerManager.party.Disconnect();
+                MultiplayerManager.Party.Disconnect();
             }
         }
     }

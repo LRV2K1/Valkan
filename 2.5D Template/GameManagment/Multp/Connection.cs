@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.IO;
-using System.Net.NetworkInformation;
 
-//this class has the key methods in it like Send(), Receive(), Disconnect(), etc.
+//this class has the key methods in it like Send(), MYIP(), etc.
 public partial class Connection
 {
-    public int port;
-    public string data = "";
+    protected int port;
+    protected string data = "";
     protected UdpClient udpclient;
-    protected IPAddress multicastaddress = IPAddress.Parse("239.0.0.222");
+    protected IPAddress multicastaddress;
     protected IPEndPoint remoteep;
     protected IPEndPoint localEp;
     protected IAsyncResult ar_ = null;
@@ -20,6 +17,7 @@ public partial class Connection
     public Connection(int port)
     {
         this.port = port;
+        multicastaddress = IPAddress.Parse("239.0.0.222");
         udpclient = new UdpClient();
         remoteep = new IPEndPoint(multicastaddress, port);
         localEp = new IPEndPoint(IPAddress.Any, port);
@@ -30,19 +28,14 @@ public partial class Connection
         udpclient.Client.Bind(localEp);
         Send("Send first message", port, false);
     }
-   
 
-    public string GetReceivedData()
-    {
-        return data;
-    }
     public void Send(string message, int port, bool log = true) //convert string to bytes to broadcast it
     {
         byte[] bytes = Encoding.ASCII.GetBytes(message);
         udpclient.Send(bytes, bytes.Length, new IPEndPoint(multicastaddress, port));
         if (log) //should the send message be put in console
         {
-            Console.WriteLine("\nSentttt on " + remoteep.ToString() + ":" + port + " ->\n{0}", message);
+            Console.WriteLine("\nSent on port " + port + " ->\n{0}", message);
         }
     }
 
@@ -57,5 +50,10 @@ public partial class Connection
             }
         }
         throw new Exception("No network adapters with an IPv4 address in the system");
+    }
+
+    public string GetReceivedData()
+    {
+        return data;
     }
 }
