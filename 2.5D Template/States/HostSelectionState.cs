@@ -190,18 +190,15 @@ class HostSelectionState : GameObjectLibrary
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
             }
-            int count = 0;
-            //for (int  i = 0; i < MultiplayerManager.Party.playerlist.Count; i++)
-            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist)
+            for (int  i = 0; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
             {
-
-                if (lobbyplayer.isready)
+                if (MultiplayerManager.Party.playerlist.playerlist[i].isready)
                 {
-                    buttonList[i] = new Button("Sprites/Menu/Ready_Button", 101);
+                    buttonList[i] = new Button("Sprites/Menu/Standard_Button", 101);
                 }
                 else
                 {
-
+                    buttonList[i] = new Button("Sprites/Menu/Ready_Button", 101);
                 }
             }
             //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.Party.playerlist.playerlist.Count);
