@@ -23,6 +23,10 @@ public class PlayerList
             //variables[5] = receivedworld
             string[] variables = lines[i].Split(new string[] { ", " }, StringSplitOptions.None);
             Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4]), receivedworld: bool.Parse(variables[5])); //modify playerlist with this data
+            if (variables[1] == "false")
+            {
+                Unready(IPAddress.Parse(variables[0]));
+            }
         }
     }
     public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "null", float timeunactive = 0, bool receivedworld = false)
