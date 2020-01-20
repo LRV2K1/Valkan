@@ -155,7 +155,7 @@ class HostSelectionState : GameObjectLibrary
                 (GetObject(skillbuttons[2, 2]) as Button).Visible = true;
                 break;
         }
-        if (timeron)
+        if (timeron) //send world
         {
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1)
@@ -174,6 +174,7 @@ class HostSelectionState : GameObjectLibrary
                 time = 0;
             }
         }
+
         if (MultiplayerManager.Party != null)
         {
             for (int i = buttonList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
@@ -188,6 +189,17 @@ class HostSelectionState : GameObjectLibrary
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
+            }
+            for (int  i = 0; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
+            {
+                if (MultiplayerManager.Party.playerlist.playerlist[i].isready)
+                {
+                    buttonList[i] = new Button("Sprites/Menu/Standard_Button", 101);
+                }
+                else
+                {
+                    buttonList[i] = new Button("Sprites/Menu/Ready_Button", 101);
+                }
             }
             //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.Party.playerlist.playerlist.Count);
         }
