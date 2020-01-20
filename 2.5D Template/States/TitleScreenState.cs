@@ -11,25 +11,25 @@ using Microsoft.Xna.Framework.Media;
 //This is the title screen, here you can select start, settings or quit.
 class TitleScreenState : GameObjectLibrary
 {
-    protected Button startButton, settingsButton, exitButton, editorButton;
+    protected Button startButton, /*settingsButton,*/ exitButton, editorButton;
     protected bool firstTime = true;
     public TitleScreenState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Logo", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/TitleScreen", 100, "background");
         RootList.Add(titleScreen);
         startButton = new Button("Sprites/Menu/Play_Button", 101);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
+        startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 2, (GameEnvironment.Screen.Y - startButton.Height) / 4);
         startButton.Sprite.Size = new Vector2(1,1.5f);
         RootList.Add(startButton);
         editorButton = new Button("Sprites/Menu/Play_Button", 101);
-        editorButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 3);
+        editorButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 2, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(editorButton);
-        settingsButton = new Button("Sprites/Menu/Settings_Button", 101);
+        /*settingsButton = new Button("Sprites/Menu/Settings_Button", 101);
         settingsButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 2);
-        RootList.Add(settingsButton);
+        RootList.Add(settingsButton);*/
         exitButton = new Button("Sprites/Menu/Quit_Button", 101);
-        exitButton.Position = new Vector2((GameEnvironment.Screen.X - settingsButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4 * 3);
+        exitButton.Position = new Vector2((GameEnvironment.Screen.X - exitButton.Width) / 2, (GameEnvironment.Screen.Y - exitButton.Height) / 4 * 3);
         RootList.Add(exitButton);
     }
 
@@ -52,19 +52,19 @@ class TitleScreenState : GameObjectLibrary
             GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
             GameEnvironment.GameSettingsManager.SetValue("editor", "false");
         }
-        else if (settingsButton.Pressed)
+        /*else if (settingsButton.Pressed)
         { 
             GameEnvironment.ScreenFade.TransitionToScene("settingsState", 5);
+        }*/
+        else if (editorButton.Pressed)
+        {
+            GameEnvironment.ScreenFade.TransitionToScene("selectEditState", 5);
+            GameEnvironment.GameSettingsManager.SetValue("editor", "true");
         }
         else if (exitButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("exit");
             GameEnvironment.AssetManager.PlaySound("SFX/Menu/Quit");
-        }
-        else if (editorButton.Pressed)
-        {
-            GameEnvironment.ScreenFade.TransitionToScene("selectEditState");
-            GameEnvironment.GameSettingsManager.SetValue("editor", "true");
         }
     }
 

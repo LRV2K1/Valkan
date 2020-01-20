@@ -15,7 +15,7 @@ class HostClientSelectionState : GameObjectLibrary
     public HostClientSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
         RootList.Add(titleScreen);
         createGameButton = new Button("Sprites/Menu/CreateGame_Button", 101);
         createGameButton.Sprite.Size = new Vector2(2f, 3f);
