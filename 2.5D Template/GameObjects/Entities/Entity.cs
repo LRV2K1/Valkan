@@ -24,6 +24,11 @@ abstract partial class Entity : AnimatedGameObject
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
+
+        if (MultiplayerManager.online) //send data if online
+        {
+            SendData();
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -58,7 +63,7 @@ abstract partial class Entity : AnimatedGameObject
         NewHost();
     }
 
-    protected virtual void SendData()
+    public virtual void SendData()
     {
         if (Current != null)
         {

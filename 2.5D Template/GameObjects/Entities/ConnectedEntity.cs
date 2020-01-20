@@ -30,7 +30,7 @@ class ConnectedEntity : Entity
         origin = connectedOrigin;
     }
 
-    protected override void SendData() { }
+    public override void SendData() { }
 
     public void ReceiveData(string data)
     {

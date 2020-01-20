@@ -103,20 +103,20 @@ class ConnectedPlayer : GameObject
 
         if (inputHelper.MouseButtonPressed(MouseButton.Left))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "bleft" + " " + "true", 9999, false);
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "leftb" + " " + "true", 9999, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Left))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "bleft" + " " + "false", 9999, false);
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "leftb" + " " + "false", 9999, false);
         }
 
         if (inputHelper.MouseButtonPressed(MouseButton.Right))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "bright" + " " + "true", 9999, false);
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "rightb" + " " + "true", 9999, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Right))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "bright" + " " + "false", 9999, false);
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "rightb" + " " + "false", 9999, false);
         }
     }
 

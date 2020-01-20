@@ -20,7 +20,7 @@ class BlockHold : Skill
         staminatimer = 0.1f;
     }
 
-    public void Button(bool button)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
         player.Block = button && player.Stamina >= 2;

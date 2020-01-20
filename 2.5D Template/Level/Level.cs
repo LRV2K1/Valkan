@@ -17,7 +17,10 @@ public partial class Level : GameObjectLibrary
         LoadLevel("Content/Levels/Level_" + name + ".txt");
         if (MultiplayerManager.online)
         {
-            SetupClient();
+            if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
+            {
+                SetupClient();
+            }
         }
         Reset();
     }

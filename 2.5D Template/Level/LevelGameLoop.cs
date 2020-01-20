@@ -8,8 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Level : GameObjectLibrary
 {
+    bool first = false;
     public override void Update(GameTime gameTime)
     {
+        if (!first && MultiplayerManager.online && GameEnvironment.GameSettingsManager.GetValue("host") == "true")
+        {
+            SetupEnitites();
+            first = true;
+        }
         //DistributeData();
         for (int i = 0; i < RootList.Children.Count; i++)
         {

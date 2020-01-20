@@ -32,7 +32,7 @@ class ProjectileAttack : Skill
         }
     }
 
-    public void Button(bool button)
+    public override void Button(bool button)
     {
         if (button && timer.Ready)
         {

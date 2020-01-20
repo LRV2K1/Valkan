@@ -15,7 +15,7 @@ class Block : Skill
         resettimer = timer;
     }
 
-    public void Button(bool button)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
         player.Block = button && timer.Ready && player.Stamina >= 20 && !player.Blocked;

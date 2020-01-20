@@ -170,6 +170,7 @@ partial class Player : MovingEntity
         else
         {
             RemoteControlMove(inputHelper);
+            RemoteSkills(inputHelper);
         }
     }
 

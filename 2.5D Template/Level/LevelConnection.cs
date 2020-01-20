@@ -20,6 +20,18 @@ partial class Level : GameObjectLibrary
         }
     }
 
+    private void SetupEnitites()
+    {
+        GameObjectList entities = GetObject("entities") as GameObjectList;
+        foreach (string id in entities.Children)
+        {
+            if (GetObject(id) is Entity)
+            {
+                (GetObject(id) as Entity).SendData();
+            }
+        }
+    }
+
     public void DistributeData(string data)
     {
         if (previousdata != data)

@@ -21,7 +21,7 @@ class CloseAttack : Skill
         
     }
 
-    public void Button(bool button)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
         if (button && timer.Ready && player.Stamina >= 20)

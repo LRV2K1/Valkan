@@ -25,7 +25,7 @@ class SpeedBuff : Skill
         resettimer = timer;
     }
 
-    public void Button(bool button)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
         if (button && timer.Ready && player.Stamina >= 30)
