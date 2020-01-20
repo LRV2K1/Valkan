@@ -65,7 +65,16 @@ public class PlayerList
             Console.WriteLine("Added lobbyplayer");
         }
     }
-
+    public void Unready(IPAddress ip)
+    {
+        foreach (LobbyPlayer lobbyplayer in playerlist)
+        {
+            if (lobbyplayer.ip.ToString() == ip.ToString()) //is this player already in the playerlist
+            {
+                lobbyplayer.isready = false;
+            }
+        }
+    }
     public bool IsHost(IPAddress ip) //goes over all lobbyplayers until it finds a matching ip, then checks then returns the bool ishost
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
@@ -110,7 +119,6 @@ public class PlayerList
         {
             if (lobbyplayer.ip.ToString() == ip.ToString())
             {
-                Console.WriteLine("hi");
                 return lobbyplayer.isready;
             }
         }
