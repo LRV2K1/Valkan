@@ -46,7 +46,11 @@ class PlayingState : State
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
-            if (overlay.CurrentOverlay is InGameMenu)
+            if (overlay.CurrentOverlayID == "die")
+            {
+                return;
+            }
+            if (overlay.CurrentOverlayID == "menu")
             {
                 overlay.SwitchTo("hud");
             }
@@ -92,8 +96,6 @@ class PlayingState : State
     public override void Reset()
     {
         firstTime = true;
-        //UnLoadLevel();
         paused = false;
-        //LoadLevel();
     }
 }

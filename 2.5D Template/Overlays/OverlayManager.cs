@@ -7,6 +7,7 @@ class OverlayManager : GameObject
 {
     Dictionary<string, GameObject> overlays;
     GameObject currentOverlay;
+    string currentid;
 
     //updates current overlay
     public OverlayManager(int layer = 101, string id = "overlay")
@@ -14,6 +15,7 @@ class OverlayManager : GameObject
     {
         overlays = new Dictionary<string, GameObject>();
         currentOverlay = null;
+        currentid = "";
     }
 
     public void AddOverlay(string name, GameObject overlay)
@@ -32,10 +34,12 @@ class OverlayManager : GameObject
         if (overlays.ContainsKey(name))
         {
             currentOverlay = overlays[name];
+            currentid = name;
+            currentOverlay.Reset();
         }
         else
         {
-            throw new KeyNotFoundException("Could not find game state: " + name);
+            //throw new KeyNotFoundException("Could not find game state: " + name);
         }
     }
 
@@ -44,6 +48,14 @@ class OverlayManager : GameObject
         get
         {
             return currentOverlay;
+        }
+    }
+
+    public string CurrentOverlayID
+    {
+        get
+        {
+            return currentid;
         }
     }
 

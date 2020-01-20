@@ -83,6 +83,120 @@
 #begin PlayerStats/Stats.txt
 /copy:PlayerStats/Stats.txt
 
+#begin SFX/Editor/Editor_Place.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Editor/Editor_Place.wav
+
+#begin SFX/Menu/Button_Press.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Button_Press.wav
+
+#begin SFX/Menu/Quit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Quit.wav
+
+#begin SFX/Player/Bard_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Damage.wav
+
+#begin SFX/Player/Bard_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Death.wav
+
+#begin SFX/Player/Bard_Heal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Heal.wav
+
+#begin SFX/Player/Bard_Speed.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Speed.wav
+
+#begin SFX/Player/Fire_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Explosion.wav
+
+#begin SFX/Player/Fire_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Shoot.wav
+
+#begin SFX/Player/Ice_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Explosion.wav
+
+#begin SFX/Player/Ice_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Shoot.wav
+
+#begin SFX/Player/Mage_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Damage.wav
+
+#begin SFX/Player/Mage_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Death.wav
+
+#begin SFX/Player/Magic_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Magic_Shield.wav
+
+#begin SFX/Player/Swoosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Swoosh.wav
+
+#begin SFX/Player/Thud.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Thud.wav
+
+#begin SFX/Player/Warrior_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Damage.wav
+
+#begin SFX/Player/Warrior_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Death.wav
+
+#begin SFX/Player/Warrior_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Shield.wav
+
 #begin Soundtracks/Sad.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -95,11 +209,29 @@
 /processorParam:Quality=Best
 /build:Soundtracks/The_Cure_-_Lullaby_Transcription.mp3
 
+#begin Soundtracks/ToT_OST04.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/ToT_OST04.mp3
+
 #begin Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Soundtracks/Valkan's Fate - Battle Theme(Garageband).mp3
+
+#begin Soundtracks/Valkan's Fate - Electric.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate - Electric.mp3
+
+#begin Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
 
 #begin Sprites/Enemy/Antilion.png
 /importer:TextureImporter
@@ -113,8 +245,26 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Antilion.png
 
+#begin Sprites/Enemy/Antilion/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Attack.wav
+
+#begin Sprites/Enemy/Antilion/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Damage.wav
+
 #begin Sprites/Enemy/Antilion/data.txt
 /copy:Sprites/Enemy/Antilion/data.txt
+
+#begin Sprites/Enemy/Antilion/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Death.wav
 
 #begin Sprites/Enemy/Antilion/spr_attack_0@4.png
 /importer:TextureImporter
@@ -512,8 +662,26 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Grave.png
 
+#begin Sprites/Enemy/Grave/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Attack.wav
+
+#begin Sprites/Enemy/Grave/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Damage.wav
+
 #begin Sprites/Enemy/Grave/data.txt
 /copy:Sprites/Enemy/Grave/data.txt
+
+#begin Sprites/Enemy/Grave/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Death.wav
 
 #begin Sprites/Enemy/Grave/spr_attack_0@4.png
 /importer:TextureImporter
@@ -911,8 +1079,26 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Minotaur.png
 
+#begin Sprites/Enemy/Minotaur/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Attack.wav
+
+#begin Sprites/Enemy/Minotaur/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Damage.wav
+
 #begin Sprites/Enemy/Minotaur/data.txt
 /copy:Sprites/Enemy/Minotaur/data.txt
+
+#begin Sprites/Enemy/Minotaur/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Death.wav
 
 #begin Sprites/Enemy/Minotaur/spr_attack_0@4.png
 /importer:TextureImporter
@@ -1310,8 +1496,26 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Skeleton.png
 
+#begin Sprites/Enemy/Skeleton/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Attack.wav
+
+#begin Sprites/Enemy/Skeleton/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Damage.wav
+
 #begin Sprites/Enemy/Skeleton/data.txt
 /copy:Sprites/Enemy/Skeleton/data.txt
+
+#begin Sprites/Enemy/Skeleton/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Death.wav
 
 #begin Sprites/Enemy/Skeleton/spr_attack_0@4.png
 /importer:TextureImporter
@@ -1709,8 +1913,26 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Zombie.png
 
+#begin Sprites/Enemy/Zombie/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Attack.wav
+
+#begin Sprites/Enemy/Zombie/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Damage.wav
+
 #begin Sprites/Enemy/Zombie/data.txt
 /copy:Sprites/Enemy/Zombie/data.txt
+
+#begin Sprites/Enemy/Zombie/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Death.wav
 
 #begin Sprites/Enemy/Zombie/spr_attack_0@4.png
 /importer:TextureImporter
@@ -3368,6 +3590,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Overlay/Menu_BG_Grey.jpg
 
+#begin Sprites/Overlay/spr_die.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Overlay/spr_die.png
+
 #begin Sprites/Overlay/spr_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -4927,226 +5161,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/Trees/spr_tree_4.png
-
-#begin Soundtracks/ToT_OST04.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Soundtracks/ToT_OST04.mp3
-
-#begin SFX/Player/Magic_Shield.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Magic_Shield.wav
-
-#begin SFX/Menu/Button_Press.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Menu/Button_Press.wav
-
-#begin SFX/Menu/Quit.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Menu/Quit.wav
-
-#begin SFX/Player/Warrior_Shield.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Shield.wav
-
-#begin SFX/Player/Bard_Speed.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Speed.wav
-
-#begin SFX/Player/Bard_Heal.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Heal.wav
-
-#begin Soundtracks/Valkan's Fate - Electric.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Soundtracks/Valkan's Fate - Electric.mp3
-
-#begin SFX/Editor/Editor_Place.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Editor/Editor_Place.wav
-
-#begin Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Soundtracks/Valkan's Fate Soundtrack - TItle Screen 1.mp3
-
-#begin SFX/Player/Fire_Explosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Fire_Explosion.wav
-
-#begin SFX/Player/Fire_Shoot.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Fire_Shoot.wav
-
-#begin SFX/Player/Ice_Explosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Ice_Explosion.wav
-
-#begin SFX/Player/Ice_Shoot.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Ice_Shoot.wav
-
-#begin SFX/Player/Thud.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Thud.wav
-
-#begin SFX/Player/Swoosh.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Swoosh.wav
-
-#begin Sprites/Enemy/Minotaur/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Attack.wav
-
-#begin Sprites/Enemy/Minotaur/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Damage.wav
-
-#begin Sprites/Enemy/Minotaur/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Death.wav
-
-#begin Sprites/Enemy/Skeleton/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Attack.wav
-
-#begin Sprites/Enemy/Skeleton/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Damage.wav
-
-#begin Sprites/Enemy/Skeleton/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Death.wav
-
-#begin SFX/Player/Warrior_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Damage.wav
-
-#begin SFX/Player/Warrior_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Death.wav
-
-#begin SFX/Player/Mage_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Mage_Damage.wav
-
-#begin SFX/Player/Mage_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Mage_Death.wav
-
-#begin SFX/Player/Bard_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Damage.wav
-
-#begin SFX/Player/Bard_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Death.wav
-
-#begin Sprites/Enemy/Zombie/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Attack.wav
-
-#begin Sprites/Enemy/Zombie/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Damage.wav
-
-#begin Sprites/Enemy/Zombie/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Death.wav
-
-#begin Sprites/Enemy/Antilion/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Attack.wav
-
-#begin Sprites/Enemy/Antilion/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Death.wav
-
-#begin Sprites/Enemy/Antilion/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Damage.wav
-
-#begin Sprites/Enemy/Grave/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Attack.wav
-
-#begin Sprites/Enemy/Grave/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Damage.wav
-
-#begin Sprites/Enemy/Grave/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Death.wav
 

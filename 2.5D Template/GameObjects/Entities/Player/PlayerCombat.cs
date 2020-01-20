@@ -85,6 +85,7 @@ partial class Player : MovingEntity
             GameEnvironment.AssetManager.PlaySound(die_sound);
             MediaPlayer.Stop();
             velocity = Vector2.Zero;
+            (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
         }
     }
 
