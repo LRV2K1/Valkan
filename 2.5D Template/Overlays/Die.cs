@@ -58,9 +58,9 @@ class Die : Overlay
         base.HandleInput(inputHelper);
         if (returnButton.Pressed)
         {
-            if (MultiplayerManager.online)
+            if (MultiplayerManager.Online)
             {
-                MultiplayerManager.party.Disconnect();
+                MultiplayerManager.Party.Disconnect();
             }
             GameEnvironment.ScreenFade.TransitionToScene("titleScreen");
         }

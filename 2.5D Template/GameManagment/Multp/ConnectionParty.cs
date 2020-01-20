@@ -64,7 +64,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort); //broadcast playerlist to port 1000
+                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort); //broadcast playerlist to port 8888
             }
             time = 0;
 
@@ -241,14 +241,14 @@ public class ConnectionParty : Connection
     {
         if (playerlist.IsHost(MyIP()))
         {
-            Send("HostLeaves", 9999);
             CloseParty();
+            Send("HostLeaves", 9999);
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
         {
             Send("Leave", 9999);
-            MultiplayerManager.Connect(1000);
+            MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         udpclient.Close();
