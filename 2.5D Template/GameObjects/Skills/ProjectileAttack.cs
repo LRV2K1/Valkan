@@ -16,8 +16,8 @@ class ProjectileAttack : Skill
     int number_frames;
     bool directional;
 
-    public ProjectileAttack(string assetname, string prj_asset = "", int prj_frames = 1, string prj_ex_asset = "", float timer = 1f, int damage = 10, MouseButton button = MouseButton.Left)
-        : base(assetname, button)
+    public ProjectileAttack(string assetname, int skill, string prj_asset = "", int prj_frames = 1, string prj_ex_asset = "", float timer = 1f, int damage = 10)
+        : base(assetname, skill)
     {
         resettimer = timer;
         this.damage = damage;
@@ -32,9 +32,9 @@ class ProjectileAttack : Skill
         }
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public override void Button(bool button)
     {
-        if (inputHelper.MouseButtonPressed(button) && timer.Ready)
+        if (button && timer.Ready)
         {
             Use(resettimer);
         }

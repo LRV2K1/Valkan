@@ -95,6 +95,14 @@ partial class Level : GameObjectLibrary
 
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
+        if (MultiplayerManager.online)
+        {
+            if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
+            {
+                LoadRemotePlayer();
+                return;
+            }
+        }
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < textlines.Count; y++)
@@ -109,6 +117,12 @@ partial class Level : GameObjectLibrary
                 }
             }
         }
+    }
+
+    private void LoadRemotePlayer()
+    {
+        ConnectedPlayer connectedPlayer = new ConnectedPlayer("player2");
+        RootList.Add(connectedPlayer);
     }
 
     private void LoadEntity(int x, int y, string entitytype)
@@ -169,9 +183,15 @@ partial class Level : GameObjectLibrary
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
 
-        if (MultiplayerManager.Online && false)
+        Player player2 = new Player(false, "player2");
+        entities.Add(player2);
+        player2.SetupPlayer();
+        player2.MovePositionOnGrid(x, y + 1);
+
+        /*
+        if (MultiplayerManager.online && false)
         {
-            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
+            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
             {
                 if (lobbyplayer.ishost == false)
                 {
@@ -182,6 +202,7 @@ partial class Level : GameObjectLibrary
                 }
             }
         }
+        */
     }
 
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)

@@ -55,8 +55,25 @@ class Camera : GameObject
         }
     }
 
+    public void GetData(string data)
+    {
+        string[] splitdata = data.Split(' ');
+        cameraPosition = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
+    }
+
     public override void Update(GameTime gameTime)
     {
+        if (MultiplayerManager.online)
+        {
+            if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
+            {
+                return;
+            }
+            else
+            {
+                MultiplayerManager.party.Send("Camera: " + id + " " + cameraPosition.X + " " + cameraPosition.Y, 9999, false);
+            }
+        }
         if (!follow)
         {
             cameraPosition += cameraSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;

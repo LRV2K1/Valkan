@@ -9,16 +9,16 @@ class Block : Skill
 {
     protected float resettimer;
 
-    public Block(string assetname, float timer = 1f, MouseButton mouseButton = MouseButton.Right)
-        : base(assetname, mouseButton)
+    public Block(string assetname, int skill, float timer = 1f)
+        : base(assetname, skill)
     {
         resettimer = timer;
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
-        player.Block = inputHelper.MouseButtonDown(button) && timer.Ready && player.Stamina >= 20 && !player.Blocked;
+        player.Block = button && timer.Ready && player.Stamina >= 20 && !player.Blocked;
         if (player.Blocked)
         {
             GameEnvironment.AssetManager.PlaySound("SFX/Player/Warrior_Shield");

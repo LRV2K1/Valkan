@@ -9,44 +9,36 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
-    int count1;
-    int count2;
-    int count3;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
     protected bool remove;
-    string previousdata = "";
-    string currentdata = "";
-    string olddata = "";
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         remove = false;
         host = "";
-        previousdata = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
+
+        if (MultiplayerManager.online) //send data if online
+        {
+            SendData();
+        }
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (MultiplayerManager.Online)
-        {
-            olddata = previousdata;
-            previousdata = currentdata;
-            currentdata = MultiplayerManager.Party.Data;
-        }
-
         base.Update(gameTime);
+        
         //check if moved
         if (previousPos != position)
         {
-            if (MultiplayerManager.Online) //send data if online
+            if (MultiplayerManager.online) //send data if online
             {
                 SendData();
             }
@@ -58,11 +50,6 @@ abstract partial class Entity : AnimatedGameObject
             NewHost();
             previousPos = position;
         }
-        if (MultiplayerManager.Online)
-        {
-            ReceiveData();
-        }
-        //Console.WriteLine(count1 + " " + count2);
     }
 
     public override void Reset()
@@ -76,50 +63,15 @@ abstract partial class Entity : AnimatedGameObject
         NewHost();
     }
 
-    private void SendData()
+    public virtual void SendData()
     {
-        if (id == "player")
+        if (Current != null)
         {
-            MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, MultiplayerManager.PartyPort); //frame of animation????
+            MultiplayerManager.party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
         }
     }
 
-    private void ReceiveData()
-    {
-
-        try
-        {
-            count1++;
-            if (currentdata != olddata)
-            {
-                count2++;
-                string[] variables = currentdata.Split(' '); //split data in Type, ID, posX, posY respectively
-                if (variables[0] == "Entity:" && variables[1] == id)
-                {
-                    position.X = float.Parse(variables[2]);
-                    position.Y = float.Parse(variables[3]);
-                    //previousPos = Position;
-                   // SpriteGameObject player2 = GameWorld.GetObject("Player2") as SpriteGameObject;
-                    //player2.Position.X = float.Parse(variables[2]); //???
-                    //player2.Position.Y = float.Parse(variables[2]);
-                    //previousPos = position;
-                }
-                else
-                {
-                    //id = 2000
-                    //new object
-                    //SpriteGameObject player2 = new SpriteGameObject("Sprites/Items/Projectiles/spr_fire_0@8", id: "player2"); //has id 1300  
-                    //here
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-    }
-    private void NewHost()
+    public void NewHost()
     {
         //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
@@ -150,12 +102,23 @@ abstract partial class Entity : AnimatedGameObject
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
+        if (MultiplayerManager.online)
+        {
+            if (Current != null)
+            {
+                MultiplayerManager.party.Send("Entity: " + id + " remove", 9999, false);
+            }
+        }
     }
 
     public override void PlayAnimation(string id, bool isBackWards = false)
     {
         base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+                if (MultiplayerManager.online) //send data if online
+        {
+            SendData();
+        }
     }
 
     public override Rectangle BoundingBox

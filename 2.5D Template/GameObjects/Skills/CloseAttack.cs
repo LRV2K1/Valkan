@@ -12,8 +12,8 @@ class CloseAttack : Skill
     protected int damage;
     protected float resettimer;
 
-    public CloseAttack(string assetname, float timer = 1f, int damage = 10, float range = 50, MouseButton mouseButton = MouseButton.Left)
-        : base(assetname, mouseButton)
+    public CloseAttack(string assetname, int skill, float timer = 1f, int damage = 10, float range = 50)
+        : base(assetname, skill)
     {
         this.range = range;
         this.damage = damage;
@@ -21,10 +21,10 @@ class CloseAttack : Skill
         
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public override void Button(bool button)
     {
         Player player = parent as Player;
-        if (inputHelper.MouseButtonPressed(button) && timer.Ready && player.Stamina >= 20)
+        if (button && timer.Ready && player.Stamina >= 20)
         {
             Use(resettimer);
         }
@@ -52,5 +52,13 @@ class CloseAttack : Skill
     {
         Player player = parent as Player;
         projectile.Position += new Vector2(range * (float)Math.Cos(player.Direction), range * (float)Math.Sin(player.Direction));
+    }
+    public override bool Ready
+    {
+        get
+        {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 20;
+        }
     }
 }
