@@ -17,7 +17,7 @@ class InGameMenu : Overlay
         background.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         background.Sprite.Size = new Vector2(0.5f, 0.8f);
         Add(background);
-        resume = new Button("Sprites/Menu/Start_Button", 105);
+        resume = new Button("Sprites/Menu/Resume_Button", 105);
         resume.Origin = resume.Sprite.Center;
         resume.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4);
         Add(resume);

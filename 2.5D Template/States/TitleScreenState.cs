@@ -22,7 +22,7 @@ class TitleScreenState : GameObjectLibrary
         startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 2, (GameEnvironment.Screen.Y - startButton.Height) / 4);
         startButton.Sprite.Size = new Vector2(1,1.5f);
         RootList.Add(startButton);
-        editorButton = new Button("Sprites/Menu/Play_Button", 101);
+        editorButton = new Button("Sprites/Menu/LevelEditor_Button", 101);
         editorButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 2, (GameEnvironment.Screen.Y - startButton.Height) / 2);
         RootList.Add(editorButton);
         /*settingsButton = new Button("Sprites/Menu/Settings_Button", 101);
