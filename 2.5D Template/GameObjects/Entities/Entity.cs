@@ -62,7 +62,7 @@ abstract partial class Entity : AnimatedGameObject
         MultiplayerManager.party.Send("Entity: " + Id + " " + GlobalPosition.X + " " + GlobalPosition.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
     }
 
-    private void NewHost()
+    public void NewHost()
     {
         //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;

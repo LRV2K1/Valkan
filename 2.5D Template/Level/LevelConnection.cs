@@ -8,8 +8,10 @@ partial class Level : GameObjectLibrary
 {
     Dictionary<string, string> connectedEntities;
     string previousdata;
+
     private void SetupClient()
     {
+        MultiplayerManager.party.level = this;
         previousdata = "";
         connectedEntities = new Dictionary<string, string>();
         if (MultiplayerManager.online)
@@ -18,17 +20,17 @@ partial class Level : GameObjectLibrary
         }
     }
 
-    private void DistributeData()
+    public void DistributeData(string data)
     {
-
-        if (previousdata != MultiplayerManager.party.GetReceivedData())
+        if (previousdata != data)
         {
-            previousdata = MultiplayerManager.party.GetReceivedData();
+            previousdata = data;
             string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
             if (variables[0] == "Entity:")
             {
                 if (connectedEntities.ContainsKey(variables[1]))
                 {
+                    Console.WriteLine(data);
                     (GetObject(connectedEntities[variables[1]]) as ConnectedEntity).ReceiveData(previousdata);
                 }
                 else
@@ -47,9 +49,10 @@ partial class Level : GameObjectLibrary
     {
         Console.WriteLine("make object");
         ConnectedEntity entity = new ConnectedEntity(data);
-        RootList.Add(entity);
-        //(GetObject("entities") as GameObjectList).Add(entity);
+        //RootList.Add(entity);
+        (GetObject("entities") as GameObjectList).Add(entity);
         connectedEntities.Add(id, entity.Id);
+        entity.NewHost();
         //SpriteGameObject test = new SpriteGameObject(entity.Sprite.AssetName, 102);
         //RootList.Add(test);
     }

@@ -9,12 +9,18 @@ using System.Text;
 public class ConnectionParty : Connection
 {
     public PlayerList playerlist;
+    public Level level;
     float time;
     public bool isopen = true;
+    int timer;
+    float timout;
 
     public ConnectionParty(int port)
         : base(port)
     {
+        timer = 0;
+        timout = 0;
+        level = null;
         playerlist = new PlayerList();
         ar_ = client.BeginReceive(Receive, new object());
         Console.WriteLine("Created party connection");
@@ -30,6 +36,11 @@ public class ConnectionParty : Connection
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, ip.Address, ip.Port);
                 data = message;
+                if (level != null)
+                {
+                    level.DistributeData(data);
+                    timer++;
+                }
             }
             ar_ = client.BeginReceive(Receive, new object()); //repeat
         }
@@ -39,6 +50,17 @@ public class ConnectionParty : Connection
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
+        if (timout > 0)
+        {
+            timout -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        else
+        {
+            timout = 1f;
+            Console.WriteLine(timer);
+            timer = 0;
+        }
+
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {

@@ -7,10 +7,9 @@ using Microsoft.Xna.Framework;
 
 class ConnectedEntity : Entity
 {
-    int count;
-    int count2;
     string connectedid;
     Vector2 connectedOrigin;
+    string previousdata;
 
     Dictionary<string, string> animations;
     int animationNumber;
@@ -20,6 +19,7 @@ class ConnectedEntity : Entity
     {
         animations = new Dictionary<string, string>();
         animationNumber = 0;
+        previousdata = "";
         ReceiveData(data);
     }
 
@@ -27,19 +27,18 @@ class ConnectedEntity : Entity
 
     public void ReceiveData(string data)
     {
-        Console.WriteLine("get data");
-        Console.WriteLine(data);
-        //Camera camera = GameWorld.GetObject("camera") as Camera;
-        //position = camera.CameraPosition;
+        if (data == previousdata)
+        {
+            return;
+        }
+        previousdata = data;
 
         string[] splitdata = data.Split(' ');
 
         connectedid = splitdata[1];
-        Console.WriteLine("set id data");
         position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
         connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
         origin = connectedOrigin;
-        Console.WriteLine("set position data");
         if (Current != null)
         {
             if (splitdata[6] != Current.AssetName)
