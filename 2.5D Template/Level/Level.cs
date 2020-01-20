@@ -9,6 +9,7 @@ public partial class Level : GameObjectLibrary
 {
     //startup of the level
     int enemycount;
+
     public Level(string name)
         : base()
     {
