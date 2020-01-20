@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 class Bard : Player
 {
+    public Bard(bool host = true, string id = "player")
+        : base(host, id)
+    {
+
+    }
+
     protected override void LoadStats()
     {
         playerType = PlayerType.Bard;

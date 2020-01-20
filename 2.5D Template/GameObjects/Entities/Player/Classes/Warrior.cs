@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 class Warrior : Player
 {
+    public Warrior(bool host = true, string id = "player")
+    : base(host, id)
+    {
+
+    }
     protected override void LoadStats()
     {
         playerType = PlayerType.Warrior;

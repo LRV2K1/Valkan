@@ -63,6 +63,7 @@ class ConnectedPlayer : GameObject
 
     public void GetData(string data)
     {
+        Console.WriteLine(data);
         string[] splitdata = data.Split(' ');
         if (splitdata[1] != playerid)
         {

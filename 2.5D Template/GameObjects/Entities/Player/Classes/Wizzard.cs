@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 class Wizzard : Player
 {
+    public Wizzard(bool host = true, string id = "player")
+: base(host, id)
+    {
+
+    }
     protected override void LoadStats()
     {
         playerType = PlayerType.Wizzard;
