@@ -12,10 +12,10 @@ class Warrior : Player
         playerType = PlayerType.Warrior;
 
         speed = 400;
-        maxhealth = 100;
+        maxhealth = 120;
         MaxStamina = 150;
-        staminatimerreset = 1.5f;
-        addstaminatimerreset = 0.05f;
+        staminatimerreset = 1.0f;
+        addstaminatimerreset = 0.03f;
     }
 
     protected override void LoadSkills()
