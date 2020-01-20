@@ -14,22 +14,13 @@ class AreaHeal : Skill
     int heal;
     float range;
 
-    public AreaHeal(string assetname, string heal_asset = "", float timer = 1f, int heal = 3, float range = 200f, Keys keys = Keys.Space)
-        : base(assetname, MouseButton.None, keys)
+    public AreaHeal(string assetname, int skill, string heal_asset = "", float timer = 1f, int heal = 3, float range = 200f)
+        : base(assetname, skill)
     {
         this.heal_asset = heal_asset;
         this.heal = heal;
         this.range = range;
         resettimer = timer;
-    }
-
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        Player player = parent as Player;
-        if (inputHelper.KeyPressed(key) && timer.Ready && player.Stamina >= 20)
-        {
-            Use(resettimer);
-        }
     }
 
     public override void Use(float timer = 2)
@@ -42,6 +33,15 @@ class AreaHeal : Skill
         HealPlayers(surroundingentities, player.GlobalPosition);
     }
 
+    public override void Button(bool button)
+    {
+        Player player = parent as Player;
+        if (button && timer.Ready && player.Stamina >= 20)
+        {
+            Use(resettimer);
+        }
+    }
+
     private void HealPlayers(List<string> surroundingentities, Vector2 position)
     {
         List<Player> surroundingPlayers = SurroundingPlayers(surroundingentities, position, range);
@@ -49,6 +49,14 @@ class AreaHeal : Skill
         {
             player.Health += heal;
             MakeParticle(player.GlobalPosition, heal_asset);
+        }
+    }
+    public override bool Ready
+    {
+        get
+        {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 20;
         }
     }
 }

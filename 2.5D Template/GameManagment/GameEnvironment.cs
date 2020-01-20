@@ -38,7 +38,7 @@ public class GameEnvironment : Game
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
         
-        char charid = (char)(0);
+        char charid = (char)(48);
         stringid += charid;
         output = new List<OutputText>();
     }
@@ -62,17 +62,17 @@ public class GameEnvironment : Game
             key = s.Substring(0, s.Length - 1);
         }
         int nummer = (int)letter + 1;
-        if (nummer > 255)
+        if (nummer > 125)
         {
             if (key == "")
             {
-                key = ((char)(0)).ToString();
+                key = ((char)(48)).ToString();
             }
             else
             {
                 key = AddChar(key);
             }
-            nummer = 0;
+            nummer = 48;
         }
         letter = (char)nummer;
         string text = key;

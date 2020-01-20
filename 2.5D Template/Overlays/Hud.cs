@@ -33,6 +33,21 @@ class Hud : Overlay
     {
         //update overlay items
         base.Update(gameTime);
+        if (MultiplayerManager.Online)
+        {
+            if (GameEnvironment.GameSettingsManager.GetValue("host") != "true")
+            {
+                ConnectedPlayer player2 = GameWorld.GetObject("player") as ConnectedPlayer;
+                if (player2 != null)
+                {
+                    //check player data and scale tubes
+                    tube1.TargetSize = (float)player2.Health / (float)player2.MaxHealth;
+                    tube2.TargetSize = (float)player2.Stamina / (float)player2.MaxStamina;
+                }
+                return;
+            }
+        }
+
         Player player = GameWorld.GetObject("player") as Player;
         if (player != null)
         {

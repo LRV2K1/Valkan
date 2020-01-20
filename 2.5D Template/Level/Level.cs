@@ -15,6 +15,13 @@ public partial class Level : GameObjectLibrary
     {
         enemycount = 0;
         LoadLevel("Content/Levels/Level_" + name + ".txt");
+        if (MultiplayerManager.Online)
+        {
+            if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
+            {
+                SetupClient();
+            }
+        }
         Reset();
     }
 

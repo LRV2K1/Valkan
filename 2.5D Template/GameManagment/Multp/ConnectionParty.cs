@@ -1,19 +1,26 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Net.Sockets;
+using System.Net;
 using Microsoft.Xna.Framework;
 using System.IO;
-using System.Net;
 using System.Text;
 
 public class ConnectionParty : Connection
 {
     public PlayerList playerlist;
-    public bool isopen = true;
+    public Level level;
     float time;
+    public bool isopen = true;
+    int timer;
+    float timout;
 
     public ConnectionParty(int port)
         : base(port)
     {
+        timer = 0;
+        timout = 0;
+        level = null;
         playerlist = new PlayerList();
         ar_ = udpclient.BeginReceive(Receive, new object());
         Console.WriteLine("Created party connection");
@@ -21,25 +28,38 @@ public class ConnectionParty : Connection
 
     private void Receive(IAsyncResult ar)
     {
-        try //if connection closes catches errors
+        try
         {
             byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
-
-            if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from local ip (we dont need our own data) 
+            if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, remoteep.Address);
+                data = message;
+                if (level != null)
+                {
+                    level.DistributeData(data);
+                    timer++;
+                }
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
         catch
         {
-
         }
     }
-
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
+        if (timout > 0)
+        {
+            timout -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        else
+        {
+            timout = 1f;
+            timer = 0;
+        }
+
         time += (float)gameTime.ElapsedGameTime.TotalSeconds;
         if (playerlist.IsHost(MyIP()) && time > 1)
         {
@@ -62,10 +82,9 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort, false); //broadcast playerlist to port lobbyport
+                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort, false); //broadcast playerlist to port 1000
             }
             time = 0;
-
         }
         else
         {
@@ -82,7 +101,6 @@ public class ConnectionParty : Connection
                             lobbyplayer.timeunactive += 1;
                             if (lobbyplayer.timeunactive >= 5)
                             {
-                                MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
                                 Disconnect();
                             }
                         }
@@ -102,11 +120,11 @@ public class ConnectionParty : Connection
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
         bool log = true;
-        if (playerlist.IsHost(MyIP())) //data for host only playerlist.IsHost(MyIP()
+        if (playerlist.IsHost(MyIP())) //data for host only
         {
-            if (variables[0] == "Entity:")
+            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:")
             {
-                data = message;
+                log = false;
             }
             else if (message == "Join")
             {
@@ -114,7 +132,8 @@ public class ConnectionParty : Connection
                 Send("Playerlist:" + playerlist.ToString(), port);
                 if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
-                    CloseParty();
+                    Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
+                    isopen = false;
                 }
             }
             else if (message == "Leave")
@@ -126,11 +145,6 @@ public class ConnectionParty : Connection
             else if (message == "Ready")
             {
                 playerlist.Modify(sender, true);
-                Send("Playerlist:" + playerlist.ToString(), port);
-            }
-            else if (message == "Unready")
-            {
-                playerlist.Unready(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
@@ -153,19 +167,19 @@ public class ConnectionParty : Connection
             }
             else
             {
-                Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
+                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
         else //data for everyone but host
         {
             if (variables[0] == "Entity:")
             {
-                data = message;
+                log = false;
             }
             else if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
-
+                
                 if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
                 {
                     log = false;
@@ -173,7 +187,6 @@ public class ConnectionParty : Connection
             }
             else if (message == "Start")
             {
-                CreatePlayers();
                 GameEnvironment.ScreenFade.TransitionToScene("playingState");
             }
             else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
@@ -191,61 +204,26 @@ public class ConnectionParty : Connection
             }
             else if (variables[0] == "World")
             {
-                Console.WriteLine("Received a world part");
+                Console.WriteLine("Received a world");
                 StoreWorld(variables[1], message);
             }
             else
             {
-                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+                //Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
         if (log) //should the received data be put in console?
         {
-            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+            //Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, sender, port);
         }
-    }
-
-    public void CreatePlayers()
-    {
-        int count = 0;
-        foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
-        {
-
-            if (MyIP().ToString() != lobbyplayer.ip.ToString())
-            {
-                if (count == 0)
-                {
-                    SpriteGameObject player1 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player1");
-                }
-                else if (count == 1)
-                {
-                    SpriteGameObject player2 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player2");
-                }
-                else if (count == 2)
-                {
-                    SpriteGameObject player3 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player3");
-                }
-                else if (count == 3)
-                {
-                    SpriteGameObject player4 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player4");
-                }
-            }
-            count++;
-        }
-    }
-
-    public void CloseParty()
-    {
-        Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
-        isopen = false;
     }
 
     public void Disconnect() //stop receiving and sending data
     {
         if (playerlist.IsHost(MyIP()))
         {
-            CloseParty();
             Send("HostLeaves", MultiplayerManager.PartyPort);
+            CloseParty();
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
@@ -259,6 +237,11 @@ public class ConnectionParty : Connection
         MultiplayerManager.Party = null;
     }
 
+    public void CloseParty()
+    {
+        Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
+        isopen = false;
+    }
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
         string path = "Content/Levels/" + file + ".txt";
@@ -273,8 +256,6 @@ public class ConnectionParty : Connection
         GameEnvironment.GameSettingsManager.SetValue("level", file.Substring(6, file.Length - 6)); //remove Level_ from Level_(number) so we only have the int
         playerlist.Modify(MyIP(), receivedworld: true);
     }
-
-    
     public string WorldToString(string file) //convert <file>.txt to string
     {
         string message = "";

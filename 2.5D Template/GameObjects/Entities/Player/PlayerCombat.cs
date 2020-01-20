@@ -15,21 +15,20 @@ partial class Player : MovingEntity
 
     protected virtual void LoadSkills()
     {
-        //skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_6", "Sprites/Items/Projectiles/spr_ice_", 8, "Sprites/Items/Particles/spr_ice_explosion@4");
-        //skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_9", "Sprites/Items/Projectiles/spr_rock", 1, "Sprites/Items/Particles/spr_rock_explosion@4", 1, 5);
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-
-        //skill2 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_7", "Sprites/Items/Projectiles/spr_fire_", 8, "Sprites/Items/Particles/spr_fire_explosion@3x4", 1.5f, 12, MouseButton.Right);
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        //skill2 = new SpeedBuff("Sprites/Menu/Skills/spr_skill_2", "Sprites/Items/Particles/spr_stamina@4");
-
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
-        //skill3 = new BlockHold("Sprites/Menu/Skills/spr_skill_8", "Sprites/Items/Particles/spr_shield@4");
-        //skill3 = new AreaHeal("Sprites/Menu/Skills/spr_skill_1", "Sprites/Items/Particles/spr_heal@6");
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0", 1);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4", 2);
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5", 3);
     }
 
     private void SetSkills()
     {
+        if (!host)
+        {
+            skill1.Timer.Visible = false;
+            skill2.Timer.Visible = false;
+            skill3.Timer.Visible = false;
+            return;
+        }
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
@@ -48,9 +47,16 @@ partial class Player : MovingEntity
     //update skills
     private void Skills(InputHelper inputHelper)
     {
-        skill1.HandleInput(inputHelper);
-        skill2.HandleInput(inputHelper);
-        skill3.HandleInput(inputHelper);
+        skill1.Button(inputHelper.MouseButtonDown(MouseButton.Left));
+        skill2.Button(inputHelper.MouseButtonDown(MouseButton.Right));
+        skill3.Button(inputHelper.IsKeyDown(Keys.Space));
+    }
+
+    private void RemoteSkills(InputHelper inputHelper)
+    {
+        skill1.Button(leftb);
+        skill2.Button(rightb);
+        skill3.Button(space);
     }
 
     private void RegenStamina(GameTime gameTime)
@@ -74,6 +80,10 @@ partial class Player : MovingEntity
 
         addstaminatimer = addstaminatimerreset;
         stamina++;
+        if (MultiplayerManager.Online && !host)
+        {
+            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + health, MultiplayerManager.PartyPort, false);
+        }
     }
 
     private void CheckDie()
@@ -83,9 +93,12 @@ partial class Player : MovingEntity
             die = true;
             SwitchAnimation("die", "D");
             GameEnvironment.AssetManager.PlaySound(die_sound);
-            MediaPlayer.Stop();
+            if (host)
+            {
+                MediaPlayer.Stop();
+                (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
+            }
             velocity = Vector2.Zero;
-            (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
         }
     }
 
@@ -110,6 +123,10 @@ partial class Player : MovingEntity
                 GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
             }
             health = value;
+            if (MultiplayerManager.Online && !host)
+            {
+                MultiplayerManager.Party.Send("CPlayer: " + id + " health " + health, MultiplayerManager.PartyPort, false);
+            }
 
             if (health > maxhealth)
             {
@@ -140,6 +157,10 @@ partial class Player : MovingEntity
         set
         {
             stamina = value;
+            if (MultiplayerManager.Online && !host)
+            {
+                MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
+            }
             staminatimer = staminatimerreset;
             if (stamina > maxstamina)
             {
@@ -158,6 +179,10 @@ partial class Player : MovingEntity
         set
         {
             maxhealth = value;
+            if (MultiplayerManager.Online && !host)
+            {
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxhealth " + maxhealth, MultiplayerManager.PartyPort, false);
+            }
             Health = health;
         }
     }
@@ -168,6 +193,10 @@ partial class Player : MovingEntity
         set
         {
             maxstamina = value;
+            if (MultiplayerManager.Online && !host)
+            {
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxstamina " + maxstamina, MultiplayerManager.PartyPort, false);
+            }
             Stamina = stamina;
         }
     }
