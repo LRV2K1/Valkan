@@ -15,11 +15,41 @@ class ConnectedPlayer : GameObject
     protected int maxhealth, maxstamina;
 
     bool die, dead;
+    SkillTimer skill1, skill2, skill3;
 
     public ConnectedPlayer(string id = "player2")
         : base(0, "player")
     {
         playerid = id;
+
+        maxhealth = 100;
+        MaxStamina = 150;
+        health = maxhealth;
+        stamina = maxstamina;
+
+        LoadSkills();
+        SetupSkills();
+    }
+
+    protected void LoadSkills()
+    {
+        skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");
+        skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_4");
+        skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_5");
+    }
+
+    private void SetupSkills()
+    {
+        skill1.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+    }
+
+    public void PlayerSetup()
+    {
+        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
+        Overlay hud = overlay.GetOverlay("hud") as Overlay;
+        hud.Add(skill1);
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -58,6 +88,33 @@ class ConnectedPlayer : GameObject
         else if (inputHelper.KeyReleased(Keys.S))
         {
             MultiplayerManager.party.Send("Player: " + playerid + " " + "down" + " " + "false", 9999, false);
+        }
+
+        if (inputHelper.KeyPressed(Keys.Space))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "space" + " " + "true", 9999, false);
+        }
+        else if (inputHelper.KeyReleased(Keys.Space))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "space" + " " + "false", 9999, false);
+        }
+
+        if (inputHelper.MouseButtonPressed(MouseButton.Left))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "bleft" + " " + "true", 9999, false);
+        }
+        else if (inputHelper.MouseButtonReleased(MouseButton.Left))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "bleft" + " " + "false", 9999, false);
+        }
+
+        if (inputHelper.MouseButtonPressed(MouseButton.Right))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "bright" + " " + "true", 9999, false);
+        }
+        else if (inputHelper.MouseButtonReleased(MouseButton.Right))
+        {
+            MultiplayerManager.party.Send("Player: " + playerid + " " + "bright" + " " + "false", 9999, false);
         }
     }
 

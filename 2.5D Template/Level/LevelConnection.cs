@@ -26,11 +26,11 @@ partial class Level : GameObjectLibrary
         {
             previousdata = data;
             string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+            Console.WriteLine(data);
             if (variables[0] == "Entity:")
             {
                 if (connectedEntities.ContainsKey(variables[1]))
                 {
-                    Console.WriteLine(data);
                     (GetObject(connectedEntities[variables[1]]) as ConnectedEntity).ReceiveData(previousdata);
                 }
                 else
@@ -46,7 +46,7 @@ partial class Level : GameObjectLibrary
             {
                 (GetObject(variables[1]) as Player).GetData(previousdata);
             }
-            if (variables[0] == "CPlayer: ")
+            if (variables[0] == "CPlayer:")
             {
                 (GetObject("player") as ConnectedPlayer).GetData(previousdata);
             }

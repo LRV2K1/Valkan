@@ -80,6 +80,23 @@ public class InputHelper
         else return false;
     }
 
+    public bool MouseButtonReleased(MouseButton m)
+    {
+        if (m == MouseButton.Left)
+        {
+            return currentMouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed;
+        }
+        else if (m == MouseButton.Right)
+        {
+            return currentMouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed;
+        }
+        else if (m == MouseButton.Middel)
+        {
+            return currentMouseState.MiddleButton == ButtonState.Released && previousMouseState.MiddleButton == ButtonState.Pressed;
+        }
+        else return false;
+    }
+
     public bool ScrolUp()
     {
         return currentMouseState.ScrollWheelValue > previousMouseState.ScrollWheelValue;

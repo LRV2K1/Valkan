@@ -91,9 +91,12 @@ partial class Player : MovingEntity
             die = true;
             SwitchAnimation("die", "D");
             GameEnvironment.AssetManager.PlaySound(die_sound);
-            MediaPlayer.Stop();
+            if (host)
+            {
+                MediaPlayer.Stop();
+                (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
+            }
             velocity = Vector2.Zero;
-            (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
         }
     }
 

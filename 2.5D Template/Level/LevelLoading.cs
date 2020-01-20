@@ -123,6 +123,7 @@ partial class Level : GameObjectLibrary
     {
         ConnectedPlayer connectedPlayer = new ConnectedPlayer("player2");
         RootList.Add(connectedPlayer);
+        connectedPlayer.PlayerSetup();
     }
 
     private void LoadEntity(int x, int y, string entitytype)
