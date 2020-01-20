@@ -80,7 +80,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         if (id == "player")
         {
-            MultiplayerManager.Party.Send("Entity: " + id + "2 " + position.X + " " + position.Y, 9999); //frame of animation????
+            MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999); //frame of animation????
         }
     }
 
@@ -96,6 +96,9 @@ abstract partial class Entity : AnimatedGameObject
                 string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
+                    position.X = float.Parse(variables[1]);
+                    position.Y = float.Parse(variables[2]);
+                    previousPos = Position;
                    // SpriteGameObject player2 = GameWorld.GetObject("Player2") as SpriteGameObject;
                     //player2.Position.X = float.Parse(variables[2]); //???
                     //player2.Position.Y = float.Parse(variables[2]);
