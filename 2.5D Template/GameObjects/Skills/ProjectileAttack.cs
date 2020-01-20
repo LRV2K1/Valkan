@@ -89,7 +89,7 @@ class ProjectileAttack : Skill
             animated = true;
         }
 
-        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 3, prj_ex_asset);
+        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 1, prj_ex_asset);
         projectile.Position = position;
         SetProjectileSpeed(projectile);
         GameWorld.RootList.Add(projectile);

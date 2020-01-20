@@ -59,6 +59,7 @@ partial class Enemy : MovingEntity
 
         if (die || dead)
         {
+            this.velocity = Vector2.Zero;
             if (Current.AnimationEnded)
             {
                 dead = true;
