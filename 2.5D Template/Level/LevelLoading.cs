@@ -121,32 +121,8 @@ partial class Level : GameObjectLibrary
 
     private void LoadRemotePlayer()
     {
-        foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
-        {
-            if (lobbyplayer.ishost == false)
-            {
-                ConnectedPlayer connectedPlayer;
-                PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
-                switch (playerType)
-                {
-                    case PlayerType.Bard:
-                        connectedPlayer = new ConnectedBard();
-                        break;
-                    case PlayerType.Warrior:
-                        connectedPlayer = new ConnectedWarrior();
-                        break;
-                    case PlayerType.Wizzard:
-                        connectedPlayer = new ConnectedWizzard();
-                        break;
-                    default:
-                        connectedPlayer = new ConnectedWarrior();
-                        break;
-                }
-                RootList.Add(connectedPlayer);
-                connectedPlayer.PlayerSetup();
-                return;
-            }
-        }
+        ConnectedPlayer connectedPlayer = new ConnectedPlayer("player2");
+        RootList.Add(connectedPlayer);
     }
 
     private void LoadEntity(int x, int y, string entitytype)
@@ -207,36 +183,10 @@ partial class Level : GameObjectLibrary
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
 
-        if (MultiplayerManager.online)
-        {
-            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
-            {
-                if (lobbyplayer.ishost == false)
-                {
-                    Player player2;
-                    PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
-                    switch (playerType)
-                    {
-                        case PlayerType.Bard:
-                            player2 = new Bard();
-                            break;
-                        case PlayerType.Warrior:
-                            player2 = new Warrior();
-                            break;
-                        case PlayerType.Wizzard:
-                            player2 = new Wizzard();
-                            break;
-                        default:
-                            player2 = new Warrior();
-                            break;
-                    }
-                    entities.Add(player2);
-                    player2.SetupPlayer();
-                    player2.MovePositionOnGrid(x, y + 1);
-                    return;
-                }
-            }
-        }
+        Player player2 = new Player(false, "player2");
+        entities.Add(player2);
+        player2.SetupPlayer();
+        player2.MovePositionOnGrid(x, y + 1);
 
         /*
         if (MultiplayerManager.online && false)
