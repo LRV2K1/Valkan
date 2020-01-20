@@ -13,7 +13,7 @@ class Die : Overlay
     int red, green, bleu, alpha;
     float timer;
     bool done;
-    public Die(GameObjectLibrary gameworld, int layer = 101, string id = "")
+    public Die(GameObjectLibrary gameworld, string asset, int layer = 101, string id = "")
         : base(gameworld, layer, id)
     {
         timer = 0;
@@ -23,7 +23,7 @@ class Die : Overlay
         alpha = 0;
         done = false;
 
-        spr_die = new SpriteGameObject("Sprites/Overlay/spr_die", 101);
+        spr_die = new SpriteGameObject(asset, 101);
         spr_die.Sprite.Color = new Color(red, green, bleu, alpha);
         Add(spr_die);
         returnButton = new Button("Sprites/Menu/Return_Button", 102);

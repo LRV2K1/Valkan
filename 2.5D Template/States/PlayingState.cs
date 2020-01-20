@@ -46,7 +46,7 @@ class PlayingState : State
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
-            if (overlay.CurrentOverlayID == "die")
+            if (overlay.CurrentOverlayID == "die" || overlay.CurrentOverlayID == "finish")
             {
                 return;
             }

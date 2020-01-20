@@ -37,7 +37,8 @@ partial class Level : GameObjectLibrary
 
         overlayManager.AddOverlay("hud", new Hud(this));
         overlayManager.AddOverlay("menu", new InGameMenu(this));
-        overlayManager.AddOverlay("die", new Die(this));
+        overlayManager.AddOverlay("die", new Die(this, "Sprites/Overlay/spr_die"));
+        overlayManager.AddOverlay("finish", new Die(this, "Sprites/Overlay/spr_finish"));
         overlayManager.SwitchTo("hud");
     }
 
@@ -203,5 +204,6 @@ partial class Level : GameObjectLibrary
         GameObjectList enemies = GetObject("enemies") as GameObjectList;
         enemies.Add(enemy);
         enemy.MovePositionOnGrid(x, y);
+        enemycount++;
     }
 }

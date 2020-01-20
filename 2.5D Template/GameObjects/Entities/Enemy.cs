@@ -111,6 +111,7 @@ partial class Enemy : MovingEntity
                 GameMouse mouse = GameWorld.GetObject("mouse") as GameMouse;
                 mouse.RemoveSelectedEntity();
             }
+            (GameWorld as Level).EnemyCount--;
         }
     }
 
@@ -436,6 +437,12 @@ partial class Enemy : MovingEntity
             range = true;
 
         return range;
+    }
+
+    public override void RemoveSelf()
+    {
+        base.RemoveSelf();
+        (GameWorld as Level).EnemyCount--;
     }
 
 }
