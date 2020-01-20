@@ -9,6 +9,7 @@ partial class Enemy : MovingEntity
 {
     bool nodata;
     bool die_anim, idle_anim, walking_anim, attack_anim;
+    string die_sound, damage_sound, attack_sound;
 
     private void LoadEnemyData()
     {
@@ -24,7 +25,9 @@ partial class Enemy : MovingEntity
             nodata = true;
             return;
         }
-
+        this.die_sound = dataloc + "/Death";
+        this.damage_sound = dataloc + "/Damage";
+        this.attack_sound = dataloc + "/Attack";
         List<string> data = new List<string>();
         string line = streamReader.ReadLine();
         while (line != "" && line != null)
@@ -55,12 +58,12 @@ partial class Enemy : MovingEntity
                     idle_anim = true;
                     break;
                 case "attack":
-                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), false);
                     damage = int.Parse(linedata[2]);
                     attack_anim = true;
                     break;
                 case "walking":
-                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true);
                     speed = int.Parse(linedata[2]);
                     walking_anim = true;
                     break;
@@ -104,5 +107,19 @@ partial class Enemy : MovingEntity
     public bool NoData
     {
         get { return nodata; }
+    }
+
+    public string Die_Sound
+    {
+        get { return die_sound; }
+    }
+
+    public string Damage_Sound
+    {
+        get { return damage_sound; }
+    }
+    public string Attack_Sound
+    {
+        get { return attack_sound; }
     }
 }

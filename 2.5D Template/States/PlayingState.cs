@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 
 class PlayingState : State
@@ -41,33 +42,15 @@ class PlayingState : State
         {
             return;
         }
-        if (inputHelper.KeyPressed(Keys.L))
-        {
-            try
-            {
-                switch (GameEnvironment.GameSettingsManager.GetValue("connection"))
-                {
-                    case "offline":
-                        GameEnvironment.ScreenFade.TransitionToScene("offlineSelectionState");
-                        break;
-                    case "online":
-                        GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch
-            {
-                GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState");
-            }
-            return;
-        }
 
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
-            if (overlay.CurrentOverlay is InGameMenu)
+            if (overlay.CurrentOverlayID == "die" || overlay.CurrentOverlayID == "finish")
+            {
+                return;
+            }
+            if (overlay.CurrentOverlayID == "menu")
             {
                 overlay.SwitchTo("hud");
             }
@@ -87,6 +70,7 @@ class PlayingState : State
     {
         if(firstTime)
         {
+            MediaPlayer.Volume = 0.4f;
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
             firstTime = false;
         }
@@ -112,8 +96,6 @@ class PlayingState : State
     public override void Reset()
     {
         firstTime = true;
-        //UnLoadLevel();
         paused = false;
-        //LoadLevel();
     }
 }

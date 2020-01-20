@@ -164,8 +164,13 @@ class LevelGrid : GameObjectGrid
         List<string> tiles = ActiveTiles();
         for (int i = 0; i < tiles.Count; i++)
         {
-            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
-            tile.Update(gameTime);
+            (GameWorld.GetObject(tiles[i]) as Tile).Update(gameTime);
+        }
+
+        List<string> entities = ActiveEnities();
+        for (int i = 0; i < entities.Count; i++)
+        {
+            (GameWorld.GetObject(entities[i]) as Entity).Update(gameTime);
         }
     }
 
@@ -210,6 +215,19 @@ class LevelGrid : GameObjectGrid
             }
         }
         return tiles;
+    }
+
+    private List<string> ActiveEnities()
+    {
+        List<string> tiles = ActiveTiles();
+        List<string> entities = new List<string>();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
+
+            entities.AddRange(tile.Passengers);
+        }
+        return entities;
     }
 
     public Vector2 AnchorPosition(int x, int y)

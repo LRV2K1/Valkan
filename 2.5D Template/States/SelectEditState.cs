@@ -9,10 +9,13 @@ using Microsoft.Xna.Framework;
 class SelectEditState : GameObjectLibrary
 {
     List<Button> buttonList;
+    List<SpriteGameObject> levelList;
+    protected Button returnButton;
     public SelectEditState()
         : base()
     {
         buttonList = new List<Button>();
+        levelList = new List<SpriteGameObject>();
         LoadButtons();
     }
 
@@ -22,22 +25,36 @@ class SelectEditState : GameObjectLibrary
         Vector2 newPosition;
         int xOffset = (int)(GameEnvironment.Screen.X / 30) * 5;
         int yOffset = (int)(GameEnvironment.Screen.Y / 4);
-        for (int i = 0; i < 3; i++)
+        for (int y = 0; y < 3; y++)
         {
-            newPosition = new Vector2(startposition.X, startposition.Y + yOffset * i);
-            for (int j = 0; j < 3; j++)
+            newPosition = new Vector2(startposition.X, startposition.Y + yOffset * y);
+            for (int x = 0; x < 3; x++)
             {
                 Button button = new Button("Sprites/Menu/Select_Button", 109);
                 buttonList.Add(button);
                 button.Sprite.Size = new Vector2(0.6f, 0.6f);
-                button.Position = new Vector2(startposition.X + j * xOffset, newPosition.Y);
+                button.Position = new Vector2(startposition.X + x * xOffset, newPosition.Y);
                 RootList.Add(button);
+                int nummer = (x + 1) * y + x + 1;
+                SpriteGameObject level = new SpriteGameObject("Sprites/Menu/Level_Button_" + nummer, 110);
+                levelList.Add(level);
+                level.Sprite.Size = new Vector2(0.6f, 0.6f);
+                level.Position = new Vector2(startposition.X + x * xOffset, newPosition.Y - 150);
+                RootList.Add(level);
             }
         }
+        returnButton = new Button("Sprites/Menu/Return_Button", 101);
+        returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 16 * 15);
+        RootList.Add(returnButton);
     }
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+        if (returnButton.Pressed)
+        {
+            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
+            return;
+        }
         for (int i = 0; i < buttonList.Count; i++)
         {
             if (buttonList[i].Pressed)

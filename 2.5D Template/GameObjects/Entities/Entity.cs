@@ -93,11 +93,11 @@ abstract partial class Entity : AnimatedGameObject
             if (currentdata != olddata)
             {
                 count2++;
-                string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
+                string[] variables = currentdata.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
-                    position.X = float.Parse(variables[1]);
-                    position.Y = float.Parse(variables[2]);
+                    position.X = float.Parse(variables[2]);
+                    position.Y = float.Parse(variables[3]);
                     previousPos = Position;
                    // SpriteGameObject player2 = GameWorld.GetObject("Player2") as SpriteGameObject;
                     //player2.Position.X = float.Parse(variables[2]); //???

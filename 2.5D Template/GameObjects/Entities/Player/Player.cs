@@ -40,6 +40,7 @@ partial class Player : MovingEntity
     protected Skill skill2;
     protected float staminatimer, staminatimerreset, addstaminatimer, addstaminatimerreset;
     protected bool dead, die;
+    string die_sound, damage_sound;
     protected bool input;
     protected PlayerType playerType;
     protected bool inmovible;
@@ -101,6 +102,21 @@ partial class Player : MovingEntity
         skill2.Setup();
         skill3.Parent = this;
         skill3.Setup();
+        string startpath = "SFX/Player/";
+        if(playerType == PlayerType.Warrior)
+        {
+            startpath += "Warrior_";
+        }
+        else if(playerType == PlayerType.Wizzard)
+        {
+            startpath += "Mage_";
+        }
+        else
+        {
+            startpath += "Bard_";
+        }
+        die_sound = startpath + "Death";
+        damage_sound = startpath + "Damage";
     }
     
     public override void HandleInput(InputHelper inputHelper)

@@ -57,6 +57,27 @@ class ProjectileAttack : Skill
     {
         string prj_sprite = prj_asset;
         bool animated = false;
+        string explosionsound;
+        explosionsound = "";
+
+        if (prj_asset == "Sprites/Items/Projectiles/spr_ice_")
+        {
+            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+            explosionsound = "SFX/Player/Ice_Explosion";
+        }
+        else if (prj_asset == "Sprites/Items/Projectiles/spr_fire_")
+        {
+            GameEnvironment.AssetManager.PlaySound("SFX/Player/Fire_Shoot");
+            explosionsound = "SFX/Player/Fire_Explosion";
+        }
+        else if (prj_asset == "Sprites/Items/Projectiles/spr_rock_")
+        {
+            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+        }
+        else
+        {
+            explosionsound = "SFX/Player/Thud";
+        }
 
         if (directional)
         {
@@ -68,7 +89,7 @@ class ProjectileAttack : Skill
             animated = true;
         }
 
-        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) ,3, prj_ex_asset);
+        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 1, prj_ex_asset);
         projectile.Position = position;
         SetProjectileSpeed(projectile);
         GameWorld.RootList.Add(projectile);

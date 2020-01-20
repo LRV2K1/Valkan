@@ -10,6 +10,7 @@ partial class Enemy : MovingEntity
 
     private void ChangeAnimation()
     {
+        input = velocity != Vector2.Zero;
         //check if attacking
         if (currentAnimation == "B")
         {
