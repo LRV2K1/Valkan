@@ -245,12 +245,12 @@ public class ConnectionParty : Connection
         if (playerlist.IsHost(MyIP()))
         {
             CloseParty();
-            Send("HostLeaves", 9999);
+            Send("HostLeaves", MultiplayerManager.PartyPort);
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
         {
-            Send("Leave", 9999);
+            Send("Leave", MultiplayerManager.PartyPort);
             MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }

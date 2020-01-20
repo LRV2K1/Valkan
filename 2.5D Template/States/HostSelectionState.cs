@@ -164,11 +164,11 @@ class HostSelectionState : GameObjectLibrary
             {
                 if (!MultiplayerManager.Party.playerlist.AllReceivedWorld())
                 {
-                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                    MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), MultiplayerManager.PartyPort);
                 }
                 else
                 {
-                    MultiplayerManager.Party.Send("Start", 9999);
+                    MultiplayerManager.Party.Send("Start", MultiplayerManager.PartyPort);
                     MultiplayerManager.Party.CreatePlayers();
                     GameEnvironment.ScreenFade.TransitionToScene("playingState");
                     timeron = false;
@@ -231,7 +231,7 @@ class HostSelectionState : GameObjectLibrary
             if (MultiplayerManager.Party.playerlist.AllReady()) //if everyone is ready
             {
                 MultiplayerManager.Party.CloseParty();               
-                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), 9999);
+                MultiplayerManager.Party.Send("World Level_" + GameEnvironment.GameSettingsManager.GetValue("level") + " " + MultiplayerManager.Party.WorldToString("Level_" + GameEnvironment.GameSettingsManager.GetValue("level")), MultiplayerManager.PartyPort);
                 timeron = true;
             }
             else
@@ -247,21 +247,21 @@ class HostSelectionState : GameObjectLibrary
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
             MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Warrior");
-            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), MultiplayerManager.PartyPort);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
             MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Wizzard");
-            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), MultiplayerManager.PartyPort);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
             MultiplayerManager.Party.playerlist.Modify(Connection.MyIP(), character: "Bard");
-            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), 9999);
+            MultiplayerManager.Party.Send("Playerlist:" + MultiplayerManager.Party.playerlist.ToString(), MultiplayerManager.PartyPort);
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (returnButton.Pressed)
