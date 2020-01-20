@@ -14,7 +14,7 @@ class MapSelectionPopUp : PopUp
     {
         this.Sprite.Size = boxSize;
         this.Origin = Center;
-        this.Sprite.Color = Color.Red;
+        this.Sprite.Color = Color.Gray;
         this.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         buttonList = new List<Button>();
         levelList = new List<SpriteGameObject>();

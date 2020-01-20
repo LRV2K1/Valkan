@@ -14,6 +14,8 @@ class SelectEditState : GameObjectLibrary
     public SelectEditState()
         : base()
     {
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
+        RootList.Add(titleScreen);
         buttonList = new List<Button>();
         levelList = new List<SpriteGameObject>();
         LoadButtons();
@@ -52,7 +54,7 @@ class SelectEditState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
+            GameEnvironment.ScreenFade.TransitionToScene("titleScreen", 5);
             return;
         }
         for (int i = 0; i < buttonList.Count; i++)

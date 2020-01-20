@@ -98,7 +98,7 @@ abstract partial class Entity : AnimatedGameObject
                 {
                     position.X = float.Parse(variables[2]);
                     position.Y = float.Parse(variables[3]);
-                    previousPos = Position;
+                    //previousPos = Position;
                    // SpriteGameObject player2 = GameWorld.GetObject("Player2") as SpriteGameObject;
                     //player2.Position.X = float.Parse(variables[2]); //???
                     //player2.Position.Y = float.Parse(variables[2]);

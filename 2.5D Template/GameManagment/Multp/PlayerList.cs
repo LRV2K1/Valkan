@@ -23,6 +23,10 @@ public class PlayerList
             //variables[5] = receivedworld
             string[] variables = lines[i].Split(new string[] { ", " }, StringSplitOptions.None);
             Modify(IPAddress.Parse(variables[0]), bool.Parse(variables[1]), bool.Parse(variables[2]), character: variables[3], timeunactive: float.Parse(variables[4]), receivedworld: bool.Parse(variables[5])); //modify playerlist with this data
+            if (variables[1] == "False")
+            {
+                Unready(IPAddress.Parse(variables[0]));
+            }
         }
     }
     public void Modify(IPAddress ip, bool isready = false, bool ishost = false, bool leave = false, string character = "null", float timeunactive = 0, bool receivedworld = false)
@@ -65,7 +69,16 @@ public class PlayerList
             Console.WriteLine("Added lobbyplayer");
         }
     }
-
+    public void Unready(IPAddress ip)
+    {
+        foreach (LobbyPlayer lobbyplayer in playerlist)
+        {
+            if (lobbyplayer.ip.ToString() == ip.ToString()) //is this player already in the playerlist
+            {
+                lobbyplayer.isready = false;
+            }
+        }
+    }
     public bool IsHost(IPAddress ip) //goes over all lobbyplayers until it finds a matching ip, then checks then returns the bool ishost
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
@@ -103,6 +116,19 @@ public class PlayerList
         }
         return true;
     }
+
+    public bool IsReady(IPAddress ip)
+    {
+        foreach (LobbyPlayer lobbyplayer in playerlist)
+        {
+            if (lobbyplayer.ip.ToString() == ip.ToString())
+            {
+                return lobbyplayer.isready;
+            }
+        }
+        return true;
+    }
+
     public bool AllReceivedWorld()
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)

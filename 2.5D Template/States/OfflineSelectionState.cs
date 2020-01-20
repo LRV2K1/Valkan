@@ -20,7 +20,7 @@ class OfflineSelectionState : GameObjectLibrary
     public OfflineSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen2", 100, "background");
         RootList.Add(titleScreen);
         startButton = new Button("Sprites/Menu/Start_Button", 101);
         startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - startButton.Height) / 6);
@@ -40,7 +40,7 @@ class OfflineSelectionState : GameObjectLibrary
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
-        popup = new MapSelectionPopUp("Sprites/Overlay/Menu_BG_Grey", new Vector2(0.5f, 0.7f));
+        popup = new MapSelectionPopUp("Sprites/Menu/Screen2", new Vector2(0.5f, 0.78f));
         RootList.Add(popup);
         popup.LoadButtons();
         popup.active = false;

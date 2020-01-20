@@ -18,16 +18,18 @@ class HostSelectionState : GameObjectLibrary
     protected MapSelectionPopUp popup;
     bool timeron;
     float time;
-    List<Button> buttonList;
+    List<Button> buttonReadyList;
+    List<Button> buttonUnreadyList;
 
     public HostSelectionState()
     {
         GameEnvironment.GameSettingsManager.SetValue("level", "1"); //load level 1 by default
-        buttonList = new List<Button>();
+        buttonReadyList = new List<Button>();
+        buttonUnreadyList = new List<Button>();
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen2", 100, "background");
         RootList.Add(titleScreen);
-        SpriteGameObject lobbyBackground = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 101, "lobby");
+        SpriteGameObject lobbyBackground = new SpriteGameObject("Sprites/Menu/Screen2", 101, "lobby");
         lobbyBackground.Sprite.Color = Color.DarkBlue;
         lobbyBackground.Sprite.Size = new Vector2(0.3f, 0.5f);
         lobbyBackground.Origin = lobbyBackground.Sprite.Center;
@@ -52,7 +54,7 @@ class HostSelectionState : GameObjectLibrary
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);
         RootList.Add(returnButton);
 
-        popup = new MapSelectionPopUp("Sprites/Overlay/Menu_BG_Grey", new Vector2(0.5f, 0.7f));
+        popup = new MapSelectionPopUp("Sprites/Menu/Screen2", new Vector2(0.5f, 0.78f));
         RootList.Add(popup);
         popup.LoadButtons();
         popup.active = false;
@@ -155,7 +157,7 @@ class HostSelectionState : GameObjectLibrary
                 (GetObject(skillbuttons[2, 2]) as Button).Visible = true;
                 break;
         }
-        if (timeron)
+        if (timeron) //send world
         {
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1)
@@ -174,20 +176,44 @@ class HostSelectionState : GameObjectLibrary
                 time = 0;
             }
         }
-        if (MultiplayerManager.Party != null)
+
+        if (MultiplayerManager.Party != null) //if not enough buttons make one
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
+            for (int i = buttonReadyList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
             {
-                buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
-                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
-                buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-                RootList.Add(buttonList[i]);
+                buttonReadyList.Add(new Button("Sprites/Menu/Ready_Button", 101));
+                buttonReadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonReadyList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                buttonReadyList[i].Visible = false;
+                RootList.Add(buttonReadyList[i]);
+
+                buttonUnreadyList.Add(new Button("Sprites/Menu/Unready_Button", 101));
+                buttonUnreadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
+                buttonUnreadyList[i].Sprite.Size = new Vector2(1.3f, 2f);
+                buttonUnreadyList[i].Visible = true;
+                RootList.Add(buttonUnreadyList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.Party.playerlist.playerlist.Count; i--)
+            for (int i = buttonReadyList.Count; i > MultiplayerManager.Party.playerlist.playerlist.Count; i--) //if too many buttons remove one
             {
-                buttonList[i - 1].Visible = false;
-                buttonList.RemoveAt(i - 1);
+                buttonReadyList[i - 1].Visible = false;
+                buttonReadyList.RemoveAt(i - 1);
+
+                buttonUnreadyList[i - 1].Visible = false;
+                buttonUnreadyList.RemoveAt(i - 1);
+            }
+            for (int  i = 0; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
+            {
+                if (MultiplayerManager.Party.playerlist.playerlist[i].isready)
+                {
+                    buttonReadyList[i].Visible = true;
+                    buttonUnreadyList[i].Visible = false;
+                }
+                else
+                {
+                    buttonReadyList[i].Visible = false;
+                    buttonUnreadyList[i].Visible = true;
+                }
             }
             //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.Party.playerlist.playerlist.Count);
         }
