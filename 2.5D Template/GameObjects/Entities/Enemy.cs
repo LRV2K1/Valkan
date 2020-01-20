@@ -53,7 +53,7 @@ partial class Enemy : MovingEntity
 
     private void CheckDie()
     {
-        if (health <=0)
+        if (health <= 0)
         {
             die = true;
             if (die_anim)
@@ -70,39 +70,38 @@ partial class Enemy : MovingEntity
                 mouse.RemoveSelectedEntity();
             }
         }
-    }
 
-                Vector2 nodepos = new Vector2(x, y);
-                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
-                nodeEnd = new Node(playerpos, 0);
-                if (nodepos == playerpos)
-                {
-                    nodes[x, y] = nodeEnd;
-                }
-                else if (nodepos == this.GridPos)
-                {
-                    nodes[x, y] = nodeStart;
-                }
-                else
-                {
-                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
-                    if (grid.GetTileType(x, y) == TileType.Wall)
-                    {
-                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
-                    }
-                }
-                foreach (Node node in nodes)
-                {
-                    if (node.nodeXY == nodepos)
-                    {
-                        node.fGlobalGoal = hcost_grid[x, y];
-                    }
-                }
+
+        Vector2 nodepos = new Vector2(x, y);
+        nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
+        nodeEnd = new Node(playerpos, 0);
+        if (nodepos == playerpos)
+        {
+            nodes[x, y] = nodeEnd;
+        }
+        else if (nodepos == this.GridPos)
+        {
+            nodes[x, y] = nodeStart;
+        }
+        else
+        {
+            nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+            if (grid.GetTileType(x, y) == TileType.Wall)
+            {
+                nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+            }
+        }
+        foreach (Node node in nodes)
+        {
+            if (node.nodeXY == nodepos)
+            {
+                node.fGlobalGoal = hcost_grid[x, y];
             }
         }
     }
 
-    void CalculateNeighbours(Node currentNode)
+
+    private void CalculateNeighbours(Node currentNode)
     {
         foreach (Node n in nodes)
         {
@@ -140,11 +139,12 @@ partial class Enemy : MovingEntity
                 currentNode.neighbours.Add(n);
             }
         }
-    }/// <summary>
-     /// //////////////////////9999
-     /// </summary>
-     /// <param name="pos"></param>
-    void Move(Vector2 pos)
+    }
+    /// <summary>
+    /// //////////////////////9999
+    /// </summary>
+    /// <param name="pos"></param>
+    private void Move(Vector2 pos)
     {
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
@@ -160,7 +160,7 @@ partial class Enemy : MovingEntity
 
         float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (aiplayerdistance < 2.2f|| die || dead)
+        if (aiplayerdistance < 2.2f || die || dead)
             this.velocity = Vector2.Zero;
         else
         {
