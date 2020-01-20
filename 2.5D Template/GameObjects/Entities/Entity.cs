@@ -9,30 +9,41 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
+    int count;
+    int count2;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
-    bool remove;
+    protected bool remove;
+    string previousdata;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         remove = false;
         host = "";
+        previousdata = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
+        if (MultiplayerManager.online)
+        {
+            previousdata = MultiplayerManager.party.GetReceivedData();
+        }
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
         //check if moved
         if (previousPos != position)
         {
+            if (MultiplayerManager.online) //send data if online
+            {
+                SendData();
+            }
             DoPhysics();
             if (remove)
             {
@@ -41,18 +52,60 @@ abstract partial class Entity : AnimatedGameObject
             NewHost();
             previousPos = position;
         }
+        if (MultiplayerManager.online)
+        {
+            ReceiveData();
+        }
     }
 
     public override void Reset()
     {
         base.Reset();
+        OutsideLevel();
+        if (remove)
+        {
+            return;
+        }
         NewHost();
     }
 
+    private void SendData()
+    {
+        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
+    }
+
+    private void ReceiveData()
+    {
+        try
+        {
+            if (previousdata != MultiplayerManager.party.GetReceivedData())
+            {
+                previousdata = MultiplayerManager.party.GetReceivedData();
+                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+                if (variables[0] == "Entity:" && variables[1] == id)
+                {
+                    count++;
+                    Console.WriteLine("Count1: " + count);
+                    position.X = float.Parse(variables[2]);
+                    position.Y = float.Parse(variables[3]);
+                    previousPos = position;
+                }
+                else
+                {
+
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+    }
     private void NewHost()
     {
         //become a passenger of a tile
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check if on new tile
         if (levelGrid.DrawGridPosition(position) != gridPos)
         {
@@ -67,7 +120,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public virtual void MovePositionOnGrid(int x, int y)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("tiles") as LevelGrid;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
     }
 

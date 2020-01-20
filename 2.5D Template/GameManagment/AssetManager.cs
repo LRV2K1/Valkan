@@ -50,14 +50,21 @@ public class AssetManager
         {
             return;
         }
-        SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
-        snd.Play();
+        try
+        {
+            SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
+            snd.Play();
+        }
+        catch
+        {
+
+        }
     }
 
     public void PlayMusic(string assetName, bool repeat = true)
     {
         MediaPlayer.IsRepeating = repeat;
-        //MediaPlayer.Play(contentManager.Load<Song>(assetName));
+        MediaPlayer.Play(contentManager.Load<Song>(assetName));
     }
 
     public ContentManager Content

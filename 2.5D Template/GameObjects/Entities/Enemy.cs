@@ -72,7 +72,7 @@ partial class Enemy : MovingEntity
             // this.Position *= EnemyVelocity(player.Position);
             DesCalculate(player.GridPos);
         }
-        else if (!InRange() || die || dead)
+        else if (!InRange()|| die || dead)
             this.velocity = Vector2.Zero;
 
         ChangeAnimation();
@@ -358,7 +358,7 @@ partial class Enemy : MovingEntity
 
         float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (aiplayerdistance < 2.2f || die || dead)
+        if (aiplayerdistance < 2.2f|| die || dead)
             this.velocity = Vector2.Zero;
         else
         {
@@ -402,3 +402,4 @@ partial class Enemy : MovingEntity
     }
 
 }
+

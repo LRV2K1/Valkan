@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 
 partial class Level : GameObjectLibrary
 {
- //loads the levels
     public void LoadLevel(string path)
     {
         GameObjectList entities = new GameObjectList(2, "entities");
@@ -31,22 +30,19 @@ partial class Level : GameObjectLibrary
         LoadFile(path);
     }
 
-    //loads overlays
     public void LoadOverlays()
     {
         OverlayManager overlayManager = new OverlayManager();
         RootList.Add(overlayManager);
 
         overlayManager.AddOverlay("hud", new Hud(this));
-        overlayManager.AddOverlay("inventory", new Inventory(this));
-
+        overlayManager.AddOverlay("menu", new InGameMenu(this));
         overlayManager.SwitchTo("hud");
     }
 
-    //loads the tilegrid
     private void LoadTiles(List<string> textlines, int width, Dictionary<char, string> tiletypechar)
     {
-        LevelGrid level = new LevelGrid(width, textlines.Count, 0, "tiles");
+        LevelGrid level = new LevelGrid(width, textlines.Count, 0, "levelgrid");
         RootList.Add(level);
         level.CellWidth = 108;
         level.CellHeight = 54;
@@ -59,13 +55,20 @@ partial class Level : GameObjectLibrary
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
-                level.Add(t, x, y);
+                try
+                {
+                    Tile t = LoadTile(x, y, tiletypechar[textlines[y][x]]);
+                    level.Add(t, x, y);
+                }
+                catch
+                {
+                    Tile t = LoadTile(x, y, tiletypechar['a']);
+                    level.Add(t, x, y);
+                }
             }
         }
     }
 
-    //loads tiles
     private Tile LoadTile(int x, int y, string tiletype)
     {
         string[] type = tiletype.Split(',');
@@ -88,19 +91,24 @@ partial class Level : GameObjectLibrary
         return new Tile(new Point(x, y));
     }
 
-    //loads all entities
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < textlines.Count; y++)
             {
-                LoadEntity(x, y, entitytypechar[textlines[y][x]]);
+                try
+                {
+                    LoadEntity(x, y, entitytypechar[textlines[y][x]]);
+                }
+                catch
+                {
+                    LoadEntity(x, y, "None");
+                }
             }
         }
     }
 
-    //load entity
     private void LoadEntity(int x, int y, string entitytype)
     {
         string[] type = entitytype.Split(',');
@@ -128,17 +136,52 @@ partial class Level : GameObjectLibrary
         }
     }
 
-    //load player
     private void LoadPlayer(int x, int y)
     {
-        Player player = new Player();
+        Player player;
+        try
+        {
+            PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), GameEnvironment.GameSettingsManager.GetValue("character"));
+            switch (playerType)
+            {
+                case PlayerType.Bard:
+                    player = new Bard();
+                    break;
+                case PlayerType.Warrior:
+                    player = new Warrior();
+                    break;
+                case PlayerType.Wizzard:
+                    player = new Wizzard();
+                    break;
+                default:
+                    player = new Warrior();
+                    break;
+            }
+        }
+        catch
+        {
+            player = new Warrior();
+        }
         GameObjectList entities = GetObject("entities") as GameObjectList;
         entities.Add(player);
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
+
+        if (MultiplayerManager.online && false)
+        {
+            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
+            {
+                if (lobbyplayer.ishost == false)
+                {
+                    Item item = new Item(id: "player2");
+                    GameObjectList items = GetObject("items") as GameObjectList;
+                    entities.Add(item);
+                    item.MovePositionOnGrid(50, 50);
+                }
+            }
+        }
     }
 
-    //load item
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)
     {
         ItemType type = (ItemType)Enum.Parse(typeof(ItemType), it);
@@ -146,11 +189,9 @@ partial class Level : GameObjectLibrary
         GameObjectList entities = GetObject("entities") as GameObjectList;
         GameObjectList items = GetObject("items") as GameObjectList;
         items.Add(item);
-        //entities.Add(item);
         item.MovePositionOnGrid(x, y);
     }
 
-    //loadenemy
     private void LoadEnemy(int x, int y, string asset, int boundingy)
     {
         Enemy enemy = new Enemy(asset, boundingy);

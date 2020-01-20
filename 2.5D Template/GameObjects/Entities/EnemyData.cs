@@ -9,6 +9,7 @@ partial class Enemy : MovingEntity
 {
     bool nodata;
     bool die_anim, idle_anim, walking_anim, attack_anim;
+    string die_sound, damage_sound, attack_sound;
 
     private void LoadEnemyData()
     {
@@ -24,7 +25,9 @@ partial class Enemy : MovingEntity
             nodata = true;
             return;
         }
-
+        this.die_sound = dataloc + "/Death";
+        this.damage_sound = dataloc + "/Damage";
+        this.attack_sound = dataloc + "/Attack";
         List<string> data = new List<string>();
         string line = streamReader.ReadLine();
         while (line != "" && line != null)
@@ -35,63 +38,68 @@ partial class Enemy : MovingEntity
 
         for (int i = 0; i < data.Count; i++)
         {
-            string[] currentline = data[i].Split('/');
-            try
+            ProcesData(data[i]);
+        }
+    }
+
+    private void ProcesData(string line)
+    {
+        string[] linedata = line.Split('/');
+        try
+        {
+            switch (linedata[0])
             {
-                switch (currentline[0])
-                {
-                    default:
-                        break;
-                    case "idle":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        PlayAnimation("idle_3");
-                        currentAnimation = "A";
-                        idle_anim = true;
-                        break;
-                    case "attack":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        damage = int.Parse(currentline[2]);
-                        attack_anim = true;
-                        break;
-                    case "walking":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), true, true);
-                        speed = int.Parse(currentline[2]);
-                        walking_anim = true;
-                        break;
-                    case "die":
-                        LoadAnimations(dataloc, currentline[0], int.Parse(currentline[1]), false);
-                        die_anim = true;
-                        break;
-                    case "health":
-                        health = int.Parse(currentline[1]);
-                        break;
-                }
+                default:
+                    break;
+                case "idle":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    PlayAnimation("idle_3");
+                    currentAnimation = "A";
+                    idle_anim = true;
+                    break;
+                case "attack":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    damage = int.Parse(linedata[2]);
+                    attack_anim = true;
+                    break;
+                case "walking":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    speed = int.Parse(linedata[2]);
+                    walking_anim = true;
+                    break;
+                case "die":
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), false);
+                    die_anim = true;
+                    break;
+                case "health":
+                    health = int.Parse(linedata[1]);
+                    break;
             }
-            catch (IndexOutOfRangeException e)
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Console.WriteLine("Bad data for: " + linedata[0]);
+            return;
+        }
+        catch (TestSpriteExeption e)
+        {
+            Console.WriteLine("Sprite not found for: " + linedata[0]);
+            switch (linedata[0])
             {
-                Console.WriteLine("Bad data for: " + currentline[0]);
-                continue;
-            }
-            catch(TestSpriteExeption e)
-            {
-                Console.WriteLine("Sprite not found for: " + currentline[0]);
-                switch (currentline[0])
-                {
-                    default:
-                        break;
-                    case "idle":
-                        idle_anim = false;
-                        break;
-                    case "attack":
-                        attack_anim = false;
-                        break;
-                    case "walking":
-                        walking_anim = false;
-                        break;
-                    case "die":
-                        die_anim = false;
-                        break;
-                }
+                default:
+                    break;
+                case "idle":
+                    idle_anim = false;
+                    break;
+                case "attack":
+                    attack_anim = false;
+                    break;
+                case "walking":
+                    walking_anim = false;
+                    break;
+                case "die":
+                    die_anim = false;
+                    break;
             }
         }
     }
@@ -99,5 +107,19 @@ partial class Enemy : MovingEntity
     public bool NoData
     {
         get { return nodata; }
+    }
+
+    public string Die_Sound
+    {
+        get { return die_sound; }
+    }
+
+    public string Damage_Sound
+    {
+        get { return damage_sound; }
+    }
+    public string Attack_Sound
+    {
+        get { return attack_sound; }
     }
 }

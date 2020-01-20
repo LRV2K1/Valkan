@@ -11,6 +11,7 @@ partial class Level : GameObjectLibrary
     //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        //skip entities
         foreach (string id in RootList.Children)
         {
             if (id == "entities")

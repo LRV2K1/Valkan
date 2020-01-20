@@ -7,45 +7,53 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 
-class PlayingState : IGameLoopObject
+class PlayingState : State
 {
     protected ContentManager content;
     protected Level level;
     protected bool paused;
-    protected bool level1;
+    protected bool firstTime = true;
 
     public PlayingState(ContentManager content)
     {
         this.content = content;
         paused = false;
-        level = new Level("Level_1");
-        level1 = true;
     }
 
-    //handels the payingstate
-    //plays the current level
-    public virtual void HandleInput(InputHelper inputHelper)
+    public override void Load()
     {
-        if (inputHelper.KeyPressed(Keys.L))
+        string levelnum = GameEnvironment.GameSettingsManager.GetValue("level");
+        level = new Level(levelnum); //also loads the level
+    }
+
+    public override void UnLoad()
+    {
+        level = null;
+    }
+
+    //handles the playingstate
+    //plays the current level
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (level == null)
         {
-            if (level1)
+            return;
+        }
+
+        if (inputHelper.KeyPressed(Keys.Escape))
+        {
+            OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
+            if (overlay.CurrentOverlay is InGameMenu)
             {
-                level = null;
-                level = new Level("Level_2");
+                overlay.SwitchTo("hud");
             }
             else
             {
-                level = null;
-                level = new Level("Level_1");
+                overlay.SwitchTo("menu");
             }
-            level1 = !level1;
-        }
-
-        if (inputHelper.KeyPressed(Keys.P))
-        {
-            paused = !paused;
         }
 
         if (!paused)
@@ -54,22 +62,38 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
+        if(firstTime)
+        {
+            MediaPlayer.Volume = 0.4f;
+            GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
+            firstTime = false;
+        }
+        if (level == null)
+        {
+            return;
+        }
         if (!paused)
         {
             level.Update(gameTime);
         }
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        if (level == null)
+        {
+            return;
+        }
         level.Draw(gameTime, spriteBatch);
     }
 
-    public virtual void Reset()
+    public override void Reset()
     {
-        level.Reset();
+        firstTime = true;
+        //UnLoadLevel();
         paused = false;
+        //LoadLevel();
     }
 }

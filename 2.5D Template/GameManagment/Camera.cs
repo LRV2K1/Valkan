@@ -11,20 +11,58 @@ using Microsoft.Xna.Framework.Input;
 class Camera : GameObject
 {
     Vector2 cameraPosition;
+    Vector2 cameraSpeed;
     int width, height;
     bool first;
     string objid;
     const int edge = 300;
+    bool follow;
 
-    public Camera(string folowObjid, int layer = 0, string id = "")
+    public Camera(string folowObjid = "", int layer = 0, string id = "camera")
         : base(layer, id)
     {
+        follow = !(folowObjid == "");
         first = false;
         objid = folowObjid;
     }
-    //move camera
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (inputHelper.IsKeyDown(Keys.A))
+        {
+            cameraSpeed.X = -800;
+        }
+        else if (inputHelper.IsKeyDown(Keys.D))
+        {
+            cameraSpeed.X = 800;
+        }
+        else
+        {
+            cameraSpeed.X = 0;
+        }
+
+        if (inputHelper.IsKeyDown(Keys.W))
+        {
+            cameraSpeed.Y = -800;
+        }
+        else if (inputHelper.IsKeyDown(Keys.S))
+        {
+            cameraSpeed.Y = 800;
+        }
+        else
+        {
+            cameraSpeed.Y = 0;
+        }
+    }
+
     public override void Update(GameTime gameTime)
     {
+        if (!follow)
+        {
+            cameraPosition += cameraSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+
         GameObject folowObj = GameWorld.GetObject(objid);
         if (folowObj == null)
         {
@@ -53,7 +91,6 @@ class Camera : GameObject
         first = false;
     }
 
-    //calculate delayx
     public float DelayPositionX(float newPositionX, int amount=20)
     {
         if(Math.Abs(cameraPosition.X - newPositionX) != 0)
@@ -70,7 +107,6 @@ class Camera : GameObject
         return newPositionX;
     }
 
-    //calculate delayy
     public float DelayPositionY(float newPositionY, int amount = 20)
     {
         if (Math.Abs(cameraPosition.Y - newPositionY) != 0)
@@ -87,7 +123,6 @@ class Camera : GameObject
         return newPositionY;
     }
 
-    //check if on screen
     public bool OnScreen(Vector2 pos)
     {
         Rectangle screen = new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2);
@@ -114,5 +149,10 @@ class Camera : GameObject
     public Rectangle Screen
     {
         get { return new Rectangle((int)cameraPosition.X - edge, (int)cameraPosition.Y - edge, GameEnvironment.Screen.X + edge * 2, GameEnvironment.Screen.Y + edge * 2); }
+    }
+
+    public Vector2 SetupCamera
+    {
+        set { cameraPosition = value; }
     }
 }

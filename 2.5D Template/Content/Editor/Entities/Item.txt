@@ -1,0 +1,8 @@
+Sprites/Items/spr_trashcan,0,None
+Sprites/Items/spr_barrel,30,SpriteItem,Movible
+Sprites/Items/spr_bucket,20,SpriteItem,Movible
+Sprites/Items/spr_campfire@1x4,20,AnimatedItem,Movible
+Sprites/Items/spr_jar,30,SpriteItem,Movible
+Sprites/Items/spr_stone_0,20,SpriteItem,Movible
+Sprites/Items/spr_stone_1,20,SpriteItem,Movible
+Sprites/Items/spr_stone_2,20,SpriteItem,Movible

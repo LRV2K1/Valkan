@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,31 +17,79 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected static ScreenFade screenFade;
+    protected static MultiplayerManager multiplayerManager;
     protected SpriteGameObject spritemouse;
 
-    protected static int randomid;
+    protected static bool quitGame;
+
+    protected static string stringid;
+    static List<OutputText> output;
 
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
 
+        multiplayerManager = new MultiplayerManager();
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-
-        randomid = 0;
+        
+        char charid = (char)(0);
+        stringid += charid;
+        output = new List<OutputText>();
     }
 
-    public static string RandomID
+    public static string SpecialID
     {
         get
         {
-            string s = randomid.ToString();
-            randomid++;
+            string s = stringid;
+            stringid = AddChar(stringid);
             return s;
+        }
+    }
+
+    public static string AddChar(string s)
+    {
+        char letter = s[s.Length - 1];
+        string key = "";
+        if (s.Length > 1)
+        {
+            key = s.Substring(0, s.Length - 1);
+        }
+        int nummer = (int)letter + 1;
+        if (nummer > 255)
+        {
+            if (key == "")
+            {
+                key = ((char)(0)).ToString();
+            }
+            else
+            {
+                key = AddChar(key);
+            }
+            nummer = 0;
+        }
+        letter = (char)nummer;
+        string text = key;
+        text += letter.ToString();
+        return text;
+    }
+
+    public static void OutputWindow(string text)
+    {
+        output.Add(new OutputText(text));
+    }
+
+    protected void DrawOutput(GameTime gameTime)
+    {
+        foreach (OutputText text in output)
+        {
+            text.Draw(gameTime, spriteBatch);
         }
     }
 
@@ -68,6 +117,17 @@ public class GameEnvironment : Game
     public static GameSettingsManager GameSettingsManager
     {
         get { return gameSettingsManager; }
+    }
+
+    public static ScreenFade ScreenFade
+    {
+        get { return screenFade; }
+    }
+
+    public static bool QuitGame
+    {
+        get { return quitGame; }
+        set { quitGame = value; }
     }
 
     public bool FullScreen
@@ -123,15 +183,20 @@ public class GameEnvironment : Game
         DrawingHelper.Initialize(this.GraphicsDevice);
         spriteBatch = new SpriteBatch(GraphicsDevice);
         spritemouse = new SpriteGameObject("Sprites/Menu/spr_mouse", 200);
+        if(screenFade == null)
+        {
+            screenFade = new ScreenFade("Sprites/Menu/spr_button");
+            
+        }
     }
 
     protected void HandleInput()
     {
         inputHelper.Update();
         spritemouse.Position = inputHelper.MousePosition;
-        if (inputHelper.KeyPressed(Keys.Escape))
+        if (ScreenFade.FadeToBlack || ScreenFade.FadeToWhite)
         {
-            Exit();
+            return;
         }
         if (inputHelper.KeyPressed(Keys.F5))
         {
@@ -144,7 +209,28 @@ public class GameEnvironment : Game
     protected override void Update(GameTime gameTime)
     {
         HandleInput();
+        multiplayerManager.Update(gameTime);
         gameStateManager.Update(gameTime);
+        ScreenFade.Update(gameTime);
+        if(quitGame)
+        {
+            Exit();
+        }
+
+        int outputx = 0;
+        for (int i = output.Count - 1; i >= 0; i--)
+        {
+            output[i].Update(gameTime);
+            if (output[i].Timer <= 0)
+            {
+                output.RemoveAt(i);
+            }
+            else
+            {
+                output[i].Position = new Vector2(60, outputx);
+                outputx += 30;
+            }
+        }
     }
 
     protected override void Draw(GameTime gameTime)
@@ -153,6 +239,7 @@ public class GameEnvironment : Game
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
         gameStateManager.Draw(gameTime, spriteBatch);
         spritemouse.Draw(gameTime, spriteBatch);
+        screenFade.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }
 }
