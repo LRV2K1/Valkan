@@ -232,6 +232,7 @@ partial class Enemy : MovingEntity
                 {
                     pathFound = false;
                     currentState = AiState.SLEEP;
+                    Move(playerpos);
                 }
                 break;
         }
