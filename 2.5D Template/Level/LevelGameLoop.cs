@@ -8,6 +8,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 partial class Level : GameObjectLibrary
 {
+    public override void Update(GameTime gameTime)
+    {
+        for (int i = 0; i < RootList.Children.Count; i++)
+        {
+            if (RootList.Children[i] == "entities")
+            {
+                continue;
+            }
+            GetObject(RootList.Children[i]).Update(gameTime);
+        }
+    }
+
     //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {

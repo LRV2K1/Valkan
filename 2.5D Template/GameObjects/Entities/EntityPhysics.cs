@@ -82,7 +82,7 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    private void HandleEntityCollisions(string id)
+    protected void HandleEntityCollisions(string id)
     {
         //check entity collision
         Entity entity = GameWorld.GetObject(id) as Entity;
@@ -120,9 +120,9 @@ abstract partial class Entity : AnimatedGameObject
 
         LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int x = (int)gridPos.X - 3; x <= (int)gridPos.X + 3; x++)
+        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 3; y <= (int)gridPos.Y + 3; y++)
+            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
             {
                 Tile currentTile = tiles.Get(x, y) as Tile;
 
