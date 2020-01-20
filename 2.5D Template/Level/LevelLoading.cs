@@ -183,10 +183,13 @@ partial class Level : GameObjectLibrary
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
 
-        Player player2 = new Player(false, "player2");
-        entities.Add(player2);
-        player2.SetupPlayer();
-        player2.MovePositionOnGrid(x, y + 1);
+        if (MultiplayerManager.Online)
+        {
+            Player player2 = new Player(false, "player2");
+            entities.Add(player2);
+            player2.SetupPlayer();
+            player2.MovePositionOnGrid(x, y + 1);
+        }
 
         /*
         if (MultiplayerManager.online && false)
