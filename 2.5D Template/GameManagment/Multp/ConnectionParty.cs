@@ -57,7 +57,6 @@ public class ConnectionParty : Connection
         else
         {
             timout = 1f;
-            Console.WriteLine(timer);
             timer = 0;
         }
 
