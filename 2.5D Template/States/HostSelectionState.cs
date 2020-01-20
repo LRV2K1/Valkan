@@ -175,7 +175,6 @@ class HostSelectionState : GameObjectLibrary
                 else
                 {
                     MultiplayerManager.Party.Send("Start", MultiplayerManager.PartyPort);
-                    MultiplayerManager.Party.CreatePlayers();
                     GameEnvironment.ScreenFade.TransitionToScene("playingState");
                     timeron = false;
                 }

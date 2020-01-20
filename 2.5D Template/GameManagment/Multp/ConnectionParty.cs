@@ -22,7 +22,7 @@ public class ConnectionParty : Connection
         timout = 0;
         level = null;
         playerlist = new PlayerList();
-        ar_ = client.BeginReceive(Receive, new object());
+        ar_ = udpclient.BeginReceive(Receive, new object());
         Console.WriteLine("Created party connection");
     }
 
@@ -30,11 +30,11 @@ public class ConnectionParty : Connection
     {
         try
         {
-            byte[] bytes = client.EndReceive(ar, ref ip); //store received data in byte array
-            if (ip.Address.ToString() != MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
+            byte[] bytes = udpclient.EndReceive(ar, ref remoteep); //store received data in byte array
+            if (remoteep.Address.ToString() != MyIP().ToString()) //check if we did not receive from own ip (we dont need our own data) 
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
-                HandleReceivedData(message, ip.Address, ip.Port);
+                HandleReceivedData(message, remoteep.Address);
                 data = message;
                 if (level != null)
                 {
@@ -42,7 +42,7 @@ public class ConnectionParty : Connection
                     timer++;
                 }
             }
-            ar_ = client.BeginReceive(Receive, new object()); //repeat
+            ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
         catch
         {
@@ -116,7 +116,7 @@ public class ConnectionParty : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender, int port) //inspect received data and take action
+    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');
@@ -234,9 +234,15 @@ public class ConnectionParty : Connection
             MultiplayerManager.Connect(1000);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
-        client.Close();
+        udpclient.Close();
         Console.WriteLine("Disconnect from party");
         MultiplayerManager.Party = null;
+    }
+
+    public void CloseParty()
+    {
+        Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
+        isopen = false;
     }
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {

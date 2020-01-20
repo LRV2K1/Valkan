@@ -16,7 +16,7 @@ partial class Level : GameObjectLibrary
         connectedEntities = new Dictionary<string, string>();
         if (MultiplayerManager.Online)
         {
-            previousdata = MultiplayerManager.Party.GetReceivedData();
+            previousdata = MultiplayerManager.Party.Data;
         }
     }
 
@@ -37,7 +37,7 @@ partial class Level : GameObjectLibrary
         if (previousdata != data)
         {
             previousdata = data;
-            string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+            string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
             Console.WriteLine(data);
             if (variables[0] == "Entity:")
             {
