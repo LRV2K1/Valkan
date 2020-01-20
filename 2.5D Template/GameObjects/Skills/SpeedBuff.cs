@@ -53,5 +53,13 @@ class SpeedBuff : Skill
             MakeParticle(player.GlobalPosition - new Vector2(0, 1), buf_asset);
         }
     }
+
+    public override bool Ready
+    {
+        get {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 30; 
+        }
+    }
 }
 

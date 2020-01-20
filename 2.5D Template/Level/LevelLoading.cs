@@ -99,6 +99,7 @@ partial class Level : GameObjectLibrary
         {
             if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
             {
+                LoadRemotePlayer();
                 return;
             }
         }
@@ -116,6 +117,12 @@ partial class Level : GameObjectLibrary
                 }
             }
         }
+    }
+
+    private void LoadRemotePlayer()
+    {
+        ConnectedPlayer connectedPlayer = new ConnectedPlayer();
+        RootList.Add(connectedPlayer);
     }
 
     private void LoadEntity(int x, int y, string entitytype)
@@ -175,6 +182,11 @@ partial class Level : GameObjectLibrary
         entities.Add(player);
         player.SetupPlayer();
         player.MovePositionOnGrid(x, y);
+
+        Player player2 = new Player(false, "player2");
+        entities.Add(player2);
+        player2.SetupPlayer();
+        player2.MovePositionOnGrid(x, y + 1);
 
         if (MultiplayerManager.online && false)
         {

@@ -51,5 +51,13 @@ class AreaHeal : Skill
             MakeParticle(player.GlobalPosition, heal_asset);
         }
     }
+    public override bool Ready
+    {
+        get
+        {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 20;
+        }
+    }
 }
 

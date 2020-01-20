@@ -29,6 +29,7 @@ enum PlayerType
 
 partial class Player : MovingEntity
 {
+    protected bool host;
     protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
@@ -45,6 +46,8 @@ partial class Player : MovingEntity
     protected PlayerType playerType;
     protected bool inmovible;
 
+    protected bool up, down, left, right, leftb, rightb, space;
+
     protected List<SpeedMultiplier> speedMultipliers;
 
     private static string hash = "_+*/(&!*";
@@ -52,11 +55,12 @@ partial class Player : MovingEntity
 
     Vector2 inputDirection;
 
-    public Player()
-        : base(30, 58, 20, 2, "player")
+    public Player(bool host = true, string id = "player")
+        : base(30, 58, 20, 2, id)
     {
         inmovible = false;
 
+        this.host = host;
         name = "Valkan";
         playerID = 1;
         playerlevel = 1;
@@ -76,6 +80,35 @@ partial class Player : MovingEntity
 
         LoadSkills();
         SetSkills();
+    }
+
+    public void GetData(string data)
+    {
+        string[] splitdata = data.Split(' ');
+        switch (splitdata[1])
+        {
+            case "left":
+                left = bool.Parse(splitdata[2]);
+                break;
+            case "right":
+                right = bool.Parse(splitdata[2]);
+                break;
+            case "up":
+                up = bool.Parse(splitdata[2]);
+                break;
+            case "down":
+                down = bool.Parse(splitdata[2]);
+                break;
+            case "leftb":
+                leftb = bool.Parse(splitdata[2]);
+                break;
+            case "rightb":
+                rightb = bool.Parse(splitdata[2]);
+                break;
+            case "space":
+                space = bool.Parse(splitdata[2]);
+                break;
+        }
     }
 
     protected virtual void LoadStats()
@@ -125,11 +158,18 @@ partial class Player : MovingEntity
         {
             return;
         }
-        ControlMove(inputHelper);
+        if (host)
+        {
+            ControlMove(inputHelper);
 
-        EntitySelection(inputHelper);
+            EntitySelection(inputHelper);
 
-        Skills(inputHelper);
+            Skills(inputHelper);
+        }
+        else
+        {
+            RemoteControlMove(inputHelper);
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -175,6 +215,34 @@ partial class Player : MovingEntity
             inputDirection.Y = -1;
         }
         else if (inputHelper.IsKeyDown(Keys.S))
+        {
+            inputDirection.Y = 1;
+        }
+    }
+
+    private void RemoteControlMove(InputHelper inputHelper)
+    {
+        inputDirection = Vector2.Zero;
+        if (inmovible)
+        {
+            input = false;
+            return;
+        }
+
+        if (left)
+        {
+            inputDirection.X = -2;
+        }
+        else if (right)
+        {
+            inputDirection.X = 2;
+        }
+
+        if (up)
+        {
+            inputDirection.Y = -1;
+        }
+        else if (down)
         {
             inputDirection.Y = 1;
         }

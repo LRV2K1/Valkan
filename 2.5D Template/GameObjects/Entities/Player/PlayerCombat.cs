@@ -30,6 +30,13 @@ partial class Player : MovingEntity
 
     private void SetSkills()
     {
+        if (!host)
+        {
+            skill1.Timer.Visible = false;
+            skill2.Timer.Visible = false;
+            skill3.Timer.Visible = false;
+            return;
+        }
         skill1.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill2.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
         skill3.Timer.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Timer.Width * 2, GameEnvironment.Screen.Y - skill1.Timer.Width / 2);
@@ -51,6 +58,15 @@ partial class Player : MovingEntity
         skill1.HandleInput(inputHelper);
         skill2.HandleInput(inputHelper);
         skill3.HandleInput(inputHelper);
+    }
+
+    private void RemoteSkills(InputHelper inputHelper)
+    {
+        //work
+        if (leftb && skill1.Ready)
+        {
+            skill1.Use();
+        }
     }
 
     private void RegenStamina(GameTime gameTime)

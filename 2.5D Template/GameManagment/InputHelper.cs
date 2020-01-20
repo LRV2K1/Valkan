@@ -100,6 +100,11 @@ public class InputHelper
         return currentKeyboardState.IsKeyDown(k);
     }
 
+    public bool KeyReleased(Keys k)
+    {
+        return currentKeyboardState.IsKeyUp(k) && previousKeyboardState.IsKeyDown(k);
+    }
+
     public bool AnyKeyPressed
     {
         get { return currentKeyboardState.GetPressedKeys().Length > 0 && previousKeyboardState.GetPressedKeys().Length == 0; }

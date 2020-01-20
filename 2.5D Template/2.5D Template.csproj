@@ -74,6 +74,7 @@
     <Compile Include="GameObjects\Entities\Player\Classes\Bard.cs" />
     <Compile Include="GameObjects\Entities\Player\Classes\Warrior.cs" />
     <Compile Include="GameObjects\Entities\Player\Classes\Wizzard.cs" />
+    <Compile Include="GameObjects\Entities\Player\ConnectedPlayer.cs" />
     <Compile Include="GameObjects\Entities\Player\PlayerAnimation.cs" />
     <Compile Include="GameObjects\Entities\Player\PlayerCombat.cs" />
     <Compile Include="GameObjects\LevelGrid.cs" />

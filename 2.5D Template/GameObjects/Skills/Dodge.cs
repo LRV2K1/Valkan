@@ -38,4 +38,13 @@ class Dodge : Skill
         player.Stamina -= 20;
         player.AddSpeedMultiplier(runtime, speed);
     }
+
+    public override bool Ready
+    {
+        get
+        {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 20;
+        }
+    }
 }

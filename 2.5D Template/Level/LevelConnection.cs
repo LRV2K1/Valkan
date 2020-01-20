@@ -42,6 +42,10 @@ partial class Level : GameObjectLibrary
             {
                 (GetObject("camera") as Camera).GetData(previousdata);
             }
+            if (variables[0] == "Player:")
+            {
+                (GetObject(variables[1]) as Player).GetData(previousdata);
+            }
         }
     }
 

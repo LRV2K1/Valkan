@@ -121,5 +121,10 @@ class Skill : GameObject
     {
         get { return timer; }
     }
+
+    public virtual bool Ready
+    {
+        get { return timer.Ready; }
+    }
 }
 

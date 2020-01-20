@@ -53,4 +53,12 @@ class CloseAttack : Skill
         Player player = parent as Player;
         projectile.Position += new Vector2(range * (float)Math.Cos(player.Direction), range * (float)Math.Sin(player.Direction));
     }
+    public override bool Ready
+    {
+        get
+        {
+            Player player = parent as Player;
+            return timer.Ready && player.Stamina >= 20;
+        }
+    }
 }
