@@ -43,6 +43,12 @@ class ConnectedEntity : Entity
         string[] splitdata = data.Split(' ');
 
         connectedid = splitdata[1];
+        if (splitdata[2] == "remove")
+        {
+            RemoveSelf();
+            return;
+        }
+
         position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
         connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
         origin = connectedOrigin;
@@ -91,7 +97,13 @@ class ConnectedEntity : Entity
 
     public override void RemoveSelf()
     {
-        base.RemoveSelf();
+        Tile host = GameWorld.GetObject(this.host) as Tile;
+        if (host != null)
+        {
+            host.RemovePassenger(id);
+        }
+    (parent as GameObjectList).Remove(id);
+        remove = true;
         (GameWorld as Level).Remove(connectedid);
     }
 }

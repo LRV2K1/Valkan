@@ -15,8 +15,8 @@ class SpeedBuff : Skill
     float speedmultipliertimer;
     float range;
 
-    public SpeedBuff(string assetname, string buf_asset = "", float timer = 4f, float range = 200, float speedmultiplier = 1.4f, float speedmultipliertimer = 2f, MouseButton mouseButton = MouseButton.Right)
-        : base(assetname, mouseButton)
+    public SpeedBuff(string assetname, int skill, string buf_asset = "", float timer = 4f, float range = 200, float speedmultiplier = 1.4f, float speedmultipliertimer = 2f)
+        : base(assetname, skill)
     {
         this.buf_asset = buf_asset;
         this.speedmultiplier = speedmultiplier;
@@ -25,10 +25,10 @@ class SpeedBuff : Skill
         resettimer = timer;
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public void Button(bool button)
     {
         Player player = parent as Player;
-        if (inputHelper.MouseButtonPressed(button) && timer.Ready && player.Stamina >= 30)
+        if (button && timer.Ready && player.Stamina >= 30)
         {
             Use(resettimer);
         }

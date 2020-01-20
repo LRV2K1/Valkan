@@ -25,9 +25,9 @@ class Bard : Player
 
     protected override void LoadSkills()
     {
-        skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_9", "Sprites/Items/Projectiles/spr_rock", 1, "Sprites/Items/Particles/spr_rock_explosion@4", 1, 5);
-        skill2 = new SpeedBuff("Sprites/Menu/Skills/spr_skill_2", "Sprites/Items/Particles/spr_stamina@4");
-        skill3 = new AreaHeal("Sprites/Menu/Skills/spr_skill_1", "Sprites/Items/Particles/spr_heal@6");
+        skill1 = new ProjectileAttack("Sprites/Menu/Skills/spr_skill_9", 1, "Sprites/Items/Projectiles/spr_rock", 1, "Sprites/Items/Particles/spr_rock_explosion@4", 1, 5);
+        skill2 = new SpeedBuff("Sprites/Menu/Skills/spr_skill_2", 2, "Sprites/Items/Particles/spr_stamina@4");
+        skill3 = new AreaHeal("Sprites/Menu/Skills/spr_skill_1", 3, "Sprites/Items/Particles/spr_heal@6");
     }
 }
 

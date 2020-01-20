@@ -26,9 +26,9 @@ class Warrior : Player
 
     protected override void LoadSkills()
     {
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0", 1);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4", 2);
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5", 3);
     }
 }
 

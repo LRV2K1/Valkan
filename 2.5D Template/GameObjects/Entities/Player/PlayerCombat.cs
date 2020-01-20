@@ -15,9 +15,9 @@ partial class Player : MovingEntity
 
     protected virtual void LoadSkills()
     {
-        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0");
-        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4");
-        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5");
+        skill1 = new CloseAttack("Sprites/Menu/Skills/spr_skill_0", 1);
+        skill2 = new Block("Sprites/Menu/Skills/spr_skill_4", 2);
+        skill3 = new Dodge("Sprites/Menu/Skills/spr_skill_5", 3);
     }
 
     private void SetSkills()
@@ -47,18 +47,16 @@ partial class Player : MovingEntity
     //update skills
     private void Skills(InputHelper inputHelper)
     {
-        skill1.HandleInput(inputHelper);
-        skill2.HandleInput(inputHelper);
-        skill3.HandleInput(inputHelper);
+        skill1.Button(inputHelper.MouseButtonDown(MouseButton.Left));
+        skill2.Button(inputHelper.MouseButtonDown(MouseButton.Right));
+        skill3.Button(inputHelper.IsKeyDown(Keys.Space));
     }
 
     private void RemoteSkills(InputHelper inputHelper)
     {
-        //work
-        if (leftb && skill1.Ready)
-        {
-            skill1.Use();
-        }
+        skill1.Button(leftb);
+        skill2.Button(rightb);
+        skill3.Button(space);
     }
 
     private void RegenStamina(GameTime gameTime)

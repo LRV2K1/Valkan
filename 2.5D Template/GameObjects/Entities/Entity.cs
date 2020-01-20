@@ -60,7 +60,10 @@ abstract partial class Entity : AnimatedGameObject
 
     protected virtual void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+        if (Current != null)
+        {
+            MultiplayerManager.party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+        }
     }
 
     public void NewHost()
@@ -94,6 +97,13 @@ abstract partial class Entity : AnimatedGameObject
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
+        if (MultiplayerManager.online)
+        {
+            if (Current != null)
+            {
+                MultiplayerManager.party.Send("Entity: " + id + " remove", 9999, false);
+            }
+        }
     }
 
     public override void PlayAnimation(string id, bool isBackWards = false)

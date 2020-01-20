@@ -13,22 +13,22 @@ class BlockHold : Skill
     string block_asset;
     float staminatimer;
 
-    public BlockHold(string assetname, string block_asset = "", Keys keys = Keys.Space)
-        : base(assetname, MouseButton.None, keys)
+    public BlockHold(string assetname, int skill, string block_asset = "")
+        : base(assetname, skill)
     {
         this.block_asset = block_asset;
         staminatimer = 0.1f;
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public void Button(bool button)
     {
         Player player = parent as Player;
-        player.Block = inputHelper.IsKeyDown(key) && player.Stamina >= 2;
+        player.Block = button && player.Stamina >= 2;
         if (player.Block)
         {
             if (timer.Ready)
             {
-                player.Stamina-=2;
+                player.Stamina -= 2;
                 base.Use(staminatimer);
                 GameEnvironment.AssetManager.PlaySound("SFX/Player/Magic_Shield");
             }

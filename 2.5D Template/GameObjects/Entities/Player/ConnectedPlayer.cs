@@ -50,6 +50,8 @@ class ConnectedPlayer : GameObject
         OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
         Overlay hud = overlay.GetOverlay("hud") as Overlay;
         hud.Add(skill1);
+        hud.Add(skill2);
+        hud.Add(skill3);
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -139,6 +141,15 @@ class ConnectedPlayer : GameObject
                 break;
             case "maxstamina":
                 MaxStamina = int.Parse(splitdata[3]);
+                break;
+            case "skill1":
+                skill1.Use(float.Parse(splitdata[3]));
+                break;
+            case "skill2":
+                skill2.Use(float.Parse(splitdata[3]));
+                break;
+            case "skill3":
+                skill3.Use(float.Parse(splitdata[3]));
                 break;
         }
     }

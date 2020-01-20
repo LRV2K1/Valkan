@@ -12,16 +12,15 @@ class Skill : GameObject
 {
 
     protected SkillTimer timer;
-    protected Keys key;
-    protected MouseButton button;
+    int skill;
+
 
     //generic skill class
-    public Skill(string assetname, MouseButton button = MouseButton.None, Keys key = Keys.None)
+    public Skill(string assetname, int skill)
         : base()
     {
+        this.skill = skill;
         timer = new SkillTimer(assetname);
-        this.key = key;
-        this.button = button;
     }
 
     //setup skill
@@ -35,29 +34,9 @@ class Skill : GameObject
         hud.Add(timer);
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public virtual void Button(bool button)
     {
-        if (button != MouseButton.None && key != Keys.None)
-        {
-            if (inputHelper.MouseButtonPressed(button) && inputHelper.IsKeyDown(key) && timer.Ready)
-            {
-                Use();
-            }
-        }
-        else if (button != MouseButton.None)
-        {
-            if (inputHelper.MouseButtonPressed(button) && timer.Ready)
-            {
-                Use();
-            }
-        }
-        else if (key != Keys.None)
-        {
-            if (inputHelper.IsKeyDown(key) && timer.Ready)
-            {
-                Use();
-            }
-        }
+
     }
 
     protected List<Player> SurroundingPlayers(List<string> surroundingentities, Vector2 position, float range)
@@ -115,6 +94,11 @@ class Skill : GameObject
     public virtual void Use(float timer = 2f)
     {
         this.timer.Use(timer);
+        Player player = parent as Player;
+        if (MultiplayerManager.online && !player.Host)
+        {
+            MultiplayerManager.party.Send("CPlayer: " + player.Id + " skill" + skill + " " + timer, 9999, false);
+        }
     }
 
     public SkillTimer Timer

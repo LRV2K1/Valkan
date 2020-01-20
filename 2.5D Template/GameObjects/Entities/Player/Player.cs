@@ -413,4 +413,9 @@ partial class Player : MovingEntity
             }
         }
     }
+
+    public bool Host
+    {
+        get { return host; }
+    }
 }

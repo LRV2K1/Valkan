@@ -13,18 +13,18 @@ class Dodge : Skill
     protected float runtime;
     protected float resettimer;
 
-    public Dodge(string assetname, float timer = 1f, float speed = 2f, float runtime = 0.2f, Keys keys = Keys.Space)
-        : base(assetname, MouseButton.None, keys)
+    public Dodge(string assetname, int skill, float timer = 1f, float speed = 2f, float runtime = 0.2f)
+        : base(assetname, skill)
     {
         this.speed = speed;
         this.runtime = runtime;
         resettimer = timer;
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public void Button(bool button)
     {
         Player player = parent as Player;
-        if (inputHelper.KeyPressed(key) && timer.Ready && player.Stamina >= 20)
+        if (button && timer.Ready && player.Stamina >= 20)
         {
             GameEnvironment.AssetManager.PlaySound("SFX/Player/Swoosh");
             Use(resettimer);
