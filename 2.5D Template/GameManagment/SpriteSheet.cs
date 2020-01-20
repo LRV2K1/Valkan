@@ -13,9 +13,11 @@ public class SpriteSheet
     protected Color color;
     protected Vector2 size;
     protected Rectangle cut;
+    string assetname;
 
     public SpriteSheet(string assetname, int sheetIndex = 0)
     {
+        this.assetname = assetname;
         cut = new Rectangle(0,0,0,0);
         size = Vector2.One;
         // retrieve the sprite
@@ -127,5 +129,10 @@ public class SpriteSheet
     {
         get { return cut; }
         set { cut = value; }
+    }
+
+    public string AssetName
+    {
+        get { return assetname; }
     }
 }

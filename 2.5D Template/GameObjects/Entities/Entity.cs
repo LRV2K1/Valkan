@@ -9,29 +9,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
-    int count;
-    int count2;
     protected Vector2 gridPos;
     protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
     protected string host;
     protected bool remove;
-    string previousdata;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         remove = false;
         host = "";
-        previousdata = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
-        if (MultiplayerManager.online)
-        {
-            previousdata = MultiplayerManager.party.GetReceivedData();
-        }
     }
 
     public override void Update(GameTime gameTime)
@@ -52,10 +44,6 @@ abstract partial class Entity : AnimatedGameObject
             NewHost();
             previousPos = position;
         }
-        if (MultiplayerManager.online)
-        {
-            ReceiveData();
-        }
     }
 
     public override void Reset()
@@ -69,39 +57,11 @@ abstract partial class Entity : AnimatedGameObject
         NewHost();
     }
 
-    private void SendData()
+    protected virtual void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999, false);
+        MultiplayerManager.party.Send("Entity: " + id + " " + GlobalPosition.X + " " + GlobalPosition.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
     }
 
-    private void ReceiveData()
-    {
-        try
-        {
-            if (previousdata != MultiplayerManager.party.GetReceivedData())
-            {
-                previousdata = MultiplayerManager.party.GetReceivedData();
-                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
-                if (variables[0] == "Entity:" && variables[1] == id)
-                {
-                    count++;
-                    Console.WriteLine("Count1: " + count);
-                    position.X = float.Parse(variables[2]);
-                    position.Y = float.Parse(variables[3]);
-                    previousPos = position;
-                }
-                else
-                {
-
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-    }
     private void NewHost()
     {
         //become a passenger of a tile

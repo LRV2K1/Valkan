@@ -62,6 +62,7 @@
     <Compile Include="GameObjects\Editor\ItemGrid.cs" />
     <Compile Include="GameObjects\Editor\EditorMouse.cs" />
     <Compile Include="GameObjects\Editor\Entities\EditorEntity.cs" />
+    <Compile Include="GameObjects\Entities\ConnectedEntity.cs" />
     <Compile Include="GameObjects\Entities\Enemy.cs" />
     <Compile Include="GameObjects\Entities\EnemyAnimation.cs" />
     <Compile Include="GameObjects\Entities\EnemyData.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="GameObjects\Tiles\GrassTile.cs" />
     <Compile Include="GameObjects\Tiles\TreeTile.cs" />
     <Compile Include="GameObjects\Tiles\WallTile.cs" />
+    <Compile Include="Level\LevelConnection.cs" />
     <Compile Include="Level\LevelIO.cs" />
     <Compile Include="Menu\Button.cs" />
     <Compile Include="Overlays\InGameMenu.cs" />

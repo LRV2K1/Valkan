@@ -43,11 +43,13 @@ class HostClientSelectionState : GameObjectLibrary
             MultiplayerManager.Connect(9999);
             MultiplayerManager.party.playerlist.Modify(Connection.MyIP(), true, true);
             GameEnvironment.ScreenFade.TransitionToScene("hostSelectionState", 5);
+            GameEnvironment.GameSettingsManager.SetValue("host", "true");
         }
         else if (joinGameButton.Pressed)
         {
             MultiplayerManager.Connect(1000);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
+            GameEnvironment.GameSettingsManager.SetValue("host", "false");
         }
         else if (returnButton.Pressed)
         {
