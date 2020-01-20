@@ -20,6 +20,7 @@ abstract partial class Entity : AnimatedGameObject
     protected bool remove;
     string previousdata = "";
     string currentdata = "";
+    string olddata = "";
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
@@ -36,6 +37,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         if (MultiplayerManager.Online)
         {
+            olddata = previousdata;
             previousdata = currentdata;
             currentdata = MultiplayerManager.Party.Data;
         }
@@ -76,7 +78,10 @@ abstract partial class Entity : AnimatedGameObject
 
     private void SendData()
     {
-        MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999);
+        if (id == "player")
+        {
+            MultiplayerManager.Party.Send("Entity: " + id + "2 " + position.X + " " + position.Y, 9999); //frame of animation????
+        }
     }
 
     private void ReceiveData()
@@ -85,21 +90,22 @@ abstract partial class Entity : AnimatedGameObject
         try
         {
             count1++;
-            if (currentdata != previousdata)
+            if (currentdata != olddata)
             {
                 count2++;
                 string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
                 if (variables[0] == "Entity:" && variables[1] == id)
                 {
-                    position.X = float.Parse(variables[2]);
-                    position.Y = float.Parse(variables[3]);
-                    previousPos = position;
+                   // SpriteGameObject player2 = GameWorld.GetObject("Player2") as SpriteGameObject;
+                    //player2.Position.X = float.Parse(variables[2]); //???
+                    //player2.Position.Y = float.Parse(variables[2]);
+                    //previousPos = position;
                 }
                 else
                 {
                     //id = 2000
                     //new object
-                    //SpriteGameObject hi = new SpriteGameObject("Sprites/Items/Projectiles/spr_fire_0@8"); //has id 1300  
+                    //SpriteGameObject player2 = new SpriteGameObject("Sprites/Items/Projectiles/spr_fire_0@8", id: "player2"); //has id 1300  
                     //here
                 }
             }
