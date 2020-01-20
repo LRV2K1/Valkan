@@ -46,6 +46,10 @@ partial class Level : GameObjectLibrary
             {
                 (GetObject(variables[1]) as Player).GetData(previousdata);
             }
+            if (variables[0] == "CPlayer: ")
+            {
+                (GetObject("player") as ConnectedPlayer).GetData(previousdata);
+            }
         }
     }
 

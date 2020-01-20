@@ -123,7 +123,7 @@ public class ConnectionParty : Connection
         bool log = true;
         if (playerlist.IsHost(MyIP())) //data for host only
         {
-            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:")
+            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:")
             {
                 log = false;
             }

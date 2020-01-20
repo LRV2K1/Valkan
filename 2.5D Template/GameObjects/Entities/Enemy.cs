@@ -209,7 +209,6 @@ partial class Enemy : MovingEntity
                 {
                     destinationQueue.Add(playerpos); //de gegeven playerpostitie wordt toegevoegd aan de destinationQueue
                     FindPath(destinationQueue[0]); //Findpath word aanroepen om de pad te vinden van de destination dat vooraan de lijst staat
-                    Console.WriteLine("Gridpos :  " + playerpos);
                 }
                 break;
 

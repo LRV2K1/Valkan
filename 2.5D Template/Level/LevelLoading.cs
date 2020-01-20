@@ -121,7 +121,7 @@ partial class Level : GameObjectLibrary
 
     private void LoadRemotePlayer()
     {
-        ConnectedPlayer connectedPlayer = new ConnectedPlayer();
+        ConnectedPlayer connectedPlayer = new ConnectedPlayer("player2");
         RootList.Add(connectedPlayer);
     }
 
@@ -188,6 +188,7 @@ partial class Level : GameObjectLibrary
         player2.SetupPlayer();
         player2.MovePositionOnGrid(x, y + 1);
 
+        /*
         if (MultiplayerManager.online && false)
         {
             foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
@@ -201,6 +202,7 @@ partial class Level : GameObjectLibrary
                 }
             }
         }
+        */
     }
 
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)

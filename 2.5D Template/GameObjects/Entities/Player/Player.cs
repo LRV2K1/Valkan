@@ -84,29 +84,30 @@ partial class Player : MovingEntity
 
     public void GetData(string data)
     {
+        Console.WriteLine(data);
         string[] splitdata = data.Split(' ');
-        switch (splitdata[1])
+        switch (splitdata[2])
         {
             case "left":
-                left = bool.Parse(splitdata[2]);
+                left = bool.Parse(splitdata[3]);
                 break;
             case "right":
-                right = bool.Parse(splitdata[2]);
+                right = bool.Parse(splitdata[3]);
                 break;
             case "up":
-                up = bool.Parse(splitdata[2]);
+                up = bool.Parse(splitdata[3]);
                 break;
             case "down":
-                down = bool.Parse(splitdata[2]);
+                down = bool.Parse(splitdata[3]);
                 break;
             case "leftb":
-                leftb = bool.Parse(splitdata[2]);
+                leftb = bool.Parse(splitdata[3]);
                 break;
             case "rightb":
-                rightb = bool.Parse(splitdata[2]);
+                rightb = bool.Parse(splitdata[3]);
                 break;
             case "space":
-                space = bool.Parse(splitdata[2]);
+                space = bool.Parse(splitdata[3]);
                 break;
         }
     }
