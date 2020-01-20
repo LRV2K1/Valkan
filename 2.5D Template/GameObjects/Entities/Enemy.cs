@@ -74,24 +74,19 @@ partial class Enemy : MovingEntity
             return;
         }
 
-        if (speed > 0)
+
+
+        if (InRange()) // als de player in bereik is zal de ai bewegen
         {
-            if (start == 1) // de start positie moet 1 keer worden geintialized
-            {
-                Startup();
-                start = 0;
-            }
-            if (InRange()) // als de player in bereik is zal de ai bewegen
-            {
-                Player player = GameWorld.GetObject("player") as Player;
-                // this.Position *= EnemyVelocity(player.Position);
-                DesCalculate(player.GridPos);
-            }
-            else if (!InRange())
-            {
-                this.velocity = Vector2.Zero;
-            }
+            Player player = GameWorld.GetObject("player") as Player;
+            // this.Position *= EnemyVelocity(player.Position);
+            DesCalculate(player.GridPos);
         }
+        else if (!InRange())
+        {
+            this.velocity = Vector2.Zero;
+        }
+
         Attack(gameTime);
     }
 
@@ -165,13 +160,6 @@ partial class Enemy : MovingEntity
             }
         }
     }
-
-    public void Startup()
-    {
-        Enemy enemy = this;
-        Player player = GameWorld.GetObject("player") as Player;
-        destinationQueue.Add(player.GridPos); //De StartPositie wordt toegevoegd aan de destinationQueue
-        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
     public void DesCalculate(Vector2 playerpos)
     {
