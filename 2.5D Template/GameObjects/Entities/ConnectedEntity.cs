@@ -21,6 +21,7 @@ class ConnectedEntity : Entity
         animationNumber = 0;
         previousdata = "";
         ReceiveData(data);
+        connectedOrigin = Vector2.Zero;
     }
 
     protected override void SendData() { }

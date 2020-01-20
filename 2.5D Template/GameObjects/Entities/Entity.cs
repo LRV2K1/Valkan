@@ -29,6 +29,7 @@ abstract partial class Entity : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        
         //check if moved
         if (previousPos != position)
         {
@@ -59,7 +60,7 @@ abstract partial class Entity : AnimatedGameObject
 
     protected virtual void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + Id + " " + GlobalPosition.X + " " + GlobalPosition.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+        MultiplayerManager.party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
     }
 
     public void NewHost()
@@ -99,6 +100,10 @@ abstract partial class Entity : AnimatedGameObject
     {
         base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+                if (MultiplayerManager.online) //send data if online
+        {
+            SendData();
+        }
     }
 
     public override Rectangle BoundingBox
