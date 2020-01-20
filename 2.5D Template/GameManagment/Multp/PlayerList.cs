@@ -108,8 +108,9 @@ public class PlayerList
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
         {
-            if (lobbyplayer.ip == ip)
+            if (lobbyplayer.ip.ToString() == ip.ToString())
             {
+                Console.WriteLine("hi");
                 return lobbyplayer.isready;
             }
         }
