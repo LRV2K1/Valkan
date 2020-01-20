@@ -76,8 +76,6 @@ partial class Enemy : MovingEntity
             return;
         }
 
-
-
         if (InRange()) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
