@@ -58,12 +58,12 @@ partial class Enemy : MovingEntity
                     idle_anim = true;
                     break;
                 case "attack":
-                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), false);
                     damage = int.Parse(linedata[2]);
                     attack_anim = true;
                     break;
                 case "walking":
-                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true, true);
+                    LoadAnimations(dataloc, linedata[0], int.Parse(linedata[1]), true);
                     speed = int.Parse(linedata[2]);
                     walking_anim = true;
                     break;

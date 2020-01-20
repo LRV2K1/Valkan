@@ -13,6 +13,8 @@ partial class Enemy : MovingEntity
     protected bool die, dead;
     protected bool selected;
     protected string dataloc;
+    protected float attacktimer;
+    protected float resetattacktimer;
 
     protected bool input;
 
@@ -41,6 +43,8 @@ partial class Enemy : MovingEntity
         health = 20;
         damage = 10;
         speed = 300f;
+        resetattacktimer = 1.5f;
+        attacktimer = 0;
 
         input = false;
 
@@ -61,21 +65,34 @@ partial class Enemy : MovingEntity
             }
             return;
         }
-        if (start == 1) // de start positie moet 1 keer worden geintialized
-        {
-            Startup();
-            start = 0;
-        }
-        if (InRange() == true) // als de player in bereik is zal de ai bewegen
-        {
-            Player player = GameWorld.GetObject("player") as Player;
-            // this.Position *= EnemyVelocity(player.Position);
-            DesCalculate(player.GridPos);
-        }
-        else if (!InRange()|| die || dead)
-            this.velocity = Vector2.Zero;
 
         ChangeAnimation();
+
+        if (currentAnimation == "B")
+        {
+            velocity = Vector2.Zero;
+            return;
+        }
+
+        if (speed > 0)
+        {
+            if (start == 1) // de start positie moet 1 keer worden geintialized
+            {
+                Startup();
+                start = 0;
+            }
+            if (InRange()) // als de player in bereik is zal de ai bewegen
+            {
+                Player player = GameWorld.GetObject("player") as Player;
+                // this.Position *= EnemyVelocity(player.Position);
+                DesCalculate(player.GridPos);
+            }
+            else if (!InRange())
+            {
+                this.velocity = Vector2.Zero;
+            }
+        }
+        Attack(gameTime);
     }
 
     private void CheckDie()
@@ -86,6 +103,7 @@ partial class Enemy : MovingEntity
             if (die_anim)
             {
                 SwitchAnimation("die", "D");
+                velocity = Vector2.Zero;
                 GameEnvironment.AssetManager.PlaySound(die_sound);
             }
             else
@@ -99,6 +117,55 @@ partial class Enemy : MovingEntity
             }
         }
     }
+
+    private void Attack(GameTime gameTime)
+    {
+        if (!attack_anim && damage > 0)
+        {
+            return;
+        }
+        if (attacktimer > 0)
+        {
+            attacktimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+        bool attacked = false;
+        Rectangle rectangle = new Rectangle((int)GlobalPosition.X - 30, (int)GlobalPosition.Y - 30, 60, 60);
+        List<string> surroudningEnities = GetSurroundingEntities();
+        foreach(string id in surroudningEnities)
+        {
+            Player player = GameWorld.GetObject(id) as Player;
+            if (player != null)
+            {
+                if (attacked)
+                {
+                    if (rectangle.Intersects(player.BoundingBox))
+                    {
+                        player.Health -= damage;
+                        continue;
+                    }
+                }
+                float distance = Vector2.Distance(player.Position, position);
+                Vector2 directions = new Vector2(Math.Sign(player.Position.X - position.X), Math.Sign(player.Position.Y - position.Y));
+                if (distance < 100)
+                {
+                    attacktimer = resetattacktimer;
+                    SwitchAnimation("attack", "B");
+                    velocity = directions;
+                    attacked = true;
+                    Vector2 range = new Vector2(50 * (float)Math.Cos(Direction), 50 * (float)Math.Sin(Direction));
+                    rectangle.X += (int)range.X;
+                    rectangle.Y += (int)range.Y;
+                    if (rectangle.Intersects(player.BoundingBox))
+                    {
+                        player.Health -= damage;
+                    }
+                    continue;
+                }
+            }
+        }
+    }
+
     public void Startup()
     {
         Enemy enemy = this;
@@ -344,6 +411,7 @@ partial class Enemy : MovingEntity
      /// <param name="pos"></param>
     void Move(Vector2 pos)
     {
+        input = false;
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
         Player player = GameWorld.GetObject("player") as Player;
@@ -354,12 +422,14 @@ partial class Enemy : MovingEntity
         float dx = movpos.X - this.Position.X;
         float dy = movpos.Y - this.Position.Y;
         float distance = Vector2.Distance(movpos, this.Position);
-        float scale = 100 / distance;
+        float scale = speed / distance;
 
         float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (aiplayerdistance < 2.2f|| die || dead)
+        if (aiplayerdistance < 2.2f)
+        {
             this.velocity = Vector2.Zero;
+        }
         else
         {
             this.velocity.X = dx * scale;
