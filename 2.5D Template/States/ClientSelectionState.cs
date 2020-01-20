@@ -17,11 +17,17 @@ class ClientSelectionState : GameObjectLibrary
     protected SpriteGameObject Selected;
     List<Button> buttonReadyList;
     List<Button> buttonUnreadyList;
+    List<Button> buttonWarriorList;
+    List<Button> buttonWizzardList;
+    List<Button> buttonBardList;
     public ClientSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         buttonReadyList = new List<Button>();
         buttonUnreadyList = new List<Button>();
+        buttonWarriorList = new List<Button>();
+        buttonWizzardList = new List<Button>();
+        buttonBardList = new List<Button>();
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
         RootList.Add(titleScreen);
         SpriteGameObject lobbyBackground = new SpriteGameObject("Sprites/Menu/Screen2", 101, "lobby");
@@ -120,17 +126,36 @@ class ClientSelectionState : GameObjectLibrary
         {
             for (int i = buttonReadyList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
             {
-                buttonReadyList.Add(new Button("Sprites/Menu/Ready_Button", 101));
+                buttonReadyList.Add(new Button("Sprites/Menu/Ready_Button", 101)); //ready
                 buttonReadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
                 buttonReadyList[i].Sprite.Size = new Vector2(1.3f, 2f);
                 buttonReadyList[i].Visible = false;
                 RootList.Add(buttonReadyList[i]);
 
-                buttonUnreadyList.Add(new Button("Sprites/Menu/Unready_Button", 101));
+                buttonUnreadyList.Add(new Button("Sprites/Menu/Unready_Button", 101)); //unready
                 buttonUnreadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y - 2) / 10 * (i + 2) + 2 * 1.5f);
                 buttonUnreadyList[i].Sprite.Size = new Vector2(1.3f, 2f);
                 buttonUnreadyList[i].Visible = true;
                 RootList.Add(buttonUnreadyList[i]);
+
+                //classes
+                buttonWarriorList.Add(new Button("Sprites/Menu/Player_Warrior_Button", 101));
+                buttonWarriorList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y - 2) / 9.4f * (i + 2) + 2 * 1.5f);
+                buttonWarriorList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
+                buttonWarriorList[i].Visible = false;
+                RootList.Add(buttonWarriorList[i]);
+
+                buttonWizzardList.Add(new Button("Sprites/Menu/Player_Wizzard_Button", 101));
+                buttonWizzardList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y - 2) / 9.4f * (i + 2) + 2 * 1.5f);
+                buttonWizzardList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
+                buttonWizzardList[i].Visible = false;
+                RootList.Add(buttonWizzardList[i]);
+
+                buttonBardList.Add(new Button("Sprites/Menu/Player_Bard_Button", 101));
+                buttonBardList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y - 2) / 9.4f * (i + 2) + 2 * 1.5f);
+                buttonBardList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
+                buttonBardList[i].Visible = false;
+                RootList.Add(buttonBardList[i]);
             }
 
             for (int i = buttonReadyList.Count; i > MultiplayerManager.Party.playerlist.playerlist.Count; i--) //if too many buttons remove one
@@ -145,13 +170,33 @@ class ClientSelectionState : GameObjectLibrary
             {
                 if (MultiplayerManager.Party.playerlist.playerlist[i].isready)
                 {
-                    buttonReadyList[i].Visible = true;
+                    buttonReadyList[i].Visible = true; //ready
                     buttonUnreadyList[i].Visible = false;
                 }
                 else
                 {
-                    buttonReadyList[i].Visible = false;
+                    buttonReadyList[i].Visible = false; //unready
                     buttonUnreadyList[i].Visible = true;
+                }
+
+                //classes
+                if (MultiplayerManager.Party.playerlist.playerlist[i].character == "Warrior")
+                {
+                    buttonWarriorList[i].Visible = true;
+                    buttonWizzardList[i].Visible = false;
+                    buttonBardList[i].Visible = false;
+                }
+                else if (MultiplayerManager.Party.playerlist.playerlist[i].character == "Wizzard")
+                {
+                    buttonWarriorList[i].Visible = false;
+                    buttonWizzardList[i].Visible = true;
+                    buttonBardList[i].Visible = false;
+                }
+                else if (MultiplayerManager.Party.playerlist.playerlist[i].character == "Bard")
+                {
+                    buttonWarriorList[i].Visible = false;
+                    buttonWizzardList[i].Visible = false;
+                    buttonBardList[i].Visible = true;
                 }
             }
         }
