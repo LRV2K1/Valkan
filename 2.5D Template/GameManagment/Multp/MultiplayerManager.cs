@@ -43,6 +43,7 @@ public class MultiplayerManager
             if (party == null)
             {
                 party = new ConnectionParty(9079);
+                partyport = 9079;
             }
             else
             {
