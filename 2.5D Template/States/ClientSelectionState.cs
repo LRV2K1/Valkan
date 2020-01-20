@@ -191,28 +191,28 @@ class ClientSelectionState : GameObjectLibrary
         {
             if (MultiplayerManager.Party.playerlist.IsReady(Connection.MyIP()))
             {
-                MultiplayerManager.Party.Send("Unready", 9999);
+                MultiplayerManager.Party.Send("Unready", MultiplayerManager.PartyPort);
             }
             else
             {
-                MultiplayerManager.Party.Send("Ready", 9999);
+                MultiplayerManager.Party.Send("Ready", MultiplayerManager.PartyPort);
             }
         }
         else if (warriorButton.Pressed)
         {
-            MultiplayerManager.Party.Send("Character: Warrior", 9999);
+            MultiplayerManager.Party.Send("Character: Warrior", MultiplayerManager.PartyPort);
             GameEnvironment.GameSettingsManager.SetValue("character", "Warrior");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 1, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (sorcererButton.Pressed)
         {
-            MultiplayerManager.Party.Send("Character: Wizzard", 9999);
+            MultiplayerManager.Party.Send("Character: Wizzard", MultiplayerManager.PartyPort);
             GameEnvironment.GameSettingsManager.SetValue("character", "Wizzard");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 2, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }
         else if (bardButton.Pressed)
         {
-            MultiplayerManager.Party.Send("Character: Bard", 9999);
+            MultiplayerManager.Party.Send("Character: Bard", MultiplayerManager.PartyPort);
             GameEnvironment.GameSettingsManager.SetValue("character", "Bard");
             Selected.Position = new Vector2((GameEnvironment.Screen.X - warriorButton.Width) / 8 * 3, (GameEnvironment.Screen.Y - warriorButton.Height) / 12 * 8);
         }

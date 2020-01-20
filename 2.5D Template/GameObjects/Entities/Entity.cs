@@ -80,7 +80,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         if (id == "player")
         {
-            MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, 9999); //frame of animation????
+            MultiplayerManager.Party.Send("Entity: " + id + " " + position.X + " " + position.Y, MultiplayerManager.PartyPort); //frame of animation????
         }
     }
 

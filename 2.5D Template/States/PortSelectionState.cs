@@ -36,15 +36,15 @@ class PortSelectionState : GameObjectLibrary
         base.Update(gameTime);
         if (MultiplayerManager.Lobby != null)
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++)
+            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++) //add buttons
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
-                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - (buttonList[i].Width * buttonList[i].Sprite.Size.X) / 2, (GameEnvironment.Screen.Y / 13) * 3 + (int)(GameEnvironment.Screen.Y / 9) * i);
+                buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - (buttonList[i].Width * buttonList[i].Sprite.Size.X) / 2, (GameEnvironment.Screen.Y / 3.3f) + (int)(GameEnvironment.Screen.Y / 9) * i);
                 RootList.Add(buttonList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--)
+            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--) //remove buttons
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);

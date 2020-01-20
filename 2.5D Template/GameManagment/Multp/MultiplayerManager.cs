@@ -10,10 +10,12 @@ public class MultiplayerManager
 {
     static ConnectionParty party;
     static ConnectionLobby lobby;
-    static int lobbyport = 8888; 
+    static int lobbyport = 61234;
+    static int partyport;
     static bool online = false;
 
     public static int LobbyPort { get { return lobbyport; } }
+    public static int PartyPort { get { return partyport; } }
     static public bool Online { get { return online; } }
     public static ConnectionParty Party { get { return party; } set { party = value; } }
     public static ConnectionLobby Lobby { get { return lobby; } set { lobby = value; } }
@@ -23,7 +25,7 @@ public class MultiplayerManager
     }
 
     //setup connection for lobby or ingame
-    public static void Connect(int port)
+    public static void Connect(int port = 0)
     {
         if (port == LobbyPort)
         {
@@ -40,11 +42,21 @@ public class MultiplayerManager
         {
             if (party == null)
             {
-                party = new ConnectionParty(port);
+                if (port == 0)
+                {
+                    int randomport = GameEnvironment.Random.Next(2000, 60000);
+                    party = new ConnectionParty(randomport);
+                    partyport = randomport;
+                }
+                else
+                {
+                    party = new ConnectionParty(port);
+                    partyport = port;
+                }
             }
             else
             {
-                Console.WriteLine("Already connected to port " + port);
+                Console.WriteLine("Already connected to party port " + PartyPort);
             }
         }
     }
