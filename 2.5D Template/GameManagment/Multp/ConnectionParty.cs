@@ -10,8 +10,6 @@ public class ConnectionParty : Connection
     public PlayerList playerlist;
     public bool isopen = true;
     float time;
-    int count = 0;
-    bool receivedworldpart1 = false;
 
     public ConnectionParty(int port)
         : base(port)
@@ -128,6 +126,11 @@ public class ConnectionParty : Connection
             else if (message == "Ready")
             {
                 playerlist.Modify(sender, true);
+                Send("Playerlist:" + playerlist.ToString(), port);
+            }
+            else if (message == "Unready")
+            {
+                playerlist.Modify(sender, false);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")

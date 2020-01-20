@@ -103,6 +103,19 @@ public class PlayerList
         }
         return true;
     }
+
+    public bool IsReady(IPAddress ip)
+    {
+        foreach (LobbyPlayer lobbyplayer in playerlist)
+        {
+            if (lobbyplayer.ip == ip)
+            {
+                return lobbyplayer.isready;
+            }
+        }
+        return true;
+    }
+
     public bool AllReceivedWorld()
     {
         foreach (LobbyPlayer lobbyplayer in playerlist)
