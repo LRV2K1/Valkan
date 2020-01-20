@@ -147,6 +147,7 @@ partial class Enemy : MovingEntity
                 {
                     attacktimer = resetattacktimer;
                     SwitchAnimation("attack", "B");
+                    GameEnvironment.AssetManager.PlaySound(attack_sound);
                     velocity = directions;
                     attacked = true;
                     Vector2 range = new Vector2(50 * (float)Math.Cos(Direction), 50 * (float)Math.Sin(Direction));
