@@ -79,7 +79,7 @@ partial class Player : MovingEntity
         }
 
         addstaminatimer = addstaminatimerreset;
-        Stamina = stamina + 1;
+        stamina++;
         if (MultiplayerManager.online && !host)
         {
             MultiplayerManager.party.Send("CPlayer: " + id + " stamina " + health, 9999, false);

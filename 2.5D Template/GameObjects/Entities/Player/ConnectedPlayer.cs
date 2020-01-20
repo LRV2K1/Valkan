@@ -15,15 +15,13 @@ class ConnectedPlayer : GameObject
     protected int maxhealth, maxstamina;
 
     bool die, dead;
-    SkillTimer skill1, skill2, skill3;
+    protected SkillTimer skill1, skill2, skill3;
 
     public ConnectedPlayer(string id = "player2")
         : base(0, "player")
     {
         playerid = id;
-
-        maxhealth = 100;
-        MaxStamina = 150;
+        SetStats();
         health = maxhealth;
         stamina = maxstamina;
 
@@ -31,7 +29,13 @@ class ConnectedPlayer : GameObject
         SetupSkills();
     }
 
-    protected void LoadSkills()
+    protected virtual void SetStats()
+    {
+        maxhealth = 100;
+        MaxStamina = 150;
+    }
+
+    protected virtual void LoadSkills()
     {
         skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");
         skill2 = new SkillTimer("Sprites/Menu/Skills/spr_skill_4");
