@@ -36,7 +36,7 @@ class PortSelectionState : GameObjectLibrary
         base.Update(gameTime);
         if (MultiplayerManager.Lobby != null)
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++)
+            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++) //add buttons
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
@@ -44,7 +44,7 @@ class PortSelectionState : GameObjectLibrary
                 RootList.Add(buttonList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--)
+            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--) //remove buttons
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
