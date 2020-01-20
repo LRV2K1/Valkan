@@ -30,7 +30,7 @@ public class ConnectionParty : Connection
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, remoteep.Address);
             }
-            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
+            ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
         catch
         {
@@ -99,118 +99,110 @@ public class ConnectionParty : Connection
 
     public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
-        if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
+        string[] lines = message.Split('\n');
+        string[] variables = message.Split(' ');
+        bool log = true;
+        if (playerlist.IsHost(MyIP())) //data for host only playerlist.IsHost(MyIP()
         {
-            data = message;
-        }
-        else
-        {
-            string[] lines = message.Split('\n');
-            string[] variables = message.Split(' ');
-            bool log = true;
-            if (playerlist.IsHost(MyIP())) //data for host only playerlist.IsHost(MyIP()
+            if (variables[0] == "Entity:")
             {
-                if (variables[0] == "Entity:")
+                data = message;
+            }
+            else if (message == "Join")
+            {
+                playerlist.Modify(sender);
+                Send("Playerlist:" + playerlist.ToString(), port);
+                if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
-                    data = message;
+                    CloseParty();
                 }
-                else if (message == "Join")
+            }
+            else if (message == "Leave")
+            {
+                playerlist.Modify(sender, false, false, true);
+                Send("Playerlist:" + playerlist.ToString(), port);
+                isopen = true;
+            }
+            else if (message == "Ready")
+            {
+                playerlist.Modify(sender, true);
+                Send("Playerlist:" + playerlist.ToString(), port);
+            }
+            else if (message == "Unready")
+            {
+                playerlist.Unready(sender);
+                Send("Playerlist:" + playerlist.ToString(), port);
+            }
+            else if (variables[0] == "Character:")
+            {
+                playerlist.Modify(sender, character: variables[1]);
+                Send("Playerlist:" + playerlist.ToString(), port);
+            }
+            else if (lines[0] == "Playerlist:")
+            {
+                playerlist.Store(message);
+                if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
                 {
-                    playerlist.Modify(sender);
-                    Send("Playerlist:" + playerlist.ToString(), port);
-                    if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
-                    {
-                        CloseParty();
-                    }
-                }
-                else if (message == "Leave")
-                {
-                    playerlist.Modify(sender, false, false, true);
-                    Send("Playerlist:" + playerlist.ToString(), port);
-                    isopen = true;
-                }
-                else if (message == "Ready")
-                {
-                    playerlist.Modify(sender, true);
-                    Send("Playerlist:" + playerlist.ToString(), port);
-                }
-                else if (message == "Unready")
-                {
-                    playerlist.Unready(sender);
-                    Send("Playerlist:" + playerlist.ToString(), port);
-                }
-                else if (variables[0] == "Character:")
-                {
-                    playerlist.Modify(sender, character: variables[1]);
-                    Send("Playerlist:" + playerlist.ToString(), port);
-                }
-                else if (lines[0] == "Playerlist:")
-                {
-                    playerlist.Store(message);
-                    if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
-                    {
-                        log = false;
-                    }
-                }
-                else if (message == "I am still connected")
-                {
-                    playerlist.Modify(sender, timeunactive: 0);
                     log = false;
                 }
-                else
-                {
-                    Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
-                }
             }
-            else //data for everyone but host
+            else if (message == "I am still connected")
             {
-                if (variables[0] == "Entity:")
-                {
-                    data = message;
-                }
-                else if (lines[0] == "Playerlist:")
-                {
-                    playerlist.Store(message);
-
-                    if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
-                    {
-                        log = false;
-                    }
-                }
-                else if (message == "Start")
-                {
-                    CreatePlayers();
-                    GameEnvironment.ScreenFade.TransitionToScene("playingState");
-                }
-                else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
-                {
-                    Disconnect();
-                }
-                else if (message == "Host is still connected")
-                {
-                    playerlist.Modify(sender, timeunactive: 0);
-                    if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
-                    {
-                        Send("Playerlist:" + playerlist.ToString(), port, false);
-                        log = false;
-                    }
-                }
-                else if (variables[0] == "World")
-                {
-                    Console.WriteLine("Received a world part");
-                    StoreWorld(variables[1], message);
-                }
-                else
-                {
-                    Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
-                }
+                playerlist.Modify(sender, timeunactive: 0);
+                log = false;
             }
-            if (log) //should the received data be put in console?
+            else
             {
-                Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+                Console.WriteLine("ERROR! The message:" + message + "is not a valid message");
             }
         }
-        
+        else //data for everyone but host
+        {
+            if (variables[0] == "Entity:")
+            {
+                data = message;
+            }
+            else if (lines[0] == "Playerlist:")
+            {
+                playerlist.Store(message);
+
+                if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
+                {
+                    log = false;
+                }
+            }
+            else if (message == "Start")
+            {
+                CreatePlayers();
+                GameEnvironment.ScreenFade.TransitionToScene("playingState");
+            }
+            else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
+            {
+                Disconnect();
+            }
+            else if (message == "Host is still connected")
+            {
+                playerlist.Modify(sender, timeunactive: 0);
+                if (playerlist.playerlist[1].ip.ToString() == MyIP().ToString()) //send only by player2
+                {
+                    Send("Playerlist:" + playerlist.ToString(), port, false);
+                    log = false;
+                }
+            }
+            else if (variables[0] == "World")
+            {
+                Console.WriteLine("Received a world part");
+                StoreWorld(variables[1], message);
+            }
+            else
+            {
+                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+            }
+        }
+        if (log) //should the received data be put in console?
+        {
+            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+        }
     }
 
     public void CreatePlayers()
