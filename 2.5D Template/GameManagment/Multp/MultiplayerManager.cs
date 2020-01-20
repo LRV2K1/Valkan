@@ -42,7 +42,7 @@ public class MultiplayerManager
         {
             if (party == null)
             {
-                party = new ConnectionParty(3333);
+                party = new ConnectionParty(9079);
             }
             else
             {
