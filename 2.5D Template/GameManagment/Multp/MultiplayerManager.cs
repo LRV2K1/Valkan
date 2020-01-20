@@ -10,7 +10,7 @@ public class MultiplayerManager
 {
     static ConnectionParty party;
     static ConnectionLobby lobby;
-    static int lobbyport = 8888;
+    static int lobbyport = 61234;
     static int partyport;
     static bool online = false;
 
@@ -42,8 +42,9 @@ public class MultiplayerManager
         {
             if (party == null)
             {
-                party = new ConnectionParty(9079);
-                partyport = 9079;
+                int randomport = GameEnvironment.Random.Next(2000, 60000);
+                party = new ConnectionParty(randomport);
+                partyport = randomport;
             }
             else
             {
