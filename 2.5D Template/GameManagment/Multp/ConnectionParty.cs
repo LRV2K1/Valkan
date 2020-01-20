@@ -125,7 +125,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "Ready")
             {
-                playerlist.Modify(sender, true);
+                playerlist.Unready(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (message == "Unready")
