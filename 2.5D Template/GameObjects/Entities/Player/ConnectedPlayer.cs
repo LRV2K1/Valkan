@@ -62,65 +62,65 @@ class ConnectedPlayer : GameObject
     {
         if (inputHelper.KeyPressed(Keys.A))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.KeyReleased(Keys.A))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.KeyPressed(Keys.D))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.KeyReleased(Keys.D))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.KeyPressed(Keys.W))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.KeyReleased(Keys.W))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.KeyPressed(Keys.S))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.KeyReleased(Keys.S))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.KeyReleased(Keys.Space))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.MouseButtonPressed(MouseButton.Left))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Left))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "false", MultiplayerManager.PartyPort, false);
         }
 
         if (inputHelper.MouseButtonPressed(MouseButton.Right))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "true", MultiplayerManager.PartyPort, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Right))
         {
-            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "false", MultiplayerManager.PartyPort, false);
         }
     }
 

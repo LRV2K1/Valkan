@@ -83,7 +83,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), 1000, false); //broadcast playerlist to port 1000
+                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort, false); //broadcast playerlist to port 1000
             }
             time = 0;
         }
@@ -133,7 +133,7 @@ public class ConnectionParty : Connection
                 Send("Playerlist:" + playerlist.ToString(), port);
                 if (playerlist.playerlist.Count > 3) //if the party has 4 members close it
                 {
-                    Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
+                    Send("Closed: " + MyIP().ToString() + ":" + port, MultiplayerManager.LobbyPort);
                     isopen = false;
                 }
             }
@@ -223,15 +223,14 @@ public class ConnectionParty : Connection
     {
         if (playerlist.IsHost(MyIP()))
         {
-            Send("HostLeaves", 9999);
-            Send("Closed: " + MyIP().ToString() + ":" + port, 1000);
-            isopen = false;
+            Send("HostLeaves", MultiplayerManager.PartyPort);
+            CloseParty();
             GameEnvironment.ScreenFade.TransitionToScene("hostClientSelectionState", 5);
         }
         else
         {
-            Send("Leave", 9999);
-            MultiplayerManager.Connect(1000);
+            Send("Leave", MultiplayerManager.PartyPort);
+            MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
             GameEnvironment.ScreenFade.TransitionToScene("portSelectionState", 5);
         }
         udpclient.Close();

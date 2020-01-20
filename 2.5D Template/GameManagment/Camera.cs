@@ -71,7 +71,7 @@ class Camera : GameObject
             }
             else
             {
-                MultiplayerManager.Party.Send("Camera: " + id + " " + cameraPosition.X + " " + cameraPosition.Y, 9999, false);
+                MultiplayerManager.Party.Send("Camera: " + id + " " + cameraPosition.X + " " + cameraPosition.Y, MultiplayerManager.PartyPort, false);
             }
         }
         if (!follow)

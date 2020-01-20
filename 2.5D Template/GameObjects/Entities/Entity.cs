@@ -67,7 +67,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         if (Current != null)
         {
-            MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+            MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, MultiplayerManager.PartyPort, false);
         }
     }
 
@@ -106,7 +106,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             if (Current != null)
             {
-                MultiplayerManager.Party.Send("Entity: " + id + " remove", 9999, false);
+                MultiplayerManager.Party.Send("Entity: " + id + " remove", MultiplayerManager.PartyPort, false);
             }
         }
     }

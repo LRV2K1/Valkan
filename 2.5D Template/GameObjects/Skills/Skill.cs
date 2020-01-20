@@ -97,7 +97,7 @@ class Skill : GameObject
         Player player = parent as Player;
         if (MultiplayerManager.Online && !player.Host)
         {
-            MultiplayerManager.Party.Send("CPlayer: " + player.Id + " skill" + skill + " " + timer, 9999, false);
+            MultiplayerManager.Party.Send("CPlayer: " + player.Id + " skill" + skill + " " + timer, MultiplayerManager.PartyPort, false);
         }
     }
 

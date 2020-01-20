@@ -82,7 +82,7 @@ partial class Player : MovingEntity
         stamina++;
         if (MultiplayerManager.Online && !host)
         {
-            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + health, 9999, false);
+            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + health, MultiplayerManager.PartyPort, false);
         }
     }
 
@@ -125,7 +125,7 @@ partial class Player : MovingEntity
             health = value;
             if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.Party.Send("CPlayer: " + id + " health " + health, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " health " + health, MultiplayerManager.PartyPort, false);
             }
 
             if (health > maxhealth)
@@ -159,7 +159,7 @@ partial class Player : MovingEntity
             stamina = value;
             if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
             }
             staminatimer = staminatimerreset;
             if (stamina > maxstamina)
@@ -181,7 +181,7 @@ partial class Player : MovingEntity
             maxhealth = value;
             if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.Party.Send("CPlayer: " + id + " maxhealth " + maxhealth, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxhealth " + maxhealth, MultiplayerManager.PartyPort, false);
             }
             Health = health;
         }
@@ -195,7 +195,7 @@ partial class Player : MovingEntity
             maxstamina = value;
             if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.Party.Send("CPlayer: " + id + " maxstamina " + maxstamina, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxstamina " + maxstamina, MultiplayerManager.PartyPort, false);
             }
             Stamina = stamina;
         }
