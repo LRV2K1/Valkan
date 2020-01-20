@@ -72,6 +72,103 @@ partial class Enemy : MovingEntity
         }
     }
 
+                Vector2 nodepos = new Vector2(x, y);
+                nodeStart = new Node(this.GridPos, Vector2.Distance(this.GridPos, playerpos));
+                nodeEnd = new Node(playerpos, 0);
+                if (nodepos == playerpos)
+                {
+                    nodes[x, y] = nodeEnd;
+                }
+                else if (nodepos == this.GridPos)
+                {
+                    nodes[x, y] = nodeStart;
+                }
+                else
+                {
+                    nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
+                    if (grid.GetTileType(x, y) == TileType.Wall)
+                    {
+                        nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
+                    }
+                }
+                foreach (Node node in nodes)
+                {
+                    if (node.nodeXY == nodepos)
+                    {
+                        node.fGlobalGoal = hcost_grid[x, y];
+                    }
+                }
+            }
+        }
+    }
+
+    void CalculateNeighbours(Node currentNode)
+    {
+        foreach (Node n in nodes)
+        {
+            //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
+            if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y + 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y))
+            {
+                currentNode.neighbours.Add(n);
+            }
+            else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X, (int)currentNode.nodeXY.Y - 1))
+            {
+                currentNode.neighbours.Add(n);
+            }
+        }
+    }/// <summary>
+     /// //////////////////////9999
+     /// </summary>
+     /// <param name="pos"></param>
+    void Move(Vector2 pos)
+    {
+        Enemy enemy = this;
+        LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        Player player = GameWorld.GetObject("player") as Player;
+        Vector2 movpos = grid.AnchorPosition((int)pos.X, (int)pos.Y);
+        //  Vector2 enemypos = new Vector2((int)this.GridPos.X, (int)this.GridPos.Y);
+        //  Vector2 endpos = new Vector2((int)nodeEnd.nodeXY.X,(int)nodeEnd.nodeXY.Y);
+        //de ai beweegt naar de gewezen positie
+        float dx = movpos.X - this.Position.X;
+        float dy = movpos.Y - this.Position.Y;
+        float distance = Vector2.Distance(movpos, this.Position);
+        float scale = 100 / distance;
+
+        float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
+
+        if (aiplayerdistance < 2.2f|| die || dead)
+            this.velocity = Vector2.Zero;
+        else
+        {
+            this.velocity.X = dx * scale;
+            this.velocity.Y = dy * scale;
+        }
+    }
+
     public int Health
     {
         get { return health; }
