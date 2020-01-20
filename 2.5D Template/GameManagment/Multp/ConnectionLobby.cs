@@ -49,7 +49,7 @@ public class ConnectionLobby : Connection
             }
             for (int i = 0; i < playerlists.Count; i++)
             {
-                if (inactivitytimer[i] >= 5)
+                if (inactivitytimer[i] >= 5) //remove button if inactive
                 {
                     playerlists.RemoveAt(i);
                     portlist.RemoveAt(i);
