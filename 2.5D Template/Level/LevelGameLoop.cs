@@ -10,6 +10,7 @@ partial class Level : GameObjectLibrary
 {
     public override void Update(GameTime gameTime)
     {
+        DistributeData();
         for (int i = 0; i < RootList.Children.Count; i++)
         {
             if (RootList.Children[i] == "entities")
@@ -23,6 +24,7 @@ partial class Level : GameObjectLibrary
     //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        DistributeData();
         //skip entities
         foreach (string id in RootList.Children)
         {
