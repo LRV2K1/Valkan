@@ -271,7 +271,6 @@ class HostSelectionState : GameObjectLibrary
                     buttonBardList[i].Visible = true;
                 }
             }
-            //Console.WriteLine(buttonList.Count + " c " + MultiplayerManager.Party.playerlist.playerlist.Count);
         }
     }
 
