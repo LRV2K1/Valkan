@@ -30,7 +30,7 @@ public class ConnectionParty : Connection
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, remoteep.Address);
             }
-            ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
+            ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
         catch
         {
@@ -62,7 +62,7 @@ public class ConnectionParty : Connection
 
             if (GameEnvironment.GameStateManager.CurrentGameState.ToString() != "PlayingState" && isopen)
             {
-                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort); //broadcast playerlist to port 8888
+                Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort, false); //broadcast playerlist to port lobbyport
             }
             time = 0;
 
