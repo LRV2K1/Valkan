@@ -53,9 +53,6 @@
 #begin Levels/Level_1.txt
 /copy:Levels/Level_1.txt
 
-#begin Levels/Level_10.txt
-/copy:Levels/Level_10.txt
-
 #begin Levels/Level_2.txt
 /copy:Levels/Level_2.txt
 
@@ -2990,6 +2987,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/Return_Button.png
 
+#begin Sprites/Menu/Screen1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/Screen1.png
+
+#begin Sprites/Menu/Screen2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/Screen2.png
+
 #begin Sprites/Menu/Select_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3349,6 +3370,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/Start_Button.png
+
+#begin Sprites/Menu/TitleScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/TitleScreen.png
 
 #begin Sprites/Menu/Unready_Button.png
 /importer:TextureImporter
@@ -5233,4 +5266,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/TitleScreen.png
+
+#begin Sprites/Menu/LevelEditor_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/LevelEditor_Button.png
+
+#begin Sprites/Menu/Resume_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/Resume_Button.png
 
