@@ -42,9 +42,17 @@ public class MultiplayerManager
         {
             if (party == null)
             {
-                int randomport = GameEnvironment.Random.Next(2000, 60000);
-                party = new ConnectionParty(randomport);
-                partyport = randomport;
+                if (port == 0)
+                {
+                    int randomport = GameEnvironment.Random.Next(2000, 60000);
+                    party = new ConnectionParty(randomport);
+                    partyport = randomport;
+                }
+                else
+                {
+                    party = new ConnectionParty(port);
+                    partyport = port;
+                }
             }
             else
             {
