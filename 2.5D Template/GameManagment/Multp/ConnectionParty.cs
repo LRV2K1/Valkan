@@ -125,12 +125,12 @@ public class ConnectionParty : Connection
             }
             else if (message == "Ready")
             {
-                playerlist.Unready(sender);
+                playerlist.Modify(sender, true);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (message == "Unready")
             {
-                playerlist.Modify(sender, false);
+                playerlist.Unready(sender);
                 Send("Playerlist:" + playerlist.ToString(), port);
             }
             else if (variables[0] == "Character:")
