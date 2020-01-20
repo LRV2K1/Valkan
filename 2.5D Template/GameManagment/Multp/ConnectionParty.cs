@@ -31,7 +31,7 @@ public class ConnectionParty : Connection
                 HandleReceivedData(message, ip.Address, ip.Port);
                 data = message;
             }
-            ar_ = client.BeginReceive(Receive, new object()); ; //repeat
+            ar_ = client.BeginReceive(Receive, new object()); //repeat
         }
         catch
         {
