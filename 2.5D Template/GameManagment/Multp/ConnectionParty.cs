@@ -67,6 +67,7 @@ public class ConnectionParty : Connection
                 Send("Playerlist " + port + " :" + playerlist.ToString(), MultiplayerManager.LobbyPort); //broadcast playerlist to port 1000
             }
             time = 0;
+
         }
         else
         {
@@ -83,6 +84,7 @@ public class ConnectionParty : Connection
                             lobbyplayer.timeunactive += 1;
                             if (lobbyplayer.timeunactive >= 5)
                             {
+                                MultiplayerManager.Connect(MultiplayerManager.LobbyPort);
                                 Disconnect();
                             }
                         }
@@ -160,7 +162,7 @@ public class ConnectionParty : Connection
             else if (lines[0] == "Playerlist:")
             {
                 playerlist.Store(message);
-                
+
                 if (GameEnvironment.GameStateManager.CurrentGameState.ToString() == "PlayingState")
                 {
                     log = false;
@@ -168,6 +170,7 @@ public class ConnectionParty : Connection
             }
             else if (message == "Start")
             {
+                CreatePlayers();
                 GameEnvironment.ScreenFade.TransitionToScene("playingState");
             }
             else if (message == "HostLeaves") //if the host leaves then disconnect and go back to portselectionstate
@@ -196,6 +199,35 @@ public class ConnectionParty : Connection
         if (log) //should the received data be put in console?
         {
             Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, remoteep, port);
+        }
+    }
+
+    public void CreatePlayers()
+    {
+        int count = 0;
+        foreach (LobbyPlayer lobbyplayer in playerlist.playerlist)
+        {
+
+            if (MyIP().ToString() != lobbyplayer.ip.ToString())
+            {
+                if (count == 0)
+                {
+                    SpriteGameObject player1 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player1");
+                }
+                else if (count == 1)
+                {
+                    SpriteGameObject player2 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player2");
+                }
+                else if (count == 2)
+                {
+                    SpriteGameObject player3 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player3");
+                }
+                else if (count == 3)
+                {
+                    SpriteGameObject player4 = new SpriteGameObject("Sprites/Player/Wizzard/spr_walking_0@8", id: "player4");
+                }
+            }
+            count++;
         }
     }
 
