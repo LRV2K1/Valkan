@@ -29,10 +29,11 @@ partial class Enemy : MovingEntity
     Node nodeEnd;
     List<Node> path = new List<Node>();
     Node[,] nodes = new Node[200, 200];
-    List<Vector2> destinationQueue = new List<Vector2>();
+
     List<Node> untestedNodesList = new List<Node>();
     int counter;
-
+    Vector2 currentplayerpos;
+    Vector2 oldplayerpos;
 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
@@ -128,7 +129,7 @@ partial class Enemy : MovingEntity
         bool attacked = false;
         Rectangle rectangle = new Rectangle((int)GlobalPosition.X - 30, (int)GlobalPosition.Y - 30, 60, 60);
         List<string> surroudningEnities = GetSurroundingEntities();
-        foreach(string id in surroudningEnities)
+        foreach (string id in surroudningEnities)
         {
             Player player = GameWorld.GetObject(id) as Player;
             if (player != null)
@@ -167,48 +168,42 @@ partial class Enemy : MovingEntity
         Enemy enemy = this;
         count++;
         counter++;
-        if (destinationQueue.Count() >= 1) //als er een distination  in de lijst staat zal de ai naar daar gaan
+        float distance = Vector2.Distance(playerpos, this.GridPos);
+        if (distance < 2 && pathFound) //de ai heeft de player gevonden door de path te gebruiken
         {
-            float distance = Vector2.Distance(playerpos, this.GridPos);
-            if (distance < 2 && pathFound) //de ai heeft de player gevonden door de path te gebruiken
-            {
-                //found 
-                currentState = AiState.SLEEP;
-                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
-                pathFound = false;
-                path.Clear();
-                count = 0;
-            }
-
-            else if (distance < 2 && !pathFound)  //de ai heeft de player gevonden maar zonder de path te gebruiken, dus de player kwam naar de ai
-            {
-                //found 
-                currentState = AiState.SLEEP;
-                pathFound = false;
-                path.Clear();
-                destinationQueue.RemoveAt(0);  //de laatste destination wordt verwijderd
-                count = 0;
-            }
-            else if (distance > 2 && !pathFound) //de ai moet de path naar de player vinden 
-            {
-                //new
-                currentState = AiState.SLEEP;
-            }
-            else if (distance > 2 && pathFound) //de ai heeft de path gevonden maar de player nog niet
-            {
-                //busy
-                currentState = AiState.RUNNING;
-                count = 0;
-            }
+            //found 
+            currentState = AiState.SLEEP;
+            pathFound = false;
+            path.Clear();
+            count = 0;
         }
+
+        else if (distance < 2 && !pathFound)  //de ai heeft de player gevonden maar zonder de path te gebruiken, dus de player kwam naar de ai
+        {
+            //found 
+            currentState = AiState.SLEEP;
+            pathFound = false;
+            path.Clear();
+            count = 0;
+        }
+        else if (distance > 2 && !pathFound) //de ai moet de path naar de player vinden 
+        {
+            //new
+            currentState = AiState.SLEEP;
+        }
+        else if (distance > 2 && pathFound) //de ai heeft de path gevonden maar de player nog niet
+        {
+            //busy
+            currentState = AiState.RUNNING;
+            count = 0;
+        }
+
         switch (currentState)
         {
             case AiState.SLEEP:
                 if (count >= 10)//de ai heeft een delay van 1 sec
                 {
-                    destinationQueue.Add(playerpos); //de gegeven playerpostitie wordt toegevoegd aan de destinationQueue
-                    FindPath(destinationQueue[0]); //Findpath word aanroepen om de pad te vinden van de destination dat vooraan de lijst staat
-                    Console.WriteLine("Gridpos :  " + playerpos);
+                    FindPath(playerpos); //Findpath word aanroepen om de pad te vinden van de destination dat vooraan de lijst staat
                 }
                 break;
 
@@ -217,16 +212,26 @@ partial class Enemy : MovingEntity
                 {
                     if (counter > 20)
                     {
+                        currentplayerpos = new Vector2((int)playerpos.X, (int)playerpos.Y);
+
                         Move(path[path.Count() - 1].nodeXY); //beweeg naar de eerste positie in de list
                         path.RemoveAt(path.Count() - 1); // verwijder de positie na het bewegen
                         counter = 0;
-                    }
 
+                        if (currentplayerpos != oldplayerpos)
+                        {
+                            path.Clear();
+                            pathFound = false;
+                            FindPath(playerpos);
+                            Move(playerpos);
+                            counter = 0;
+                        }
+                        oldplayerpos = currentplayerpos;
+                    }
                 }
                 else // als er geen pad is dan zal hij niet bewegen en opnieuw proberen met de volgende locatie 
                 {
                     pathFound = false;
-                    destinationQueue.RemoveAt(0);
                     currentState = AiState.SLEEP;
                 }
                 break;
@@ -255,10 +260,10 @@ partial class Enemy : MovingEntity
                 break;
             }
             nodeCurrent = untestedNodesList[0];        //de node die momenteel word getest is de node vooraan de lijst 
-            nodeCurrent.bvisited = true;              
+            nodeCurrent.bvisited = true;
 
             CalculateNeighbours(nodeCurrent);          // bereken de buren van de momentele geteste node
-            foreach (Node neighbour in nodeCurrent.neighbours) 
+            foreach (Node neighbour in nodeCurrent.neighbours)
             {
                 Vector2 distance = new Vector2((float)Math.Abs(nodeStart.nodeXY.X - neighbour.nodeXY.X), (float)Math.Abs(nodeStart.nodeXY.Y - neighbour.nodeXY.Y));
                 if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10) //als de neigbour niet al getest is en het geen obstacle is dan zal hij in de lijst worden gezet met Nodes die getest zullen worden
@@ -266,14 +271,14 @@ partial class Enemy : MovingEntity
                 float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
                 if (possiblyLowerGoal < neighbour.fLocalGoal) //als de mogelijke snellere weg kleiner is dan de weg van de neighbour dan zal deze zijn pad veranderen en de kortere kiezen
                 {
-                    neighbour.parent = nodeCurrent; 
+                    neighbour.parent = nodeCurrent;
                     neighbour.fLocalGoal = possiblyLowerGoal;
                     neighbour.fGlobalGoal = neighbour.fLocalGoal + Vector2.Distance(neighbour.nodeXY, nodeEnd.nodeXY);
                 }
             }
         }
-        
-        pathFound = true; 
+
+        pathFound = true;
         untestedNodesList.Clear(); //alle nodes worden gecleared zodat de ai opnieuw kan berekenen zonder dat er nodes in de lijst te zijn
         AddParentToPath(nodeCurrent); //hier word het pad toegevoegd doormiddel van terugkijken wat de parents zijn van elk node
     }
@@ -295,7 +300,7 @@ partial class Enemy : MovingEntity
         {
             for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
             {
-                if (x > 0 && y> 0)
+                if (x > 0 && y > 0)
                 {
                     hcost_grid[x, y] = (float)Vector2.Distance(new Vector2(x, y), playerpos);
 
@@ -373,10 +378,7 @@ partial class Enemy : MovingEntity
                 }
             }
         }
-    }/// <summary>
-     /// //////////////////////9999
-     /// </summary>
-     /// <param name="pos"></param>
+    }
     void Move(Vector2 pos)
     {
         input = false;
@@ -395,7 +397,7 @@ partial class Enemy : MovingEntity
 
         if (aiplayerdistance < 2.2f)
         {
-          this.velocity = Vector2.Zero;
+            this.velocity = Vector2.Zero;
         }
         else
         {
