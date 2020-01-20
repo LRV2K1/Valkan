@@ -95,7 +95,7 @@ partial class Level : GameObjectLibrary
 
     private void LoadEntities(List<string> textlines, int width, Dictionary<char, string> entitytypechar)
     {
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
             if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
             {

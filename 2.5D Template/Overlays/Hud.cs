@@ -33,7 +33,7 @@ class Hud : Overlay
     {
         //update overlay items
         base.Update(gameTime);
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
             if (GameEnvironment.GameSettingsManager.GetValue("host") != "true")
             {

@@ -11,12 +11,12 @@ partial class Level : GameObjectLibrary
 
     private void SetupClient()
     {
-        MultiplayerManager.party.level = this;
+        MultiplayerManager.Party.level = this;
         previousdata = "";
         connectedEntities = new Dictionary<string, string>();
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
-            previousdata = MultiplayerManager.party.GetReceivedData();
+            previousdata = MultiplayerManager.Party.GetReceivedData();
         }
     }
 

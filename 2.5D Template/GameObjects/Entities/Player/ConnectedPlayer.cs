@@ -62,65 +62,65 @@ class ConnectedPlayer : GameObject
     {
         if (inputHelper.KeyPressed(Keys.A))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "left" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "true", 9999, false);
         }
         else if (inputHelper.KeyReleased(Keys.A))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "left" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "false", 9999, false);
         }
 
         if (inputHelper.KeyPressed(Keys.D))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "right" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "true", 9999, false);
         }
         else if (inputHelper.KeyReleased(Keys.D))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "right" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "right" + " " + "false", 9999, false);
         }
 
         if (inputHelper.KeyPressed(Keys.W))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "up" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "true", 9999, false);
         }
         else if (inputHelper.KeyReleased(Keys.W))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "up" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "up" + " " + "false", 9999, false);
         }
 
         if (inputHelper.KeyPressed(Keys.S))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "down" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "true", 9999, false);
         }
         else if (inputHelper.KeyReleased(Keys.S))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "down" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "down" + " " + "false", 9999, false);
         }
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "space" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "true", 9999, false);
         }
         else if (inputHelper.KeyReleased(Keys.Space))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "space" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "space" + " " + "false", 9999, false);
         }
 
         if (inputHelper.MouseButtonPressed(MouseButton.Left))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "leftb" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "true", 9999, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Left))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "leftb" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "leftb" + " " + "false", 9999, false);
         }
 
         if (inputHelper.MouseButtonPressed(MouseButton.Right))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "rightb" + " " + "true", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "true", 9999, false);
         }
         else if (inputHelper.MouseButtonReleased(MouseButton.Right))
         {
-            MultiplayerManager.party.Send("Player: " + playerid + " " + "rightb" + " " + "false", 9999, false);
+            MultiplayerManager.Party.Send("Player: " + playerid + " " + "rightb" + " " + "false", 9999, false);
         }
     }
 

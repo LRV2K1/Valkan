@@ -80,9 +80,9 @@ partial class Player : MovingEntity
 
         addstaminatimer = addstaminatimerreset;
         stamina++;
-        if (MultiplayerManager.online && !host)
+        if (MultiplayerManager.Online && !host)
         {
-            MultiplayerManager.party.Send("CPlayer: " + id + " stamina " + health, 9999, false);
+            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + health, 9999, false);
         }
     }
 
@@ -123,9 +123,9 @@ partial class Player : MovingEntity
                 GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
             }
             health = value;
-            if (MultiplayerManager.online && !host)
+            if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.party.Send("CPlayer: " + id + " health " + health, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " health " + health, 9999, false);
             }
 
             if (health > maxhealth)
@@ -157,9 +157,9 @@ partial class Player : MovingEntity
         set
         {
             stamina = value;
-            if (MultiplayerManager.online && !host)
+            if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.party.Send("CPlayer: " + id + " stamina " + stamina, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, 9999, false);
             }
             staminatimer = staminatimerreset;
             if (stamina > maxstamina)
@@ -179,9 +179,9 @@ partial class Player : MovingEntity
         set
         {
             maxhealth = value;
-            if (MultiplayerManager.online && !host)
+            if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.party.Send("CPlayer: " + id + " maxhealth " + maxhealth, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxhealth " + maxhealth, 9999, false);
             }
             Health = health;
         }
@@ -193,9 +193,9 @@ partial class Player : MovingEntity
         set
         {
             maxstamina = value;
-            if (MultiplayerManager.online && !host)
+            if (MultiplayerManager.Online && !host)
             {
-                MultiplayerManager.party.Send("CPlayer: " + id + " maxstamina " + maxstamina, 9999, false);
+                MultiplayerManager.Party.Send("CPlayer: " + id + " maxstamina " + maxstamina, 9999, false);
             }
             Stamina = stamina;
         }

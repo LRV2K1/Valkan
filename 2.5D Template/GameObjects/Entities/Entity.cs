@@ -25,7 +25,7 @@ abstract partial class Entity : AnimatedGameObject
         this.boundingy = boundingy;
         previousPos = position;
 
-        if (MultiplayerManager.online) //send data if online
+        if (MultiplayerManager.Online) //send data if online
         {
             SendData();
         }
@@ -38,7 +38,7 @@ abstract partial class Entity : AnimatedGameObject
         //check if moved
         if (previousPos != position)
         {
-            if (MultiplayerManager.online) //send data if online
+            if (MultiplayerManager.Online) //send data if online
             {
                 SendData();
             }
@@ -67,7 +67,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         if (Current != null)
         {
-            MultiplayerManager.party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+            MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
         }
     }
 
@@ -102,11 +102,11 @@ abstract partial class Entity : AnimatedGameObject
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
             if (Current != null)
             {
-                MultiplayerManager.party.Send("Entity: " + id + " remove", 9999, false);
+                MultiplayerManager.Party.Send("Entity: " + id + " remove", 9999, false);
             }
         }
     }
@@ -115,7 +115,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
-                if (MultiplayerManager.online) //send data if online
+                if (MultiplayerManager.Online) //send data if online
         {
             SendData();
         }

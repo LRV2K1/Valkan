@@ -63,7 +63,7 @@ class Camera : GameObject
 
     public override void Update(GameTime gameTime)
     {
-        if (MultiplayerManager.online)
+        if (MultiplayerManager.Online)
         {
             if (GameEnvironment.GameSettingsManager.GetValue("host") == "false")
             {
@@ -71,7 +71,7 @@ class Camera : GameObject
             }
             else
             {
-                MultiplayerManager.party.Send("Camera: " + id + " " + cameraPosition.X + " " + cameraPosition.Y, 9999, false);
+                MultiplayerManager.Party.Send("Camera: " + id + " " + cameraPosition.X + " " + cameraPosition.Y, 9999, false);
             }
         }
         if (!follow)

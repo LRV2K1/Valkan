@@ -236,7 +236,7 @@ public class ConnectionParty : Connection
         }
         client.Close();
         Console.WriteLine("Disconnect from party");
-        MultiplayerManager.party = null;
+        MultiplayerManager.Party = null;
     }
     private void StoreWorld(string file, string world) //write to <file>.txt from a single string containing the world
     {
