@@ -16,13 +16,13 @@ class PortSelectionState : GameObjectLibrary
     public PortSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
         RootList.Add(titleScreen);
-        SpriteGameObject lobby = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 101, "lobby");
+        SpriteGameObject lobby = new SpriteGameObject("Sprites/Menu/Screen2", 101, "lobby");
         lobby.Sprite.Size = new Vector2(0.75f, 0.5f);
         lobby.Origin = lobby.Sprite.Center;
         lobby.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
-        lobby.Sprite.Color = Color.Red;
+        lobby.Sprite.Color = Color.Gray;
         RootList.Add(lobby);
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
         returnButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - returnButton.Width / 2, (GameEnvironment.Screen.Y - returnButton.Height) / 8 * 7);

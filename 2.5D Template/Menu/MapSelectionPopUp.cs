@@ -14,7 +14,7 @@ class MapSelectionPopUp : PopUp
     {
         this.Sprite.Size = boxSize;
         this.Origin = Center;
-        this.Sprite.Color = Color.Red;
+        this.Sprite.Color = Color.Gray;
         this.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         buttonList = new List<Button>();
         levelList = new List<SpriteGameObject>();
@@ -59,7 +59,7 @@ class MapSelectionPopUp : PopUp
                 button.Sprite.Size = new Vector2(0.6f,0.6f);
                 button.Position = new Vector2(startposition.X + x * xOffset, newPosition.Y);
                 RootList.Add(button);
-                int nummer = (x + 1) * y + x + 1;
+                int nummer = (3) * y + x + 1;
                 SpriteGameObject level = new SpriteGameObject("Sprites/Menu/Level_Button_" + nummer, 110);
                 levelList.Add(level);
                 level.Sprite.Size = new Vector2(0.6f, 0.6f);

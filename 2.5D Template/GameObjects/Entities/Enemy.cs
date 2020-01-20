@@ -80,7 +80,6 @@ partial class Enemy : MovingEntity
         if (InRange()) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
-            // this.Position *= EnemyVelocity(player.Position);
             DesCalculate(player.GridPos);
         }
         else if (!InRange())
@@ -148,6 +147,7 @@ partial class Enemy : MovingEntity
                 {
                     attacktimer = resetattacktimer;
                     SwitchAnimation("attack", "B");
+                    GameEnvironment.AssetManager.PlaySound(attack_sound);
                     velocity = directions;
                     attacked = true;
                     Vector2 range = new Vector2(50 * (float)Math.Cos(Direction), 50 * (float)Math.Sin(Direction));
@@ -224,7 +224,7 @@ partial class Enemy : MovingEntity
                     }
 
                 }
-                else
+                else // als er geen pad is dan zal hij niet bewegen en opnieuw proberen met de volgende locatie 
                 {
                     pathFound = false;
                     destinationQueue.RemoveAt(0);
@@ -251,32 +251,32 @@ partial class Enemy : MovingEntity
             {
                 untestedNodesList.RemoveAt(0);
             }
-            if (untestedNodesList.Count() == 0)
+            if (untestedNodesList.Count() == 0) //als er geen nodes zijn die nog getest moeten worden dan stopt de algoritme zonder dat het een pad heeft gevonden
             {
                 break;
             }
-            nodeCurrent = untestedNodesList[0];
-            nodeCurrent.bvisited = true;
+            nodeCurrent = untestedNodesList[0];        //de node die momenteel word getest is de node vooraan de lijst 
+            nodeCurrent.bvisited = true;              
 
-            CalculateNeighbours(nodeCurrent);
-            foreach (Node neighbour in nodeCurrent.neighbours)
+            CalculateNeighbours(nodeCurrent);          // bereken de buren van de momentele geteste node
+            foreach (Node neighbour in nodeCurrent.neighbours) 
             {
                 Vector2 distance = new Vector2((float)Math.Abs(nodeStart.nodeXY.X - neighbour.nodeXY.X), (float)Math.Abs(nodeStart.nodeXY.Y - neighbour.nodeXY.Y));
-                if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10)
+                if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10) //als de neigbour niet al getest is en het geen obstacle is dan zal hij in de lijst worden gezet met Nodes die getest zullen worden
                     untestedNodesList.Add(neighbour);
                 float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
-                if (possiblyLowerGoal < neighbour.fLocalGoal)
+                if (possiblyLowerGoal < neighbour.fLocalGoal) //als de mogelijke snellere weg kleiner is dan de weg van de neighbour dan zal deze zijn pad veranderen en de kortere kiezen
                 {
-                    neighbour.parent = nodeCurrent;
+                    neighbour.parent = nodeCurrent; 
                     neighbour.fLocalGoal = possiblyLowerGoal;
                     neighbour.fGlobalGoal = neighbour.fLocalGoal + Vector2.Distance(neighbour.nodeXY, nodeEnd.nodeXY);
                 }
             }
         }
         
-        pathFound = true;
-        untestedNodesList.Clear();
-        AddParentToPath(nodeCurrent);
+        pathFound = true; 
+        untestedNodesList.Clear(); //alle nodes worden gecleared zodat de ai opnieuw kan berekenen zonder dat er nodes in de lijst te zijn
+        AddParentToPath(nodeCurrent); //hier word het pad toegevoegd doormiddel van terugkijken wat de parents zijn van elk node
     }
 
     public void AddParentToPath(Node n)
@@ -339,7 +339,7 @@ partial class Enemy : MovingEntity
         {
             if (n != null)
             {
-                //De if-statements hieronder voegen de posities rondom de aipos aan de OpenNodesList
+                //De if-statements hieronder voegen de posities rondom de Node aan de Node
                 if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
                 {
                     currentNode.neighbours.Add(n);
@@ -396,7 +396,7 @@ partial class Enemy : MovingEntity
 
         if (aiplayerdistance < 2.2f)
         {
-            this.velocity = Vector2.Zero;
+          this.velocity = Vector2.Zero;
         }
         else
         {

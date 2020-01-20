@@ -12,7 +12,7 @@ class InGameMenu : Overlay
     public InGameMenu(GameObjectLibrary gameworld, int layer = 101, string id = "")
         : base(gameworld, layer, id)
     {
-        background = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 105);
+        background = new SpriteGameObject("Sprites/Menu/Screen2", 105);
         background.Origin = background.Sprite.Center;
         background.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         background.Sprite.Size = new Vector2(0.5f, 0.8f);

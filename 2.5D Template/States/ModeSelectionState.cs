@@ -15,8 +15,7 @@ class ModeSelectionState : GameObjectLibrary
     public ModeSelectionState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
-        titleScreen.Sprite.Color = Color.Red;
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
         RootList.Add(titleScreen);
         offlineButton = new Button("Sprites/Menu/PlayOffline_Button", 101);
         offlineButton.Sprite.Size = new Vector2(2f, 3f);

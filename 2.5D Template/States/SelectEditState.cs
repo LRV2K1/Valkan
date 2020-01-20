@@ -14,6 +14,8 @@ class SelectEditState : GameObjectLibrary
     public SelectEditState()
         : base()
     {
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
+        RootList.Add(titleScreen);
         buttonList = new List<Button>();
         levelList = new List<SpriteGameObject>();
         LoadButtons();
@@ -35,7 +37,7 @@ class SelectEditState : GameObjectLibrary
                 button.Sprite.Size = new Vector2(0.6f, 0.6f);
                 button.Position = new Vector2(startposition.X + x * xOffset, newPosition.Y);
                 RootList.Add(button);
-                int nummer = (x + 1) * y + x + 1;
+                int nummer = (3) * y + x + 1;
                 SpriteGameObject level = new SpriteGameObject("Sprites/Menu/Level_Button_" + nummer, 110);
                 levelList.Add(level);
                 level.Sprite.Size = new Vector2(0.6f, 0.6f);
@@ -52,7 +54,7 @@ class SelectEditState : GameObjectLibrary
         base.HandleInput(inputHelper);
         if (returnButton.Pressed)
         {
-            GameEnvironment.ScreenFade.TransitionToScene("modeSelectionState", 5);
+            GameEnvironment.ScreenFade.TransitionToScene("titleScreen", 5);
             return;
         }
         for (int i = 0; i < buttonList.Count; i++)
