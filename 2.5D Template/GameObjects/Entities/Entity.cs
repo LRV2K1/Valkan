@@ -59,7 +59,7 @@ abstract partial class Entity : AnimatedGameObject
 
     protected virtual void SendData()
     {
-        MultiplayerManager.party.Send("Entity: " + id + " " + GlobalPosition.X + " " + GlobalPosition.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
+        MultiplayerManager.party.Send("Entity: " + Id + " " + GlobalPosition.X + " " + GlobalPosition.Y + " " + origin.X + " " + origin.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, 9999, false);
     }
 
     private void NewHost()

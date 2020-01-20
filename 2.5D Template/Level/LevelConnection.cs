@@ -20,36 +20,38 @@ partial class Level : GameObjectLibrary
 
     private void DistributeData()
     {
-        try
+
+        if (previousdata != MultiplayerManager.party.GetReceivedData())
         {
-            if (previousdata != MultiplayerManager.party.GetReceivedData())
+            previousdata = MultiplayerManager.party.GetReceivedData();
+            string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
+            if (variables[0] == "Entity:")
             {
-                previousdata = MultiplayerManager.party.GetReceivedData();
-                string[] variables = MultiplayerManager.party.GetReceivedData().Split(' '); //split data in Type, ID, posX, posY respectively
-                if (variables[0] == "Entity:")
+                if (connectedEntities.ContainsKey(variables[1]))
                 {
-                    if (connectedEntities.ContainsKey(variables[1]))
-                    {
-                        (GetObject(connectedEntities[variables[1]]) as ConnectedEntity).ReceiveData(previousdata);
-                    }
+                    (GetObject(connectedEntities[variables[1]]) as ConnectedEntity).ReceiveData(previousdata);
                 }
                 else
                 {
                     AddConnectedEntity(previousdata, variables[1]);
                 }
             }
-        }
-        catch
-        {
-
+            if (variables[0] == "Camera:")
+            {
+                (GetObject("camera") as Camera).GetData(previousdata);
+            }
         }
     }
 
     public void AddConnectedEntity(string data, string id)
     {
+        Console.WriteLine("make object");
         ConnectedEntity entity = new ConnectedEntity(data);
-        (GameWorld.GetObject("entities") as GameObjectList).Add(entity);
+        RootList.Add(entity);
+        //(GetObject("entities") as GameObjectList).Add(entity);
         connectedEntities.Add(id, entity.Id);
+        //SpriteGameObject test = new SpriteGameObject(entity.Sprite.AssetName, 102);
+        //RootList.Add(test);
     }
 
     public void RemoveConnectedEntity(string connectedid)

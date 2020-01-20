@@ -27,15 +27,21 @@ class ConnectedEntity : Entity
 
     public void ReceiveData(string data)
     {
-        try
+        Console.WriteLine("get data");
+        Console.WriteLine(data);
+        //Camera camera = GameWorld.GetObject("camera") as Camera;
+        //position = camera.CameraPosition;
+
+        string[] splitdata = data.Split(' ');
+
+        connectedid = splitdata[1];
+        Console.WriteLine("set id data");
+        position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
+        connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
+        origin = connectedOrigin;
+        Console.WriteLine("set position data");
+        if (Current != null)
         {
-            string[] splitdata = data.Split(' ');
-
-            connectedid = splitdata[1];
-            position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
-            connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
-            origin = connectedOrigin;
-
             if (splitdata[6] != Current.AssetName)
             {
                 if (animations.ContainsKey(splitdata[6]))
@@ -48,10 +54,10 @@ class ConnectedEntity : Entity
                 }
             }
         }
-        catch
+        else
         {
+            NewAnimation(splitdata[6], splitdata[7], splitdata[8]);
         }
-
     }
 
     private void SwitchAnimation(string animation)
