@@ -31,6 +31,7 @@ public class ConnectionLobby : Connection
             {
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, remoteep.Address);
+                //Console.Write(message + remoteep);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); ; //repeat
         }

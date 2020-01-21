@@ -172,7 +172,7 @@ public class ConnectionParty : Connection
         }
         else //data for everyone but host
         {
-            if (variables[0] == "Entity:")
+            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:")
             {
                 log = false;
             }
@@ -209,12 +209,12 @@ public class ConnectionParty : Connection
             }
             else
             {
-                //Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
+                Console.WriteLine("ERROR! The message:\n" + message + "\nis not a valid message");
             }
         }
         if (log) //should the received data be put in console?
         {
-            //Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, sender, port);
+            Console.WriteLine("\nReceived from {1}:" + port + " ->\n{0}", message, sender, port);
         }
     }
 
