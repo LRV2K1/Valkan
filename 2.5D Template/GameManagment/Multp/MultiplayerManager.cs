@@ -10,7 +10,7 @@ public class MultiplayerManager
 {
     static ConnectionParty party;
     static ConnectionLobby lobby;
-    static int lobbyport = 61234;
+    static int lobbyport = 1900;
     static int partyport;
     static bool online = false;
 

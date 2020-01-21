@@ -18,7 +18,7 @@ public partial class Connection
     public Connection(int port)
     {
         this.port = port;
-        multicastaddress = IPAddress.Parse("239.0.0.222");
+        multicastaddress = IPAddress.Parse("239.222.222.222");
         udpclient = new UdpClient();
         remoteep = new IPEndPoint(multicastaddress, port);
         localEp = new IPEndPoint(IPAddress.Any, port);
