@@ -151,6 +151,7 @@ partial class LevelEditor : GameObjectLibrary
         width = entitygrid[0].Length;
 
         LoadEntities(entitygrid, width, entitytypes);
+        streamReader.Close();
     }
 
     private Dictionary<char, string> ReadTypes(StreamReader streamReader)
