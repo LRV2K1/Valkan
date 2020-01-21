@@ -36,7 +36,7 @@ class PortSelectionState : GameObjectLibrary
         base.Update(gameTime);
         if (MultiplayerManager.Lobby != null)
         {
-            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.playerlists.Count; i++) //add buttons
+            for (int i = buttonList.Count; i < MultiplayerManager.Lobby.Playerlists.Count; i++) //add buttons
             {
                 buttonList.Add(new Button("Sprites/Menu/Standard_Button", 101));
                 buttonList[i].Sprite.Size = new Vector2(1.3f, 2f);
@@ -44,7 +44,7 @@ class PortSelectionState : GameObjectLibrary
                 RootList.Add(buttonList[i]);
             }
 
-            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.playerlists.Count; i--) //remove buttons
+            for (int i = buttonList.Count; i > MultiplayerManager.Lobby.Playerlists.Count; i--) //remove buttons
             {
                 buttonList[i - 1].Visible = false;
                 buttonList.RemoveAt(i - 1);
@@ -60,8 +60,8 @@ class PortSelectionState : GameObjectLibrary
         {
             buttonList[i - 1].Visible = false;
             buttonList.RemoveAt(i - 1);
-            MultiplayerManager.Lobby.portlist.Clear();
-            MultiplayerManager.Lobby.playerlists.Clear();
+            MultiplayerManager.Lobby.Ports.Clear();
+            MultiplayerManager.Lobby.Playerlists.Clear();
         }
     }
     public override void HandleInput(InputHelper inputHelper)
@@ -71,8 +71,8 @@ class PortSelectionState : GameObjectLibrary
         {
             if (buttonList[i].Pressed)
             {
-                MultiplayerManager.Connect(MultiplayerManager.Lobby.portlist[i]);
-                MultiplayerManager.Party.Send("Join", MultiplayerManager.Lobby.portlist[i]);
+                MultiplayerManager.Connect(MultiplayerManager.Lobby.Ports[i]);
+                MultiplayerManager.Party.Send("Join", MultiplayerManager.Lobby.Ports[i]);
                 ClearButtonsList();
                 MultiplayerManager.Lobby.Disconnect();
                 GameEnvironment.ScreenFade.TransitionToScene("clientSelectionState", 5);

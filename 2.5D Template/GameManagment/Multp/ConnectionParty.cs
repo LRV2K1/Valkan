@@ -115,7 +115,7 @@ public class ConnectionParty : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
+    private void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] lines = message.Split('\n');
         string[] variables = message.Split(' ');

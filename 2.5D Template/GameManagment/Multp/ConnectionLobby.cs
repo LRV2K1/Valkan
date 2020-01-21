@@ -7,10 +7,12 @@ using System.Text;
 
 public class ConnectionLobby : Connection
 {
-    public List<PlayerList> playerlists = new List<PlayerList>();
-    public List<int> portlist = new List<int>();
-    public List<int> inactivitytimer = new List<int>();
+    List<PlayerList> playerlists = new List<PlayerList>();
+    List<int> ports = new List<int>();
+    List<int> inactivitytimer = new List<int>();
     float time;
+    public List<int> Ports { get { return ports; } }
+    public List<PlayerList> Playerlists { get { return playerlists; } }
 
     public ConnectionLobby(int port)
         : base(port)
@@ -52,7 +54,7 @@ public class ConnectionLobby : Connection
                 if (inactivitytimer[i] >= 5) //remove button if inactive
                 {
                     playerlists.RemoveAt(i);
-                    portlist.RemoveAt(i);
+                    Ports.RemoveAt(i);
                     inactivitytimer.RemoveAt(i);
                 }
             }
@@ -60,7 +62,7 @@ public class ConnectionLobby : Connection
         }
     }
 
-    public void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
+    private void HandleReceivedData(string message, IPAddress sender) //inspect received data and take action
     {
         string[] variables = message.Split(' ');
         if (variables[0] == "Playerlist")
@@ -68,7 +70,7 @@ public class ConnectionLobby : Connection
             if (playerlists.Count == 0)
             {
                 playerlists.Add(new PlayerList());
-                portlist.Add(int.Parse(variables[1]));
+                Ports.Add(int.Parse(variables[1]));
                 inactivitytimer.Add(0);
                 playerlists[0].Store(message);
             }
@@ -90,7 +92,7 @@ public class ConnectionLobby : Connection
                 if (newplayerlist) //ip was not yet in the list
                 {
                     playerlists.Add(new PlayerList());
-                    portlist.Add(int.Parse(variables[1]));
+                    Ports.Add(int.Parse(variables[1]));
                     inactivitytimer.Add(0);
                     playerlists[playerlists.Count - 1].Store(message);
                     GameEnvironment.GameStateManager.GetGameState("hostSelectionState");
@@ -112,7 +114,7 @@ public class ConnectionLobby : Connection
             {
 
                 playerlists.RemoveAt(i);
-                portlist.RemoveAt(i);
+                Ports.RemoveAt(i);
                 inactivitytimer.RemoveAt(i);
                 break;
             }

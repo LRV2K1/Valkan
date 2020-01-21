@@ -186,32 +186,32 @@ class HostSelectionState : GameObjectLibrary
         {
             for (int i = buttonReadyList.Count; i < MultiplayerManager.Party.playerlist.playerlist.Count; i++)
             {
-                buttonReadyList.Add(new Button("Sprites/Menu/Ready_Button", 101)); //ready
+                buttonReadyList.Add(new Button("Sprites/Menu/Ready_Button", 101, hovereffect: false)); //ready
                 buttonReadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y) / 5 + i * (1.1f * 2 * buttonReadyList[i].Sprite.Size.Y * buttonReadyList[i].Sprite.Height));
                 buttonReadyList[i].Sprite.Size = new Vector2(1.29f, 2f);
                 buttonReadyList[i].Visible = false;
                 RootList.Add(buttonReadyList[i]);
 
-                buttonUnreadyList.Add(new Button("Sprites/Menu/Unready_Button", 101)); //unready
+                buttonUnreadyList.Add(new Button("Sprites/Menu/Unready_Button", 101, hovereffect: false)); //unready
                 buttonUnreadyList[i].Position = new Vector2(GameEnvironment.Screen.X / 20 * 13, (GameEnvironment.Screen.Y) / 5 + i * (1.1f * 2 * buttonUnreadyList[i].Sprite.Size.Y * buttonUnreadyList[i].Sprite.Height));
                 buttonUnreadyList[i].Sprite.Size = new Vector2(1.29f, 2f);
                 buttonUnreadyList[i].Visible = true;
                 RootList.Add(buttonUnreadyList[i]);
 
                 //classes
-                buttonWarriorList.Add(new Button("Sprites/Menu/Player_Warrior", 101));
+                buttonWarriorList.Add(new Button("Sprites/Menu/Player_Warrior", 101, hovereffect: false));
                 buttonWarriorList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y) / 4.67f + i * (1.1f * 1 * buttonUnreadyList[i].Sprite.Size.Y * buttonUnreadyList[i].Sprite.Height));
                 buttonWarriorList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
                 buttonWarriorList[i].Visible = false;
                 RootList.Add(buttonWarriorList[i]);
 
-                buttonWizzardList.Add(new Button("Sprites/Menu/Player_Wizzard", 101));
+                buttonWizzardList.Add(new Button("Sprites/Menu/Player_Wizzard", 101, hovereffect: false));
                 buttonWizzardList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y) / 4.67f + i * (1.1f * 1 * buttonUnreadyList[i].Sprite.Size.Y * buttonUnreadyList[i].Sprite.Height));
                 buttonWizzardList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
                 buttonWizzardList[i].Visible = false;
                 RootList.Add(buttonWizzardList[i]);
 
-                buttonBardList.Add(new Button("Sprites/Menu/Player_Bard", 101));
+                buttonBardList.Add(new Button("Sprites/Menu/Player_Bard", 101, hovereffect: false));
                 buttonBardList[i].Position = new Vector2(GameEnvironment.Screen.X / 19f * 13, (GameEnvironment.Screen.Y) / 4.67f + i * (1.1f * 1 * buttonUnreadyList[i].Sprite.Size.Y * buttonUnreadyList[i].Sprite.Height));
                 buttonBardList[i].Sprite.Size = new Vector2(0.38f, 0.38f);
                 buttonBardList[i].Visible = false;

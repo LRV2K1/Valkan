@@ -12,12 +12,14 @@ class Button : SpriteGameObject
 {
     protected bool pressed;
     protected bool highLighted;
+    protected bool hovereffect;
 
     //simple button, they're active from default
-    public Button(string assetname, int layer = 101, string id = "") :
+    public Button(string assetname, int layer = 101, string id = "", bool hovereffect = true) :
         base(assetname, layer, id)
     {
         pressed = false;
+        this.hovereffect = hovereffect;
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -30,7 +32,7 @@ class Button : SpriteGameObject
 
         highLighted = BoundingBox.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y);
         pressed = inputHelper.MouseButtonPressed(MouseButton.Left) && highLighted;
-        if (highLighted)
+        if (highLighted && hovereffect)
         {
             //The button will become slightly light red-ish to indicate the highlight.
             this.Sprite.Color = Color.LightSalmon;
