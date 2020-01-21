@@ -209,7 +209,7 @@ partial class Enemy : MovingEntity
             case AiState.RUNNING:
                 if (path.Count() != 0) //wanneer de path berekend
                 {
-                    if (counter > 10)
+                    if (counter > 18)
                     {
                         currentplayerpos = new Vector2((int)playerpos.X, (int)playerpos.Y);
 
@@ -257,6 +257,7 @@ partial class Enemy : MovingEntity
             }
             if (untestedNodesList.Count() == 0) //als er geen nodes zijn die nog getest moeten worden dan stopt de algoritme zonder dat het een pad heeft gevonden
             {
+                Console.WriteLine("List is 0");
                 break;
             }
             nodeCurrent = untestedNodesList[0];        //de node die momenteel word getest is de node vooraan de lijst 
@@ -298,9 +299,9 @@ partial class Enemy : MovingEntity
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = (int)playerpos.Y - 4; y <= (int)playerpos.Y + 4; y++)
+        for (int y = (int)playerpos.Y - 3; y <= (int)playerpos.Y + 3; y++)
         {
-            for (int x = (int)playerpos.X - 4; x <= (int)playerpos.X + 4; x++)
+            for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
             {
                 if (x > 0 && y > 0)
                 {
@@ -321,7 +322,7 @@ partial class Enemy : MovingEntity
                     {
                         nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
                         Tile tile = grid.Get(x, y) as Tile;
-                        if (tile != null || tile.TileType == TileType.Wall || tile.Passengers.Count > 0)
+                        if (grid.GetTileType(x,y)== TileType.Wall || tile.Passengers.Count > 0 && !tile.Passengers.Contains("player"))
                         {
                             nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
                         }
@@ -347,7 +348,7 @@ partial class Enemy : MovingEntity
             if (n != null)
             {
                 //De if-statements hieronder voegen de posities rondom de Node aan de Node
-                if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
+              /*if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
                 {
                     currentNode.neighbours.Add(n);
                 }
@@ -362,7 +363,7 @@ partial class Enemy : MovingEntity
                 else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
                 {
                     currentNode.neighbours.Add(n);
-                }
+                }*/
                if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
                 {
                     currentNode.neighbours.Add(n);
@@ -399,7 +400,7 @@ partial class Enemy : MovingEntity
 
         float aiplayerdistance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (aiplayerdistance < 2.2f)
+        if (aiplayerdistance <= 2f)
         {
             this.velocity = Vector2.Zero;
         }
