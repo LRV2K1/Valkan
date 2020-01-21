@@ -209,7 +209,7 @@ partial class Enemy : MovingEntity
             case AiState.RUNNING:
                 if (path.Count() != 0) //wanneer de path berekend
                 {
-                    if (counter > 20)
+                    if (counter > 10)
                     {
                         currentplayerpos = new Vector2((int)playerpos.X, (int)playerpos.Y);
 
@@ -267,7 +267,9 @@ partial class Enemy : MovingEntity
             {
                 Vector2 distance = new Vector2((float)Math.Abs(nodeStart.nodeXY.X - neighbour.nodeXY.X), (float)Math.Abs(nodeStart.nodeXY.Y - neighbour.nodeXY.Y));
                 if (!neighbour.bvisited && !neighbour.obstacle && distance.X < 10 && distance.Y < 10) //als de neigbour niet al getest is en het geen obstacle is dan zal hij in de lijst worden gezet met Nodes die getest zullen worden
+                {
                     untestedNodesList.Add(neighbour);
+                }
                 float possiblyLowerGoal = nodeCurrent.fLocalGoal + Vector2.Distance(nodeCurrent.nodeXY, neighbour.nodeXY);
                 if (possiblyLowerGoal < neighbour.fLocalGoal) //als de mogelijke snellere weg kleiner is dan de weg van de neighbour dan zal deze zijn pad veranderen en de kortere kiezen
                 {
@@ -296,9 +298,9 @@ partial class Enemy : MovingEntity
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int y = (int)playerpos.Y - 3; y <= (int)playerpos.Y + 3; y++)
+        for (int y = (int)playerpos.Y - 4; y <= (int)playerpos.Y + 4; y++)
         {
-            for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
+            for (int x = (int)playerpos.X - 4; x <= (int)playerpos.X + 4; x++)
             {
                 if (x > 0 && y > 0)
                 {
@@ -318,7 +320,8 @@ partial class Enemy : MovingEntity
                     else
                     {
                         nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
-                        if (grid.GetTileType(x, y) == TileType.Wall)
+                        Tile tile = grid.Get(x, y) as Tile;
+                        if (tile != null || tile.TileType == TileType.Wall || tile.Passengers.Count > 0)
                         {
                             nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
                         }
@@ -360,7 +363,7 @@ partial class Enemy : MovingEntity
                 {
                     currentNode.neighbours.Add(n);
                 }
-                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
+               if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
                 {
                     currentNode.neighbours.Add(n);
                 }
@@ -381,6 +384,7 @@ partial class Enemy : MovingEntity
     }
     void Move(Vector2 pos)
     {
+        
         input = false;
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
