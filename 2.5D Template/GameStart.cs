@@ -69,9 +69,9 @@ public class GameStart : GameEnvironment
     {
         base.Draw(gameTime);
         spriteBatch.Begin();
-        framecounter.Draw(gameTime, spriteBatch);
-        physicscounter.Draw(gameTime, spriteBatch);
-        DrawOutput(gameTime);
+        //framecounter.Draw(gameTime, spriteBatch);
+        //physicscounter.Draw(gameTime, spriteBatch);
+        //DrawOutput(gameTime);
         spriteBatch.End();
 
         frames++;
