@@ -11,8 +11,15 @@ partial class LevelEditor : GameObjectLibrary
     {
         Dictionary<string, char> tiletypeschar = new Dictionary<string, char>();
         List<string> tiletypes = new List<string>();
-
-        StreamWriter streamWriter = new StreamWriter("Content/Levels/Level_"+ path+ ".txt");
+        StreamWriter streamWriter;
+        try
+        {
+            streamWriter = new StreamWriter("Content/Levels/Level_" + path + ".txt");
+        }
+        catch
+        {
+            return;
+        }
         LevelGrid level = GetObject("levelgrid") as LevelGrid;
         string[] map = new string[level.Rows];
         char type = 'a';
