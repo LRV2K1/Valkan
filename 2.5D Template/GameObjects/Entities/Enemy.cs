@@ -209,7 +209,7 @@ partial class Enemy : MovingEntity
             case AiState.RUNNING:
                 if (path.Count() != 0) //wanneer de path berekend
                 {
-                    if (counter > 18)
+                    if (counter > 15)
                     {
                         currentplayerpos = new Vector2((int)playerpos.X, (int)playerpos.Y);
 
@@ -298,10 +298,9 @@ partial class Enemy : MovingEntity
     {
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
-
-        for (int y = (int)playerpos.Y - 3; y <= (int)playerpos.Y + 3; y++)
+        for (int y = (int)playerpos.Y - 4; y <= (int)playerpos.Y + 4; y++)
         {
-            for (int x = (int)playerpos.X - 3; x <= (int)playerpos.X + 3; x++)
+            for (int x = (int)playerpos.X - 4; x <= (int)playerpos.X + 4; x++)
             {
                 if (x > 0 && y > 0)
                 {
@@ -322,7 +321,7 @@ partial class Enemy : MovingEntity
                     {
                         nodes[x, y] = new Node(nodepos, hcost_grid[x, y]);//node wordt toegovoegd aan de lijst van nodes en de hcost wordt toegevoegt aan de Node
                         Tile tile = grid.Get(x, y) as Tile;
-                        if (grid.GetTileType(x,y)== TileType.Wall || tile.Passengers.Count > 0 && !tile.Passengers.Contains("player"))
+                        if (grid.GetTileType(x, y) == TileType.Wall || tile.Passengers.Count > 0 && !tile.Passengers.Contains("player"))
                         {
                             nodes[x, y].obstacle = true;//wanneer in de grid van de map een muur staat zal de hcost grid die tellen als een onbruikbare getal
                         }
@@ -337,6 +336,7 @@ partial class Enemy : MovingEntity
                             }
                     }
                 }
+
             }
         }
 
@@ -348,23 +348,7 @@ partial class Enemy : MovingEntity
             if (n != null)
             {
                 //De if-statements hieronder voegen de posities rondom de Node aan de Node
-              /*if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y + 1))
-                {
-                    currentNode.neighbours.Add(n);
-                }
-                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y - 1))
-                {
-                    currentNode.neighbours.Add(n);
-                }
-                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y - 1))
-                {
-                    currentNode.neighbours.Add(n);
-                }
-                else if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X - 1, (int)currentNode.nodeXY.Y + 1))
-                {
-                    currentNode.neighbours.Add(n);
-                }*/
-               if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
+                if (n.nodeXY == new Vector2((int)currentNode.nodeXY.X + 1, (int)currentNode.nodeXY.Y))
                 {
                     currentNode.neighbours.Add(n);
                 }
@@ -385,7 +369,7 @@ partial class Enemy : MovingEntity
     }
     void Move(Vector2 pos)
     {
-        
+
         input = false;
         Enemy enemy = this;
         LevelGrid grid = GameWorld.GetObject("levelgrid") as LevelGrid;
