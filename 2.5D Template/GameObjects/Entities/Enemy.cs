@@ -104,6 +104,8 @@ partial class Enemy : MovingEntity
             return;
         }
 
+        //MoveEnemy();
+        
         if (InRange()) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
@@ -113,6 +115,7 @@ partial class Enemy : MovingEntity
         {
             this.velocity = Vector2.Zero;
         }
+        
 
         Attack(gameTime);
     }
@@ -139,6 +142,15 @@ partial class Enemy : MovingEntity
             }
             (GameWorld as Level).EnemyCount--;
         }
+    }
+
+    private void MoveEnemy()
+    {
+        Player player = GameWorld.GetObject("player") as Player;
+        float distance = Vector2.Distance(player.Position, position);
+        float dx = player.Position.X - position.X;
+        float dy = player.Position.Y - position.Y;
+        velocity = new Vector2((dx / distance) * speed, (dy / distance) * speed);
     }
 
     private void Attack(GameTime gameTime)
@@ -285,7 +297,7 @@ partial class Enemy : MovingEntity
             }
             if (untestedNodesList.Count() == 0) //als er geen nodes zijn die nog getest moeten worden dan stopt de algoritme zonder dat het een pad heeft gevonden
             {
-                Console.WriteLine("List is 0");
+                //Console.WriteLine("List is 0");
                 break;
             }
             nodeCurrent = untestedNodesList[0];        //de node die momenteel word getest is de node vooraan de lijst 

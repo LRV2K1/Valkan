@@ -76,30 +76,17 @@ class Projectile : Item
 
     protected override void HandleCollisions() 
     {
-        LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
-        //check surrounding tiles
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        List<string> surroundingTiles = GetSurroundingTiles();
+        for (int i = 0; i < surroundingTiles.Count; i++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            Tile tile = GameWorld.GetObject(surroundingTiles[i]) as Tile;
+            if (tile.TileType == TileType.Wall && tile.TextureType != TextureType.Water)
             {
-                TileType tileType = tiles.GetTileType(x, y);
-                TextureType textureType = tiles.GetTextureType(x, y);
-                Tile currentTile = tiles.Get(x, y) as Tile;
-                Rectangle tileBounds;
-
-                if (currentTile == null)
+                Rectangle tilebounds = tile.GetBoundingBox();
+                if (tilebounds.Intersects(BoundingBox))
                 {
-                    continue;
-                }
-                //check collision
-                if (tileType == TileType.Wall && textureType != TextureType.Water)
-                {
-                    tileBounds = currentTile.GetBoundingBox();
-                    if (tileBounds.Intersects(BoundingBox))
-                    {
-                        Explode();
-                        return;
-                    }
+                    Explode();
+                    return;
                 }
             }
         }
@@ -119,7 +106,8 @@ class Projectile : Item
             ParticleEffect particleEffect = new ParticleEffect(particle_asset);
             particleEffect.Position = GlobalPosition;
             particleEffect.Origin += offsetposition;
-            GameWorld.RootList.Add(particleEffect);
+            (GameWorld.GetObject("items") as GameObjectList).Add(particleEffect);
+            particleEffect.Reset();
             GameEnvironment.AssetManager.PlaySound(explosionsound);
         }
         RemoveSelf();

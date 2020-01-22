@@ -87,7 +87,8 @@ class Skill : GameObject
         {
             ParticleEffect particleEffect = new ParticleEffect(asset);
             particleEffect.Position = position;
-            GameWorld.RootList.Add(particleEffect);
+            (GameWorld.GetObject("items") as GameObjectList).Add(particleEffect);
+            particleEffect.Reset();
         }
     }
 

@@ -21,7 +21,6 @@ class ParticleEffect : Item
 
         LoadAnimation(asset, "sprite", looping, false, 0.07f);
         PlayAnimation("sprite");
-
     }
 
     public override void Update(GameTime gameTime)

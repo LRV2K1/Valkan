@@ -37,7 +37,8 @@ class BlockHold : Skill
                 shield = new ParticleEffect(block_asset, true);
                 shield.Position = GlobalPosition;
                 shield.Origin += new Vector2(0, shield.Sprite.Height / 4);
-                GameWorld.RootList.Add(shield);
+                (GameWorld.GetObject("items") as GameObjectList).Add(shield);
+                shield.Reset();
                 player.InMovible = true;
             }
         }
