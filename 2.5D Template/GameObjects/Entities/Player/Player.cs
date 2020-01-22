@@ -29,7 +29,7 @@ enum PlayerType
 
 partial class Player : MovingEntity
 {
-    protected bool host;
+    protected bool gamehost;
     protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
@@ -60,7 +60,7 @@ partial class Player : MovingEntity
     {
         inmovible = false;
 
-        this.host = host;
+        this.gamehost = host;
         name = "Valkan";
         playerID = 1;
         playerlevel = 1;
@@ -159,7 +159,7 @@ partial class Player : MovingEntity
         {
             return;
         }
-        if (host)
+        if (gamehost)
         {
             ControlMove(inputHelper);
 
@@ -417,6 +417,6 @@ partial class Player : MovingEntity
 
     public bool Host
     {
-        get { return host; }
+        get { return gamehost; }
     }
 }

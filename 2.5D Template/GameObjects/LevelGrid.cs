@@ -218,12 +218,12 @@ class LevelGrid : GameObjectGrid
         return entities;
     }
 
-    public Vector2 AnchorPosition(int x, int y)
+    public Vector2 AnchorPosition(int x, int y) //translate grid position to screen position
     {
         return new Vector2(x * cellWidth / 2 - cellWidth / 2 * y, y * cellHeight / 2 + cellHeight / 2 * x);
     }
 
-    public Vector2 GridPosition(Vector2 pos)
+    public Vector2 GridPosition(Vector2 pos) // translate screen position to grid position
     {
         return new Vector2(pos.X / cellWidth + pos.Y / cellHeight, -pos.X / CellWidth + pos.Y / cellHeight);
     }

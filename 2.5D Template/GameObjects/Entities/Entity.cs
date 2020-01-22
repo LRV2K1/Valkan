@@ -71,7 +71,7 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    public void NewHost()
+    public virtual void NewHost()
     {
         //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
@@ -90,7 +90,7 @@ abstract partial class Entity : AnimatedGameObject
     public virtual void MovePositionOnGrid(int x, int y)
     {
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
+        position = levelGrid.AnchorPosition(x,y);
     }
 
     public override void RemoveSelf()

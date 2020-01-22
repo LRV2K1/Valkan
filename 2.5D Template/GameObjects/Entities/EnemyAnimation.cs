@@ -37,4 +37,37 @@ partial class Enemy : MovingEntity
             }
         }
     }
+
+    private void DeSpawn(GameTime gameTime)
+    {
+        if (startdespawntimer > 0)
+        {
+            startdespawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+        despawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        if (despawntimer <= 0)
+        {
+            despawntimer = 0.01f;
+            int R = (int)sprite.Color.R - 3;
+            int G = (int)sprite.Color.G - 3;
+            int B = (int)sprite.Color.B - 3;
+            int A = (int)sprite.Color.A - 3;
+            if (A <= 0)
+            {
+                base.RemoveSelf();
+                return;
+            }
+            sprite.Color = new Color(R, G, B, A);
+        }
+    }
+
+    private void Die()
+    {
+        this.velocity = Vector2.Zero;
+        if (Current.AnimationEnded)
+        {
+            dead = true;
+        }
+    }
 }

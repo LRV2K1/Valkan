@@ -11,13 +11,13 @@ class ConnectedEntity : Entity
     Vector2 connectedOrigin;
     string previousdata;
 
-    Dictionary<string, string> animations;
+    Dictionary<string, string> savedAnimations;
     int animationNumber;
 
     public ConnectedEntity(string data)
         : base(0)
     {
-        animations = new Dictionary<string, string>();
+        savedAnimations = new Dictionary<string, string>();
         animationNumber = 0;
         previousdata = "";
         ReceiveData(data);
@@ -56,7 +56,7 @@ class ConnectedEntity : Entity
         {
             if (splitdata[6] != Current.AssetName)
             {
-                if (animations.ContainsKey(splitdata[6]))
+                if (savedAnimations.ContainsKey(splitdata[6]))
                 {
                     SwitchAnimation(splitdata[6]);
                 }
@@ -74,16 +74,16 @@ class ConnectedEntity : Entity
 
     private void SwitchAnimation(string animation)
     {
-        PlayAnimation(animations[animation]);
+        PlayAnimation(savedAnimations[animation]);
     }
 
     private void NewAnimation(string animation, string islooping, string isbackandforth)
     {
         bool isLooping = bool.Parse(islooping);
         bool isBackAndForth = bool.Parse(isbackandforth);
-        animations.Add(animation, animationNumber.ToString());
+        savedAnimations.Add(animation, animationNumber.ToString());
         animationNumber++;
-        LoadAnimation(animation, animations[animation], isLooping, isBackAndForth);
+        LoadAnimation(animation, savedAnimations[animation], isLooping, isBackAndForth);
         SwitchAnimation(animation);
     }
 
