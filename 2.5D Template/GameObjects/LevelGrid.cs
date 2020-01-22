@@ -151,22 +151,10 @@ class LevelGrid : GameObjectGrid
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        List<string> tiles = ActiveTiles();
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
-            tile.HandleInput(inputHelper);
-        }
     }
 
     public override void Update(GameTime gameTime)
     {
-        List<string> tiles = ActiveTiles();
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            (GameWorld.GetObject(tiles[i]) as Tile).Update(gameTime);
-        }
-
         List<string> entities = ActiveEnities();
         for (int i = 0; i < entities.Count; i++)
         {

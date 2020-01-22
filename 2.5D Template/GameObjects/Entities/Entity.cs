@@ -115,7 +115,7 @@ abstract partial class Entity : AnimatedGameObject
     {
         base.PlayAnimation(id, isBackWards);
         origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
-                if (MultiplayerManager.Online) //send data if online
+        if (MultiplayerManager.Online) //send data if online
         {
             SendData();
         }

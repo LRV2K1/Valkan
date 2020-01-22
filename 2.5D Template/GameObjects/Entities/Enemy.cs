@@ -16,6 +16,9 @@ partial class Enemy : MovingEntity
     protected float attacktimer;
     protected float resetattacktimer;
 
+    protected float despawntimer;
+    protected float startdespawntimer = 10;
+
     protected bool input;
 
     int count = 0;
@@ -40,6 +43,7 @@ partial class Enemy : MovingEntity
     {
         selected = false;
         dead = false;
+        despawntimer = 0;
 
         health = 20;
         damage = 10;
@@ -57,8 +61,32 @@ partial class Enemy : MovingEntity
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        if (dead)
+        {
+            if (startdespawntimer > 0)
+            {
+                startdespawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                return;
+            }
+            despawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (despawntimer <= 0)
+            {
+                despawntimer = 0.01f;
+                int R = (int)sprite.Color.R - 3;
+                int G = (int)sprite.Color.G - 3;
+                int B = (int)sprite.Color.B - 3;
+                int A = (int)sprite.Color.A - 3;
+                if (A <= 0)
+                {
+                    base.RemoveSelf();
+                    return;
+                }
+                sprite.Color = new Color(R, G, B, A);
+            }
+            return;
+        }
 
-        if (die || dead)
+        if (die)
         {
             this.velocity = Vector2.Zero;
             if (Current.AnimationEnded)
