@@ -19,7 +19,6 @@ partial class Enemy : MovingEntity
     protected float startdespawntimer = 10;
 
     protected bool input;
-    protected Vector2 GridLocation; //actual location on grid
 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 40, weight, layer, id)
@@ -68,9 +67,7 @@ partial class Enemy : MovingEntity
         {
             //MoveEnemy();
             Player player = GameWorld.GetObject("player") as Player;
-            LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-            Vector2 goal = new Vector2((int)levelGrid.GridPosition(player.Position).X, (int)levelGrid.GridPosition(player.Position).Y);
-            PathFinding(goal, gameTime);
+            PathFinding(player.GridPos, gameTime);
             MovePath(gameTime);
         }
         else if (!InRange())
@@ -79,16 +76,6 @@ partial class Enemy : MovingEntity
         }
         
         Attack(gameTime);
-    }
-
-    public override void NewHost()
-    {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        if (levelGrid != null)
-        {
-            GridLocation = new Vector2((int)levelGrid.GridPosition(position).X, (int)levelGrid.GridPosition(position).Y);
-        }
-        base.NewHost();
     }
 
     private void CheckDie()
@@ -198,7 +185,7 @@ partial class Enemy : MovingEntity
     {
         bool range = false;
         Player player = GameWorld.GetObject("player") as Player;
-        float distance = Vector2.Distance(this.GridPos, player.GridPos);
+        float distance = Vector2.Distance(gridpos, player.GridPos);
 
         if (distance < 15)
             range = true;

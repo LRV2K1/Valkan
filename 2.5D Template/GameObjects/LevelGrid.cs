@@ -90,6 +90,20 @@ class LevelGrid : GameObjectGrid
         return current.HasWalls;
     }
 
+    public bool HasItem(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return true;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return true;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.HasItem;
+    }
+
     public TileType GetTileType(int x, int y)
     {
         if (x < 0 || x >= Columns)
@@ -239,7 +253,7 @@ class LevelGrid : GameObjectGrid
 
     public Vector2 GridPosition(Vector2 pos) // translate screen position to grid position
     {
-        return new Vector2(pos.X / cellWidth + pos.Y / cellHeight, -pos.X / CellWidth + pos.Y / cellHeight);
+        return new Vector2((int)(pos.X / cellWidth + pos.Y / cellHeight), (int)(-pos.X / CellWidth + pos.Y / cellHeight));
     }
 
     public Vector2 DrawGridPosition(Vector2 pos)

@@ -40,15 +40,17 @@ partial class Tile : SpriteGameObject
     protected List<string> passengers;
     protected Point grid;
     protected bool hasWalls;
+    protected int hasItem;
 
     public Tile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.None, int layer = 0, string id = "")
-        : base (assetname, layer, id, 0)
+        : base(assetname, layer, id, 0)
     {
         tileobject = TileObject.Tile;
         this.grid = grid;
         texturetype = tt;
         type = tp;
         passengers = new List<string>();
+        hasItem = 0;
     }
 
     public override void Reset()
@@ -83,6 +85,10 @@ partial class Tile : SpriteGameObject
     //add passenger
     public void AddPassenger(GameObject obj)
     {
+        if (obj is Item)
+        {
+            hasItem++;
+        }
         for (int i = 0; i < passengers.Count; i++)
         {
             if (GameWorld.GetObject(passengers[i]).Position.Y > obj.Position.Y)
@@ -97,14 +103,11 @@ partial class Tile : SpriteGameObject
     //remove passenger
     public void RemovePassenger(string id)
     {
-        for (int i = 0; i < Passengers.Count; i++)
+        if (GameWorld.GetObject(id) is Item)
         {
-            if (passengers[i] == id)
-            {
-                passengers.RemoveAt(i);
-                break;
-            }
+            hasItem--;
         }
+        passengers.Remove(id);
     }
 
     //passenger order
@@ -116,7 +119,7 @@ partial class Tile : SpriteGameObject
             {
                 if (i != 0)
                 {
-                    if (GameWorld.GetObject(passengers[i -1]).Position.Y > obj.Position.Y)
+                    if (GameWorld.GetObject(passengers[i - 1]).Position.Y > obj.Position.Y)
                     {
                         RemovePassenger(obj.Id);
                         AddPassenger(obj);
@@ -282,6 +285,11 @@ partial class Tile : SpriteGameObject
     public bool HasWalls
     {
         get { return hasWalls; }
+    }
+
+    public bool HasItem
+    {
+        get { return hasItem > 0; }
     }
 }
 

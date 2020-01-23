@@ -34,25 +34,29 @@ partial class Enemy: MovingEntity
 
     List<Vector2> path;
     float timer = 0;
-    bool test = false;
 
     private void PathFinding(Vector2 goal, GameTime gameTime)
     {
-        if (foundpath || test)
+        if (foundpath && !PlayerMoved()) //check if moved
         {
             return;
         }
-        double timer = gameTime.TotalGameTime.TotalMilliseconds;
-        GameEnvironment.OutputWindow(timer.ToString());
-        start = new Node(0, Distance(goal, GridLocation), null, GridLocation);
-        test = true;
+        if (this.timer > 0) //check timer
+        {
+            this.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return;
+        }
+
+        this.timer = 0.5f;
+        foundpath = false;
+        start = new Node(0, Distance(goal, gridpos), null, gridpos);
         open = new List<Node>();
         openNodes = new Dictionary<Vector2, Node>();
         closed = new Dictionary<Vector2, Node>();
 
         AddOpen(start);
 
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 250; i++)
         {
             if (open.Count == 0)
             {
@@ -62,8 +66,6 @@ partial class Enemy: MovingEntity
             ToClosed(current);
             if (current.position == goal)
             {
-                timer = gameTime.TotalGameTime.TotalMilliseconds;
-                GameEnvironment.OutputWindow(timer.ToString());
                 MakePath(current);
                 foundpath = true;
                 return;
@@ -71,8 +73,6 @@ partial class Enemy: MovingEntity
 
             GetNeighbour(current, goal);
         }
-        timer = gameTime.TotalGameTime.TotalMilliseconds;
-        GameEnvironment.OutputWindow(timer.ToString());
     }
 
     private void GetNeighbour(Node node, Vector2 goal)
@@ -89,7 +89,10 @@ partial class Enemy: MovingEntity
             {
                 if (closed.ContainsKey(new Vector2(x,y)) || levelGrid.GetTileType(x,y) != TileType.Floor || levelGrid.HasWalls(x,y)) //already in closed or not usable
                 {
-                    continue;
+                    if (x != goal.X || y != goal.Y)
+                    {
+                        continue;
+                    }
                 }
                 Node neighbour;
                 if (!openNodes.ContainsKey(new Vector2(x, y))) //not seen before
@@ -123,7 +126,7 @@ partial class Enemy: MovingEntity
         }
     }
 
-    private int Distance(Vector2 goal, Vector2 start)
+    private int Distance(Vector2 goal, Vector2 start) //calculate distance from start to goal
     {
         int distance = 0;
         int dx = Math.Abs((int)goal.X - (int)start.X);
@@ -142,8 +145,8 @@ partial class Enemy: MovingEntity
 
     private void AddOpen(Node node)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
+        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
         openNodes.Add(node.position, node);
         for (int i = 0; i < open.Count; i++)
         {
@@ -164,8 +167,8 @@ partial class Enemy: MovingEntity
 
     private void ToClosed(Node node)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
+        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
         closed.Add(node.position, node);
         openNodes.Remove(node.position);
         open.Remove(node);
@@ -182,10 +185,10 @@ partial class Enemy: MovingEntity
         Node current = node;
         while (current.parent != null)
         {
-            path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
-            (levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
+            //path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
+            //(levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
             current = current.parent;
-            if (current.position == GridLocation)
+            if (current.position == gridpos)
             {
                 return;
             }
@@ -196,6 +199,7 @@ partial class Enemy: MovingEntity
     {
         if (!foundpath)
         {
+            velocity = Vector2.Zero;
             return;
         }
         if (path.Count == 0)
@@ -204,17 +208,6 @@ partial class Enemy: MovingEntity
             return;
         }
         Vector2 destination = path[path.Count - 1];
-        /*
-        timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (timer <= 0)
-        {
-            timer = 1;
-            destination = path[path.Count - 1];
-            position = destination;
-            path.RemoveAt(path.Count - 1);
-        }
-        */
-
         
         float distance = Vector2.Distance(destination, position);
         if (distance < 50)
@@ -226,5 +219,20 @@ partial class Enemy: MovingEntity
         float dy = destination.Y - position.Y;
         velocity = new Vector2((dx / distance) * speed, (dy / distance) * speed);
         
+    }
+
+    private bool PlayerMoved()
+    {
+        if (start == null)
+        {
+            return true;
+        }
+
+        Player player = GameWorld.GetObject("player") as Player;
+        if (player.GridPos.X < start.position.X - 1 || player.GridPos.X > start.position.X + 1 || player.GridPos.Y < start.position.Y - 1 || player.GridPos.Y > start.position.Y + 1)
+        {
+            return true;
+        }
+        return false;
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
-    protected Vector2 gridPos;
+    protected Vector2 drawgridpos, gridpos;
     protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
@@ -76,10 +76,11 @@ abstract partial class Entity : AnimatedGameObject
         //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check if on new tile
-        if (levelGrid.DrawGridPosition(position) != gridPos)
+        if (levelGrid.GridPosition(position) != gridpos)
         {
-            host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), gridPos, this, host);
-            gridPos = levelGrid.DrawGridPosition(position);
+            gridpos = levelGrid.GridPosition(position);
+            host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), drawgridpos, this, host);
+            drawgridpos = levelGrid.DrawGridPosition(position);
         }
         else if (host != "")
         {
@@ -131,10 +132,16 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
+    public Vector2 DrawGridPos
+    {
+        get { return drawgridpos; }
+        set { drawgridpos = value; }
+    }
+
     public Vector2 GridPos
     {
-        get { return gridPos; }
-        set { gridPos = value; }
+        get { return gridpos; }
+        set { gridpos = value; }
     }
 
     public int Weight
