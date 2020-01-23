@@ -71,7 +71,7 @@ public class GameStart : GameEnvironment
         spriteBatch.Begin();
         framecounter.Draw(gameTime, spriteBatch);
         physicscounter.Draw(gameTime, spriteBatch);
-        //DrawOutput(gameTime);
+        DrawOutput(gameTime);
         spriteBatch.End();
 
         frames++;

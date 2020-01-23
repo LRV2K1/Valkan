@@ -70,8 +70,8 @@ partial class Enemy : MovingEntity
             Player player = GameWorld.GetObject("player") as Player;
             LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
             Vector2 goal = new Vector2((int)levelGrid.GridPosition(player.Position).X, (int)levelGrid.GridPosition(player.Position).Y);
-            PathFinding(goal);
-            MovePath();
+            PathFinding(goal, gameTime);
+            MovePath(gameTime);
         }
         else if (!InRange())
         {
@@ -200,7 +200,7 @@ partial class Enemy : MovingEntity
         Player player = GameWorld.GetObject("player") as Player;
         float distance = Vector2.Distance(this.GridPos, player.GridPos);
 
-        if (distance < 10)
+        if (distance < 15)
             range = true;
 
         return range;

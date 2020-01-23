@@ -75,6 +75,20 @@ class LevelGrid : GameObjectGrid
             }
         }
     }
+    
+    public bool HasWalls(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return true;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return true;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.HasWalls;
+    }
 
     public TileType GetTileType(int x, int y)
     {

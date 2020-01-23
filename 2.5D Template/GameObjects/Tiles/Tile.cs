@@ -39,6 +39,7 @@ partial class Tile : SpriteGameObject
     protected Rectangle boundingbox;
     protected List<string> passengers;
     protected Point grid;
+    protected bool hasWalls;
 
     public Tile(Point grid, string assetname = "", TileType tp = TileType.Background, TextureType tt = TextureType.None, int layer = 0, string id = "")
         : base (assetname, layer, id, 0)
@@ -171,6 +172,7 @@ partial class Tile : SpriteGameObject
         }
 
         SetSprite();
+        CheckHasWalls();
     }
 
     //sets sprite
@@ -187,6 +189,32 @@ partial class Tile : SpriteGameObject
         {
             sprite.SheetIndex = s % 16 + 16;
         }
+    }
+
+    private void CheckHasWalls()
+    {
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        if (levelGrid.GetTileType(grid.X, grid.Y - 1) == TileType.Wall)
+        {
+            hasWalls = true;
+            return;
+        }
+        if (levelGrid.GetTileType(grid.X + 1, grid.Y) == TileType.Wall)
+        {
+            hasWalls = true;
+            return;
+        }
+        if (levelGrid.GetTileType(grid.X, grid.Y + 1) == TileType.Wall)
+        {
+            hasWalls = true;
+            return;
+        }
+        if (levelGrid.GetTileType(grid.X - 1, grid.Y) == TileType.Wall)
+        {
+            hasWalls = true;
+            return;
+        }
+        hasWalls = false;
     }
 
     //autotiling algorithm
@@ -250,5 +278,10 @@ partial class Tile : SpriteGameObject
 
     public void SetBoundingBox(Rectangle value)
     { boundingbox = value; }
+
+    public bool HasWalls
+    {
+        get { return hasWalls; }
+    }
 }
 
