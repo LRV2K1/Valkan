@@ -9,18 +9,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Entity : AnimatedGameObject
 {
-    protected Vector2 drawgridpos, gridPos;
+    protected Vector2 drawgridpos, gridpos;
     protected int boundingy;
     protected Vector2 previousPos;
     protected int weight;
-    protected string host;
+    protected string drawHost;
     protected bool remove;
 
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
         remove = false;
-        host = "";
+        drawHost = "";
         this.weight = weight;
         this.boundingy = boundingy;
         previousPos = position;
@@ -71,35 +71,35 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    public void NewHost()
+    public virtual void NewHost()
     {
         //become a passenger of a tile
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check if on new tile
-        if (levelGrid.GridPosition(position) != gridPos)
+        if (levelGrid.GridPosition(position) != gridpos)
         {
-            gridPos = levelGrid.GridPosition(position);
-            host = levelGrid.NewPassenger(levelGrid.DrawGridPosition(position), drawgridpos, this, host);
+            drawHost = levelGrid.NewPassenger(position, gridpos, this, drawHost);
+            gridpos = levelGrid.GridPosition(position);
             drawgridpos = levelGrid.DrawGridPosition(position);
         }
-        else if (host != "")
+        else if (drawHost != "")
         {
-            (GameWorld.GetObject(host) as Tile).CheckPassengerPosition(this);
+            (GameWorld.GetObject(drawHost) as Tile).CheckDrawPassengerPosition(this);
         }
     }
 
     public virtual void MovePositionOnGrid(int x, int y)
     {
         LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        position = new Vector2(x * levelGrid.CellWidth / 2 - levelGrid.CellWidth / 2 * y, y * levelGrid.CellHeight / 2 + levelGrid.CellHeight / 2 * x);
+        position = levelGrid.AnchorPosition(x,y);
     }
 
     public override void RemoveSelf()
     {
-        Tile host = GameWorld.GetObject(this.host) as Tile;
+        Tile host = GameWorld.GetObject(this.drawHost) as Tile;
         if (host != null)
         {
-            host.RemovePassenger(id);
+            host.RemoveDrawPassenger(id);
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
@@ -132,10 +132,16 @@ abstract partial class Entity : AnimatedGameObject
         }
     }
 
-    public Vector2 GridPos
+    public Vector2 DrawGridPos
     {
         get { return drawgridpos; }
         set { drawgridpos = value; }
+    }
+
+    public Vector2 GridPos
+    {
+        get { return gridpos; }
+        set { gridpos = value; }
     }
 
     public int Weight

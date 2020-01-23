@@ -87,7 +87,7 @@ partial class Enemy: MovingEntity
         {
             for (int y = (int)node.position.Y - 1; y <= (int)node.position.Y + 1; y++)
             {
-                if (closed.ContainsKey(new Vector2(x,y)) || levelGrid.GetTileType(x,y) != TileType.Floor || levelGrid.HasWalls(x,y)) //already in closed or not usable
+                if (closed.ContainsKey(new Vector2(x,y)) || levelGrid.GetTileType(x,y) != TileType.Floor || levelGrid.HasWalls(x,y) || levelGrid.HasItem(x,y)) //already in closed or not usable
                 {
                     if (x != goal.X || y != goal.Y)
                     {

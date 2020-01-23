@@ -37,6 +37,7 @@ partial class Tile : SpriteGameObject
     protected TextureType texturetype;
     protected TileObject tileobject;
     protected Rectangle boundingbox;
+    protected List<string> drawPassengers;
     protected List<string> passengers;
     protected Point grid;
     protected bool hasWalls;
@@ -49,6 +50,7 @@ partial class Tile : SpriteGameObject
         this.grid = grid;
         texturetype = tt;
         type = tp;
+        drawPassengers = new List<string>();
         passengers = new List<string>();
         hasItem = 0;
     }
@@ -82,25 +84,15 @@ partial class Tile : SpriteGameObject
         }
     }
 
-    //add passenger
-    public void AddPassenger(GameObject obj)
+    public void AddPassenger(string id)
     {
-        if (obj is Item)
+        if (GameWorld.GetObject(id) is Item)
         {
             hasItem++;
         }
-        for (int i = 0; i < passengers.Count; i++)
-        {
-            if (GameWorld.GetObject(passengers[i]).Position.Y > obj.Position.Y)
-            {
-                passengers.Insert(i, obj.Id);
-                return;
-            }
-        }
-        passengers.Add(obj.Id);
+        passengers.Add(id);
     }
 
-    //remove passenger
     public void RemovePassenger(string id)
     {
         if (GameWorld.GetObject(id) is Item)
@@ -110,29 +102,49 @@ partial class Tile : SpriteGameObject
         passengers.Remove(id);
     }
 
-    //passenger order
-    public void CheckPassengerPosition(GameObject obj)
+    //add passenger
+    public void AddDrawPassenger(GameObject obj)
     {
-        for (int i = 0; i < passengers.Count; i++)
+        for (int i = 0; i < drawPassengers.Count; i++)
         {
-            if (passengers[i] == obj.Id)
+            if (GameWorld.GetObject(drawPassengers[i]).Position.Y > obj.Position.Y)
+            {
+                drawPassengers.Insert(i, obj.Id);
+                return;
+            }
+        }
+        drawPassengers.Add(obj.Id);
+    }
+
+    //remove passenger
+    public void RemoveDrawPassenger(string id)
+    {
+        drawPassengers.Remove(id);
+    }
+
+    //passenger order
+    public void CheckDrawPassengerPosition(GameObject obj)
+    {
+        for (int i = 0; i < drawPassengers.Count; i++)
+        {
+            if (drawPassengers[i] == obj.Id)
             {
                 if (i != 0)
                 {
-                    if (GameWorld.GetObject(passengers[i - 1]).Position.Y > obj.Position.Y)
+                    if (GameWorld.GetObject(drawPassengers[i - 1]).Position.Y > obj.Position.Y)
                     {
-                        RemovePassenger(obj.Id);
-                        AddPassenger(obj);
+                        RemoveDrawPassenger(obj.Id);
+                        AddDrawPassenger(obj);
                         return;
                     }
                 }
 
-                if (i < passengers.Count - 1)
+                if (i < drawPassengers.Count - 1)
                 {
-                    if (GameWorld.GetObject(passengers[i + 1]).Position.Y < obj.Position.Y)
+                    if (GameWorld.GetObject(drawPassengers[i + 1]).Position.Y < obj.Position.Y)
                     {
-                        RemovePassenger(obj.Id);
-                        AddPassenger(obj);
+                        RemoveDrawPassenger(obj.Id);
+                        AddDrawPassenger(obj);
                         return;
                     }
                 }
@@ -268,6 +280,12 @@ partial class Tile : SpriteGameObject
             s += 8;
         }
         return s;
+    }
+
+    public List<string> DrawPassengers
+    {
+        get { return drawPassengers; }
+        set { drawPassengers = value; }
     }
 
     public List<string> Passengers

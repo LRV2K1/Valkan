@@ -49,10 +49,10 @@ class GameMouse : GameObject
                     continue;
                 }
 
-                for (int i = 0; i < tile.Passengers.Count; i++)
+                for (int i = 0; i < tile.DrawPassengers.Count; i++)
                 {
                     //check if enemy
-                    Enemy enemy = GameWorld.GetObject(tile.Passengers[i]) as Enemy;
+                    Enemy enemy = GameWorld.GetObject(tile.DrawPassengers[i]) as Enemy;
                     if (enemy == null)
                     {
                         continue;

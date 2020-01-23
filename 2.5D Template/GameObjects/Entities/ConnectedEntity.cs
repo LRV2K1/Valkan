@@ -97,10 +97,10 @@ class ConnectedEntity : Entity
 
     public override void RemoveSelf()
     {
-        Tile host = GameWorld.GetObject(this.host) as Tile;
+        Tile host = GameWorld.GetObject(this.drawHost) as Tile;
         if (host != null)
         {
-            host.RemovePassenger(id);
+            host.RemoveDrawPassenger(id);
         }
     (parent as GameObjectList).Remove(id);
         remove = true;
