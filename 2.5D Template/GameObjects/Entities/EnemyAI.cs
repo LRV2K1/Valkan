@@ -87,7 +87,7 @@ partial class Enemy: MovingEntity
         {
             for (int y = (int)node.position.Y - 1; y <= (int)node.position.Y + 1; y++)
             {
-                if (closed.ContainsKey(new Vector2(x,y)) || levelGrid.GetTileType(x,y) != TileType.Floor || levelGrid.HasWalls(x,y)) //already in closed or not usable
+                if (closed.ContainsKey(new Vector2(x,y)) || levelGrid.GetTileType(x,y) != TileType.Floor || levelGrid.HasWalls(x,y) || levelGrid.HasItem(x,y)) //already in closed or not usable
                 {
                     if (x != goal.X || y != goal.Y)
                     {
@@ -145,8 +145,8 @@ partial class Enemy: MovingEntity
 
     private void AddOpen(Node node)
     {
-        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
         openNodes.Add(node.position, node);
         for (int i = 0; i < open.Count; i++)
         {
@@ -167,8 +167,8 @@ partial class Enemy: MovingEntity
 
     private void ToClosed(Node node)
     {
-        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
         closed.Add(node.position, node);
         openNodes.Remove(node.position);
         open.Remove(node);
@@ -185,8 +185,8 @@ partial class Enemy: MovingEntity
         Node current = node;
         while (current.parent != null)
         {
-            //path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
-            //(levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
+            path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
+            (levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
             current = current.parent;
             if (current.position == gridpos)
             {

@@ -153,28 +153,30 @@ class LevelGrid : GameObjectGrid
         return current.TileObject;
     }
 
-    public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
+    public string NewPassenger(Vector2 pos, Vector2 prevPos, GameObject obj, string host)
     {
-        Tile tile;
-
+        Tile drawTile;
+        (Get((int)prevPos.X, (int)prevPos.Y) as Tile).RemovePassenger(obj.Id);
+        Vector2 gridPos = GridPosition(pos);
+        (Get((int)gridPos.X, (int)gridPos.Y) as Tile).AddPassenger(obj.Id);
+        Vector2 drawPos = DrawGridPosition(pos);
         try
         {
-            tile = GameWorld.GetObject(grid[(int)newPos.X, (int)newPos.Y]) as Tile;
+            drawTile = GameWorld.GetObject(grid[(int)drawPos.X, (int)drawPos.Y]) as Tile;
         }
         catch
         {
-            tile = GameWorld.GetObject(grid[(int)newPos.X - 1, (int)newPos.Y]) as Tile;
+            drawTile = GameWorld.GetObject(grid[(int)drawPos.X - 1, (int)drawPos.Y]) as Tile;
         }
 
-        tile.AddPassenger(obj);
+        drawTile.AddDrawPassenger(obj);
 
         if (host != "")
         {
-            Tile prevtile = GameWorld.GetObject(host) as Tile;
-            prevtile.RemovePassenger(obj.Id);
+            (GameWorld.GetObject(host) as Tile).RemoveDrawPassenger(obj.Id);
         }
 
-        return tile.Id;
+        return drawTile.Id;
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -201,9 +203,9 @@ class LevelGrid : GameObjectGrid
 
             if (GameEnvironment.GameSettingsManager.GetValue("editor") != "true")
             {
-                for (int j = 0; j < tile.Passengers.Count; j++)
+                for (int j = 0; j < tile.DrawPassengers.Count; j++)
                 {
-                    GameWorld.GetObject(tile.Passengers[j]).Draw(gameTime, spriteBatch);
+                    GameWorld.GetObject(tile.DrawPassengers[j]).Draw(gameTime, spriteBatch);
                 }
             }
         }
@@ -241,7 +243,7 @@ class LevelGrid : GameObjectGrid
         {
             Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
 
-            entities.AddRange(tile.Passengers);
+            entities.AddRange(tile.DrawPassengers);
         }
         return entities;
     }
