@@ -49,7 +49,7 @@ partial class Enemy: MovingEntity
 
         this.timer = 0.5f;
         foundpath = false;
-        start = new Node(0, Distance(goal, gridpos), null, gridpos);
+        start = new Node(0, Distance(goal, gridPos), null, gridPos);
         open = new List<Node>();
         openNodes = new Dictionary<Vector2, Node>();
         closed = new Dictionary<Vector2, Node>();
@@ -185,10 +185,10 @@ partial class Enemy: MovingEntity
         Node current = node;
         while (current.parent != null)
         {
-            //path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
+            path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
             //(levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
             current = current.parent;
-            if (current.position == gridpos)
+            if (current.position == gridPos)
             {
                 return;
             }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
+
 partial class Enemy : MovingEntity
 {
     protected int health, damage;
@@ -45,13 +46,36 @@ partial class Enemy : MovingEntity
         base.Update(gameTime);
         if (dead)
         {
-            DeSpawn(gameTime);
+            if (startdespawntimer > 0)
+            {
+                startdespawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                return;
+            }
+            despawntimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (despawntimer <= 0)
+            {
+                despawntimer = 0.01f;
+                int R = (int)sprite.Color.R - 3;
+                int G = (int)sprite.Color.G - 3;
+                int B = (int)sprite.Color.B - 3;
+                int A = (int)sprite.Color.A - 3;
+                if (A <= 0)
+                {
+                    base.RemoveSelf();
+                    return;
+                }
+                sprite.Color = new Color(R, G, B, A);
+            }
             return;
         }
 
         if (die)
         {
-            Die();
+            this.velocity = Vector2.Zero;
+            if (Current.AnimationEnded)
+            {
+                dead = true;
+            }
             return;
         }
 
@@ -62,10 +86,11 @@ partial class Enemy : MovingEntity
             velocity = Vector2.Zero;
             return;
         }
+
+        //MoveEnemy();
         
         if (InRange()) // als de player in bereik is zal de ai bewegen
         {
-            //MoveEnemy();
             Player player = GameWorld.GetObject("player") as Player;
             PathFinding(player.GridPos, gameTime);
             MovePath(gameTime);
@@ -75,6 +100,7 @@ partial class Enemy : MovingEntity
             this.velocity = Vector2.Zero;
         }
         
+
         Attack(gameTime);
     }
 
@@ -100,15 +126,6 @@ partial class Enemy : MovingEntity
             }
             (GameWorld as Level).EnemyCount--;
         }
-    }
-
-    private void MoveEnemy()
-    {
-        Player player = GameWorld.GetObject("player") as Player;
-        float distance = Vector2.Distance(player.Position, position);
-        float dx = player.Position.X - position.X;
-        float dy = player.Position.Y - position.Y;
-        velocity = new Vector2((dx / distance) * speed, (dy / distance) * speed);
     }
 
     private void Attack(GameTime gameTime)
@@ -184,8 +201,9 @@ partial class Enemy : MovingEntity
     bool InRange()
     {
         bool range = false;
+        Enemy enemy = this;
         Player player = GameWorld.GetObject("player") as Player;
-        float distance = Vector2.Distance(gridpos, player.GridPos);
+        float distance = Vector2.Distance(this.GridPos, player.GridPos);
 
         if (distance < 15)
             range = true;
