@@ -145,8 +145,8 @@ partial class Enemy: MovingEntity
 
     private void AddOpen(Node node)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
+        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Green;
         openNodes.Add(node.position, node);
         for (int i = 0; i < open.Count; i++)
         {
@@ -167,8 +167,8 @@ partial class Enemy: MovingEntity
 
     private void ToClosed(Node node)
     {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        (levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
+        //LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //(levelGrid.Get((int)node.position.X, (int)node.position.Y) as Tile).Sprite.Color = Color.Red;
         closed.Add(node.position, node);
         openNodes.Remove(node.position);
         open.Remove(node);
@@ -186,7 +186,7 @@ partial class Enemy: MovingEntity
         while (current.parent != null)
         {
             path.Add(levelGrid.AnchorPosition((int)current.position.X, (int)current.position.Y));
-            (levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
+            //(levelGrid.Get((int)current.position.X, (int)current.position.Y) as Tile).Sprite.Color = Color.Blue;
             current = current.parent;
             if (current.position == gridpos)
             {
