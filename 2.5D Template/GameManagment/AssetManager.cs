@@ -64,7 +64,7 @@ public class AssetManager
     public void PlayMusic(string assetName, bool repeat = true)
     {
         MediaPlayer.IsRepeating = repeat;
-        //MediaPlayer.Play(contentManager.Load<Song>(assetName));
+        MediaPlayer.Play(contentManager.Load<Song>(assetName));
     }
 
     public ContentManager Content
