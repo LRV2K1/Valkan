@@ -5,6 +5,8 @@ using System.Net;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class ConnectionParty : Connection
 {
@@ -41,6 +43,7 @@ public class ConnectionParty : Connection
                     level.DistributeData(data);
                     timer++;
                 }
+                Thread.Sleep(10);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
@@ -50,6 +53,15 @@ public class ConnectionParty : Connection
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
+        Task.Run(async () =>
+        {
+
+            string loggingEvent = "Received ";
+            var receivedResults = await udpclient.ReceiveAsync();
+            loggingEvent += Encoding.ASCII.GetString(receivedResults.Buffer);
+            Console.WriteLine(loggingEvent);
+        });
+
         if (timout > 0)
         {
             timout -= (float)gameTime.ElapsedGameTime.TotalSeconds;
