@@ -89,7 +89,7 @@ partial class Enemy : MovingEntity
 
         //MoveEnemy();
         
-        if (InRange()) // als de player in bereik is zal de ai bewegen
+        if (InRange() && walking_anim) // als de player in bereik is zal de ai bewegen
         {
             Player player = GameWorld.GetObject("player") as Player;
             PathFinding(player.GridPos, gameTime);

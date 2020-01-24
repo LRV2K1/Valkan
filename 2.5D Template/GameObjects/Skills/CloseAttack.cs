@@ -42,7 +42,7 @@ class CloseAttack : Skill
 
     private void MakeProjectile(Vector2 position)
     {
-        Projectile projectile = new Projectile("", false, damage, Vector2.Zero, "", 0.1f, "", 25, 25);
+        Projectile projectile = new Projectile("", false, damage, Vector2.Zero, "", 0.1f, "", 40, 40);
         projectile.Position = position;
         SetAttackBox(projectile);
         (GameWorld.GetObject("items") as GameObjectList).Add(projectile);

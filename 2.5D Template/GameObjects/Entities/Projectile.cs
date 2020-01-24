@@ -15,7 +15,7 @@ class Projectile : Item
     Vector2 offsetposition;
     string explosionsound;
 
-    public Projectile(string assetname, bool animated, int damage, Vector2 offsetposition, string sound = "", float lifetime = 3f, string part_asset = "", int hitboxX = 10, int hitboxY = 10)
+    public Projectile(string assetname, bool animated, int damage, Vector2 offsetposition, string sound = "", float lifetime = 3f, string part_asset = "", int hitboxX = 20, int hitboxY = 20)
         : base(assetname, animated)
     {
         this.damage = damage;
