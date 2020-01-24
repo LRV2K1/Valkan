@@ -30,6 +30,7 @@ class EditorEntity : SpriteGameObject
     protected ItemType item;
     protected Point grid;
     protected int boundingy;
+    int offset = 20;
 
     public EditorEntity(Point grid, string assetname = "", int boundingy = 0, EntityType et = EntityType.None, int layer = 0, string id = "")
         : base(assetname, layer, id)
@@ -80,7 +81,7 @@ class EditorEntity : SpriteGameObject
         }
         ItemGrid itemGrid = GameWorld.GetObject("itemgrid") as ItemGrid;
 
-        origin = new Vector2(Width / 2, sprite.Height - boundingy/2);
+        origin = new Vector2(Width / 2, sprite.Height - boundingy/2 - offset);
     }
 
     public int Boundingy

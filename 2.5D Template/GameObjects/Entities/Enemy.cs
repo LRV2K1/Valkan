@@ -22,7 +22,7 @@ partial class Enemy : MovingEntity
     protected bool input;
 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
-        : base(boundingy, 40, weight, layer, id)
+        : base(boundingy, 60, weight, layer, id)
     {
         selected = false;
         dead = false;
