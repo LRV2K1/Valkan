@@ -5,8 +5,6 @@ using System.Net;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class ConnectionParty : Connection
 {
