@@ -1,0 +1,5 @@
+idle/4
+attack/4/20
+walking/8/350
+die/6
+health/20

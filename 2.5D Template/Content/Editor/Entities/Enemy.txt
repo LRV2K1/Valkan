@@ -4,3 +4,4 @@ Sprites/Enemy/Skeleton,30,Enemy,Close
 Sprites/Enemy/Grave,30,Enemy,Close
 Sprites/Enemy/Zombie,30,Enemy,Close
 Sprites/Enemy/Antilion,45,Enemy,Close
+Sprites/Enemy/Goblin,30,Enemy,Close
