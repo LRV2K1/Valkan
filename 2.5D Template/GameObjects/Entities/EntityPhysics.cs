@@ -49,12 +49,12 @@ abstract partial class Entity : AnimatedGameObject
                 }
                 else
                 {
-                    for (int i = 0; i < currentTile.DrawPassengers.Count; i++)
+                    for (int i = 0; i < currentTile.Passengers.Count; i++)
                     {
-                        if (currentTile.DrawPassengers[i] != id)
+                        if (currentTile.Passengers[i] != id)
                         {
                             //check tile passenger collision
-                            HandleEntityCollisions(currentTile.DrawPassengers[i]);
+                            HandleEntityCollisions(currentTile.Passengers[i]);
                         }
                     }
                     //check collision
@@ -147,9 +147,9 @@ abstract partial class Entity : AnimatedGameObject
         {
             Tile tile = GameWorld.GetObject(id) as Tile;
 
-            for (int i = 0; i < tile.DrawPassengers.Count; i++)
+            for (int i = 0; i < tile.Passengers.Count; i++)
             {
-                surroundingentities.Add(tile.DrawPassengers[i]);
+                surroundingentities.Add(tile.Passengers[i]);
             }
         }
         return surroundingentities;
