@@ -1,6 +1,6 @@
 Sprites/Items/spr_trashcan,0,None
-Sprites/Enemy/Minotaur,60,Enemy,Close
-Sprites/Enemy/Skeleton,45,Enemy,Close
-Sprites/Enemy/Grave,45,Enemy,Close
-Sprites/Enemy/Zombie,45,Enemy,Close
-Sprites/Enemy/Antilion,60,Enemy,Close
+Sprites/Enemy/Minotaur,45,Enemy,Close
+Sprites/Enemy/Skeleton,30,Enemy,Close
+Sprites/Enemy/Grave,30,Enemy,Close
+Sprites/Enemy/Zombie,30,Enemy,Close
+Sprites/Enemy/Antilion,45,Enemy,Close

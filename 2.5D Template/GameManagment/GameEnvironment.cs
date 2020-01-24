@@ -215,6 +215,7 @@ public class GameEnvironment : Game
         if(quitGame)
         {
             Exit();
+            return;
         }
 
         int outputx = 0;

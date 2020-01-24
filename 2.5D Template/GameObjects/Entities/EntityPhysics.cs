@@ -34,9 +34,9 @@ abstract partial class Entity : AnimatedGameObject
     {
         LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check surrounding tiles
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)drawgridpos.X - 2; x <= (int)drawgridpos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)drawgridpos.Y - 2; y <= (int)drawgridpos.Y + 2; y++)
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;
@@ -49,12 +49,12 @@ abstract partial class Entity : AnimatedGameObject
                 }
                 else
                 {
-                    for (int i = 0; i < currentTile.Passengers.Count; i++)
+                    for (int i = 0; i < currentTile.DrawPassengers.Count; i++)
                     {
-                        if (currentTile.Passengers[i] != id)
+                        if (currentTile.DrawPassengers[i] != id)
                         {
                             //check tile passenger collision
-                            HandleEntityCollisions(currentTile.Passengers[i]);
+                            HandleEntityCollisions(currentTile.DrawPassengers[i]);
                         }
                     }
                     //check collision
@@ -120,9 +120,9 @@ abstract partial class Entity : AnimatedGameObject
 
         LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)drawgridpos.X - 2; x <= (int)drawgridpos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)drawgridpos.Y - 2; y <= (int)drawgridpos.Y + 2; y++)
             {
                 Tile currentTile = tiles.Get(x, y) as Tile;
 
@@ -147,9 +147,9 @@ abstract partial class Entity : AnimatedGameObject
         {
             Tile tile = GameWorld.GetObject(id) as Tile;
 
-            for (int i = 0; i < tile.Passengers.Count; i++)
+            for (int i = 0; i < tile.DrawPassengers.Count; i++)
             {
-                surroundingentities.Add(tile.Passengers[i]);
+                surroundingentities.Add(tile.DrawPassengers[i]);
             }
         }
         return surroundingentities;

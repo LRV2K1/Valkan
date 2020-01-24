@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 class ProjectileAttack : Skill
 {
-    float speed = 500;
+    float speed = 800;
     int damage;
     float resettimer;
 
@@ -89,10 +89,11 @@ class ProjectileAttack : Skill
             animated = true;
         }
 
-        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 1, prj_ex_asset);
+        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 0.65f, prj_ex_asset);
         projectile.Position = position;
         SetProjectileSpeed(projectile);
-        GameWorld.RootList.Add(projectile);
+        (GameWorld.GetObject("items") as GameObjectList).Add(projectile);
+        projectile.Reset();
     }
 
     private void SetProjectileSpeed(Projectile projectile)
