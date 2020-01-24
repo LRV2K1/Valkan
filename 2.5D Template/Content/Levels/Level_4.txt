@@ -221,11 +221,11 @@ m:Sprites/Objects/spr_sign_0,10,SpriteItem,InMovible
 n:Sprites/Items/spr_stone_0,20,SpriteItem,Movible
 o:Sprites/Items/spr_stone_1,20,SpriteItem,Movible
 p:Sprites/Objects/spr_axe,40,SpriteItem,InMovible
-q:Sprites/Enemy/Antilion,60,Enemy,Close
+q:Sprites/Enemy/Antilion,45,Enemy,Close
 r:Sprites/Items/spr_stone_2,20,SpriteItem,Movible
-s:Sprites/Enemy/Skeleton,45,Enemy,Close
+s:Sprites/Enemy/Skeleton,30,Enemy,Close
 t:Sprites/Objects/spr_cart_1,40,SpriteItem,InMovible
-u:Sprites/Enemy/Minotaur,60,Enemy,Close
+u:Sprites/Enemy/Minotaur,45,Enemy,Close
 v:Sprites/Objects/spr_anvil,40,SpriteItem,InMovible
 w:Sprites/Player/spr_idle_1,30,Player
 
