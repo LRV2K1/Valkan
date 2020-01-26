@@ -27,7 +27,7 @@ public partial class Connection
         udpclient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
         udpclient.ExclusiveAddressUse = false;
         udpclient.Client.Bind(localEp);
-        udpclient.Client.Ttl = 128;
+        udpclient.Client.Ttl = 1;
         Send("Send first message", port);
     }
 

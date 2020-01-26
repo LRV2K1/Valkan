@@ -25,12 +25,6 @@ class ConnectedEntity : Entity
         connectedOrigin = Vector2.Zero;
     }
 
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
-        origin = connectedOrigin;
-    }
-
     public override void NewHost()
     {
         //become a passenger of a tile

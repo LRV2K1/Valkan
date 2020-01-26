@@ -14,7 +14,7 @@ partial class Level : GameObjectLibrary
         //DistributeData();
         for (int i = 0; i < RootList.Children.Count; i++)
         {
-            if (RootList.Children[i] == "entities")
+            if (RootList.Children[i] == "entities") 
             {
                 continue;
             }
