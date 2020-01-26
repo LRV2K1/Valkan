@@ -51,24 +51,25 @@ class ConnectedEntity : Entity
 
         position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
         connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
+        velocity = new Vector2(float.Parse(splitdata[6]), float.Parse(splitdata[7]));
         origin = connectedOrigin;
         if (Current != null)
         {
             if (splitdata[6] != Current.AssetName)
             {
-                if (savedAnimations.ContainsKey(splitdata[6]))
+                if (savedAnimations.ContainsKey(splitdata[8]))
                 {
-                    SwitchAnimation(splitdata[6]);
+                    SwitchAnimation(splitdata[8]);
                 }
                 else
                 {
-                    NewAnimation(splitdata[6], splitdata[7], splitdata[8]);
+                    NewAnimation(splitdata[8], splitdata[9], splitdata[10]);
                 }
             }
         }
         else
         {
-            NewAnimation(splitdata[6], splitdata[7], splitdata[8]);
+            NewAnimation(splitdata[8], splitdata[9], splitdata[10]);
         }
     }
 
