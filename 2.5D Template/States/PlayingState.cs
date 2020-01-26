@@ -46,6 +46,10 @@ class PlayingState : State
         if (inputHelper.KeyPressed(Keys.Escape))
         {
             OverlayManager overlay = level.GetObject("overlay") as OverlayManager;
+            if (overlay.CurrentOverlayID == "die" || overlay.CurrentOverlayID == "finish")
+            {
+                return;
+            }
             if (overlay.CurrentOverlayID == "menu")
             {
                 overlay.SwitchTo("hud");

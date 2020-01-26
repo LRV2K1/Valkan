@@ -102,7 +102,6 @@ partial class Player : MovingEntity
             Camera camera = GameWorld.GetObject("camera") as Camera;
             if (camera.FolowOpj == id)
             {
-                Console.WriteLine("change camera");
                 ChangeCamera();
             }
         }

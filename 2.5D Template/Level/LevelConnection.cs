@@ -67,14 +67,10 @@ partial class Level : GameObjectLibrary
 
     public void AddConnectedEntity(string data, string id)
     {
-        //Console.WriteLine("make object");
         ConnectedEntity entity = new ConnectedEntity(data);
-        //RootList.Add(entity);
         (GetObject("entities") as GameObjectList).Add(entity);
         connectedEntities.Add(id, entity.Id);
         entity.NewHost();
-        //SpriteGameObject test = new SpriteGameObject(entity.Sprite.AssetName, 102);
-        //RootList.Add(test);
     }
 
     public void RemoveConnectedEntity(string connectedid)

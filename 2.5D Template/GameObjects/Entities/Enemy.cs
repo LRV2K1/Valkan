@@ -160,7 +160,7 @@ partial class Enemy : MovingEntity
                 }
                 float distance = Vector2.Distance(player.Position, position);
                 Vector2 directions = new Vector2(Math.Sign(player.Position.X - position.X), Math.Sign(player.Position.Y - position.Y));
-                if (distance < 100)
+                if (distance < 100 && !player.Dead)
                 {
                     attacktimer = resetattacktimer;
                     SwitchAnimation("attack", "B");

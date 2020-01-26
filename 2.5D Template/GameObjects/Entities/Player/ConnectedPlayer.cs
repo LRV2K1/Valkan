@@ -60,6 +60,7 @@ class ConnectedPlayer : GameObject
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        Console.WriteLine("input");
         if (inputHelper.KeyPressed(Keys.A))
         {
             MultiplayerManager.Party.Send("Player: " + playerid + " " + "left" + " " + "true", MultiplayerManager.PartyPort, false);

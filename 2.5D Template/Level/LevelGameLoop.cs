@@ -30,7 +30,6 @@ partial class Level : GameObjectLibrary
     //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        //DistributeData();
         //skip entities
         for (int i = 0; i < RootList.Children.Count; i++)
         {
