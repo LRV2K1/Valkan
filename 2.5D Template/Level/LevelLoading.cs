@@ -121,9 +121,34 @@ partial class Level : GameObjectLibrary
 
     private void LoadRemotePlayer()
     {
-        ConnectedPlayer connectedPlayer = new ConnectedPlayer("player2");
-        RootList.Add(connectedPlayer);
-        connectedPlayer.PlayerSetup();
+        ConnectedPlayer connectedPlayer;
+        int i = 1;
+        foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
+        {
+            if (lobbyplayer.ip == Connection.MyIP())
+            {
+                PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), lobbyplayer.character);
+                switch (playerType)
+                {
+                    case PlayerType.Bard:
+                        connectedPlayer = new ConnectedBard("player" + i);
+                        break;
+                    case PlayerType.Warrior:
+                        connectedPlayer = new ConnectedWarrior("player" + i);
+                        break;
+                    case PlayerType.Wizzard:
+                        connectedPlayer = new ConnectedWizzard("player" + i);
+                        break;
+                    default:
+                        connectedPlayer = new ConnectedWarrior("player" + i);
+                        break;
+                };
+                RootList.Add(connectedPlayer);
+                connectedPlayer.PlayerSetup();
+                break;
+            }
+            i++;
+        }
     }
 
     private void LoadEntity(int x, int y, string entitytype)
@@ -188,28 +213,36 @@ partial class Level : GameObjectLibrary
 
         if (MultiplayerManager.Online)
         {
-            Player player2 = new Warrior(false, "player2");
-            entities.Add(player2);
-            player2.SetupPlayer();
-            player2.MovePositionOnGrid(x, y + 1);
-            players.Add(player2.Id);
-        }
-
-        /*
-        if (MultiplayerManager.Online)
-        {
+            int i = 1;
             foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
             {
                 if (lobbyplayer.ishost == false)
                 {
-                    Item item = new Item(id: "player2");
-                    GameObjectList items = GetObject("items") as GameObjectList;
-                    entities.Add(item);
-                    item.MovePositionOnGrid(50, 50);
+                    Player player2;
+                    PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), lobbyplayer.character);
+                    switch (playerType)
+                    {
+                        case PlayerType.Bard:
+                            player2 = new Bard(false, "player" + i);
+                            break;
+                        case PlayerType.Warrior:
+                            player2 = new Warrior(false, "player" + i);
+                            break;
+                        case PlayerType.Wizzard:
+                            player2 = new Wizzard(false, "player" + i);
+                            break;
+                        default:
+                            player2 = new Warrior(false, "player" + i);
+                            break;
+                    }
+                    entities.Add(player2);
+                    player2.SetupPlayer();
+                    player2.MovePositionOnGrid(x, y + 1);
+                    players.Add(player2.Id);
                 }
+                i++;
             }
         }
-        */
         
     }
 

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 class ConnectedBard : ConnectedPlayer
 {
+    public ConnectedBard(string id = "player2")
+      : base(id)
+    {
+
+    }
     protected override void LoadSkills()
     {
         skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_9");

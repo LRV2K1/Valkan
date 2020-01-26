@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 class ConnectedWizzard : ConnectedPlayer
 {
+    public ConnectedWizzard(string id = "player2")
+        : base (id)
+    {
+
+    }
     protected override void LoadSkills()
     {
         skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_6");

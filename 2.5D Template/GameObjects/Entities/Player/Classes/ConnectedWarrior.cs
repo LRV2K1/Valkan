@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 class ConnectedWarrior : ConnectedPlayer
 {
+    public ConnectedWarrior(string id = "player2")
+       : base(id)
+    {
+
+    }
     protected override void LoadSkills()
     {
         skill1 = new SkillTimer("Sprites/Menu/Skills/spr_skill_0");

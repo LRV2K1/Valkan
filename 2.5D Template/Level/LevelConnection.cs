@@ -38,7 +38,6 @@ partial class Level : GameObjectLibrary
         {
             previousdata = data;
             string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
-            //Console.WriteLine(data);
             if (variables[0] == "Entity:")
             {
                 if (connectedEntities.ContainsKey(variables[1]))
