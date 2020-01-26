@@ -84,7 +84,6 @@ partial class Player : MovingEntity
 
     public void GetData(string data)
     {
-        Console.WriteLine(data);
         string[] splitdata = data.Split(' ');
         switch (splitdata[2])
         {

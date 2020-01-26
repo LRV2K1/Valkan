@@ -102,6 +102,7 @@ partial class Player : MovingEntity
             Camera camera = GameWorld.GetObject("camera") as Camera;
             if (camera.FolowOpj == id)
             {
+                Console.WriteLine("change camera");
                 ChangeCamera();
             }
         }
@@ -114,7 +115,7 @@ partial class Player : MovingEntity
         foreach(string id in players)
         {
             Player player = GameWorld.GetObject(id) as Player;
-            if (!player.dead)
+            if (!player.Dead)
             {
                 camera.FolowOpj = player.Id;
                 return;
