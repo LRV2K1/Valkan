@@ -79,7 +79,10 @@ partial class Player : MovingEntity
         }
 
         addstaminatimer = addstaminatimerreset;
-        Stamina++;
+        stamina++; if (MultiplayerManager.Online && !gamehost)
+        {
+            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
+        }
     }
 
     private void CheckDie()
