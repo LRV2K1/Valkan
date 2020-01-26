@@ -193,9 +193,9 @@ partial class Level : GameObjectLibrary
         }
 
         /*
-        if (MultiplayerManager.online && false)
+        if (MultiplayerManager.Online)
         {
-            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.party.playerlist.playerlist)
+            foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
             {
                 if (lobbyplayer.ishost == false)
                 {
@@ -207,6 +207,7 @@ partial class Level : GameObjectLibrary
             }
         }
         */
+        
     }
 
     private void LoadItem(int x, int y, string asset, int boundingy, bool animated, string it)
