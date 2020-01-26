@@ -14,7 +14,7 @@ class AreaHeal : Skill
     int heal;
     float range;
 
-    public AreaHeal(string assetname, int skill, string heal_asset = "", float timer = 1f, int heal = 3, float range = 200f)
+    public AreaHeal(string assetname, int skill, string heal_asset = "", float timer = 1f, int heal = 3, float range = 400)
         : base(assetname, skill)
     {
         this.heal_asset = heal_asset;
@@ -44,7 +44,7 @@ class AreaHeal : Skill
 
     private void HealPlayers(List<string> surroundingentities, Vector2 position)
     {
-        List<Player> surroundingPlayers = SurroundingPlayers(surroundingentities, position, range);
+        List<Player> surroundingPlayers = SurroundingPlayers(position, range);
         foreach(Player player in surroundingPlayers)
         {
             player.Health += heal;
