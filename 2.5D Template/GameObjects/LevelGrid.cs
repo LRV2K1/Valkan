@@ -188,7 +188,11 @@ class LevelGrid : GameObjectGrid
         List<string> entities = ActiveEnities();
         for (int i = 0; i < entities.Count; i++)
         {
-            (GameWorld.GetObject(entities[i]) as Entity).Update(gameTime);
+            Entity entity = GameWorld.GetObject(entities[i]) as Entity;
+            if (entity != null)
+            {
+                entity.Update(gameTime);
+            }
         }
     }
 
