@@ -63,11 +63,18 @@ abstract partial class Entity : AnimatedGameObject
         NewHost();
     }
 
-    public virtual void SendData()
+    public virtual void SendData(string data = "")
     {
         if (Current != null)
         {
-            MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + velocity.X + " " + velocity.Y +" " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, MultiplayerManager.PartyPort, false);
+            if (data == "")
+            {
+                MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + velocity.X + " " + velocity.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, MultiplayerManager.PartyPort, false);
+            }
+            else
+            {
+                MultiplayerManager.Party.Send("Entity: " + id + " " + data, MultiplayerManager.PartyPort, false);
+            }
         }
     }
 
@@ -107,11 +114,11 @@ abstract partial class Entity : AnimatedGameObject
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
-        if (MultiplayerManager.Online)
+        if (MultiplayerManager.Online && Current != null)
         {
             if (Current != null)
             {
-                MultiplayerManager.Party.Send("Entity: " + id + " remove", MultiplayerManager.PartyPort, false);
+                SendData("remove");
             }
         }
     }

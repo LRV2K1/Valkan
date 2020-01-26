@@ -32,19 +32,17 @@ class ConnectedEntity : Entity
         //check if on new tile
         if (levelGrid.GridPosition(position) != gridpos)
         {
-            Console.WriteLine("test1");
             drawHost = levelGrid.NewPassenger(position, gridpos, this, drawHost);
             gridpos = levelGrid.GridPosition(position);
             drawgridpos = levelGrid.DrawGridPosition(position);
         }
         else if (drawHost != "")
         {
-            Console.WriteLine("test2");
             (GameWorld.GetObject(drawHost) as Tile).CheckDrawPassengerPosition(this);
         }
     }
 
-    public override void SendData() { }
+    public override void SendData(string data = "") { }
 
     public void ReceiveData(string data)
     {
