@@ -20,6 +20,7 @@ partial class Enemy : MovingEntity
     protected float startdespawntimer = 10;
 
     protected bool input;
+    protected string target;
 
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 60, weight, layer, id)
@@ -91,8 +92,8 @@ partial class Enemy : MovingEntity
         
         if (InRange() && walking_anim) // als de player in bereik is zal de ai bewegen
         {
-            Player player = GameWorld.GetObject("player") as Player;
-            PathFinding(player.GridPos, gameTime);
+            Vector2 goal = (GameWorld.GetObject(target) as Entity).GridPos;
+            PathFinding(goal, gameTime);
             MovePath(gameTime);
         }
         else if (!InRange())
@@ -200,15 +201,20 @@ partial class Enemy : MovingEntity
 
     bool InRange()
     {
-        bool range = false;
-        Enemy enemy = this;
-        Player player = GameWorld.GetObject("player") as Player;
-        float distance = Vector2.Distance(this.GridPos, player.GridPos);
+        List<string> players = (GameWorld as Level).PlayerList;
+        float targetDistance = Vector2.Distance(this.GridPos, (GameWorld.GetObject(target)as Entity).GridPos);
+        foreach (string id in players)
+        {
+            Player player = GameWorld.GetObject(id) as Player;
+            float distance = Vector2.Distance(this.GridPos, player.GridPos);
+            if (targetDistance > distance)
+            {
+                target = player.Id;
+                break;
+            }
+        }
 
-        if (distance < 15)
-            range = true;
-
-        return range;
+        return targetDistance < 15;
     }
 
     public override void RemoveSelf()
@@ -218,4 +224,3 @@ partial class Enemy : MovingEntity
     }
 
 }
-

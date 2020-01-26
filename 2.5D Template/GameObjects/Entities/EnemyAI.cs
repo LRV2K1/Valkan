@@ -228,7 +228,7 @@ partial class Enemy: MovingEntity
             return true;
         }
 
-        Player player = GameWorld.GetObject("player") as Player;
+        Player player = GameWorld.GetObject(target) as Player;
         if (player.GridPos.X < start.position.X - 1 || player.GridPos.X > start.position.X + 1 || player.GridPos.Y < start.position.Y - 1 || player.GridPos.Y > start.position.Y + 1)
         {
             return true;
