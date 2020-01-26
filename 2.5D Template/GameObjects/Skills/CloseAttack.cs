@@ -36,7 +36,7 @@ class CloseAttack : Skill
         base.Use(timer);
         player.Stamina -= 20;
         player.SwitchAnimation("attack", "B");
-        GameEnvironment.AssetManager.PlaySound("SFX/Player/Swoosh");
+        GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Swoosh");
         MakeProjectile(player.GlobalPosition);
     }
 

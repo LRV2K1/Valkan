@@ -62,17 +62,17 @@ class ProjectileAttack : Skill
 
         if (prj_asset == "Sprites/Items/Projectiles/spr_ice_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Ice_Shoot");
             explosionsound = "SFX/Player/Ice_Explosion";
         }
         else if (prj_asset == "Sprites/Items/Projectiles/spr_fire_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Fire_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Fire_Shoot");
             explosionsound = "SFX/Player/Fire_Explosion";
         }
         else if (prj_asset == "Sprites/Items/Projectiles/spr_rock_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Ice_Shoot");
         }
         else
         {

@@ -25,7 +25,7 @@ class AreaHeal : Skill
 
     public override void Use(float timer = 2)
     {
-        GameEnvironment.AssetManager.PlaySound("SFX/Player/Bard_Heal");
+        GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Bard_Heal");
         base.Use(resettimer);
         Player player = parent as Player;
         player.Stamina -= 20;

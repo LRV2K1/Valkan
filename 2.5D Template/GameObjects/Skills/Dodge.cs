@@ -26,7 +26,7 @@ class Dodge : Skill
         Player player = parent as Player;
         if (button && timer.Ready && player.Stamina >= 20)
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Swoosh");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Swoosh");
             Use(resettimer);
         }
     }

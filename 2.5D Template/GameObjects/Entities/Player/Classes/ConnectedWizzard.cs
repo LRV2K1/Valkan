@@ -14,10 +14,11 @@ class ConnectedWizzard : ConnectedPlayer
         skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_8");
     }
 
-    protected override void SetStats()
+    protected override void LoadStats()
     {
         maxhealth = 60;
         MaxStamina = 120;
+        playerType = PlayerType.Wizzard;
     }
 }
 

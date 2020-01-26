@@ -13,6 +13,8 @@ class ConnectedPlayer : GameObject
 
     protected int health, stamina;
     protected int maxhealth, maxstamina;
+    string die_sound, damage_sound;
+    protected PlayerType playerType;
 
     bool die, dead;
     protected SkillTimer skill1, skill2, skill3;
@@ -21,18 +23,23 @@ class ConnectedPlayer : GameObject
         : base(0, "player")
     {
         playerid = id;
+        LoadStats();
         SetStats();
-        health = maxhealth;
-        stamina = maxstamina;
-
         LoadSkills();
-        SetupSkills();
+        SetupPlayer();
     }
 
-    protected virtual void SetStats()
+    protected virtual void LoadStats()
     {
         maxhealth = 100;
         MaxStamina = 150;
+        playerType = PlayerType.Warrior;
+    }
+
+    protected void SetStats()
+    {
+        health = maxhealth;
+        stamina = maxstamina;
     }
 
     protected virtual void LoadSkills()
@@ -42,11 +49,28 @@ class ConnectedPlayer : GameObject
         skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_5");
     }
 
-    private void SetupSkills()
+    private void SetupPlayer()
     {
         skill1.Position = new Vector2(GameEnvironment.Screen.X / 2 - skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
         skill2.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y - skill1.Width / 2);
         skill3.Position = new Vector2(GameEnvironment.Screen.X / 2 + skill1.Width * 2, GameEnvironment.Screen.Y - skill1.Width / 2);
+        /*
+        string startpath = "SFX/Player/";
+        if (playerType == PlayerType.Warrior)
+        {
+            startpath += "Warrior_";
+        }
+        else if (playerType == PlayerType.Wizzard)
+        {
+            startpath += "Mage_";
+        }
+        else
+        {
+            startpath += "Bard_";
+        }
+        die_sound = startpath + "Death";
+        damage_sound = startpath + "Damage";
+        */
     }
 
     public void PlayerSetup()
@@ -162,7 +186,7 @@ class ConnectedPlayer : GameObject
         if (health <= 0 && !die)
         {
             die = true;
-            //GameEnvironment.AssetManager.PlaySound(die_sound);
+            //GameEnvironment.AssetManager.PlayPartySound(die_sound);
             MediaPlayer.Stop();
             velocity = Vector2.Zero;
             (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
@@ -176,8 +200,8 @@ class ConnectedPlayer : GameObject
         {
             if (value < health)
             {
-                //GameEnvironment.AssetManager.PlaySound(damage_sound);
-                GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                //GameEnvironment.AssetManager.PlayPartySound(damage_sound);
+                GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Thud");
             }
             health = value;
 

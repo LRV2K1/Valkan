@@ -122,7 +122,7 @@ public class ConnectionParty : Connection
         bool log = true;
         if (playerlist.IsHost(MyIP())) //data for host only
         {
-            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:")
+            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:" || variables[0] == "Sound:")
             {
                 log = false;
             }
@@ -172,7 +172,7 @@ public class ConnectionParty : Connection
         }
         else //data for everyone but host
         {
-            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:")
+            if (variables[0] == "Entity:" || variables[0] == "Camera:" || variables[0] == "Player:" || variables[0] == "CPlayer:" || variables[0] == "Sound:")
             {
                 log = false;
             }

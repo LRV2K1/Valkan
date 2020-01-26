@@ -14,10 +14,11 @@ class ConnectedWarrior : ConnectedPlayer
         skill3 = new SkillTimer("Sprites/Menu/Skills/spr_skill_5");
     }
 
-    protected override void SetStats()
+    protected override void LoadStats()
     {
         maxhealth = 100;
         MaxStamina = 150;
+        playerType = PlayerType.Warrior;
     }
 }
 

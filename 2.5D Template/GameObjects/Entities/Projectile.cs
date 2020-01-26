@@ -58,10 +58,10 @@ class Projectile : Item
                 if (!enemy.Dead && HitBox.Intersects(enemy.BoundingBox))
                 {
                     enemy.Health -= damage;
-                    GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                    GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Thud");
                     if (enemy.Health > 0)
                     {
-                        GameEnvironment.AssetManager.PlaySound(enemy.Damage_Sound);
+                        GameEnvironment.AssetManager.PlayPartySound(enemy.Damage_Sound);
                     }
                     damaged = true;                    
                 }
@@ -108,7 +108,7 @@ class Projectile : Item
             particleEffect.Origin += offsetposition;
             (GameWorld.GetObject("items") as GameObjectList).Add(particleEffect);
             particleEffect.Reset();
-            GameEnvironment.AssetManager.PlaySound(explosionsound);
+            GameEnvironment.AssetManager.PlayPartySound(explosionsound);
         }
         RemoveSelf();
     }

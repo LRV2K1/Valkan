@@ -49,18 +49,27 @@ partial class Level : GameObjectLibrary
                 {
                     AddConnectedEntity(previousdata, variables[1]);
                 }
+                return;
             }
             if (variables[0] == "Camera:")
             {
                 (GetObject("camera") as Camera).GetData(previousdata);
+                return;
             }
             if (variables[0] == "Player:")
             {
                 (GetObject(variables[1]) as Player).GetData(previousdata);
+                return;
             }
             if (variables[0] == "CPlayer:")
             {
                 (GetObject("player") as ConnectedPlayer).GetData(previousdata);
+                return;
+            }
+            if (variables[0] == "Sound:")
+            {
+                GameEnvironment.AssetManager.PlaySound(variables[1]);
+                return;
             }
         }
     }

@@ -91,7 +91,7 @@ partial class Player : MovingEntity
         {
             die = true;
             SwitchAnimation("die", "D");
-            GameEnvironment.AssetManager.PlaySound(die_sound);
+            GameEnvironment.AssetManager.PlayPartySound(die_sound);
             if (gamehost)
             {
                 MediaPlayer.Stop();
@@ -139,8 +139,8 @@ partial class Player : MovingEntity
 
             if (value < health)
             {
-                GameEnvironment.AssetManager.PlaySound(damage_sound);
-                GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                GameEnvironment.AssetManager.PlayPartySound(damage_sound);
+                GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Thud");
             }
             health = value;
             if (MultiplayerManager.Online && !gamehost)

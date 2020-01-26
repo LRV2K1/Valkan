@@ -64,7 +64,7 @@ class TitleScreenState : GameObjectLibrary
         else if (exitButton.Pressed)
         {
             GameEnvironment.ScreenFade.TransitionToScene("exit");
-            GameEnvironment.AssetManager.PlaySound("SFX/Menu/Quit");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Menu/Quit");
         }
     }
 

@@ -30,7 +30,7 @@ class BlockHold : Skill
             {
                 player.Stamina -= 2;
                 base.Use(staminatimer);
-                GameEnvironment.AssetManager.PlaySound("SFX/Player/Magic_Shield");
+                GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Magic_Shield");
             }
             if (shield == null && block_asset != "")
             {

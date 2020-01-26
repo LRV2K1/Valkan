@@ -44,6 +44,27 @@ public class AssetManager
         return tex;
     }
 
+    public void PlayPartySound(string assetName)
+    {
+        if (assetName == "")
+        {
+            return;
+        }
+        try
+        {
+            SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
+            snd.Play();
+            if (MultiplayerManager.Online)
+            {
+                MultiplayerManager.Party.Send("Sound: " + assetName, MultiplayerManager.PartyPort, false);
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
     public void PlaySound(string assetName)
     {
         if (assetName == "")

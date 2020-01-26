@@ -36,7 +36,7 @@ class SpeedBuff : Skill
 
     public override void Use(float timer = 2)
     {
-        GameEnvironment.AssetManager.PlaySound("SFX/Player/Bard_Speed");
+        GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Bard_Speed");
         base.Use(resettimer);
         Player player = parent as Player;
         player.Stamina -= 30;

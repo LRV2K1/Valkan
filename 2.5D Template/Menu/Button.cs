@@ -44,7 +44,7 @@ class Button : SpriteGameObject
         if (pressed)
         {
             //It could play a sound here, but we've not yet made a sound ourselves. #copyright
-            GameEnvironment.AssetManager.PlaySound("SFX/Menu/Button_Press");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Menu/Button_Press");
         }
     }
 
