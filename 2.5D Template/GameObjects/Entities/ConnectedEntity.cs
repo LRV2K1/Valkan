@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 class ConnectedEntity : Entity
 {
@@ -28,6 +29,25 @@ class ConnectedEntity : Entity
     {
         base.Update(gameTime);
         origin = connectedOrigin;
+    }
+
+    public override void NewHost()
+    {
+        //become a passenger of a tile
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //check if on new tile
+        if (levelGrid.GridPosition(position) != gridpos)
+        {
+            Console.WriteLine("test1");
+            drawHost = levelGrid.NewPassenger(position, gridpos, this, drawHost);
+            gridpos = levelGrid.GridPosition(position);
+            drawgridpos = levelGrid.DrawGridPosition(position);
+        }
+        else if (drawHost != "")
+        {
+            Console.WriteLine("test2");
+            (GameWorld.GetObject(drawHost) as Tile).CheckDrawPassengerPosition(this);
+        }
     }
 
     public override void SendData() { }
@@ -71,6 +91,10 @@ class ConnectedEntity : Entity
         {
             NewAnimation(splitdata[8], splitdata[9], splitdata[10]);
         }
+        if (drawHost == "" && GameWorld != null)
+        {
+            NewHost();
+        }
     }
 
     private void SwitchAnimation(string animation)
@@ -88,9 +112,8 @@ class ConnectedEntity : Entity
         SwitchAnimation(animation);
     }
 
-    public override void PlayAnimation(string id, bool isBackWards = false)
+    protected override void SetAnimationData()
     {
-        base.PlayAnimation(id, isBackWards);
         origin = connectedOrigin;
     }
 

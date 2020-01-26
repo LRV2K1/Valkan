@@ -119,11 +119,16 @@ abstract partial class Entity : AnimatedGameObject
     public override void PlayAnimation(string id, bool isBackWards = false)
     {
         base.PlayAnimation(id, isBackWards);
-        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
+        SetAnimationData();
         if (MultiplayerManager.Online) //send data if online
         {
             SendData();
         }
+    }
+
+    protected virtual void SetAnimationData()
+    {
+        origin = new Vector2(sprite.Width / 2, sprite.Height - BoundingBox.Height / 2);
     }
 
     public override Rectangle BoundingBox

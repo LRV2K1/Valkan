@@ -38,7 +38,7 @@ partial class Level : GameObjectLibrary
         {
             previousdata = data;
             string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
-            Console.WriteLine(data);
+            //Console.WriteLine(data);
             if (variables[0] == "Entity:")
             {
                 if (connectedEntities.ContainsKey(variables[1]))
@@ -67,7 +67,7 @@ partial class Level : GameObjectLibrary
 
     public void AddConnectedEntity(string data, string id)
     {
-        Console.WriteLine("make object");
+        //Console.WriteLine("make object");
         ConnectedEntity entity = new ConnectedEntity(data);
         //RootList.Add(entity);
         (GetObject("entities") as GameObjectList).Add(entity);
