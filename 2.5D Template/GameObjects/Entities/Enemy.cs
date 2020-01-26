@@ -112,6 +112,7 @@ partial class Enemy : MovingEntity
         if (health <= 0)
         {
             die = true;
+            SendData();
             if (die_anim)
             {
                 SwitchAnimation("die", "D");

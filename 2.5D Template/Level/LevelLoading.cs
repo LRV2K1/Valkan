@@ -123,13 +123,10 @@ partial class Level : GameObjectLibrary
     {
         ConnectedPlayer connectedPlayer;
         int i = 1;
-        Console.WriteLine(Connection.MyIP());
         foreach (LobbyPlayer lobbyplayer in MultiplayerManager.Party.playerlist.playerlist)
         {
-            Console.WriteLine(lobbyplayer.ip);
             if (lobbyplayer.ip.ToString() == Connection.MyIP().ToString())
             {
-                Console.WriteLine("test");
                 PlayerType playerType = (PlayerType)Enum.Parse(typeof(PlayerType), lobbyplayer.character);
                 switch (playerType)
                 {
