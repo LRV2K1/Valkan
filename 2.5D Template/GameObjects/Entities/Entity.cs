@@ -19,7 +19,6 @@ abstract partial class Entity : AnimatedGameObject
     public Entity(int boundingy, int weight = 10, int layer = 0, string id = "")
         : base(layer, id)
     {
-        gridpos = new Vector2(-1, -1);
         remove = false;
         drawHost = "";
         this.weight = weight;
@@ -102,7 +101,7 @@ abstract partial class Entity : AnimatedGameObject
         {
             host.RemoveDrawPassenger(id);
         }
-        if (gridpos != new Vector2(-1, -1))
+        if (gridpos != null)
         {
             ((GameWorld.GetObject("levelgrid") as LevelGrid).Get((int)gridpos.X, (int)gridpos.Y) as Tile).RemovePassenger(id);
         }
