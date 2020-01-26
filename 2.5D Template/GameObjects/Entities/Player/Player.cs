@@ -156,6 +156,7 @@ partial class Player : MovingEntity
     {
         if (die || dead)
         {
+            inputDirection = Vector2.Zero;
             return;
         }
         if (gamehost)
@@ -251,13 +252,6 @@ partial class Player : MovingEntity
 
     private void Move(GameTime gameTime)
     {
-        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        if (!(overlay.CurrentOverlay is Hud))
-        {
-            velocity = Vector2.Zero;
-            return;
-        }
-
         //check direction and movement
         float totalDir = (float)Math.Sqrt(inputDirection.X * inputDirection.X + inputDirection.Y * inputDirection.Y);
         if (totalDir != 0)
