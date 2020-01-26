@@ -206,4 +206,9 @@ partial class Player : MovingEntity
         get { return selected; }
         set { selected = value; }
     }
+
+    public bool Dead
+    {
+        get { return die; }
+    }
 }

@@ -212,6 +212,10 @@ partial class Enemy : MovingEntity
         foreach (string id in players)
         {
             Player player = GameWorld.GetObject(id) as Player;
+            if (player.Dead)
+            {
+                continue;
+            }
             float distance = Vector2.Distance(this.GridPos, player.GridPos);
             if (targetDistance > distance)
             {
