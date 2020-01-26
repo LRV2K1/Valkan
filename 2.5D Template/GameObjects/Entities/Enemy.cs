@@ -112,12 +112,12 @@ partial class Enemy : MovingEntity
         if (health <= 0)
         {
             die = true;
-            SendData();
             if (die_anim)
             {
                 SwitchAnimation("die", "D");
                 velocity = Vector2.Zero;
                 GameEnvironment.AssetManager.PlayPartySound(die_sound);
+                SendData();
             }
             else
             {

@@ -5,6 +5,7 @@ using System.Net;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 public class ConnectionParty : Connection
 {
@@ -41,6 +42,7 @@ public class ConnectionParty : Connection
                     level.DistributeData(data);
                     timer++;
                 }
+                Thread.Sleep(10);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
