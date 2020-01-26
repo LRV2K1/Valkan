@@ -25,6 +25,8 @@ partial class Enemy : MovingEntity
     public Enemy(string assetname, int boundingy, int weight = 200, int layer = 0, string id = "")
         : base(boundingy, 60, weight, layer, id)
     {
+        target = "";
+
         selected = false;
         dead = false;
         despawntimer = 0;
@@ -202,7 +204,11 @@ partial class Enemy : MovingEntity
     bool InRange()
     {
         List<string> players = (GameWorld as Level).PlayerList;
-        float targetDistance = Vector2.Distance(this.GridPos, (GameWorld.GetObject(target)as Entity).GridPos);
+        float targetDistance = 100;
+        if (target != "")
+        {
+            targetDistance = Vector2.Distance(this.GridPos, (GameWorld.GetObject(target) as Entity).GridPos);
+        }
         foreach (string id in players)
         {
             Player player = GameWorld.GetObject(id) as Player;

@@ -223,7 +223,7 @@ partial class Enemy: MovingEntity
 
     private bool PlayerMoved()
     {
-        if (start == null)
+        if (start == null || target == "")
         {
             return true;
         }
