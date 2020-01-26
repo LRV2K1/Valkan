@@ -172,4 +172,10 @@ class Camera : GameObject
     {
         set { cameraPosition = value; }
     }
+
+    public string FolowOpj
+    {
+        get { return objid; }
+        set { objid = value; }
+    }
 }

@@ -98,6 +98,27 @@ partial class Player : MovingEntity
                 (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
             }
             velocity = Vector2.Zero;
+
+            Camera camera = GameWorld.GetObject("camera") as Camera;
+            if (camera.FolowOpj == id)
+            {
+                ChangeCamera();
+            }
+        }
+    }
+
+    private void ChangeCamera()
+    {
+        Camera camera = GameWorld.GetObject("camera") as Camera;
+        List<string> players = (GameWorld as Level).PlayerList;
+        foreach(string id in players)
+        {
+            Player player = GameWorld.GetObject(id) as Player;
+            if (!player.dead)
+            {
+                camera.FolowOpj = player.Id;
+                return;
+            }
         }
     }
 
