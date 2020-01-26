@@ -150,6 +150,10 @@ partial class Enemy : MovingEntity
             Player player = GameWorld.GetObject(id) as Player;
             if (player != null)
             {
+                if (player.Dead)
+                {
+                    continue;
+                }
                 if (attacked)
                 {
                     if (rectangle.Intersects(player.BoundingBox))
@@ -160,7 +164,7 @@ partial class Enemy : MovingEntity
                 }
                 float distance = Vector2.Distance(player.Position, position);
                 Vector2 directions = new Vector2(Math.Sign(player.Position.X - position.X), Math.Sign(player.Position.Y - position.Y));
-                if (distance < 100 && !player.Dead)
+                if (distance < 100)
                 {
                     attacktimer = resetattacktimer;
                     SwitchAnimation("attack", "B");
