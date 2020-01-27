@@ -18,13 +18,13 @@ class SettingsState : GameObjectLibrary
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
         RootList.Add(titleScreen);
-        fullScreenButton = new Button("Sprites/Menu/Select_Button", 101);
+        fullScreenButton = new Button("Sprites/Menu/FullScreen_Button", 101);
         fullScreenButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - fullScreenButton.Width / 2, (GameEnvironment.Screen.Y - fullScreenButton.Height) / 4);
         RootList.Add(fullScreenButton);
-        volumeUpButton = new Button("Sprites/Menu/Select_Button", 101);
+        volumeUpButton = new Button("Sprites/Menu/VolumeUp_Button", 101);
         volumeUpButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - volumeUpButton.Width / 2, (GameEnvironment.Screen.Y - fullScreenButton.Height) / 8 * 3);
         RootList.Add(volumeUpButton);
-        volumeDownButton = new Button("Sprites/Menu/Select_Button", 101);
+        volumeDownButton = new Button("Sprites/Menu/VolumeDown_Button", 101);
         volumeDownButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - volumeDownButton.Width / 2, (GameEnvironment.Screen.Y - fullScreenButton.Height) / 2);
         RootList.Add(volumeDownButton);
         returnButton = new Button("Sprites/Menu/Return_Button", 101);
