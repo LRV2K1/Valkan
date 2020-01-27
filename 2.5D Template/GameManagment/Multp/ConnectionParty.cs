@@ -23,11 +23,11 @@ public class ConnectionParty : Connection
         timout = 0;
         level = null;
         playerlist = new PlayerList();
-        //ar_ = udpclient.BeginReceive(Receive, new object());
+        ar_ = udpclient.BeginReceive(Receive, new object());
         Console.WriteLine("Created party connection");
     }
 
-    /*private void Receive(IAsyncResult ar)
+    private void Receive(IAsyncResult ar)
     {
         try
         {
@@ -48,7 +48,7 @@ public class ConnectionParty : Connection
         catch
         {
         }
-    }*/
+    }
 
     public void Update(GameTime gameTime) //manage unexpected disconnect
     {
