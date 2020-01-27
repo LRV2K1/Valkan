@@ -65,7 +65,7 @@ abstract partial class Entity : AnimatedGameObject
 
     public virtual void SendData(string data = "")
     {
-        if (Current != null)
+        if (Current != null && MultiplayerManager.Online)
         {
             if (data == "")
             {
