@@ -37,7 +37,6 @@ class TitleScreenState : GameObjectLibrary
     {
         if (firstTime)
         {
-            MediaPlayer.Volume = 0.7f;
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/Sad");
             firstTime = false;
         }

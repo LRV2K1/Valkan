@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
 
 public class GameStart : GameEnvironment
 {
@@ -46,7 +47,12 @@ public class GameStart : GameEnvironment
         framecounter = new TextGameObject("Fonts/Hud");
         physicscounter = new TextGameObject("Fonts/Hud");
         physicscounter.Position = new Vector2(0, 30);
+        MediaPlayer.Volume = 0.7f;
+    }
 
+    public static void ChangeAudio(float increase)
+    {
+        MediaPlayer.Volume += increase;
     }
 
     protected override void Update(GameTime gameTime)
