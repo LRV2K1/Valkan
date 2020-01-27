@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 class ProjectileAttack : Skill
 {
-    float speed = 500;
+    float speed = 800;
     int damage;
     float resettimer;
 
@@ -62,17 +62,17 @@ class ProjectileAttack : Skill
 
         if (prj_asset == "Sprites/Items/Projectiles/spr_ice_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Ice_Shoot");
             explosionsound = "SFX/Player/Ice_Explosion";
         }
         else if (prj_asset == "Sprites/Items/Projectiles/spr_fire_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Fire_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Fire_Shoot");
             explosionsound = "SFX/Player/Fire_Explosion";
         }
         else if (prj_asset == "Sprites/Items/Projectiles/spr_rock_")
         {
-            GameEnvironment.AssetManager.PlaySound("SFX/Player/Ice_Shoot");
+            GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Ice_Shoot");
         }
         else
         {
@@ -89,10 +89,11 @@ class ProjectileAttack : Skill
             animated = true;
         }
 
-        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 1, prj_ex_asset);
+        Projectile projectile = new Projectile(prj_sprite, animated, damage, new Vector2(0, 50) , explosionsound, 0.65f, prj_ex_asset);
         projectile.Position = position;
         SetProjectileSpeed(projectile);
-        GameWorld.RootList.Add(projectile);
+        (GameWorld.GetObject("items") as GameObjectList).Add(projectile);
+        projectile.Reset();
     }
 
     private void SetProjectileSpeed(Projectile projectile)

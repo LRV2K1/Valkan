@@ -29,7 +29,7 @@ enum PlayerType
 
 partial class Player : MovingEntity
 {
-    protected bool host;
+    protected bool gamehost;
     protected float speed = 400;
     protected bool selected;
     protected int health, stamina;
@@ -60,7 +60,7 @@ partial class Player : MovingEntity
     {
         inmovible = false;
 
-        this.host = host;
+        this.gamehost = host;
         name = "Valkan";
         playerID = 1;
         playerlevel = 1;
@@ -84,7 +84,6 @@ partial class Player : MovingEntity
 
     public void GetData(string data)
     {
-        Console.WriteLine(data);
         string[] splitdata = data.Split(' ');
         switch (splitdata[2])
         {
@@ -157,9 +156,10 @@ partial class Player : MovingEntity
     {
         if (die || dead)
         {
+            inputDirection = Vector2.Zero;
             return;
         }
-        if (host)
+        if (gamehost)
         {
             ControlMove(inputHelper);
 
@@ -186,12 +186,35 @@ partial class Player : MovingEntity
             RegenStamina(gameTime);
         }
         base.Update(gameTime);
+        if (!die && !dead)
+        {
+            CheckPlayerOutOfScreen();
+        }
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         base.Draw(gameTime, spriteBatch);
         skill1.Draw(gameTime, spriteBatch);
+    }
+
+    private void CheckPlayerOutOfScreen()
+    {
+        Camera camera = GameWorld.GetObject("camera") as Camera;
+        Vector2 depth = camera.OutOfScreenDepth(id);
+        if (depth == Vector2.Zero)
+        {
+            return;
+        }
+        if (depth.X > 100 || depth.Y > 100)
+        {
+            Entity entity = GameWorld.GetObject(camera.FolowOpj) as Entity;
+            MovePositionOnGrid((int)entity.GridPos.X, (int)entity.GridPos.Y + 1);
+        }
+        else
+        {
+            position += depth;
+        }
     }
 
     private void ControlMove(InputHelper inputHelper)
@@ -252,13 +275,6 @@ partial class Player : MovingEntity
 
     private void Move(GameTime gameTime)
     {
-        OverlayManager overlay = GameWorld.GetObject("overlay") as OverlayManager;
-        if (!(overlay.CurrentOverlay is Hud))
-        {
-            velocity = Vector2.Zero;
-            return;
-        }
-
         //check direction and movement
         float totalDir = (float)Math.Sqrt(inputDirection.X * inputDirection.X + inputDirection.Y * inputDirection.Y);
         if (totalDir != 0)
@@ -417,6 +433,6 @@ partial class Player : MovingEntity
 
     public bool Host
     {
-        get { return host; }
+        get { return gamehost; }
     }
 }

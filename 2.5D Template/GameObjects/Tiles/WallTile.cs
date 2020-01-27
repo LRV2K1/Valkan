@@ -42,29 +42,30 @@ class WallTile : Tile
     //set boundingbox
     private void SetBoundingBox()
     {
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
         int i = sprite.SheetIndex;
-        if ((i%3 == 0 && i < 16) || i == 23 || i == 27 || i == 29 || i == 30)
+
+        if (i == 3 || i == 27 || i == 7 || i == 11)
         {
-            if ( i == 3 || i == 27)
-            {
-                boundingbox.Width /= 2;
-            }
-            else if (i == 6 || i == 23)
-            {
-                boundingbox.Height /= 2;
-            }
-            else if (i == 9 || i == 29)
-            {
-                boundingbox.Height /= 2;
-                boundingbox.Y += boundingbox.Height;
-            }
-            else if (i == 12 || i == 30)
-            {
-                boundingbox.Width /= 2;
-                boundingbox.X += boundingbox.Width;
-            }
+            boundingbox.Width /= 2;
         }
+
+        if (i == 6 || i == 23 || i == 7 || i == 14)
+        {
+            boundingbox.Height /= 2;
+        }
+
+        if (i == 9 || i == 29 || i == 11 || i == 13)
+        {
+            boundingbox.Height /= 2;
+            boundingbox.Y += boundingbox.Height;
+        }
+
+        if (i == 12 || i == 30 || i == 13 || i == 14)
+        {
+            boundingbox.Width /= 2;
+            boundingbox.X += boundingbox.Width;
+        }
+
     }
     //autotiling alogrithm
     public override int CalculateSurroundingStraightTiles()

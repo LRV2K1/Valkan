@@ -34,9 +34,9 @@ abstract partial class Entity : AnimatedGameObject
     {
         LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
         //check surrounding tiles
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)gridpos.X - 2; x <= (int)gridpos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)gridpos.Y - 2; y <= (int)gridpos.Y + 2; y++)
             {
                 TileType tileType = tiles.GetTileType(x, y);
                 Tile currentTile = tiles.Get(x, y) as Tile;
@@ -120,9 +120,9 @@ abstract partial class Entity : AnimatedGameObject
 
         LevelGrid tiles = GameWorld.GetObject("levelgrid") as LevelGrid;
 
-        for (int x = (int)gridPos.X - 2; x <= (int)gridPos.X + 2; x++)
+        for (int x = (int)gridpos.X - 2; x <= (int)gridpos.X + 2; x++)
         {
-            for (int y = (int)gridPos.Y - 2; y <= (int)gridPos.Y + 2; y++)
+            for (int y = (int)gridpos.Y - 2; y <= (int)gridpos.Y + 2; y++)
             {
                 Tile currentTile = tiles.Get(x, y) as Tile;
 

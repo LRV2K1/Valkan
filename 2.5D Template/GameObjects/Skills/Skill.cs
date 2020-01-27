@@ -39,21 +39,17 @@ class Skill : GameObject
 
     }
 
-    protected List<Player> SurroundingPlayers(List<string> surroundingentities, Vector2 position, float range)
+    protected List<Player> SurroundingPlayers(Vector2 position, float range)
     {
         List<Player> surroundingplayers = new List<Player>();
-        foreach (string id in surroundingentities)
+        List<string> players = (GameWorld as Level).PlayerList;
+        foreach (string id in players)
         {
-            if (GameWorld.GetObject(id) is Player)
+            Player player = GameWorld.GetObject(id) as Player;
+            float distance = Vector2.Distance(position, player.GlobalPosition);
+            if (distance <= range && !player.Dead)
             {
-                Player player = GameWorld.GetObject(id) as Player;
-                float dx = player.GlobalPosition.X - position.X;
-                float dy = player.GlobalPosition.Y - position.Y;
-                double distance = Math.Sqrt(dx * dx + dy * dy);
-                if (distance <= range)
-                {
-                    surroundingplayers.Add(player);
-                }
+                surroundingplayers.Add(player);
             }
         }
         return surroundingplayers;
@@ -87,7 +83,8 @@ class Skill : GameObject
         {
             ParticleEffect particleEffect = new ParticleEffect(asset);
             particleEffect.Position = position;
-            GameWorld.RootList.Add(particleEffect);
+            (GameWorld.GetObject("items") as GameObjectList).Add(particleEffect);
+            particleEffect.Reset();
         }
     }
 

@@ -30,14 +30,15 @@ class BlockHold : Skill
             {
                 player.Stamina -= 2;
                 base.Use(staminatimer);
-                GameEnvironment.AssetManager.PlaySound("SFX/Player/Magic_Shield");
+                GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Magic_Shield");
             }
             if (shield == null && block_asset != "")
             {
                 shield = new ParticleEffect(block_asset, true);
                 shield.Position = GlobalPosition;
                 shield.Origin += new Vector2(0, shield.Sprite.Height / 4);
-                GameWorld.RootList.Add(shield);
+                (GameWorld.GetObject("items") as GameObjectList).Add(shield);
+                shield.Reset();
                 player.InMovible = true;
             }
         }

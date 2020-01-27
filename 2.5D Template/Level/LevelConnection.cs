@@ -38,7 +38,6 @@ partial class Level : GameObjectLibrary
         {
             previousdata = data;
             string[] variables = MultiplayerManager.Party.Data.Split(' '); //split data in Type, ID, posX, posY respectively
-            Console.WriteLine(data);
             if (variables[0] == "Entity:")
             {
                 if (connectedEntities.ContainsKey(variables[1]))
@@ -49,32 +48,37 @@ partial class Level : GameObjectLibrary
                 {
                     AddConnectedEntity(previousdata, variables[1]);
                 }
+                return;
             }
             if (variables[0] == "Camera:")
             {
                 (GetObject("camera") as Camera).GetData(previousdata);
+                return;
             }
             if (variables[0] == "Player:")
             {
                 (GetObject(variables[1]) as Player).GetData(previousdata);
+                return;
             }
             if (variables[0] == "CPlayer:")
             {
                 (GetObject("player") as ConnectedPlayer).GetData(previousdata);
+                return;
+            }
+            if (variables[0] == "Sound:")
+            {
+                GameEnvironment.AssetManager.PlaySound(variables[1]);
+                return;
             }
         }
     }
 
     public void AddConnectedEntity(string data, string id)
     {
-        Console.WriteLine("make object");
         ConnectedEntity entity = new ConnectedEntity(data);
-        //RootList.Add(entity);
         (GetObject("entities") as GameObjectList).Add(entity);
         connectedEntities.Add(id, entity.Id);
         entity.NewHost();
-        //SpriteGameObject test = new SpriteGameObject(entity.Sprite.AssetName, 102);
-        //RootList.Add(test);
     }
 
     public void RemoveConnectedEntity(string connectedid)

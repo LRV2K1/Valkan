@@ -16,7 +16,7 @@ class SettingsState : GameObjectLibrary
     public SettingsState()
     {
         //Load all menu sprites (e.g. background images, overlay images, button sprites)
-        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Overlay/Menu_BG_Grey", 100, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Menu/Screen1", 100, "background");
         RootList.Add(titleScreen);
         startButton = new Button("Sprites/Menu/Select_Button", 101);
         startButton.Position = new Vector2((GameEnvironment.Screen.X - startButton.Width) / 16 * 13, (GameEnvironment.Screen.Y - startButton.Height) / 4);
@@ -31,11 +31,6 @@ class SettingsState : GameObjectLibrary
 
     public override void Update(GameTime gameTime)
     {
-        if(firstTime)
-        {
-            GameEnvironment.AssetManager.PlayMusic("Soundtracks/Valkan's Fate - Battle Theme(Garageband)");
-            firstTime = false;
-        }
         base.Update(gameTime);
     }
 

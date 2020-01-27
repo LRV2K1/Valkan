@@ -1,5 +1,5 @@
 idle/4
 attack/4/15
-walking/8/350
+walking/8/450
 die/8
 health/20

@@ -11,26 +11,25 @@ partial class Level : GameObjectLibrary
     bool first = false;
     public override void Update(GameTime gameTime)
     {
-        if (!first && MultiplayerManager.Online && GameEnvironment.GameSettingsManager.GetValue("host") == "true")
-        {
-            SetupEnitites();
-            first = true;
-        }
         //DistributeData();
         for (int i = 0; i < RootList.Children.Count; i++)
         {
-            if (RootList.Children[i] == "entities")
+            if (RootList.Children[i] == "entities") 
             {
                 continue;
             }
             GetObject(RootList.Children[i]).Update(gameTime);
+        }
+        if (!first && MultiplayerManager.Online && GameEnvironment.GameSettingsManager.GetValue("host") == "true")
+        {
+            SetupEnitites();
+            first = true;
         }
     }
 
     //loops the level
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        //DistributeData();
         //skip entities
         for (int i = 0; i < RootList.Children.Count; i++)
         {

@@ -80,120 +80,6 @@
 #begin PlayerStats/Stats.txt
 /copy:PlayerStats/Stats.txt
 
-#begin SFX/Editor/Editor_Place.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Editor/Editor_Place.wav
-
-#begin SFX/Menu/Button_Press.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Menu/Button_Press.wav
-
-#begin SFX/Menu/Quit.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Menu/Quit.wav
-
-#begin SFX/Player/Bard_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Damage.wav
-
-#begin SFX/Player/Bard_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Death.wav
-
-#begin SFX/Player/Bard_Heal.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Heal.wav
-
-#begin SFX/Player/Bard_Speed.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Bard_Speed.wav
-
-#begin SFX/Player/Fire_Explosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Fire_Explosion.wav
-
-#begin SFX/Player/Fire_Shoot.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Fire_Shoot.wav
-
-#begin SFX/Player/Ice_Explosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Ice_Explosion.wav
-
-#begin SFX/Player/Ice_Shoot.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Ice_Shoot.wav
-
-#begin SFX/Player/Mage_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Mage_Damage.wav
-
-#begin SFX/Player/Mage_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Mage_Death.wav
-
-#begin SFX/Player/Magic_Shield.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Magic_Shield.wav
-
-#begin SFX/Player/Swoosh.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Swoosh.wav
-
-#begin SFX/Player/Thud.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Thud.wav
-
-#begin SFX/Player/Warrior_Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Damage.wav
-
-#begin SFX/Player/Warrior_Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Death.wav
-
-#begin SFX/Player/Warrior_Shield.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SFX/Player/Warrior_Shield.wav
-
 #begin Soundtracks/Sad.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -242,26 +128,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Antilion.png
 
-#begin Sprites/Enemy/Antilion/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Attack.wav
-
-#begin Sprites/Enemy/Antilion/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Damage.wav
-
 #begin Sprites/Enemy/Antilion/data.txt
 /copy:Sprites/Enemy/Antilion/data.txt
-
-#begin Sprites/Enemy/Antilion/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Antilion/Death.wav
 
 #begin Sprites/Enemy/Antilion/spr_attack_0@4.png
 /importer:TextureImporter
@@ -647,6 +515,405 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Antilion/spr_walking_7@8.png
 
+#begin Sprites/Enemy/Goblin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin.png
+
+#begin Sprites/Enemy/Goblin/data.txt
+/copy:Sprites/Enemy/Goblin/data.txt
+
+#begin Sprites/Enemy/Goblin/spr_attack_0@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_0@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_1@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_1@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_2@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_2@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_3@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_3@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_4@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_4@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_5@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_5@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_6@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_6@4.png
+
+#begin Sprites/Enemy/Goblin/spr_attack_7@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_attack_7@4.png
+
+#begin Sprites/Enemy/Goblin/spr_die_0@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_0@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_1@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_1@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_2@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_2@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_3@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_3@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_4@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_4@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_5@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_5@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_6@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_6@6.png
+
+#begin Sprites/Enemy/Goblin/spr_die_7@6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_die_7@6.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_0@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_0@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_1@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_1@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_2@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_2@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_3@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_3@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_4@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_4@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_5@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_5@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_6@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_6@4.png
+
+#begin Sprites/Enemy/Goblin/spr_idle_7@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_idle_7@4.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_0@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_0@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_1@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_1@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_2@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_2@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_3@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_3@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_4@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_4@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_5@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_5@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_6@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_6@8.png
+
+#begin Sprites/Enemy/Goblin/spr_walking_7@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Enemy/Goblin/spr_walking_7@8.png
+
 #begin Sprites/Enemy/Grave.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -659,26 +926,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Grave.png
 
-#begin Sprites/Enemy/Grave/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Attack.wav
-
-#begin Sprites/Enemy/Grave/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Damage.wav
-
 #begin Sprites/Enemy/Grave/data.txt
 /copy:Sprites/Enemy/Grave/data.txt
-
-#begin Sprites/Enemy/Grave/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Grave/Death.wav
 
 #begin Sprites/Enemy/Grave/spr_attack_0@4.png
 /importer:TextureImporter
@@ -1076,26 +1325,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Minotaur.png
 
-#begin Sprites/Enemy/Minotaur/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Attack.wav
-
-#begin Sprites/Enemy/Minotaur/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Damage.wav
-
 #begin Sprites/Enemy/Minotaur/data.txt
 /copy:Sprites/Enemy/Minotaur/data.txt
-
-#begin Sprites/Enemy/Minotaur/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Minotaur/Death.wav
 
 #begin Sprites/Enemy/Minotaur/spr_attack_0@4.png
 /importer:TextureImporter
@@ -1493,26 +1724,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Skeleton.png
 
-#begin Sprites/Enemy/Skeleton/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Attack.wav
-
-#begin Sprites/Enemy/Skeleton/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Damage.wav
-
 #begin Sprites/Enemy/Skeleton/data.txt
 /copy:Sprites/Enemy/Skeleton/data.txt
-
-#begin Sprites/Enemy/Skeleton/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Skeleton/Death.wav
 
 #begin Sprites/Enemy/Skeleton/spr_attack_0@4.png
 /importer:TextureImporter
@@ -1910,26 +2123,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Enemy/Zombie.png
 
-#begin Sprites/Enemy/Zombie/Attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Attack.wav
-
-#begin Sprites/Enemy/Zombie/Damage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Damage.wav
-
 #begin Sprites/Enemy/Zombie/data.txt
 /copy:Sprites/Enemy/Zombie/data.txt
-
-#begin Sprites/Enemy/Zombie/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sprites/Enemy/Zombie/Death.wav
 
 #begin Sprites/Enemy/Zombie/spr_attack_0@4.png
 /importer:TextureImporter
@@ -4943,6 +5138,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/spr_castle_0.png
 
+#begin Sprites/Tiles/spr_castle_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_castle_1.png
+
+#begin Sprites/Tiles/spr_castle_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/spr_castle_2.png
+
 #begin Sprites/Tiles/spr_castle_wall_sheet_1@4x8.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -5290,4 +5509,226 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/Trees/spr_tree_4.png
+
+#begin SFX/Editor/Editor_Place.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Editor/Editor_Place.wav
+
+#begin SFX/Menu/Button_Press.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Button_Press.wav
+
+#begin SFX/Menu/Quit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu/Quit.wav
+
+#begin SFX/Player/Bard_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Damage.wav
+
+#begin SFX/Player/Bard_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Death.wav
+
+#begin SFX/Player/Bard_Heal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Heal.wav
+
+#begin SFX/Player/Bard_Speed.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Bard_Speed.wav
+
+#begin SFX/Player/Fire_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Explosion.wav
+
+#begin SFX/Player/Fire_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Fire_Shoot.wav
+
+#begin SFX/Player/Ice_Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Explosion.wav
+
+#begin SFX/Player/Ice_Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Ice_Shoot.wav
+
+#begin SFX/Player/Mage_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Damage.wav
+
+#begin SFX/Player/Mage_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Mage_Death.wav
+
+#begin SFX/Player/Magic_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Magic_Shield.wav
+
+#begin SFX/Player/Swoosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Swoosh.wav
+
+#begin SFX/Player/Thud.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Thud.wav
+
+#begin SFX/Player/Warrior_Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Damage.wav
+
+#begin SFX/Player/Warrior_Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Death.wav
+
+#begin SFX/Player/Warrior_Shield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player/Warrior_Shield.wav
+
+#begin Sprites/Enemy/Antilion/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Attack.wav
+
+#begin Sprites/Enemy/Antilion/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Death.wav
+
+#begin Sprites/Enemy/Antilion/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Antilion/Damage.wav
+
+#begin Sprites/Enemy/Goblin/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Goblin/Attack.wav
+
+#begin Sprites/Enemy/Goblin/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Goblin/Damage.wav
+
+#begin Sprites/Enemy/Goblin/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Goblin/Death.wav
+
+#begin Sprites/Enemy/Grave/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Attack.wav
+
+#begin Sprites/Enemy/Grave/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Damage.wav
+
+#begin Sprites/Enemy/Grave/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Grave/Death.wav
+
+#begin Sprites/Enemy/Minotaur/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Attack.wav
+
+#begin Sprites/Enemy/Minotaur/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Damage.wav
+
+#begin Sprites/Enemy/Minotaur/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Minotaur/Death.wav
+
+#begin Sprites/Enemy/Skeleton/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Attack.wav
+
+#begin Sprites/Enemy/Skeleton/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Damage.wav
+
+#begin Sprites/Enemy/Skeleton/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Skeleton/Death.wav
+
+#begin Sprites/Enemy/Zombie/Attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Attack.wav
+
+#begin Sprites/Enemy/Zombie/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Damage.wav
+
+#begin Sprites/Enemy/Zombie/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sprites/Enemy/Zombie/Death.wav
 

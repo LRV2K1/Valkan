@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 class ConnectedEntity : Entity
 {
@@ -11,26 +12,37 @@ class ConnectedEntity : Entity
     Vector2 connectedOrigin;
     string previousdata;
 
-    Dictionary<string, string> animations;
+    Dictionary<string, string> savedAnimations;
     int animationNumber;
 
     public ConnectedEntity(string data)
         : base(0)
     {
-        animations = new Dictionary<string, string>();
+        savedAnimations = new Dictionary<string, string>();
         animationNumber = 0;
         previousdata = "";
         ReceiveData(data);
         connectedOrigin = Vector2.Zero;
     }
 
-    public override void Update(GameTime gameTime)
+    public override void NewHost()
     {
-        base.Update(gameTime);
-        origin = connectedOrigin;
+        //become a passenger of a tile
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        //check if on new tile
+        if (levelGrid.GridPosition(position) != gridpos)
+        {
+            drawHost = levelGrid.NewPassenger(position, gridpos, this, drawHost);
+            gridpos = levelGrid.GridPosition(position);
+            drawgridpos = levelGrid.DrawGridPosition(position);
+        }
+        else if (drawHost != "")
+        {
+            (GameWorld.GetObject(drawHost) as Tile).CheckDrawPassengerPosition(this);
+        }
     }
 
-    public override void SendData() { }
+    public override void SendData(string data = "") { }
 
     public void ReceiveData(string data)
     {
@@ -51,45 +63,49 @@ class ConnectedEntity : Entity
 
         position = new Vector2(float.Parse(splitdata[2]), float.Parse(splitdata[3]));
         connectedOrigin = new Vector2(float.Parse(splitdata[4]), float.Parse(splitdata[5]));
+        velocity = new Vector2(float.Parse(splitdata[6]), float.Parse(splitdata[7]));
         origin = connectedOrigin;
         if (Current != null)
         {
             if (splitdata[6] != Current.AssetName)
             {
-                if (animations.ContainsKey(splitdata[6]))
+                if (savedAnimations.ContainsKey(splitdata[8]))
                 {
-                    SwitchAnimation(splitdata[6]);
+                    SwitchAnimation(splitdata[8]);
                 }
                 else
                 {
-                    NewAnimation(splitdata[6], splitdata[7], splitdata[8]);
+                    NewAnimation(splitdata[8], splitdata[9], splitdata[10]);
                 }
             }
         }
         else
         {
-            NewAnimation(splitdata[6], splitdata[7], splitdata[8]);
+            NewAnimation(splitdata[8], splitdata[9], splitdata[10]);
+        }
+        if (drawHost == "" && GameWorld != null)
+        {
+            NewHost();
         }
     }
 
     private void SwitchAnimation(string animation)
     {
-        PlayAnimation(animations[animation]);
+        PlayAnimation(savedAnimations[animation]);
     }
 
     private void NewAnimation(string animation, string islooping, string isbackandforth)
     {
         bool isLooping = bool.Parse(islooping);
         bool isBackAndForth = bool.Parse(isbackandforth);
-        animations.Add(animation, animationNumber.ToString());
+        savedAnimations.Add(animation, animationNumber.ToString());
         animationNumber++;
-        LoadAnimation(animation, animations[animation], isLooping, isBackAndForth);
+        LoadAnimation(animation, savedAnimations[animation], isLooping, isBackAndForth);
         SwitchAnimation(animation);
     }
 
-    public override void PlayAnimation(string id, bool isBackWards = false)
+    protected override void SetAnimationData()
     {
-        base.PlayAnimation(id, isBackWards);
         origin = connectedOrigin;
     }
 
@@ -97,13 +113,7 @@ class ConnectedEntity : Entity
 
     public override void RemoveSelf()
     {
-        Tile host = GameWorld.GetObject(this.host) as Tile;
-        if (host != null)
-        {
-            host.RemovePassenger(id);
-        }
-    (parent as GameObjectList).Remove(id);
-        remove = true;
-        (GameWorld as Level).Remove(connectedid);
+        (GameWorld as Level).RemoveConnectedEntity(connectedid);
+        base.RemoveSelf();
     }
 }

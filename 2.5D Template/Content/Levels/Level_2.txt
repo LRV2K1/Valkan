@@ -200,11 +200,11 @@ h:Sprites/Objects/spr_axe,40,SpriteItem,InMovible
 i:Sprites/Objects/spr_anvil,40,SpriteItem,InMovible
 j:Sprites/Objects/spr_grave_1,35,SpriteItem,InMovible
 k:Sprites/Objects/spr_grave_3,35,SpriteItem,InMovible
-l:Sprites/Enemy/Grave,45,Enemy,Close
-m:Sprites/Enemy/Zombie,45,Enemy,Close
-n:Sprites/Enemy/Antilion,60,Enemy,Close
-o:Sprites/Enemy/Skeleton,45,Enemy,Close
-p:Sprites/Enemy/Minotaur,60,Enemy,Close
+l:Sprites/Enemy/Grave,30,Enemy,Close
+m:Sprites/Enemy/Zombie,30,Enemy,Close
+n:Sprites/Enemy/Antilion,45,Enemy,Close
+o:Sprites/Enemy/Skeleton,30,Enemy,Close
+p:Sprites/Enemy/Minotaur,45,Enemy,Close
 q:Sprites/Objects/spr_tomb_3,60,SpriteItem,InMovible
 r:Sprites/Objects/spr_tomb_0,60,SpriteItem,InMovible
 s:Sprites/Objects/spr_tomb_2,60,SpriteItem,InMovible

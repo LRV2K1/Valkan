@@ -75,6 +75,34 @@ class LevelGrid : GameObjectGrid
             }
         }
     }
+    
+    public bool HasWalls(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return true;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return true;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.HasWalls;
+    }
+
+    public bool HasItem(int x, int y)
+    {
+        if (x < 0 || x >= Columns)
+        {
+            return true;
+        }
+        if (y < 0 || y >= Rows)
+        {
+            return true;
+        }
+        Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
+        return current.HasItem;
+    }
 
     public TileType GetTileType(int x, int y)
     {
@@ -125,52 +153,46 @@ class LevelGrid : GameObjectGrid
         return current.TileObject;
     }
 
-    public string NewPassenger(Vector2 newPos, Vector2 prevPos, GameObject obj, string host)
+    public string NewPassenger(Vector2 pos, Vector2 prevPos, GameObject obj, string host)
     {
-        Tile tile;
-
+        Tile drawTile;
+        (Get((int)prevPos.X, (int)prevPos.Y) as Tile).RemovePassenger(obj.Id);
+        Vector2 gridPos = GridPosition(pos);
+        (Get((int)gridPos.X, (int)gridPos.Y) as Tile).AddPassenger(obj.Id);
+        Vector2 drawPos = DrawGridPosition(pos);
         try
         {
-            tile = GameWorld.GetObject(grid[(int)newPos.X, (int)newPos.Y]) as Tile;
+            drawTile = GameWorld.GetObject(grid[(int)drawPos.X, (int)drawPos.Y]) as Tile;
         }
         catch
         {
-            tile = GameWorld.GetObject(grid[(int)newPos.X - 1, (int)newPos.Y]) as Tile;
+            drawTile = GameWorld.GetObject(grid[(int)drawPos.X - 1, (int)drawPos.Y]) as Tile;
         }
 
-        tile.AddPassenger(obj);
+        drawTile.AddDrawPassenger(obj);
 
         if (host != "")
         {
-            Tile prevtile = GameWorld.GetObject(host) as Tile;
-            prevtile.RemovePassenger(obj.Id);
+            (GameWorld.GetObject(host) as Tile).RemoveDrawPassenger(obj.Id);
         }
 
-        return tile.Id;
+        return drawTile.Id;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        List<string> tiles = ActiveTiles();
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
-            tile.HandleInput(inputHelper);
-        }
     }
 
     public override void Update(GameTime gameTime)
     {
-        List<string> tiles = ActiveTiles();
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            (GameWorld.GetObject(tiles[i]) as Tile).Update(gameTime);
-        }
-
         List<string> entities = ActiveEnities();
         for (int i = 0; i < entities.Count; i++)
         {
-            (GameWorld.GetObject(entities[i]) as Entity).Update(gameTime);
+            Entity entity = GameWorld.GetObject(entities[i]) as Entity;
+            if (entity != null)
+            {
+                entity.Update(gameTime);
+            }
         }
     }
 
@@ -185,9 +207,9 @@ class LevelGrid : GameObjectGrid
 
             if (GameEnvironment.GameSettingsManager.GetValue("editor") != "true")
             {
-                for (int j = 0; j < tile.Passengers.Count; j++)
+                for (int j = 0; j < tile.DrawPassengers.Count; j++)
                 {
-                    GameWorld.GetObject(tile.Passengers[j]).Draw(gameTime, spriteBatch);
+                    GameWorld.GetObject(tile.DrawPassengers[j]).Draw(gameTime, spriteBatch);
                 }
             }
         }
@@ -225,19 +247,19 @@ class LevelGrid : GameObjectGrid
         {
             Tile tile = GameWorld.GetObject(tiles[i]) as Tile;
 
-            entities.AddRange(tile.Passengers);
+            entities.AddRange(tile.DrawPassengers);
         }
         return entities;
     }
 
-    public Vector2 AnchorPosition(int x, int y)
+    public Vector2 AnchorPosition(int x, int y) //translate grid position to screen position
     {
         return new Vector2(x * cellWidth / 2 - cellWidth / 2 * y, y * cellHeight / 2 + cellHeight / 2 * x);
     }
 
-    public Vector2 GridPosition(Vector2 pos)
+    public Vector2 GridPosition(Vector2 pos) // translate screen position to grid position
     {
-        return new Vector2(pos.X / cellWidth + pos.Y / cellHeight, -pos.X / CellWidth + pos.Y / cellHeight);
+        return new Vector2((int)(pos.X / cellWidth + pos.Y / cellHeight), (int)(-pos.X / CellWidth + pos.Y / cellHeight));
     }
 
     public Vector2 DrawGridPosition(Vector2 pos)

@@ -25,6 +25,7 @@ public partial class Connection
 
         udpclient.JoinMulticastGroup(multicastaddress);
         udpclient.Client.Bind(localEp);
+        udpclient.Client.Ttl = 1;
         Send("Send first message", port);
     }
 

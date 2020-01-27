@@ -9,10 +9,12 @@ public partial class Level : GameObjectLibrary
 {
     //startup of the level
     int enemycount;
+    List<string> players;
 
     public Level(string name)
         : base()
     {
+        players = new List<string>();
         enemycount = 0;
         LoadLevel("Content/Levels/Level_" + name + ".txt");
         if (MultiplayerManager.Online)
@@ -35,5 +37,10 @@ public partial class Level : GameObjectLibrary
                 (GetObject("overlay") as OverlayManager).SwitchTo("finish");
             }
         }
+    }
+
+    public List<string> PlayerList
+    {
+        get { return players; }
     }
 }

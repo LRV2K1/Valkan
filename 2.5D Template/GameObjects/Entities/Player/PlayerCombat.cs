@@ -22,7 +22,7 @@ partial class Player : MovingEntity
 
     private void SetSkills()
     {
-        if (!host)
+        if (!gamehost)
         {
             skill1.Timer.Visible = false;
             skill2.Timer.Visible = false;
@@ -79,10 +79,9 @@ partial class Player : MovingEntity
         }
 
         addstaminatimer = addstaminatimerreset;
-        stamina++;
-        if (MultiplayerManager.Online && !host)
+        stamina++; if (MultiplayerManager.Online && !gamehost)
         {
-            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + health, MultiplayerManager.PartyPort, false);
+            MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
         }
     }
 
@@ -92,13 +91,34 @@ partial class Player : MovingEntity
         {
             die = true;
             SwitchAnimation("die", "D");
-            GameEnvironment.AssetManager.PlaySound(die_sound);
-            if (host)
+            GameEnvironment.AssetManager.PlayPartySound(die_sound);
+            if (gamehost)
             {
                 MediaPlayer.Stop();
                 (GameWorld.GetObject("overlay") as OverlayManager).SwitchTo("die");
             }
             velocity = Vector2.Zero;
+
+            Camera camera = GameWorld.GetObject("camera") as Camera;
+            if (camera.FolowOpj == id)
+            {
+                ChangeCamera();
+            }
+        }
+    }
+
+    private void ChangeCamera()
+    {
+        Camera camera = GameWorld.GetObject("camera") as Camera;
+        List<string> players = (GameWorld as Level).PlayerList;
+        foreach(string id in players)
+        {
+            Player player = GameWorld.GetObject(id) as Player;
+            if (!player.Dead)
+            {
+                camera.FolowOpj = player.Id;
+                return;
+            }
         }
     }
 
@@ -119,11 +139,11 @@ partial class Player : MovingEntity
 
             if (value < health)
             {
-                GameEnvironment.AssetManager.PlaySound(damage_sound);
-                GameEnvironment.AssetManager.PlaySound("SFX/Player/Thud");
+                GameEnvironment.AssetManager.PlayPartySound(damage_sound);
+                GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Thud");
             }
             health = value;
-            if (MultiplayerManager.Online && !host)
+            if (MultiplayerManager.Online && !gamehost)
             {
                 MultiplayerManager.Party.Send("CPlayer: " + id + " health " + health, MultiplayerManager.PartyPort, false);
             }
@@ -157,7 +177,8 @@ partial class Player : MovingEntity
         set
         {
             stamina = value;
-            if (MultiplayerManager.Online && !host)
+            Console.WriteLine(stamina);
+            if (MultiplayerManager.Online && !gamehost)
             {
                 MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
             }
@@ -179,7 +200,7 @@ partial class Player : MovingEntity
         set
         {
             maxhealth = value;
-            if (MultiplayerManager.Online && !host)
+            if (MultiplayerManager.Online && !gamehost)
             {
                 MultiplayerManager.Party.Send("CPlayer: " + id + " maxhealth " + maxhealth, MultiplayerManager.PartyPort, false);
             }
@@ -193,7 +214,7 @@ partial class Player : MovingEntity
         set
         {
             maxstamina = value;
-            if (MultiplayerManager.Online && !host)
+            if (MultiplayerManager.Online && !gamehost)
             {
                 MultiplayerManager.Party.Send("CPlayer: " + id + " maxstamina " + maxstamina, MultiplayerManager.PartyPort, false);
             }
@@ -205,5 +226,10 @@ partial class Player : MovingEntity
     {
         get { return selected; }
         set { selected = value; }
+    }
+
+    public bool Dead
+    {
+        get { return die; }
     }
 }

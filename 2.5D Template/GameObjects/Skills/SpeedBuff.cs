@@ -15,7 +15,7 @@ class SpeedBuff : Skill
     float speedmultipliertimer;
     float range;
 
-    public SpeedBuff(string assetname, int skill, string buf_asset = "", float timer = 4f, float range = 200, float speedmultiplier = 1.4f, float speedmultipliertimer = 2f)
+    public SpeedBuff(string assetname, int skill, string buf_asset = "", float timer = 4f, float range = 400, float speedmultiplier = 1.4f, float speedmultipliertimer = 2f)
         : base(assetname, skill)
     {
         this.buf_asset = buf_asset;
@@ -36,7 +36,7 @@ class SpeedBuff : Skill
 
     public override void Use(float timer = 2)
     {
-        GameEnvironment.AssetManager.PlaySound("SFX/Player/Bard_Speed");
+        GameEnvironment.AssetManager.PlayPartySound("SFX/Player/Bard_Speed");
         base.Use(resettimer);
         Player player = parent as Player;
         player.Stamina -= 30;
@@ -46,7 +46,7 @@ class SpeedBuff : Skill
 
     private void BuffPlayer(List<string> surroundingentities, Vector2 position)
     {
-        List<Player> surroundingplayers = SurroundingPlayers(surroundingentities, position, range);
+        List<Player> surroundingplayers = SurroundingPlayers(position, range);
         foreach(Player player in surroundingplayers)
         {
             player.AddSpeedMultiplier(speedmultipliertimer, speedmultiplier);
