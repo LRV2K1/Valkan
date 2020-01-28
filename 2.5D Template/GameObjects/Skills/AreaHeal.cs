@@ -14,7 +14,7 @@ class AreaHeal : Skill
     int heal;
     float range;
 
-    public AreaHeal(string assetname, int skill, string heal_asset = "", float timer = 1f, int heal = 10, float range = 400)
+    public AreaHeal(string assetname, int skill, string heal_asset = "", float timer = 1f, int heal = 3, float range = 400)
         : base(assetname, skill)
     {
         this.heal_asset = heal_asset;
