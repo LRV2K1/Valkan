@@ -25,23 +25,6 @@ class ConnectedEntity : Entity
         connectedOrigin = Vector2.Zero;
     }
 
-    public override void NewHost()
-    {
-        //become a passenger of a tile
-        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
-        //check if on new tile
-        if (levelGrid.GridPosition(position) != gridpos)
-        {
-            drawHost = levelGrid.NewPassenger(position, gridpos, this, drawHost);
-            gridpos = levelGrid.GridPosition(position);
-            drawgridpos = levelGrid.DrawGridPosition(position);
-        }
-        else if (drawHost != "")
-        {
-            (GameWorld.GetObject(drawHost) as Tile).CheckDrawPassengerPosition(this);
-        }
-    }
-
     public override void SendData(string data = "") { }
 
     public void ReceiveData(string data)

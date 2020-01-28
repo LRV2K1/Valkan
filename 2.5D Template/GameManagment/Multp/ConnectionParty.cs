@@ -48,6 +48,13 @@ public class ConnectionParty : Connection
         }
         catch
         {
+            try
+            {
+                ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
+            }
+            catch
+            {
+            }
         }
     }
     public void Update(GameTime gameTime) //manage unexpected disconnect
