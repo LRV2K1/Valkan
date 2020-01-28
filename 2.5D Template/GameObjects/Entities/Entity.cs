@@ -111,7 +111,11 @@ abstract partial class Entity : AnimatedGameObject
         }
         if (gridpos != null)
         {
-            ((GameWorld.GetObject("levelgrid") as LevelGrid).Get((int)gridpos.X, (int)gridpos.Y) as Tile).RemovePassenger(id);
+            Tile gridTile = (GameWorld.GetObject("levelgrid") as LevelGrid).Get((int)gridpos.X, (int)gridpos.Y) as Tile;
+            if (gridTile != null)
+            {
+                gridTile.RemovePassenger(id);
+            }
         }
         (parent as GameObjectList).Remove(id);
         remove = true;
