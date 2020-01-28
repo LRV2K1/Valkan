@@ -58,7 +58,7 @@ class InGameMenu : Overlay
             {
                 MultiplayerManager.Party.Disconnect();
             }
-            GameEnvironment.QuitGame = true;
+            GameEnvironment.ScreenFade.TransitionToScene("exit");
         }
     }
 

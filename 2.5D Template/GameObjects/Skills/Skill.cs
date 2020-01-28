@@ -47,7 +47,7 @@ class Skill : GameObject
         {
             Player player = GameWorld.GetObject(id) as Player;
             float distance = Vector2.Distance(position, player.GlobalPosition);
-            if (distance <= range)
+            if (distance <= range && !player.Dead)
             {
                 surroundingplayers.Add(player);
             }

@@ -22,6 +22,7 @@ public class GameEnvironment : Game
     protected SpriteGameObject spritemouse;
 
     protected static bool quitGame;
+    protected static bool newChanges;
 
     protected static string stringid;
     static List<OutputText> output;
@@ -130,6 +131,12 @@ public class GameEnvironment : Game
         set { quitGame = value; }
     }
 
+    public static bool NewChanges
+    {
+        get { return newChanges; }
+        set { newChanges = value; }
+    }
+
     public bool FullScreen
     {
         get { return graphics.IsFullScreen; }
@@ -190,6 +197,7 @@ public class GameEnvironment : Game
         }
     }
 
+
     protected void HandleInput()
     {
         inputHelper.Update();
@@ -217,7 +225,16 @@ public class GameEnvironment : Game
             Exit();
             return;
         }
-
+        if(newChanges && !FullScreen)
+        {
+            FullScreen = true;
+            newChanges = false;
+        }
+        else if(newChanges && FullScreen)
+        {
+            FullScreen = false;
+            newChanges = false;
+        }
         int outputx = 0;
         for (int i = output.Count - 1; i >= 0; i--)
         {

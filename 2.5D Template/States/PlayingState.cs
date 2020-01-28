@@ -70,7 +70,6 @@ class PlayingState : State
     {
         if(firstTime)
         {
-            MediaPlayer.Volume = 0.4f;
             GameEnvironment.AssetManager.PlayMusic("Soundtracks/ToT_OST04");
             firstTime = false;
         }
