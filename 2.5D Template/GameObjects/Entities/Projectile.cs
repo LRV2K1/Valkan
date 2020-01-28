@@ -63,7 +63,7 @@ class Projectile : Item
                     {
                         GameEnvironment.AssetManager.PlayPartySound(enemy.Damage_Sound);
                     }
-                    damaged = true;                    
+                    damaged = true;
                 }
             }            
         }

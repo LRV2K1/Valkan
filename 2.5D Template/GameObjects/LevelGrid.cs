@@ -157,9 +157,25 @@ class LevelGrid : GameObjectGrid
     public string NewPassenger(Vector2 pos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile drawTile;
-        (Get((int)prevPos.X, (int)prevPos.Y) as Tile).RemovePassenger(obj.Id);
         Vector2 gridPos = GridPosition(pos);
-        (Get((int)gridPos.X, (int)gridPos.Y) as Tile).AddPassenger(obj.Id);
+
+        Tile prevGridTile;
+        prevGridTile = Get((int)prevPos.X, (int)prevPos.Y) as Tile;
+        if (prevGridTile != null)
+        {
+            prevGridTile.RemovePassenger(obj.Id);
+        }
+
+        Tile gridTile;
+        gridTile = Get((int)gridPos.X, (int)gridPos.Y) as Tile;
+        if (gridTile != null)
+        {
+            gridTile.AddPassenger(obj.Id);
+        }
+        else
+        {
+            (Get(1, 1) as Tile).AddPassenger(obj.Id);
+        }
         Vector2 drawPos = DrawGridPosition(pos);
         try
         {

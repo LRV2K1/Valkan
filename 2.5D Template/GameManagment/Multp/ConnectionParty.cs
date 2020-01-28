@@ -37,6 +37,7 @@ public class ConnectionParty : Connection
                 string message = Encoding.ASCII.GetString(bytes); //convert byte array to string
                 HandleReceivedData(message, remoteep.Address);
                 data = message;
+                Console.WriteLine(data);
                 if (level != null)
                 {
                     level.DistributeData(data);

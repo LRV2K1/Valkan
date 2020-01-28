@@ -177,7 +177,6 @@ partial class Player : MovingEntity
         set
         {
             stamina = value;
-            Console.WriteLine(stamina);
             if (MultiplayerManager.Online && !gamehost)
             {
                 MultiplayerManager.Party.Send("CPlayer: " + id + " stamina " + stamina, MultiplayerManager.PartyPort, false);
