@@ -146,33 +146,6 @@ class Camera : GameObject
         return screen.Contains(new Point((int)pos.X, (int)pos.Y));
     }
 
-    public Vector2 OutOfScreenDepth(string id)
-    {
-        GameObject obj = GameWorld.GetObject(id);
-        Rectangle screen = new Rectangle((int)cameraPosition.X, (int)cameraPosition.Y, GameEnvironment.Screen.X, GameEnvironment.Screen.Y);
-        float dx = (cameraPosition.X + GameEnvironment.Screen.X/2) - (obj.GlobalPosition.X);
-        float dy = (cameraPosition.Y + GameEnvironment.Screen.Y / 2) - (obj.GlobalPosition.Y);
-        int ddx = Math.Sign(dx);
-        int ddy = Math.Sign(dy);
-        if (Math.Abs(dx) > GameEnvironment.Screen.X / 2)
-        {
-            dx -= ddx * (GameEnvironment.Screen.X / 2);
-        }
-        else
-        {
-            dx = 0;
-        }
-        if (Math.Abs(dy) > GameEnvironment.Screen.Y / 2)
-        {
-            dy -= ddy * (GameEnvironment.Screen.Y / 2);
-        }
-        else
-        {
-            dy = 0;
-        }
-        return new Vector2(dx, dy);
-    }
-
     public int Width
     {
         get { return width; }
