@@ -42,6 +42,7 @@ public class ConnectionParty : Connection
                     level.DistributeData(data);
                     timer++;
                 }
+                Thread.Sleep(10);
             }
             ar_ = udpclient.BeginReceive(Receive, new object()); //repeat
         }
