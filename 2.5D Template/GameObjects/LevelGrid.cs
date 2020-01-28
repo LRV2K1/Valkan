@@ -101,7 +101,7 @@ class LevelGrid : GameObjectGrid
             return true;
         }
         Tile current = GameWorld.GetObject(Objects[x, y]) as Tile;
-        return current.HasItem;
+        return current.HasItems();
     }
 
     public TileType GetTileType(int x, int y)
@@ -153,6 +153,7 @@ class LevelGrid : GameObjectGrid
         return current.TileObject;
     }
 
+    //gives a tile a new passenger and removes the passenger from the old tile.
     public string NewPassenger(Vector2 pos, Vector2 prevPos, GameObject obj, string host)
     {
         Tile drawTile;
@@ -179,10 +180,12 @@ class LevelGrid : GameObjectGrid
         return drawTile.Id;
     }
 
+    //tiles do not have a hanlde input
     public override void HandleInput(InputHelper inputHelper)
     {
     }
 
+    //update only the objects on screen
     public override void Update(GameTime gameTime)
     {
         List<string> entities = ActiveEnities();
@@ -215,6 +218,7 @@ class LevelGrid : GameObjectGrid
         }
     }
 
+    //a list of all the tiles on the screen aka the active tiles
     private List<string> ActiveTiles()
     {
         List<string> tiles = new List<string>();
@@ -239,6 +243,7 @@ class LevelGrid : GameObjectGrid
         return tiles;
     }
 
+    //a list of all the entities on the screen aka the active entities
     private List<string> ActiveEnities()
     {
         List<string> tiles = ActiveTiles();
@@ -252,16 +257,19 @@ class LevelGrid : GameObjectGrid
         return entities;
     }
 
-    public Vector2 AnchorPosition(int x, int y) //translate grid position to screen position
+    //translate grid position to screen position
+    public Vector2 AnchorPosition(int x, int y)
     {
         return new Vector2(x * cellWidth / 2 - cellWidth / 2 * y, y * cellHeight / 2 + cellHeight / 2 * x);
     }
 
-    public Vector2 GridPosition(Vector2 pos) // translate screen position to grid position
+    // translate screen position to grid position
+    public Vector2 GridPosition(Vector2 pos)
     {
         return new Vector2((int)(pos.X / cellWidth + pos.Y / cellHeight), (int)(-pos.X / CellWidth + pos.Y / cellHeight));
     }
 
+    //gives a grid position below the actual grid postition to make sure the entitie is draw correctly
     public Vector2 DrawGridPosition(Vector2 pos)
     {
         if (GetTileType((int)GridPosition(pos).X + 1, (int)GridPosition(pos).Y + 1) == TileType.Wall)

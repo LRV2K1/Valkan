@@ -282,6 +282,36 @@ partial class Tile : SpriteGameObject
         return s;
     }
 
+    //checks for items around the tile
+    public bool HasItems()
+    {
+        LevelGrid levelGrid = GameWorld.GetObject("levelgrid") as LevelGrid;
+        if (HasItem)
+        {
+            return true;
+        }
+        for (int x = grid.X - 1; x <= grid.X + 1; x++)
+        {
+            for (int y = grid.Y - 1; y <= grid.Y + 1; y++)
+            {
+                if (x != grid.X && y != grid.Y)
+                {
+                    continue;
+                }
+                Tile tile = levelGrid.Get(x, y) as Tile;
+                if (tile == null)
+                {
+                    return true;
+                }
+                if (tile.HasItem)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public List<string> DrawPassengers
     {
         get { return drawPassengers; }
