@@ -183,7 +183,14 @@ class LevelGrid : GameObjectGrid
         }
         catch
         {
-            drawTile = GameWorld.GetObject(grid[(int)drawPos.X - 1, (int)drawPos.Y]) as Tile;
+            try
+            {
+                drawTile = GameWorld.GetObject(grid[(int)drawPos.X - 1, (int)drawPos.Y]) as Tile;
+            }
+            catch
+            {
+                drawTile = GameWorld.GetObject(grid[1,1]) as Tile;
+            }
         }
 
         drawTile.AddDrawPassenger(obj);
