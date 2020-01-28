@@ -65,20 +65,18 @@ abstract partial class Entity : AnimatedGameObject
 
     public virtual void SendData(string data = "")
     {
-        if (MultiplayerManager.Online)
+        if (Current != null && MultiplayerManager.Online)
         {
-            if (Current != null)
+            if (data == "")
             {
-                if (data == "")
-                {
-                    MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + velocity.X + " " + velocity.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, MultiplayerManager.PartyPort, false);
-                }
-                else
-                {
-                    MultiplayerManager.Party.Send("Entity: " + id + " " + data, MultiplayerManager.PartyPort, false);
-                }
+                MultiplayerManager.Party.Send("Entity: " + Id + " " + position.X + " " + position.Y + " " + origin.X + " " + origin.Y + " " + velocity.X + " " + velocity.Y + " " + Current.AssetName + " " + Current.IsLooping + " " + Current.IsBackAndForth, MultiplayerManager.PartyPort, false);
+            }
+            else
+            {
+                MultiplayerManager.Party.Send("Entity: " + id + " " + data, MultiplayerManager.PartyPort, false);
             }
         }
+
     }
 
     public virtual void NewHost()
