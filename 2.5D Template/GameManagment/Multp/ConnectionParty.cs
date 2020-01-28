@@ -71,7 +71,7 @@ public class ConnectionParty : Connection
                 foreach (LobbyPlayer lobbyplayer in playerlist.playerlist) //remove unactive players
                 {
                     lobbyplayer.timeunactive += 1;
-                    if (lobbyplayer.timeunactive >= 5)
+                    if (lobbyplayer.timeunactive >= 10)
                     {
                         playerlist.Modify(lobbyplayer.ip, false, false, true); //remove 1 player from the party
                         Send("Playerlist:" + playerlist.ToString(), port, false);
@@ -100,7 +100,7 @@ public class ConnectionParty : Connection
                         if (lobbyplayer.ishost)
                         {
                             lobbyplayer.timeunactive += 1;
-                            if (lobbyplayer.timeunactive >= 5)
+                            if (lobbyplayer.timeunactive >= 10)
                             {
                                 Disconnect();
                             }
